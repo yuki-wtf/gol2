@@ -23,6 +23,7 @@ const StyledNavbarInner = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 0 32px;
   gap: 40px;
   @media (max-width: 790px) {
     gap: 25px;
@@ -34,17 +35,15 @@ const Navbar = () => {
 
   return (
     <StyledNavbar>
-      <ContainerInner>
-        <StyledNavbarInner>
-          <MenuButton onClick={() => console.log("test")} />
+      <StyledNavbarInner>
+        <MenuButton onClick={() => console.log("test")} />
 
-          <HeaderLogo page={router.pathname} />
-          {router.pathname === "/infinite" ? <Credits /> : null}
-          {router.pathname === "/creator" ? <CreatorCredits /> : null}
+        <HeaderLogo page={router.pathname} />
+        {router.pathname === "/infinite" ? <Credits /> : null}
+        {router.pathname === "/creator" ? <CreatorCredits /> : null}
 
-          <ConnectWallet />
-        </StyledNavbarInner>
-      </ContainerInner>
+        <ConnectWallet />
+      </StyledNavbarInner>
     </StyledNavbar>
   );
 };

@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  useStarknet,
-  InjectedConnector,
-  ConnectorNotFoundError,
-} from "@starknet-react/core";
-import { truncate } from "../../../utils/truncate";
+import { useStarknet, ConnectorNotFoundError } from "@starknet-react/core";
 import Button from "../../Button/Button";
 import UserDropdownMenu from "./UserDropdownMenu/UserDropdownMenu";
 import NetworkDropdownMenu from "./NetworkDropdownMenu/NetworkDropdownMenu";

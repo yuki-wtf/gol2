@@ -22,6 +22,7 @@ const StyledFooterInner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 0 24px;
 `;
 const StyledStarkware = styled.div`
   display: flex;
@@ -40,16 +41,14 @@ const StyledYuki = styled.div`
 const Footer = () => {
   return (
     <StyledFooter>
-      <ContainerInner>
-        <StyledFooterInner>
-          <StyledStarkware>starkware</StyledStarkware>
-          <StyledYuki>
-            <Typography.XL1Extrabold>
-              Design &amp; frontend by <a href="https://yuki.wtf">Yuki</a>
-            </Typography.XL1Extrabold>
-          </StyledYuki>
-        </StyledFooterInner>
-      </ContainerInner>
+      <StyledFooterInner>
+        <StyledStarkware>starkware</StyledStarkware>
+        <StyledYuki>
+          <Typography.XL1Extrabold>
+            Design &amp; frontend by <a href="https://yuki.wtf">Yuki</a>
+          </Typography.XL1Extrabold>
+        </StyledYuki>
+      </StyledFooterInner>
     </StyledFooter>
   );
 };

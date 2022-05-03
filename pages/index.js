@@ -49,6 +49,9 @@ export default function Home() {
         <Link href="/about">
           <a>About</a>
         </Link>
+        <Link href="/dialogs">
+          <a>Components</a>
+        </Link>
       </div>
     </div>
   );

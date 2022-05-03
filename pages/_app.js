@@ -6,6 +6,7 @@ import { infinite } from "../styles/themes/infinite";
 
 function MyApp({ Component, pageProps }) {
   const connectors = [new InjectedConnector()];
+  console.log(connectors);
   return (
     <>
       <ThemeProvider theme={infinite}>

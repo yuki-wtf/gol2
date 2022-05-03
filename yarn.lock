@@ -601,6 +601,27 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@radix-ui/react-dialog@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-0.1.7.tgz#285414cf66f5bbf42bc9935314e0381abe01e7d0"
+  integrity sha512-jXt8srGhHBRvEr9jhEAiwwJzWCWZoGRJ030aC9ja/gkRJbZdy0iD3FwXf+Ff4RtsZyLUMHW7VUwFOlz3Ixe1Vw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "0.1.0"
+    "@radix-ui/react-compose-refs" "0.1.0"
+    "@radix-ui/react-context" "0.1.1"
+    "@radix-ui/react-dismissable-layer" "0.1.5"
+    "@radix-ui/react-focus-guards" "0.1.0"
+    "@radix-ui/react-focus-scope" "0.1.4"
+    "@radix-ui/react-id" "0.1.5"
+    "@radix-ui/react-portal" "0.1.4"
+    "@radix-ui/react-presence" "0.1.2"
+    "@radix-ui/react-primitive" "0.1.4"
+    "@radix-ui/react-slot" "0.1.2"
+    "@radix-ui/react-use-controllable-state" "0.1.0"
+    aria-hidden "^1.1.1"
+    react-remove-scroll "^2.4.0"
+
 "@radix-ui/react-dismissable-layer@0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-dismissable-layer/-/react-dismissable-layer-0.1.5.tgz#9379032351e79028d472733a5cc8ba4a0ea43314"
@@ -2035,6 +2056,18 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+lottie-react@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/lottie-react/-/lottie-react-2.2.1.tgz#27fbb85a11000557d7166c36a630fe1e5ce07028"
+  integrity sha512-lAdIUw+zeHLX3gtyLkisa4QM9NkTUUeZTsEL53laBEsjIH4JibgwkioZuza8CtwZ7/cpPZRbCRXWKfiuaDZWww==
+  dependencies:
+    lottie-web "^5.8.1"
+
+lottie-web@^5.8.1:
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.9.4.tgz#c01478ee5dd47f916cb4bb79040c11d427872d57"
+  integrity sha512-bSs1ZTPifnBVejO1MnQHdfrKfcn02YTCmgOh2wcAEICqRA0V7GzDh8FnwXY6+EzT+i8XOunaIloo/5xC5YNbsA==
 
 lru-cache@^6.0.0:
   version "6.0.0"

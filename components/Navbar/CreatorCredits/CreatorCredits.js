@@ -2,17 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import Skeleton from "../../Skeleton/Skeleton";
 import T from "../../Typography/Typography";
-import { HiOutlineHeart, HiOutlineLightningBolt } from "react-icons/hi";
+import { HiOutlineHeart, HiOutlineLightningBolt, HiPlus } from "react-icons/hi";
+import Button from "../../Button/Button";
 const StyledContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  gap: 24px;
+  gap: 32px;
   justify-content: center;
   align-items: center;
 `;
 const StyledIconWrapper = styled.div`
   color: ${(props) => props.theme.colors.creatorPrimary};
+`;
+const StyledButtonWrapper = styled.div`
+  margin-left: 16px;
 `;
 const StyledTextWrapper = styled.div`
   > h4 {
@@ -32,7 +36,7 @@ const StyledTokenIconWrapper = styled.div`
   align-items: center;
   color: ${(props) => props.theme.colors.creatorPrimary};
   position: relative;
-  gap: 8px;
+  gap: 4px;
   height: 27px;
   &:before {
     content: "";
@@ -41,7 +45,7 @@ const StyledTokenIconWrapper = styled.div`
     background-color: black;
     position: absolute;
     top: -5px;
-    right: -12px;
+    right: -16px;
   }
   @media (max-width: 750px) {
     flex-direction: column;
@@ -75,6 +79,14 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
       <StyledTextWrapper>
         <T.H4SemiBold>Creator Credits</T.H4SemiBold>
       </StyledTextWrapper>
+      <StyledButtonWrapper>
+        <Button
+          disabled
+          icon={<HiPlus size={24} />}
+          label="new game"
+          secondary
+        />
+      </StyledButtonWrapper>
     </StyledContainer>
   );
 };

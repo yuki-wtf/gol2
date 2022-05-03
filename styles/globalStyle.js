@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: "Mulish", sans-serif;
     color:${(props) => props.theme.colors.bodyText};
+    background-color:#000; 
     font-size: 16px
   }
 `;

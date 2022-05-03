@@ -12,6 +12,7 @@ const defaultButton = css`
   cursor: pointer;
   display: inline-flex;
   flex: 0 0 auto;
+  width: ${(p) => (p.full ? "100%" : "auto")};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -215,9 +216,11 @@ const Button = ({
   label,
   disabled,
   onClick,
+  full,
 }) => {
   return (
     <StyledButton
+      full={full}
       primary={primary}
       secondary={secondary}
       tertiary={tertiary}

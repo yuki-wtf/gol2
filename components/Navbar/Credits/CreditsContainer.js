@@ -7,7 +7,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  gap: 24px;
+  gap: 32px;
   justify-content: center;
   align-items: center;
 `;
@@ -29,7 +29,7 @@ const StyledTokenIconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
-  gap: 8px;
+  gap: 4px;
   height: 27px;
   &:before {
     content: "";
@@ -38,7 +38,7 @@ const StyledTokenIconWrapper = styled.div`
     background-color: black;
     position: absolute;
     top: -5px;
-    right: -12px;
+    right: -16px;
   }
   color: ${(props) => props.theme.colors.infinitePrimary};
   @media (max-width: 750px) {
