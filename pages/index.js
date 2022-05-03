@@ -49,7 +49,7 @@ export default function Home() {
         <Link href="/about">
           <a>About</a>
         </Link>
-        <Link href="/dialogs">
+        <Link href="/components">
           <a>Components</a>
         </Link>
       </div>
