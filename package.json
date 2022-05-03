@@ -12,6 +12,8 @@
     "@argent/get-starknet": "^3.0",
     "@radix-ui/react-dialog": "^0.1.7",
     "@radix-ui/react-dropdown-menu": "^0.1.6",
+    "@radix-ui/react-popover": "^0.1.6",
+    "@radix-ui/react-toast": "^0.1.1",
     "@starknet-react/core": "^0.8.1",
     "copy-to-clipboard": "^3.3.1",
     "framer-motion": "^6.3.3",

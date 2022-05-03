@@ -10,6 +10,7 @@ const StyledContainer = styled.div`
   gap: 32px;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 const StyledIconWrapper = styled.div`
   color: ${(props) => props.theme.colors.infinitePrimary};
