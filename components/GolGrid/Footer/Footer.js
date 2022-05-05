@@ -3,7 +3,8 @@ import styled from "styled-components";
 import ControlBar from "./ControlBar/ControlBar";
 
 const StyledFooter = styled.footer`
-  background-color: ${(props) => props.theme.colors.neutral100};
+  background-color: ${(props) =>
+    props.empty ? "#1D222D" : props.theme.colors.neutral100};
   border: 1px solid ${(props) => props.theme.colors.neutral400};
   height: 68px;
   display: flex;
@@ -14,12 +15,8 @@ const StyledFooter = styled.footer`
   border-bottom-right-radius: 33px;
 `;
 
-const Footer = () => {
-  return (
-    <StyledFooter>
-      <ControlBar />
-    </StyledFooter>
-  );
+const Footer = ({ empty }) => {
+  return <StyledFooter empty={empty}>{!empty && <ControlBar />}</StyledFooter>;
 };
 
 export default Footer;

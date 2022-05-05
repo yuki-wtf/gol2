@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStarknet, ConnectorNotFoundError } from "@starknet-react/core";
 import Button from "../../Button/Button";
 import UserDropdownMenu from "./UserDropdownMenu/UserDropdownMenu";
 import NetworkDropdownMenu from "./NetworkDropdownMenu/NetworkDropdownMenu";
+import DialogDownloadWallet from "../../DialogDownloadWallet/DialogDownloadWallet";
 
 const ConnectWallet = () => {
+  const [open, setOpen] = useState(true);
   const { account, connect, error, disconnect, connectors } = useStarknet();
+
+  console.log("connectors", connectors);
   if (account) {
     return (
       <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
@@ -19,6 +23,7 @@ const ConnectWallet = () => {
     <div style={{ marginLeft: "auto" }}>
       {!account &&
         !error &&
+        open &&
         connectors.map((connector, i) =>
           connector.available() ? (
             <Button
@@ -30,13 +35,19 @@ const ConnectWallet = () => {
           ) : null
         )}
       {error instanceof ConnectorNotFoundError && (
-        <div>
-          <p>
-            <a href="https://github.com/argentlabs/argent-x">
-              Download Argent-X
-            </a>
-          </p>
-        </div>
+        <DialogDownloadWallet
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
+        // <div>
+        //   <p>
+        //     <a href="https://github.com/argentlabs/argent-x">
+        //       Download Argent-X
+        //     </a>
+        //   </p>
+        // </div>
       )}
     </div>
   );

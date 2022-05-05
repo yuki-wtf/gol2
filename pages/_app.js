@@ -3,20 +3,28 @@ import Layout from "../components/layout";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styles/globalStyle";
 import { infinite } from "../styles/themes/infinite";
-
+import Toast from "../components/Toast/Toast";
+import { Provider } from "react-redux";
+import { store } from "../app/store";
+import NextHead from "next/head";
 function MyApp({ Component, pageProps }) {
   const connectors = [new InjectedConnector()];
   console.log(connectors);
   return (
     <>
-      <ThemeProvider theme={infinite}>
-        <GlobalStyle />
-        <StarknetProvider autoConnect connectors={connectors}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </StarknetProvider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={infinite}>
+          <GlobalStyle />
+          <StarknetProvider autoConnect connectors={connectors}>
+            <NextHead>
+              <title>GoL2 CREATE GAMES - GIVE LIFE - EVOLVE</title>
+            </NextHead>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </StarknetProvider>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }

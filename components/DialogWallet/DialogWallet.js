@@ -1,6 +1,6 @@
 import React from "react";
 import Dialog from "../Dialog/Dialog";
-import { HiOutlineFire, HiOutlineX } from "react-icons/hi";
+import { HiOutlineX } from "react-icons/hi";
 import Button from "../Button/Button";
 const DialogWallet = ({ open, onClose }) => {
   return (

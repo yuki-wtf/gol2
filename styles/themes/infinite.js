@@ -1,6 +1,13 @@
 export const infinite = {
   name: "infinite",
   colors: {
+    cell: {
+      cellPendingBackground: "#000000",
+      cellLiveBackground: "#DBF267",
+      cellDefaultBackground: "transparent",
+      cellPreLiveBackground: "#F06B97",
+      cellDefaultHover: "#3B3F49",
+    },
     dropdownMenu: {
       triggerBackground: "#1D222C",
       triggerColor: "#F3E9E1",

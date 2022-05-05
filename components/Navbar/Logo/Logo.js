@@ -18,13 +18,17 @@ const HeaderLogo = ({ page }) => {
         return <InfiniteLogo />;
       case "/creator":
         return <CreatorLogo />;
+      case "/creator/[cid]":
+        return <CreatorLogo />;
+      case "/creator/create":
+        return <CreatorLogo />;
       case "/snapshots":
         return <SnapshotsLogo />;
       case "/howitworks":
         return <HowitworksLogo />;
       case "/about":
         return <AboutLogo />;
-      case "/nav":
+      case "/menu":
         return <DefaultLogo />;
 
       default:

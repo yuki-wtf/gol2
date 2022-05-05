@@ -29,10 +29,10 @@ const ControlBar = () => {
   return (
     <StyledControlbar>
       <ControlButtons.ToStartBtn />
-      <ControlButtons.PlayPauseBtn />
-      <ControlButtons.StepForwardBtn />
-      <ControlButtons.ToEndBtn />
-      <SpeedDropdownMenu />
+      <ControlButtons.PlayPauseBtn disabled />
+      <ControlButtons.StepForwardBtn disabled />
+      <ControlButtons.ToEndBtn disabled />
+      <SpeedDropdownMenu disabled />
 
       <StyledGenerationLabel>
         Generation # <span>6</span>

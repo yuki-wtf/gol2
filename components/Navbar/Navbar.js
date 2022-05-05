@@ -40,7 +40,11 @@ const Navbar = () => {
 
         <HeaderLogo page={router.pathname} />
         {router.pathname === "/infinite" ? <Credits /> : null}
-        {router.pathname === "/creator" ? <CreatorCredits /> : null}
+        {router.pathname === "/creator" ||
+        router.pathname === "/creator/create" ||
+        router.pathname === "/creator/[cid]" ? (
+          <CreatorCredits />
+        ) : null}
 
         <ConnectWallet />
       </StyledNavbarInner>
