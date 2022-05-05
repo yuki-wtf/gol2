@@ -14,7 +14,7 @@ const MenuButtonWrapper = styled.button`
 const MenuButton = ({ onClick = () => console.log("rest"), ...rest }) => {
   const router = useRouter();
   return (
-    <MenuButtonWrapper onClick={() => router.push("/")}>
+    <MenuButtonWrapper onClick={() => router.push("/menu")}>
       <svg
         width={26}
         height={20}

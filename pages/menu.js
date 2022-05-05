@@ -1,7 +1,189 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import NavItem from "../components/Menu/NavItem";
+import MenuDescription from "../components/Menu/MenuDescription";
+import useFetchTokens from "../hooks/useFetchTokens";
+import NavContainer from "../components/Layout/NavContainer";
 
-const menu = () => {
-  return <div>menu</div>;
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
 };
 
-export default menu;
+const listItem = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
+const Menu = () => {
+  const [selectedHover, setselectedHover] = useState(null);
+  const [currentNav, setCurrentNav] = useState(null);
+  const { snapshots } = useFetchTokens();
+
+  const menuItems = [
+    {
+      className: "infinite",
+      title: "Infinite Mode",
+      color: "var(--infinite-primary)",
+      to: "/infinite",
+      badge: 0,
+      heading: "One game to rule them all",
+      desc: "A single game. Multiple players. No end point.",
+      desc2:
+        "Evolve the game to earn credits, which are then used to Give Life to a cell and change the course of the game for all.",
+      image_url: "/assets/menu/infinite.png",
+    },
+    {
+      className: "creator",
+      title: "Creator Mode",
+      color: "var(--creator-primary)",
+      to: "/creator",
+      badge: 0,
+      heading: "Create your own game (coming soon)",
+      desc: "Explore the communities games and create your own games. Earn 10 credits to spawn your own game and share it with the community.",
+      image_url: "/assets/menu/creator.png",
+      width: 354,
+    },
+    {
+      className: "snapshots",
+      title: "Snapshots",
+      color: "var(--snapshots-primary)",
+      to: "/snapshots",
+      badge: snapshots.length,
+      heading: "Proof of play",
+      desc: "Evolve the game in infinite mode to generate and store a unique snapshot of your play. ",
+      image_url: "/assets/menu/snapshot.png",
+      width: 290,
+    },
+    {
+      className: "howitworks",
+      title: "How it works",
+      color: "var(--howitworks-primary)",
+      to: "/howitworks",
+      badge: 0,
+      heading: "How does GoL2 work?",
+      desc: "New to Conways game of life? We’ve got you covered inside.",
+      image_url: "/assets/menu/howitworks.png",
+    },
+    {
+      className: "about",
+      title: "About GOL2 & Starknet",
+      color: "var(--about-primary)",
+      to: "/about",
+      badge: 0,
+
+      heading: "How does Starknet work?",
+      desc: "StarkNet is a Layer 2 ZK-Rollup technology that is bringing massive scalability to Ethereum while preserving L1 security, permissionless interactions, and decentralization.",
+      image_url: "/assets/menu/how.png",
+    },
+  ];
+
+  useEffect(() => {
+    console.log(currentNav);
+  }, [currentNav]);
+  return (
+    <NavContainer>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          // gridTemplateColumns: "1.3fr 1fr",
+          flex: 1,
+          // background: "red",
+          justifyContent: "center",
+        }}
+      >
+        <motion.div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            // background: "green",
+            paddingLeft: 0,
+            width: "59%",
+            // paddingTop: 40,
+            // paddingBottom: 40,
+          }}
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {menuItems &&
+            menuItems.map((item, i) => {
+              return (
+                <motion.div
+                  // whileHover={() => setCurrentNav(i + 1)}
+                  // onHoverEnd={() => setCurrentNav(null)}
+                  onMouseEnter={() => setCurrentNav(i + 1)}
+                  onMouseLeave={() => setCurrentNav(null)}
+                  key={item.to}
+                  variants={listItem}
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <NavItem
+                    selectedHover={selectedHover}
+                    // onMouseEnter={() => setselectedHover(item.className)}
+                    // onMouseLeave={() => setselectedHover(null)}
+                    to={item.to}
+                    exClassName={item.className}
+                    color={item.color}
+                    title={item.title}
+                    isActive={i + 1 === currentNav}
+                    badge={item.badge}
+                  />
+                </motion.div>
+              );
+            })}
+        </motion.div>
+        <div
+          style={{
+            position: "fixed",
+            right: 0,
+            top: 0,
+            display: "flex",
+            zIndex: 100,
+            pointerEvents: "none",
+            width: "41%",
+            height: "100vh",
+            // backgroundColor: "red",
+          }}
+          className="menuCont"
+        >
+          {menuItems &&
+            menuItems.map((item, i) => {
+              return (
+                <MenuDescription
+                  index={i + 1}
+                  title={item.heading}
+                  color={item.color}
+                  isActive={i + 1 === currentNav}
+                  desc={item.desc}
+                  desc2={item.desc2}
+                  img={item.image_url}
+                  width={item.width}
+                  key={item.to}
+                />
+              );
+            })}
+
+          {/* <MenuDesc selectedHover={selectedHover} /> */}
+        </div>
+        {/* <div
+        style={{
+          position: "absolute",
+          height: "100%",
+        }}
+      >
+        
+      </div> */}
+      </div>
+    </NavContainer>
+  );
+};
+
+export default Menu;

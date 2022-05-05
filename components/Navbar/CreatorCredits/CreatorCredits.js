@@ -4,6 +4,7 @@ import Skeleton from "../../Skeleton/Skeleton";
 import T from "../../Typography/Typography";
 import { HiOutlineHeart, HiOutlineLightningBolt, HiPlus } from "react-icons/hi";
 import Button from "../../Button/Button";
+import { useRouter } from "next/router";
 const StyledContainer = styled.div`
   display: flex;
   flex: 1;
@@ -62,6 +63,7 @@ const StyledTokenIconWrapper = styled.div`
 `;
 
 const CreatorCredits = ({ loading, tokenCount, error }) => {
+  const router = useRouter();
   return (
     <StyledContainer>
       <StyledTokenIconWrapper>
@@ -81,7 +83,7 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
       </StyledTextWrapper>
       <StyledButtonWrapper>
         <Button
-          disabled
+          onClick={() => router.push("/creator/create")}
           icon={<HiPlus size={24} />}
           label="new game"
           secondary

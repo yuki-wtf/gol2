@@ -8,6 +8,8 @@ import Spinner from "../Spinner/Spinner";
 
 const defaultButton = css`
   position: relative;
+  text-transform: uppercase;
+  font-weight: 800;
   height: 40px;
   cursor: pointer;
   display: inline-flex;
@@ -143,6 +145,7 @@ const secondaryButton = css`
 const hoveredButtonTertiary = css`
   background: ${({ theme }) => theme.colors.buttonTertiary.hoverBackground};
   color: ${({ theme }) => theme.colors.buttonTertiary.hoverText};
+  opacity: 0.7;
 `;
 const focusedButtonTertiary = css`
   &:focus-visible {
@@ -175,8 +178,10 @@ const activeButtonTertiary = css`
 
 const tertiaryButton = css`
   background: transparent;
+  text-transform: none;
+  font-weight: 500;
   border: none;
-  color: white;
+  color: ${(p) => (p.tertiaryColor ? p.tertiaryColor : "white")};
   &:hover {
     ${(p) => !p.disabled && hoveredButtonTertiary}
   }
@@ -217,6 +222,7 @@ const Button = ({
   disabled,
   onClick,
   full,
+  tertiaryColor,
 }) => {
   return (
     <StyledButton
@@ -228,6 +234,7 @@ const Button = ({
       icon={icon}
       disabled={disabled}
       onClick={onClick}
+      tertiaryColor={tertiaryColor}
     >
       {icon && !isLoading && icon}
       {isLoading ? <Spinner /> : <T.Button>{label}</T.Button>}

@@ -18,7 +18,7 @@ const Typography = {
     font-family: "Mulish";
     line-height: 26px;
     text-decoration: none;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     color: ${(props) => (props.color ? props.color : "inherit")};
   `,
   H3: styled.h3`
@@ -132,10 +132,10 @@ const Typography = {
   Button: styled.p`
     font-family: "Mulish";
     font-style: normal;
-    font-weight: 800;
+
     font-size: 14px;
     line-height: 100%;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 0.1em;
     color: ${(props) => (props.color ? props.color : "inherit")};
   `,

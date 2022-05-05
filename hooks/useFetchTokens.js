@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import { useStarknet, useStarknetCall } from "@starknet-react/core";
 import { useInfiniteGameContract } from "./useInfiniteGameContract";
+import useUpdateEffect from "./useUpdateEffect";
 
 const useFetchTokens = () => {
   const { contract: infinite } = useInfiniteGameContract();
-  const { account } = useStarknet();
+  const { account, library, connectors } = useStarknet();
   const [snapshots, setSnapshots] = useState([]);
-
+  console.log("library", library, connectors);
   const {
     data: tokens,
     loading,
@@ -24,7 +25,16 @@ const useFetchTokens = () => {
     }
   }, [tokens]);
 
-  const snapshotsIds = useMemo(() => {
+  // const snapshotsIds = useMemo(() => {
+  //   if (tokens && tokens.length > 0) {
+  //     tokens.token_ids.map((item) => {
+  //       if (!snapshots.includes(item.words[0])) {
+  //         setSnapshots((oldArray) => [...oldArray, item.words[0]]);
+  //       }
+  //     });
+  //   }
+  // }, [tokens, snapshots]);
+  useUpdateEffect(() => {
     if (tokens && tokens.length > 0) {
       tokens.token_ids.map((item) => {
         if (!snapshots.includes(item.words[0])) {

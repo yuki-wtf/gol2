@@ -24,17 +24,7 @@ const CreditsConnected = () => {
   }, []);
 
   return (
-    <>
-      <Toast.Root open={open} onOpenChange={setOpen}>
-        <Toast.Title>Hello</Toast.Title>
-        <Toast.Description>asdfsdf</Toast.Description>
-      </Toast.Root>
-      <CreditsContainer
-        tokenCount={tokenCount}
-        loading={loading}
-        error={error}
-      />
-    </>
+    <CreditsContainer tokenCount={tokenCount} loading={loading} error={error} />
   );
 };
 
