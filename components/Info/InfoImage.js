@@ -1,18 +1,24 @@
+import Image from "next/image";
 import styles from "./Info.module.css";
 const InfoImage = ({
   url,
   alt,
-  width = "100%",
+  width,
+  height,
   backgroundColor = " var(--howitworks-primary)",
 }) => {
   return (
-    <div className={styles.InfoImageContainer} style={{ backgroundColor }}>
-      <img
+    <div
+      className={styles.InfoImageContainer}
+      style={{ backgroundColor, paddingTop: 88, paddingBottom: 88 }}
+    >
+      <Image
         src={url}
         alt={alt}
-        className={styles.InfoImage}
-        style={{ width: width }}
-      ></img>
+        width={width}
+        height={height}
+        style={{}}
+      ></Image>
     </div>
   );
 };

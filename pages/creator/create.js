@@ -97,15 +97,16 @@ const StyledlistItem = styled.li`
 `;
 const Create = () => {
   return (
-    <ContainerInner maxWidth={900}>
+    <ContainerInner>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           flexWrap: "nowrap",
           width: "100%",
+
           maxWidth: "882px",
-          margin: "6vh auto 0",
+          margin: "1vh auto 0",
           paddingBottom: 64,
           gap: 24,
           borderBottom: "2px solid #0A0C10",

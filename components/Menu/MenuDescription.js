@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 const MenuDescriptionVariant = {
   hidden: {
     x: "100%",
@@ -75,6 +76,7 @@ const MenuDescription = ({
   img,
   alt,
   width = 375,
+  height,
   index,
 }) => {
   return (
@@ -119,10 +121,12 @@ const MenuDescription = ({
           </motion.div>
         ) : null}
         <motion.div variants={imgVariant}>
-          <img
+          <Image
             className="descImg"
             src={img}
             alt={alt}
+            width={width}
+            height={height}
             style={{ width: width }}
           />
         </motion.div>

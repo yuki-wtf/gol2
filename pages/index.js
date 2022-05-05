@@ -59,7 +59,7 @@ const LandingScreen = () => {
     setTimeout(() => {
       setGameActive(true);
     }, 1000);
-  }, []);
+  }, [router]);
   useEffect(() => {
     if (gameActive) {
       setGameVisible(true);

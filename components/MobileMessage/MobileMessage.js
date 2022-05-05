@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 import { HiOutlineDesktopComputer } from "react-icons/hi";
@@ -9,9 +10,9 @@ const MobileMessage = () => {
       </div>
       <div className="mobileMessageLogoContainer">
         <div>
-          <img
+          <Image
             style={{ width: 230 }}
-            src="./assets/mobile/mobile_logo.png"
+            src="/assets/mobile/mobile_logo.png"
             alt=""
           />
           <p className="mobileMessageLogoContainerTag">

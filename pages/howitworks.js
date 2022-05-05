@@ -31,11 +31,13 @@ const HowItWorksScreen = ({ children }) => {
             backgroundColor="rgba(131,232,254,0.1)"
             url="/assets/howitworks/Gridx3.png"
             width={284}
+            height={284}
           />
           <InfoParagraph text="Cells:" weight={700} />
           <InfoParagraph text="Each cell has two possible states. Alive or dead." />
           <InfoImage
             width={144}
+            height={89}
             backgroundColor="rgba(131,232,254,0.1)"
             url="/assets/howitworks/Cellsx3.png"
           />
@@ -51,20 +53,36 @@ const HowItWorksScreen = ({ children }) => {
             weight={700}
           />
           <InfoParagraph text="Every cell interacts with its eight neighbors, which are the cells that are directly horizontally, vertically, or diagonally adjacent." />
-          <InfoImage url="/assets/howitworks/Generationsx3.png" width={216} />
+          <InfoImage
+            url="/assets/howitworks/Generationsx3.png"
+            width={216}
+            height={216}
+          />
           <InfoParagraph text="A useful way to think about this is that at any point in time each cell contains either a unit of energy (alive) or no energy (dead). " />
           <Spacer />
           <InfoParagraph text="As the game is evolved through each generation the state of the cells on the grid is determined as follows:" />
           <Spacer />
           <InfoParagraph text="Any live cell with fewer than two live neighbors dies, as there is not enough energy for it to survive." />
 
-          <InfoImage url="/assets/howitworks/1.png" />
+          <InfoImage width={284} height={284} url="/assets/howitworks/1.png" />
           <InfoParagraph text="Any live cell with more than three live neighbors dies, as there is too much energy." />
-          <InfoImage width="360px" url="/assets/howitworks/GoL-1.gif" />
+          <InfoImage
+            width="360px"
+            height="360px"
+            url="/assets/howitworks/GoL-1.gif"
+          />
           <InfoParagraph text="Any live cell with two or three live neighbors lives, unchanged, to the next generation as there is sufficient energy to maintain life." />
-          <InfoImage width="360px" url="/assets/howitworks/GoL-2.gif" />
+          <InfoImage
+            width="360px"
+            height="360px"
+            url="/assets/howitworks/GoL-2.gif"
+          />
           <InfoParagraph text="Any dead cell with exactly three live neighbors comes to life." />
-          <InfoImage width="360px" url="/assets/howitworks/GoL-3.gif" />
+          <InfoImage
+            width="360px"
+            height="360px"
+            url="/assets/howitworks/GoL-3.gif"
+          />
           {/* <InfoParagraph text="To summarise:" weight={700} />
           <InfoImage url="/assets/howitworks/summary.png" width="477px" /> */}
         </InfoSection>
@@ -114,9 +132,10 @@ const HowItWorksScreen = ({ children }) => {
           <InfoParagraph text="In order to give life you must first earn credits, here’s how it works:" />
           <InfoList>
             <InfoListItem>
-              When in infinite mode you can evolve the game via the 'Evolve'
-              button. This will take the grid in its current state and then
-              progress the game to the next generation, based on the GoL rules.
+              When in infinite mode you can evolve the game via the
+              &apos;Evolve&apos; button. This will take the grid in its current
+              state and then progress the game to the next generation, based on
+              the GoL rules.
             </InfoListItem>
             <InfoListItem>
               For every evolution you make, you will earn 1 credit.
@@ -155,9 +174,9 @@ const HowItWorksScreen = ({ children }) => {
               to the next generation, based on the GoL rules.
             </InfoListItem>
             <InfoListItem>
-              You can evolve a game via the 'Evolve' button. This will take the
-              grid in its current state and then progress the game to the next
-              generation, based on the GoL rules.
+              You can evolve a game via the &apos;Evolve&apos; button. This will
+              take the grid in its current state and then progress the game to
+              the next generation, based on the GoL rules.
             </InfoListItem>
             <InfoListItem>
               For every evolution you make, you will earn 1 credit.

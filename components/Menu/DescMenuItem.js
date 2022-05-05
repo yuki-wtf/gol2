@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 const DescMenuItem = (props, ref) => {
   //   const headingRef = useRef(null);
   //   const descRef = useRef(null);
@@ -16,7 +17,7 @@ const DescMenuItem = (props, ref) => {
       <h3 className="descHeading">{heading}</h3>
       <p className="descP">{desc}</p>
       <p className="descP">{desc2}</p>
-      <img
+      <Image
         className="descImg"
         src={image_url}
         alt={alt}
