@@ -80,9 +80,9 @@ export const StyledPlayPause = styled.button`
   ${primaryButton}
 `;
 
-const PlayPauseBtn = ({ disabled, isPlaying = false, rest }) => {
+const PlayPauseBtn = ({ onClick, disabled, isPlaying, rest }) => {
   return (
-    <StyledPlayPause disabled={disabled} {...rest}>
+    <StyledPlayPause onClick={onClick} disabled={disabled} {...rest}>
       {isPlaying ? (
         <svg
           width={14}

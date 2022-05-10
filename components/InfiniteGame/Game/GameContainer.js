@@ -19,13 +19,15 @@ const StyledGridContainer = styled.div`
 
 const GameContainer = () => {
   const [missingGens, setMissingGens] = useState([]);
+  const [callIncrement, setCallIncrement] = useState(0);
+  const [missingGensIncrements, setMissingGensIncrements] = useState([]);
   const { latest_generation, generations } = useSelector(
     (state) => state.generations
   );
+
   useEffect(() => {
-    if (latest_generation === null || latest_generation === undefined) return;
     let fakeArray = [];
-    console.log(missingGens);
+    // console.log(missingGens);
     if (latest_generation) {
       Array.from(Array(latest_generation)).forEach((x, i) => {
         if (i in generations || missingGens.includes(i)) {
@@ -36,15 +38,70 @@ const GameContainer = () => {
         }
       });
     }
-  }, [generations, latest_generation, missingGens]);
+  }, [latest_generation, generations, missingGens]);
+
+  useEffect(() => {
+    setCallIncrement(1);
+    setCallIncrement(0);
+  }, []);
+
+  useEffect(() => {
+    if (missingGens.length) {
+      const callNum = Math.round(latest_generation / 40);
+
+      const perChunk = 40;
+      let result = missingGens.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk);
+
+        if (!resultArray[chunkIndex]) {
+          resultArray[chunkIndex] = []; // start a new chunk
+        }
+
+        resultArray[chunkIndex].push(item);
+
+        return resultArray;
+      }, []);
+      console.log(result);
+      setMissingGensIncrements(result);
+
+      const intervalId = setInterval(() => {
+        setCallIncrement(callIncrement + 1);
+      }, 10000);
+
+      if (callIncrement === callNum) {
+        clearInterval(intervalId);
+      }
+    }
+    return () => clearInterval(intervalId);
+  }, [missingGens, callIncrement, latest_generation]);
+
+  // useEffect(() => {
+  //   if (latest_generation === null || latest_generation === undefined) return;
+  //   let fakeArray = [];
+  //   console.log(missingGens);
+  //   if (latest_generation) {
+  //     Array.from(Array(latest_generation)).forEach((x, i) => {
+  //       if (i in generations || missingGens.includes(i)) {
+  //         return;
+  //       } else {
+  //         fakeArray.push(i);
+  //         setMissingGens((prevArray) => [...fakeArray]);
+  //       }
+  //     });
+  //   }
+  // }, [generations, latest_generation, missingGens]);
   return (
     <StyledGridContainer>
       <IHeader />
       <DialogGiveLife />
       {latest_generation ? <GetLatestGame /> : null}
       {/* {latest_generation ? <GetPreviousGames /> : null} */}
-      {latest_generation && missingGens.length === latest_generation ? (
-        <GetPreviousGamesLarge missingGens={missingGens} />
+      {latest_generation &&
+      missingGensIncrements.length > 0 &&
+      callIncrement !== null ? (
+        <GetPreviousGamesLarge
+          missingGens={missingGensIncrements[callIncrement]}
+        />
       ) : null}
 
       <GridWrapper />

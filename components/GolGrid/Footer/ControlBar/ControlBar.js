@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { updateSelectedGeneration } from "../../../../features/Infinite/generations/generationsSlice";
-import { togglePlayback } from "../../../../features/Infinite/playback/playbackSlice";
+import {
+  updatePlaybackProgress,
+  updateSelectedGeneration,
+} from "../../../../features/Infinite/generations/generationsSlice";
+import {
+  togglePlayback,
+  togglePlayPause,
+} from "../../../../features/Infinite/playback/playbackSlice";
 import ControlButtons from "./ControlButtons";
 import SpeedDropdownMenu from "./SpeedControl";
 const StyledControlbar = styled.div`
@@ -30,19 +36,64 @@ const StyledGenerationLabel = styled.div`
 `;
 const ControlBar = () => {
   const dispatch = useDispatch();
+  const intervalId = useRef();
   const { selected_generation, latest_generation } = useSelector(
     (state) => state.generations
   );
-  const { playbackMode } = useSelector((state) => state.playback);
+  const { playbackMode, isPlaying, playbackSpeed } = useSelector(
+    (state) => state.playback
+  );
+
+  useEffect(() => {
+    const clear = () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+      }
+    };
+
+    if (isPlaying) {
+      intervalId.current = setInterval(() => {
+        dispatch(togglePlayback(true));
+        dispatch(updatePlaybackProgress());
+      }, playbackSpeed && playbackSpeed);
+      if (selected_generation === latest_generation) {
+        clear();
+        dispatch(togglePlayPause());
+        dispatch(togglePlayback(false));
+      }
+    } else {
+      clear();
+    }
+    return clear;
+  }, [
+    dispatch,
+    isPlaying,
+    playbackMode,
+    playbackSpeed,
+    selected_generation,
+    latest_generation,
+  ]);
+
+  const calculateSelected = playbackMode
+    ? selected_generation - 80
+    : selected_generation;
+
   return (
     <StyledControlbar>
       <ControlButtons.ToStartBtn
         onClick={() => {
-          dispatch(updateSelectedGeneration(1));
+          dispatch(updateSelectedGeneration(81));
           dispatch(togglePlayback(true));
         }}
       />
-      <ControlButtons.PlayPauseBtn disabled={!playbackMode} />
+      <ControlButtons.PlayPauseBtn
+        isPlaying={isPlaying}
+        disabled={!playbackMode}
+        onClick={() => {
+          console.log("clicked");
+          dispatch(togglePlayPause(!isPlaying));
+        }}
+      />
       <ControlButtons.StepForwardBtn
         disabled={!playbackMode}
         onClick={() => {
@@ -59,8 +110,7 @@ const ControlBar = () => {
       <SpeedDropdownMenu disabled={!playbackMode} />
 
       <StyledGenerationLabel>
-        Generation #{" "}
-        <span>{`${selected_generation ? selected_generation : ""}`}</span>
+        Generation # <span>{`${calculateSelected}`}</span>
       </StyledGenerationLabel>
     </StyledControlbar>
   );

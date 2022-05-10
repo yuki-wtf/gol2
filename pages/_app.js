@@ -7,6 +7,11 @@ import Toast from "../components/Toast/Toast";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
 import NextHead from "next/head";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+let persistor = persistStore(store);
+
 function MyApp({ Component, pageProps }) {
   const connectors = [new InjectedConnector()];
 
