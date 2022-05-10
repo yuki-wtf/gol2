@@ -7,7 +7,7 @@ import {
   GameWrapper,
   GameGridWrapper,
   SideBarWrapper,
-} from "../components/layout/GameLayouts";
+} from "../components/Layout/GameLayouts";
 
 const Infinite = () => {
   return (
