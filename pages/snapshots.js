@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
 import { data as mockdata } from "../data/data";
 import { dataToGrid } from "../utils/dataToGrid";
+import { useSelector } from "react-redux";
 
 const FlexContainer = styled.div`
   display: flex;
@@ -21,12 +22,13 @@ const FlexContainer = styled.div`
   }
 `;
 const Snapshots = () => {
+  const { snapshots: snapshotsRedux } = useSelector((state) => state.user);
   const { snapshots, loading, error } = useFetchTokens();
   const { account } = useStarknet();
-  console.log(snapshots);
-  console.log("loading", loading);
-  console.log("account", account);
-  console.log("mockdata", mockdata);
+  console.log("snapshots", snapshotsRedux);
+  // console.log("loading", loading);
+  // console.log("account", account);
+  // console.log("mockdata", mockdata);
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
       <PageIntro.Container>
@@ -40,8 +42,8 @@ const Snapshots = () => {
         {/* Show Loading */}
         <AnimatePresence>
           {account &&
-            !snapshots.length &&
-            [1, 2, 3].map((item, i) => (
+            !snapshotsRedux.length &&
+            [(1, 2, 3)].map((item, i) => (
               <Snapshot
                 data={dataToGrid({
                   1: {
@@ -127,20 +129,22 @@ const Snapshots = () => {
             />
           )}
         </AnimatePresence>
-        <AnimatePresence>
-          {account &&
-            snapshots &&
-            snapshots.length > 0 &&
-            snapshots.map((snapshot, i) => (
+
+        {account &&
+          snapshotsRedux &&
+          snapshotsRedux.length > 0 &&
+          snapshotsRedux
+            .map((snapshot, i) => (
               <Snapshot
+                isSnapshot
                 key={snapshot}
                 generationNumber={snapshot}
                 user={account}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: 1 } }}
               />
-            ))}
-        </AnimatePresence>
+            ))
+            .reverse()}
       </FlexContainer>
     </ContainerInner>
   );

@@ -1,7 +1,7 @@
+//Todo: Move to styled components
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { Item } from "@radix-ui/react-dropdown-menu";
 const linkVariant = {
   hidden: {
     width: 0,
@@ -26,7 +26,6 @@ const NavItem = ({
   isActive,
   badge,
 }) => {
-  console.log(typeof badge, badge);
   return (
     <div
       className={`alink`}

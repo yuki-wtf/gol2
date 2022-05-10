@@ -2,8 +2,8 @@ const GRID_SIZE = 32;
 
 function toBinaryStringArray(val) {
   return (
-    // Convert to int ( the 10 is to indicate it should be decimal)
-    parseInt(val, 16)
+    // Not required: Convert to int ( the 10 is to indicate it should be decimal)
+    val
       // Turn integer into a binary string
       .toString(2)
       // Turn it into an array

@@ -1,10 +1,11 @@
+//Todo: Move to styled components
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import NavItem from "../components/Menu/NavItem";
 import MenuDescription from "../components/Menu/MenuDescription";
 import useFetchTokens from "../hooks/useFetchTokens";
 import NavContainer from "../components/Layout/NavContainer";
-
+import { useSelector } from "react-redux";
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -21,6 +22,7 @@ const listItem = {
 };
 
 const Menu = () => {
+  const { tokenCount, activeTokenCount } = useSelector((state) => state.user);
   const [selectedHover, setselectedHover] = useState(null);
   const [currentNav, setCurrentNav] = useState(null);
   const { snapshots } = useFetchTokens();
@@ -57,7 +59,7 @@ const Menu = () => {
       title: "Snapshots",
       color: "var(--snapshots-primary)",
       to: "/snapshots",
-      badge: snapshots.length,
+      badge: tokenCount ? tokenCount : 0,
       heading: "Proof of play",
       desc: "Evolve the game in infinite mode to generate and store a unique snapshot of your play. ",
       image_url: "/assets/menu/snapshot.png",
@@ -91,18 +93,13 @@ const Menu = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(currentNav);
-  }, [currentNav]);
   return (
     <NavContainer>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          // gridTemplateColumns: "1.3fr 1fr",
           flex: 1,
-          // background: "red",
           justifyContent: "center",
         }}
       >
@@ -110,11 +107,8 @@ const Menu = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            // background: "green",
             paddingLeft: 0,
             width: "59%",
-            // paddingTop: 40,
-            // paddingBottom: 40,
           }}
           variants={container}
           initial="hidden"
@@ -124,8 +118,6 @@ const Menu = () => {
             menuItems.map((item, i) => {
               return (
                 <motion.div
-                  // whileHover={() => setCurrentNav(i + 1)}
-                  // onHoverEnd={() => setCurrentNav(null)}
                   onMouseEnter={() => setCurrentNav(i + 1)}
                   onMouseLeave={() => setCurrentNav(null)}
                   key={item.to}
@@ -135,8 +127,6 @@ const Menu = () => {
                 >
                   <NavItem
                     selectedHover={selectedHover}
-                    // onMouseEnter={() => setselectedHover(item.className)}
-                    // onMouseLeave={() => setselectedHover(null)}
                     to={item.to}
                     exClassName={item.className}
                     color={item.color}
@@ -158,7 +148,6 @@ const Menu = () => {
             pointerEvents: "none",
             width: "41%",
             height: "100vh",
-            // backgroundColor: "red",
           }}
           className="menuCont"
         >
@@ -179,17 +168,7 @@ const Menu = () => {
                 />
               );
             })}
-
-          {/* <MenuDesc selectedHover={selectedHover} /> */}
         </div>
-        {/* <div
-        style={{
-          position: "absolute",
-          height: "100%",
-        }}
-      >
-        
-      </div> */}
       </div>
     </NavContainer>
   );

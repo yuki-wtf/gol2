@@ -62,7 +62,7 @@ const CreditsContainer = ({ loading, tokenCount, error }) => {
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
           {loading && !error ? (
-            <Skeleton size={12} />
+            <Skeleton size={6} />
           ) : (
             <T.H4SemiBold> {tokenCount} </T.H4SemiBold>
           )}

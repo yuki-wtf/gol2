@@ -63,7 +63,12 @@ const primaryButton = css`
     ${(p) => !p.disabled && focusedButtonPrimary}
   }
   &:disabled {
-    ${disabledButtonPrimary}
+    /* border: 20px solid red; */
+    background-color: transparent;
+    pointer-events: none;
+    > div svg path {
+      fill: #0a0c10;
+    }
   }
   &:active {
     ${activeButtonPrimary}
@@ -75,9 +80,9 @@ export const StyledPlayPause = styled.button`
   ${primaryButton}
 `;
 
-const PlayPauseBtn = ({ isPlaying = false, rest }) => {
+const PlayPauseBtn = ({ disabled, isPlaying = false, rest }) => {
   return (
-    <StyledPlayPause {...rest}>
+    <StyledPlayPause disabled={disabled} {...rest}>
       {isPlaying ? (
         <svg
           width={14}

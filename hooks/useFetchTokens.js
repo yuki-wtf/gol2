@@ -7,7 +7,7 @@ const useFetchTokens = () => {
   const { contract: infinite } = useInfiniteGameContract();
   const { account, library, connectors } = useStarknet();
   const [snapshots, setSnapshots] = useState([]);
-  console.log("library", library, connectors);
+
   const {
     data: tokens,
     loading,
@@ -18,7 +18,6 @@ const useFetchTokens = () => {
     method: "get_user_tokens",
     args: [account],
   });
-
   const tokenCount = useMemo(() => {
     if (tokens && tokens.length > 0) {
       return tokens.token_ids.length;
@@ -34,6 +33,7 @@ const useFetchTokens = () => {
   //     });
   //   }
   // }, [tokens, snapshots]);
+
   useUpdateEffect(() => {
     if (tokens && tokens.length > 0) {
       tokens.token_ids.map((item) => {
@@ -45,6 +45,7 @@ const useFetchTokens = () => {
   }, [tokens, snapshots]);
 
   return {
+    tokens,
     tokenCount,
     loading,
     error,

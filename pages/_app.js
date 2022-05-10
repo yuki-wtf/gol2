@@ -9,7 +9,7 @@ import { store } from "../app/store";
 import NextHead from "next/head";
 function MyApp({ Component, pageProps }) {
   const connectors = [new InjectedConnector()];
-  console.log(connectors);
+
   return (
     <>
       <Provider store={store}>

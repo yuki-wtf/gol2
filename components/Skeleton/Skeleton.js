@@ -25,8 +25,8 @@ const Skeleton = styled.div`
   position: relative;
   overflow: hidden;
   height: ${(p) => (!p.size ? "100%" : `${p.size}px`)};
-  border-radius: 4px;
-  min-width: 20px;
+  border-radius: 2px;
+  min-width: 24px;
   background-color: ${(p) => p.theme.colors.text200};
   /* Figure out more performant way to animate skeletons */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -38,8 +38,12 @@ const Skeleton = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: ${(p) =>
-      `linear-gradient(90deg, rgba(255, 255, 255, 0), ${p.theme.colors.text200}, rgba(255, 255, 255, 0))`};
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(38, 45, 60, 0.520859),
+      rgba(255, 255, 255, 0)
+    );
     background-repeat: repeat;
     background-size: cover;
     background-position: center;

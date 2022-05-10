@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import TempOverlay from "../../TempOverlay/TempOverlay";
 import ControlBar from "./ControlBar/ControlBar";
 
 const StyledFooter = styled.footer`
@@ -13,10 +14,15 @@ const StyledFooter = styled.footer`
   padding: 14px;
   border-bottom-left-radius: 33px;
   border-bottom-right-radius: 33px;
+  position: relative;
 `;
 
-const Footer = ({ empty }) => {
-  return <StyledFooter empty={empty}>{!empty && <ControlBar />}</StyledFooter>;
+const Footer = ({ children }) => {
+  return (
+    <StyledFooter>
+      <>{children}</>
+    </StyledFooter>
+  );
 };
 
 export default Footer;

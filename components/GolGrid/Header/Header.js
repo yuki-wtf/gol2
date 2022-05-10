@@ -11,6 +11,9 @@ const StyledHeader = styled.header`
   gap: 8px;
   align-items: center;
   padding: 14px;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const Header = ({ children, empty }) => {

@@ -3,8 +3,10 @@ import { HiOutlinePhotograph, HiOutlineUser } from "react-icons/hi";
 import styled, { keyframes } from "styled-components";
 import { truncate } from "../../utils/truncate";
 import { motion } from "framer-motion";
-import GameGrid from "../GameGrid/GameGrid";
-import Cell from "../GolGrid/Cell/Cell";
+import ISnapshotGrid from "../InfiniteGame/SnapshotGrid/ISnapShotGrid";
+import { useStarknetCall } from "@starknet-react/core";
+import { useInfiniteGameContract } from "../../hooks/useInfiniteGameContract";
+import { dataToGrid } from "../../utils/dataToGrid";
 
 const animate = keyframes`
   from { 
@@ -178,8 +180,14 @@ const SkeletonImagePreview = () => {
   );
 };
 
-const Snapshot = ({ generationNumber, user, id, data, isLoading, ...rest }) => {
-  console.log("data", data);
+const Snapshot = ({ generationNumber, user, id, isLoading, ...rest }) => {
+  const { contract } = useInfiniteGameContract();
+  const { data, loading, error } = useStarknetCall({
+    contract: contract,
+    method: "view_game",
+    args: [generationNumber && generationNumber.toString(), "", "pending"],
+  });
+
   let formattedUser;
   if (user) {
     formattedUser = truncate(user, 12);
@@ -194,13 +202,7 @@ const Snapshot = ({ generationNumber, user, id, data, isLoading, ...rest }) => {
   return (
     <StyledCard {...rest}>
       <StyledGridContainer>
-        <GameGrid small>
-          {/* {data && data.length ? (
-            data.map((item) => <Cell state={"alive"} key={id} />)
-          ) : (
-            <div>Loading</div>
-          )} */}
-        </GameGrid>
+        <ISnapshotGrid loading={loading} isSnapshot data={dataToGrid(data)} />
       </StyledGridContainer>
       <StyledGenLabel> Generation: </StyledGenLabel>
       <StyledGenNumber> {generationNumber} </StyledGenNumber>

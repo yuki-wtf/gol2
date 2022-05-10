@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { gsap } from "gsap";
 import styles from "../styles/LandingScreen.module.css";
@@ -135,8 +134,6 @@ const LandingScreen = () => {
           right: 0,
           top: 0,
           bottom: 0,
-          // opacity: 0.2,
-          // backgroundColor: "red",
           overflow: "hidden",
         }}
       >

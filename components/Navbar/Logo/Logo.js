@@ -18,7 +18,7 @@ const HeaderLogo = ({ page }) => {
         return <InfiniteLogo />;
       case "/creator":
         return <CreatorLogo />;
-      case "/creator/[cid]":
+      case "/creator/game/[cid]":
         return <CreatorLogo />;
       case "/creator/create":
         return <CreatorLogo />;

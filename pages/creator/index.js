@@ -31,7 +31,7 @@ const Creator = () => {
         >
           {[1, 2, 3, 4].map((item) => (
             <SnapshotCreator
-              onClick={() => Router.push(`/creator/${item}`)}
+              onClick={() => Router.push(`/creator/game/${item}`)}
               key={item}
               id={item}
               generationNumber={12}

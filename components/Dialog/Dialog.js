@@ -7,6 +7,7 @@ const Overlay = styled(DialogPrimitve.Overlay)`
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
+  z-index: 100000;
 `;
 const IconWrapper = styled.div`
   display: flex;
@@ -58,6 +59,7 @@ const Content = styled(DialogPrimitve.Content)`
   display: flex;
   gap: 24px;
   flex-direction: column;
+  z-index: 100000;
 `;
 const Title = styled(DialogPrimitve.Title)`
   font-family: "Mulish";

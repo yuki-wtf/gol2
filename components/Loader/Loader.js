@@ -22,6 +22,7 @@ const StyledCenteredContainer = styled.div`
 const StyledLoaderContainer = styled.div`
   height: 120px;
   width: 120px;
+  z-index: 0 !important;
   & svg > g > g:first-child path {
     stroke: ${(p) => (p.theme === "light" ? "#2d3038" : "#1D222C")};
   }

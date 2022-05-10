@@ -2,12 +2,12 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import { ThemeProvider } from "styled-components";
-import { creator } from "../../styles/themes/creator";
-import ContainerInner from "../../components/Layout/ContainerInner";
-import GolGrid from "../../components/GolGrid/GolGrid";
-import Sidebar from "../../components/InfiniteGame/Sidebar/Sidebar";
-import CreatorGameHeader from "../../components/CreatorGameHeader/CreatorGameHeader";
+import { creator } from "../../../styles/themes/creator";
+import ContainerInner from "../../../components/Layout/ContainerInner";
+import Sidebar from "../../../components/InfiniteGame/Sidebar/Sidebar";
+import CreatorGameHeader from "../../../components/CreatorGameHeader/CreatorGameHeader";
 import { useStarknet } from "@starknet-react/core";
+import GameContainer from "../../../components/InfiniteGame/Game/GameContainer";
 const CreatorGame = () => {
   const router = useRouter();
   const { account } = useStarknet();
@@ -35,7 +35,7 @@ const CreatorGame = () => {
         >
           <div style={{ width: 544, minWidth: 544 }}>
             <CreatorGameHeader gameId={cid} address={account} />
-            <GolGrid />
+            <GameContainer />
           </div>
           <div
             style={{

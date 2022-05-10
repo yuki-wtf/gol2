@@ -55,7 +55,7 @@ const StatRow = ({ icon, loading, error, title = "title", value }) => {
       </StyledTitle>
       <StyledValueContainer {...fadeInAnimation}>
         {loading ? (
-          <Skeleton size={12} />
+          <Skeleton size={6} />
         ) : (
           <StyledValue {...fadeInAnimation}>
             <T.BaseExtraBold>{value}</T.BaseExtraBold>

@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { useStarknet, ConnectorNotFoundError } from "@starknet-react/core";
+import React, { useEffect, useState } from "react";
+import {
+  useStarknet,
+  ConnectorNotFoundError,
+  InjectedConnector,
+} from "@starknet-react/core";
 import Button from "../../Button/Button";
 import UserDropdownMenu from "./UserDropdownMenu/UserDropdownMenu";
 import NetworkDropdownMenu from "./NetworkDropdownMenu/NetworkDropdownMenu";
@@ -9,7 +13,12 @@ const ConnectWallet = () => {
   const [open, setOpen] = useState(true);
   const { account, connect, error, disconnect, connectors } = useStarknet();
 
-  console.log("connectors", connectors);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     connect(new InjectedConnector());
+  //   }, 1000);
+  // }, [connect]);
+
   if (account) {
     return (
       <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>

@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import GameGrid from "../../GameGrid/GameGrid";
-import Cell from "../Cell/Cell";
+import GameGrid from "../../GolGrid/GameGrid/GameGrid";
+import Cell from "../../GolGrid/Cell/Cell";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectedCellColumn,
+  setSelectedCellRow,
+} from "../../../features/Infinite/grid/infiniteGridSlice";
 
 const Grid = ({ data }) => {
-  const [selectedCellRow, setSelectedCellRow] = useState(null);
-  const [selectedCellColumn, setSelectedCellColumn] = useState(null);
-
+  const dispatch = useDispatch();
+  const { selectedCellRow, selectedCellColumn } = useSelector(
+    (state) => state.infiniteGrid
+  );
   const handleSelected = (row, column) => {
-    setSelectedCellRow(row);
-    setSelectedCellColumn(column);
+    console.log("row/col", row, column);
+    dispatch(setSelectedCellRow(row));
+    dispatch(setSelectedCellColumn(column));
   };
+  // console.log("data is", data);
   return (
     <GameGrid>
       {data &&
@@ -20,9 +28,9 @@ const Grid = ({ data }) => {
               return (
                 <Cell
                   state={
-                    selectedCellRow === j &&
-                    selectedCellColumn === i &&
-                    "selected"
+                    selectedCellRow === j && selectedCellColumn === i
+                      ? "selected"
+                      : "default"
                   }
                   onClick={() => {
                     handleSelected(j, i);

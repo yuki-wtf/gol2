@@ -1,3 +1,4 @@
+//Todo: Move to styled components
 import { motion } from "framer-motion";
 import Image from "next/image";
 const MenuDescriptionVariant = {
@@ -127,7 +128,6 @@ const MenuDescription = ({
             alt={alt}
             width={width}
             height={height}
-            style={{ width: width }}
           />
         </motion.div>
       </div>
