@@ -15,6 +15,7 @@ import {
   updateTokenCount,
   updateTokenIds,
 } from "../../features/Infinite/user/userSlice";
+import GetUserCounts from "../CreatorGame/Game/Wrapped/GetUserCounts";
 const StyledNavbar = styled.header`
   position: relative;
   height: 120px;
@@ -41,6 +42,7 @@ const StyledNavbarInner = styled.header`
 
 const Navbar = () => {
   const { selectedCellRow } = useSelector((state) => state.infiniteGrid);
+  const { creatorCreditsCount } = useSelector((state) => state.user);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -55,6 +57,7 @@ const Navbar = () => {
 
   return (
     <StyledNavbar>
+      <GetUserCounts />
       {selectedCellRow !== null && <TempOverlay />}
       <StyledNavbarInner>
         <MenuButton onClick={() => console.log("test")} />
@@ -64,7 +67,7 @@ const Navbar = () => {
         {router.pathname === "/creator" ||
         router.pathname === "/creator/create" ||
         router.pathname === "/creator/game/[cid]" ? (
-          <CreatorCredits />
+          <CreatorCredits tokenCount={creatorCreditsCount} />
         ) : null}
 
         <ConnectWallet />

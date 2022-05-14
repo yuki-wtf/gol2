@@ -1,13 +1,22 @@
-import React from "react";
+import { useStarknet, useStarknetCall } from "@starknet-react/core";
+import React, { useEffect } from "react";
 import { HiOutlineUser } from "react-icons/hi";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { updateGameState } from "../../features/creator/creatorGamesSlice";
+import { useCreatorGameContract } from "../../hooks/useCreatorGameContract";
+import { useInfiniteGameContract } from "../../hooks/useInfiniteGameContract";
+import { dataToGrid } from "../../utils/dataToGrid";
+import { truncate } from "../../utils/truncate";
+import CSnapshotGrid from "../CreatorGame/CSnapshotGrid";
 const StyledGridContainer = styled.div`
   width: 212px;
   height: 212px;
   border: 4px solid #8aed9b;
   border-radius: 4px;
-
+  overflow: hidden;
   background-color: #1d222c;
+  pointer-events: none;
 `;
 
 const StyledCard = styled.li`
@@ -105,15 +114,36 @@ const StyledUserAddress = styled.div`
 `;
 
 const SnapshotCreator = ({ onClick, generationNumber, address, id, grid }) => {
+  const dispatch = useDispatch();
+  const { contract } = useCreatorGameContract();
+  const { account } = useStarknet();
+  const { data, loading, error } = useStarknetCall({
+    contract: contract,
+    method: "view_game",
+    args: [generationNumber.toString(), id.toString(), "pending"],
+  });
+
+  useEffect(() => {
+    if (data !== undefined && data.length > 0) {
+      dispatch(updateGameState({ game_index: id, data }));
+    }
+  }, [data, dispatch, id]);
+
   return (
     <StyledCard onClick={onClick}>
-      <StyledGridContainer data={grid} />
+      <StyledGridContainer>
+        <CSnapshotGrid
+          loading={loading}
+          isSnapshotCreator
+          data={dataToGrid(data)}
+        />
+      </StyledGridContainer>
 
       <StyledGenNumber> Game #{id} </StyledGenNumber>
       <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
-
+      <div>{error}</div>
       <StyledUserAddress>
-        <HiOutlineUser color="#c2b9b2" size={16} /> 32232323232323
+        <HiOutlineUser color="#c2b9b2" size={16} /> {truncate(address, 12)}
       </StyledUserAddress>
     </StyledCard>
   );

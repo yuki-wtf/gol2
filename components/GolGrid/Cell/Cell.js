@@ -16,9 +16,20 @@ const selectedCell = css`
   background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
   pointer-events: none;
 `;
+const createSelectedCell = css`
+  background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
+  cursor: pointer;
+  > &:hover {
+    background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
+  }
+`;
 const defaultCell = css`
   background-color: ${(p) => p.theme.colors.cell.cellDefaultBackground};
   cursor: ${(p) => (!p.isSnapshot ? "pointer" : "default")};
+  &:hover {
+    background-color: ${(p) =>
+      !p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
+  }
 `;
 
 const StyledCell = styled(motion.div)`
@@ -30,17 +41,14 @@ const StyledCell = styled(motion.div)`
         return aliveCell;
       case "selected":
         return selectedCell;
+      case "createSelected":
+        return createSelectedCell;
       case "dead":
         return defaultCell;
       default:
         return defaultCell;
     }
   }}
-
-  &:hover {
-    background-color: ${(p) =>
-      !p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
-  }
 `;
 
 const StyledCell2 = styled.div`
@@ -52,6 +60,8 @@ const StyledCell2 = styled.div`
         return aliveCell;
       case "selected":
         return selectedCell;
+      case "createSelected":
+        return createSelectedCell;
       case "dead":
         return defaultCell;
       default:

@@ -71,7 +71,7 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
           {loading && !error ? (
             <Skeleton size={12} />
           ) : (
-            <T.H4SemiBold color="inherit"> 1 </T.H4SemiBold>
+            <T.H4SemiBold color="inherit"> {tokenCount} </T.H4SemiBold>
           )}
         </StyledTextWrapper>
         <StyledIconWrapper>
@@ -87,6 +87,7 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
           icon={<HiPlus size={24} />}
           label="new game"
           secondary
+          disabled={tokenCount && tokenCount < 10}
         />
       </StyledButtonWrapper>
     </StyledContainer>

@@ -35,10 +35,33 @@ const StyledGridNoMotion = styled.div`
   position: relative;
   overflow: ${(p) => (p.small ? "hidden" : "visible")};
 `;
+const StyledGridCreatorNoMotion = styled.div`
+  display: grid;
+  grid-template-columns: ${(p) =>
+    p.small ? "repeat(32, 6.625px)" : "repeat(32, 6.625px)"};
+  grid-template-rows: ${(p) =>
+    p.small ? "repeat(32, 6.625px)" : "repeat(32, 6.625px)"};
+  grid-gap: 0;
+  gap: 0;
+  background: url("/assets/grid/grid-body.svg");
+  background-size: ${(p) => (p.small ? "212px" : "512px")};
+  border: 0;
+  height: ${(p) => (p.small ? "212px" : "512px")};
+  width: ${(p) => (p.small ? "212px" : "512px")};
+  position: relative;
+  overflow: ${(p) => (p.small ? "hidden" : "visible")};
+`;
 
-const GameGrid = ({ children, small, isSnapshot }) => {
+const GameGrid = ({ children, small, isSnapshot, isSnapshotCreator }) => {
   if (isSnapshot)
     return <StyledGridNoMotion small={small}>{children}</StyledGridNoMotion>;
+  if (isSnapshotCreator) {
+    return (
+      <StyledGridCreatorNoMotion small={small}>
+        {children}
+      </StyledGridCreatorNoMotion>
+    );
+  }
   return (
     <StyledGrid
       initial={{ opacity: 0 }}

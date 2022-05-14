@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import Body from "../GolGrid/Body/Body";
 import Footer from "../GolGrid/Footer/Footer";
 import Header from "../GolGrid/Header/Header";
+import GridWrapper from "./GridWrapper";
 
 const StyledGridContainer = styled.div`
   background-color: #000000;
@@ -19,7 +20,9 @@ const CreateGolGrid = () => {
   return (
     <StyledGridContainer>
       <Header empty />
-      <Body />
+      <Body>
+        <GridWrapper />
+      </Body>
       <Footer empty />
     </StyledGridContainer>
   );

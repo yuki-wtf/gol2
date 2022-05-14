@@ -12,7 +12,9 @@ const Grid = ({ data }) => {
   const { selectedCellRow, selectedCellColumn } = useSelector(
     (state) => state.infiniteGrid
   );
+  const { playbackMode } = useSelector((state) => state.playback);
   const handleSelected = (row, column) => {
+    if (playbackMode) return;
     console.log("row/col", row, column);
     dispatch(setSelectedCellRow(row));
     dispatch(setSelectedCellColumn(column));

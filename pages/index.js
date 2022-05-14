@@ -142,7 +142,7 @@ const LandingScreen = () => {
           initial="hide"
           animate={gameVisible ? "show" : "hide"}
         >
-          <AutomataGrid
+          {/* <AutomataGrid
             className={"golGrid"}
             pixelStyles={{
               activeColor: "var( --color-neutral-neutral-100)",
@@ -156,14 +156,14 @@ const LandingScreen = () => {
             iterationTimeInMs={1000}
             size={25}
             rules={conwaysGameOfLifePreset}
-          />
+          /> */}
         </motion.div>
         )
       </motion.div>
 
       <div
         className={styles.landingContainer}
-        style={{ position: "relative", zIndex: 1 }}
+        style={{ position: "relative", zIndex: 1, paddingTop: 150 }}
       >
         {/* <img
           ref={logoRef}

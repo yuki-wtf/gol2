@@ -14,11 +14,11 @@ export const playBackSlice = createSlice({
       state.playbackMode = payload;
     },
     togglePlayPause: (state, { payload }) => {
-      console.log(payload);
+      // console.log(payload);
       state.isPlaying = payload;
     },
     setPlaybackSpeed: (state, { payload }) => {
-      console.log(payload);
+      // console.log(payload);
       state.playbackSpeed = payload;
     },
   },

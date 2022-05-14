@@ -6,6 +6,7 @@ import T from "../Typography/Typography";
 const StyledSidebarSection = styled.div`
   display: flex;
   max-width: 300px;
+
   flex-direction: column;
   border-bottom: ${(props) =>
     props.type === "statistics" ? "2px solid transparent" : "2px solid black"};

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ContainerInner from "../Layout/ContainerInner";
 import Typography from "../Typography/Typography";
 import StarknetLogoLink from "./Links/StarknetLogo";
+import YukiLogoLink from "./Links/YukiLogo";
 
 const StyledFooter = styled.footer`
   height: 72px;
@@ -48,7 +49,8 @@ const Footer = () => {
         </StyledStarkware>
         <StyledYuki>
           <Typography.XL1Extrabold>
-            Design &amp; frontend by <a href="https://yuki.wtf">Yuki</a>
+            Design &amp; frontend by{" "}
+            <a href="https://yuki.wtf">Yuki{/* <YukiLogoLink /> */}</a>
           </Typography.XL1Extrabold>
         </StyledYuki>
       </StyledFooterInner>

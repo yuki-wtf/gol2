@@ -20,10 +20,17 @@ const StyledGridContainer = styled.div`
 const GameContainer = () => {
   const [missingGens, setMissingGens] = useState([]);
   const [callIncrement, setCallIncrement] = useState(0);
+  const [lUS, setLUS] = useState(true);
   const [missingGensIncrements, setMissingGensIncrements] = useState([]);
   const { latest_generation, generations } = useSelector(
     (state) => state.generations
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLUS(false);
+    }, 10000);
+  }, []);
 
   useEffect(() => {
     let fakeArray = [];
@@ -41,15 +48,10 @@ const GameContainer = () => {
   }, [latest_generation, generations, missingGens]);
 
   useEffect(() => {
-    setCallIncrement(1);
-    setCallIncrement(0);
-  }, []);
-
-  useEffect(() => {
     if (missingGens.length) {
-      const callNum = Math.round(latest_generation / 40);
+      const perChunk = 30;
+      const callNum = Math.round(latest_generation / perChunk);
 
-      const perChunk = 40;
       let result = missingGens.reduce((resultArray, item, index) => {
         const chunkIndex = Math.floor(index / perChunk);
 
@@ -61,7 +63,7 @@ const GameContainer = () => {
 
         return resultArray;
       }, []);
-      console.log(result);
+      console.log("result", result);
       setMissingGensIncrements(result);
 
       const intervalId = setInterval(() => {
@@ -95,7 +97,7 @@ const GameContainer = () => {
       <IHeader />
       <DialogGiveLife />
       {latest_generation ? <GetLatestGame /> : null}
-      {/* {latest_generation ? <GetPreviousGames /> : null} */}
+      {latest_generation && lUS ? <GetPreviousGames latest_generation /> : null}
       {latest_generation &&
       missingGensIncrements.length > 0 &&
       callIncrement !== null ? (

@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import createGameSlice from "../features/creator/create/CreateGameSlice";
+import creatorGamesSlice from "../features/creator/creatorGamesSlice";
 import gamePlaySlice from "../features/Infinite/gameplay/gameplaySlice";
 import generationsSlice from "../features/Infinite/generations/generationsSlice";
 import infiniteGridSlice from "../features/Infinite/grid/infiniteGridSlice";
@@ -12,6 +14,8 @@ export const store = configureStore({
     user: userSlice,
     gameplay: gamePlaySlice,
     playback: playBackSlice,
+    creatorGames: creatorGamesSlice,
+    createGame: createGameSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

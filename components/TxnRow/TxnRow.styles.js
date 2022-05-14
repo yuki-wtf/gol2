@@ -53,12 +53,28 @@ const ButtonContainer = styled.div`
     }
   }
 `;
+const ButtonContainerCompleted = styled.div`
+  margin-left: auto;
+  a {
+    color: white;
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+`;
 const IconContainer = styled.div`
   height: 100%;
   justify-content: center;
   display: flex;
   flex-direction: column;
   color: ${(p) => TxnRowStatus[p.status].iconColor};
+`;
+const IconContainerComplete = styled.div`
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
 `;
 
 const UserContainer = styled(motion.span)`
@@ -148,16 +164,33 @@ const TransactionRow = ({
       animate={{ opacity: 1, transition: { delay: delay } }}
       exit={{ opacity: 0 }}
     >
-      <Progress status={status} initial={{ width: "0%" }} animate={controls} />
+      {statusInternal !== "COMPLETED" ? (
+        <Progress
+          status={status}
+          initial={{ width: "0%" }}
+          animate={controls}
+        />
+      ) : null}
 
       <InnerContainer>
-        <IconContainer status={status}>
-          {typeOfTxn ? (
-            <HiOutlineHeart size={18} />
-          ) : (
-            <HiOutlineHeart size={18} />
-          )}
-        </IconContainer>
+        {statusInternal !== "COMPLETED" ? (
+          <IconContainer status={status}>
+            {typeOfTxn ? (
+              <HiOutlineHeart size={18} />
+            ) : (
+              <HiOutlineHeart size={18} />
+            )}
+          </IconContainer>
+        ) : (
+          <IconContainerComplete>
+            {typeOfTxn ? (
+              <HiOutlineHeart size={18} color="white" />
+            ) : (
+              <HiOutlineHeart size={18} color="white" />
+            )}
+          </IconContainerComplete>
+        )}
+
         <StatusContainer status={status}>
           {showUserAddress && (
             <UserContainer
@@ -171,11 +204,27 @@ const TransactionRow = ({
 
           {statusInternal === "COMPLETED" ? "" : label}
         </StatusContainer>
-        <ButtonContainer status={status}>
-          <Link href={url}>
-            <a>view</a>
-          </Link>
-        </ButtonContainer>
+        {statusInternal !== "COMPLETED" ? (
+          <ButtonContainer status={status}>
+            <a
+              rel="noreferrer"
+              target="_blank"
+              href={`https://goerli.voyager.online/tx/${user}`}
+            >
+              view
+            </a>
+          </ButtonContainer>
+        ) : (
+          <ButtonContainerCompleted status={status}>
+            <a
+              rel="noreferrer"
+              target="_blank"
+              href={`https://goerli.voyager.online/contract/${user}`}
+            >
+              view
+            </a>
+          </ButtonContainerCompleted>
+        )}
       </InnerContainer>
     </Container>
   );

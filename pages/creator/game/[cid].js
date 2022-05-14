@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import { creator } from "../../../styles/themes/creator";
 import ContainerInner from "../../../components/Layout/ContainerInner";
-import Sidebar from "../../../components/InfiniteGame/Sidebar/Sidebar";
+import Sidebar from "../../../components/CreatorGame/Sidebar/Sidebar";
 import CreatorGameHeader from "../../../components/CreatorGameHeader/CreatorGameHeader";
 import { useStarknet } from "@starknet-react/core";
-import GameContainer from "../../../components/InfiniteGame/Game/GameContainer";
+import GameContainer from "../../../components/CreatorGame/GameContainer";
+import GetGame from "../../../components/CreatorGame/Game/Wrapped/GetGame";
 const CreatorGame = () => {
   const router = useRouter();
   const { account } = useStarknet();
@@ -15,8 +16,10 @@ const CreatorGame = () => {
     query: { cid },
   } = router;
 
-  console.log(cid);
-  console.log(router);
+  const data = router.query;
+  console.log(data.game_index);
+  // console.log(cid);
+  // console.log(router);
 
   return (
     <ThemeProvider theme={creator}>
@@ -34,8 +37,8 @@ const CreatorGame = () => {
           }}
         >
           <div style={{ width: 544, minWidth: 544 }}>
-            <CreatorGameHeader gameId={cid} address={account} />
-            <GameContainer />
+            <CreatorGameHeader gameId={data.game_index} address={data.owner} />
+            <GameContainer gameId={data.game_index} />
           </div>
           <div
             style={{
@@ -44,7 +47,7 @@ const CreatorGame = () => {
               flex: 1,
             }}
           >
-            <Sidebar />
+            <Sidebar currentGen={data.current_gen} />
           </div>
         </div>
       </ContainerInner>

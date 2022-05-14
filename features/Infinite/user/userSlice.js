@@ -5,11 +5,19 @@ const initialState = {
   activeTokenCount: 0,
   activeTokens: [],
   snapshots: [],
+  creatorCreditsCount: 0,
+  creatorGamesOwnedCount: 0,
 };
 export const userSlice = createSlice({
   name: "infiniteGrid",
   initialState,
   reducers: {
+    updateCreatorCredits: (state, action) => {
+      state.creatorCreditsCount = action.payload;
+    },
+    updateCreatorGamesOwned: (state, action) => {
+      state.creatorGamesOwnedCount = action.payload;
+    },
     updateTokenCount: (state, action) => {
       state.tokenCount = action.payload;
     },
@@ -44,6 +52,11 @@ export const userSlice = createSlice({
   },
 });
 
-export const { updateTokenIds, updateTokenCount, updateSnapshots } =
-  userSlice.actions;
+export const {
+  updateTokenIds,
+  updateTokenCount,
+  updateSnapshots,
+  updateCreatorCredits,
+  updateCreatorGamesOwned,
+} = userSlice.actions;
 export default userSlice.reducer;
