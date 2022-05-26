@@ -96,8 +96,8 @@ const TransactionRow = ({
   const [statusInternal, setStatusInternal] = useState(null);
   const controls = useAnimation();
   const { account } = useStarknet();
-  console.log(user);
-  console.log(status);
+  // console.log(user);
+  // console.log(status);
   useEffect(() => {
     if (
       status === "TRANSACTION_RECEIVED" ||

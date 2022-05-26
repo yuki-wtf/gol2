@@ -1,5 +1,7 @@
 import produce from "immer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { updateGridSelection } from "../../features/creator/create/CreateGameSlice";
 import Cell from "../GolGrid/Cell/Cell";
 import GameGrid from "../GolGrid/GameGrid/GameGrid";
 
@@ -70,6 +72,7 @@ const torus = (index, length) => {
 };
 
 const UserCreatedGrid = () => {
+  const dispatch = useDispatch();
   const [cells, setCells] = useState(generateGrid(32, 32, true));
   const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -140,6 +143,7 @@ const UserCreatedGrid = () => {
                   cellsCopy[i][k] = cellsCopy[i][k] ? 0 : 1;
                 });
                 setCells(newCells);
+                dispatch(updateGridSelection(newCells));
               }}
               key={`${i}-${k}`}
               state={cells[i][k] ? "createSelected" : "dead"}

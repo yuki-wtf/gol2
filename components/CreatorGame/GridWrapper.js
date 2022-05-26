@@ -14,21 +14,13 @@ const StyledLoaderContainer = styled(motion.div)`
   height: 512px;
   background-color: black;
 `;
-const GridWrapper = ({ gameId, generationNumber }) => {
+const GridWrapper = ({ address, currentGen, gameId }) => {
   const { gameStates } = useSelector((state) => state.creatorGames);
-  const router = useRouter();
-  const data = router.query;
-  console.log(gameStates);
-  useEffect(() => {
-    if (!gameStates) {
-      console.log("rr");
-    }
-  }, [gameStates]);
 
   return (
     <Body>
-      {data && data.game_index ? (
-        <Grid data={dataToGrid(gameStates[data.game_index].data)} />
+      {gameStates && gameStates[gameId] ? (
+        <Grid data={dataToGrid(gameStates[gameId].data)} />
       ) : (
         <StyledLoaderContainer
           initial={{ opacity: 0 }}

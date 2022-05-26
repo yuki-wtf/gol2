@@ -53,12 +53,7 @@ const Creator = () => {
             Earn 10 credits and you can spawn a brand new game.
           </PageIntro.Text>
         </PageIntro.Container>
-        <div>
-          {/* <ContributeToGame />
-           */}
-
-          <CreateGame />
-        </div>
+        <div></div>
         {account && <Typography.H2>Your Games</Typography.H2>}
 
         <div

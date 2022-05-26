@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { ThemeProvider } from "styled-components";
@@ -10,19 +10,23 @@ import { useStarknet } from "@starknet-react/core";
 import GameContainer from "../../../components/CreatorGame/GameContainer";
 import GetGame from "../../../components/CreatorGame/Game/Wrapped/GetGame";
 const CreatorGame = () => {
+  const [needsData, setNeedsData] = useState(false);
   const router = useRouter();
-  const { account } = useStarknet();
   const {
-    query: { cid },
+    query: { game_index, current_gen, owner },
   } = router;
 
-  const data = router.query;
-  console.log(data.game_index);
-  // console.log(cid);
-  // console.log(router);
+  useEffect(() => {
+    setTimeout(() => {
+      setNeedsData(true);
+    }, 500);
+  }, [needsData]);
 
   return (
     <ThemeProvider theme={creator}>
+      {needsData ? (
+        <GetGame gameId={game_index} address={owner} currentGen={current_gen} />
+      ) : null}
       <ContainerInner>
         <div
           style={{
@@ -37,8 +41,12 @@ const CreatorGame = () => {
           }}
         >
           <div style={{ width: 544, minWidth: 544 }}>
-            <CreatorGameHeader gameId={data.game_index} address={data.owner} />
-            <GameContainer gameId={data.game_index} />
+            <CreatorGameHeader gameId={game_index} address={owner} />
+            <GameContainer
+              gameId={game_index}
+              address={owner}
+              currentGen={current_gen}
+            />
           </div>
           <div
             style={{
@@ -47,7 +55,7 @@ const CreatorGame = () => {
               flex: 1,
             }}
           >
-            <Sidebar currentGen={data.current_gen} />
+            <Sidebar currentGen={current_gen} />
           </div>
         </div>
       </ContainerInner>

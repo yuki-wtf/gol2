@@ -9,6 +9,7 @@ import GridWrapper from "./GridWrapper";
 import GetLatestGame from "./Wrapped/GetLatestGame";
 import GetPreviousGames from "./Wrapped/GetPreviousGames";
 import GetPreviousGamesLarge from "./Wrapped/GetPreviousGamesLarge";
+import GetFirst20Gens from "./Wrapped/GetFirst20Gens";
 
 const StyledGridContainer = styled.div`
   background-color: #000000;
@@ -32,9 +33,13 @@ const GameContainer = () => {
     }, 10000);
   }, []);
 
+  // console.log("missing gens", missingGens);
+
   useEffect(() => {
     let fakeArray = [];
     // console.log(missingGens);
+
+    // check generations to see what generations are missing and store them in state missing gens
     if (latest_generation) {
       Array.from(Array(latest_generation)).forEach((x, i) => {
         if (i in generations || missingGens.includes(i)) {
@@ -47,9 +52,13 @@ const GameContainer = () => {
     }
   }, [latest_generation, generations, missingGens]);
 
+  // if we have any missing gens -
+
   useEffect(() => {
     if (missingGens.length) {
-      const perChunk = 30;
+      // set a chunk size
+      const perChunk = 20;
+      // divide the latest gen by chunk size
       const callNum = Math.round(latest_generation / perChunk);
 
       let result = missingGens.reduce((resultArray, item, index) => {
@@ -63,12 +72,12 @@ const GameContainer = () => {
 
         return resultArray;
       }, []);
-      console.log("result", result);
+      // console.log("result", result);
       setMissingGensIncrements(result);
 
       const intervalId = setInterval(() => {
         setCallIncrement(callIncrement + 1);
-      }, 10000);
+      }, 5000);
 
       if (callIncrement === callNum) {
         clearInterval(intervalId);
@@ -97,10 +106,12 @@ const GameContainer = () => {
       <IHeader />
       <DialogGiveLife />
       {latest_generation ? <GetLatestGame /> : null}
+      {latest_generation ? <GetFirst20Gens /> : null}
       {latest_generation && lUS ? <GetPreviousGames latest_generation /> : null}
+
       {latest_generation &&
       missingGensIncrements.length > 0 &&
-      callIncrement !== null ? (
+      callIncrement > 0 ? (
         <GetPreviousGamesLarge
           missingGens={missingGensIncrements[callIncrement]}
         />

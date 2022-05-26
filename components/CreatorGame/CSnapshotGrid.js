@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 const CSnapshotGrid = ({ loading = true, data, isSnapshot = true }) => {
   return (
     <GameGrid isSnapshotCreator small>
-      {data && data.length ? (
+      {!loading && data && data.length ? (
         data.map((row, j) => {
           return row.map((cell, i) => {
             if (cell === 0) return <Cell isSnapshot key={`${i}${cell}`} />;
