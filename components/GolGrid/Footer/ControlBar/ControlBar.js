@@ -82,7 +82,7 @@ const ControlBar = () => {
     <StyledControlbar>
       <ControlButtons.ToStartBtn
         onClick={() => {
-          dispatch(updateSelectedGeneration(81));
+          dispatch(updateSelectedGeneration(1));
           dispatch(togglePlayback(true));
         }}
       />
@@ -110,7 +110,7 @@ const ControlBar = () => {
       <SpeedDropdownMenu disabled={!playbackMode} />
 
       <StyledGenerationLabel>
-        Generation # <span>{`${calculateSelected}`}</span>
+        Generation # <span>{`${selected_generation}`}</span>
       </StyledGenerationLabel>
     </StyledControlbar>
   );

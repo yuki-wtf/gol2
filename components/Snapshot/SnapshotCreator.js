@@ -120,7 +120,7 @@ const SnapshotCreator = ({ onClick, generationNumber, address, id, grid }) => {
   const { data, loading, error } = useStarknetCall({
     contract: contract,
     method: "view_game",
-    args: [generationNumber.toString(), id.toString(), "pending"],
+    args: [id.toString(), generationNumber.toString(), "pending"],
   });
 
   useEffect(() => {

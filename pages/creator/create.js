@@ -6,6 +6,7 @@ import Typography from "../../components/Typography/Typography";
 import styled from "styled-components";
 import Button from "../../components/Button/Button";
 import Image from "next/image";
+import CreateGame from "../../components/CreatorGame/Game/Wrapped/CreateGame";
 
 const gameExamples = [
   {
@@ -144,8 +145,8 @@ const Create = () => {
                 </StyledlistItem>
               </Styledlist>
               <div>
-                <Button label="Start game" />
-                <Button tertiary label="CANCEL" />
+                <CreateGame />
+                <Button tertiary label="CLEAR" />
               </div>
             </div>
           </div>

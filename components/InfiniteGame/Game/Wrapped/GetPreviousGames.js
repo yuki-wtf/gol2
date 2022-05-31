@@ -24,7 +24,7 @@ const GetPreviousGames = () => {
 
   useEffect(() => {
     if (data && data !== undefined && data.length > 0) {
-      console.log("latest use ful", data);
+      // console.log("latest use ful", data);
       dispatch(updateRecentGames([data.a_owner, data.b_owner, data.c_owner]));
       //   dispatch(updateRecentGames(latestUsefulData.b_owner));
       //   dispatch(updateRecentGames(latestUsefulData.c_owner));

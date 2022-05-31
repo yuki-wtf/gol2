@@ -14,11 +14,12 @@ const StyledGridContainer = styled.div`
   border-bottom-right-radius: 33px;
 `;
 
-const GameContainer = ({ gameId, generationNumber }) => {
+const GameContainer = ({ address, currentGen, gameId }) => {
+  console.log(address, currentGen, gameId);
   return (
     <StyledGridContainer>
       <CHeader gameId={gameId} />
-      <GridWrapper />
+      <GridWrapper gameId={gameId} address={address} currentGen={currentGen} />
       <CFooter gameId={gameId} />
     </StyledGridContainer>
   );
