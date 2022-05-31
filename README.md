@@ -1,11 +1,24 @@
-
+\
+\
 ![golLanding](https://user-images.githubusercontent.com/5764504/171171394-5f7b5753-6f48-4b5f-96a1-c03d6fb9e222.svg)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+GoL2 is a fun and interactive way to introduce new users and developers to smart contracts written in Cairo.
+
+With StarkNet, Game of Life transitions can be computed inside the contract, with each of the 1024 cells living or dying according to the game rules. These rules are enforced by a STARK proof, which then displays the game updates to Ethereum - this means the results are guaranteed to be correct.
+
+### Cairo Contracts 
+Infinite and creator contracts can be found here - https://github.com/perama-v/GoL2
+
+#### Deployed contracts 
+Infinite - [0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f](https://goerli.voyager.online/contract/0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f#readContract) <br>
+Creator - [0x021720286a97c4cb4504de696a28f60a421af77a21f5da9df717d071756d9734](https://goerli.voyager.online/contract/0x021720286a97c4cb4504de696a28f60a421af77a21f5da9df717d071756d9734#readContract)
+
+### Getting Started
 
 First, install Argent X chrome extension - [https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb]
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 Secondly, run the development server:
 
@@ -17,24 +30,4 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
