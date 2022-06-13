@@ -6,7 +6,7 @@ const MenuButtonWrapper = styled.button`
   border: 0;
   cursor: pointer;
 
-  & :hover {
+  &:hover {
     opacity: 0.4;
   }
 `;

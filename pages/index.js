@@ -158,7 +158,6 @@ const LandingScreen = () => {
             rules={conwaysGameOfLifePreset}
           /> */}
         </motion.div>
-        )
       </motion.div>
 
       <div
