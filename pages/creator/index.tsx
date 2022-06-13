@@ -141,12 +141,13 @@ const Creator = () => {
 }
 
 export default Creator
-{
-  /* <SnapshotCreator
-              onClick={() => Router.push(`/creator/game/${game.game_index}`)}
-              key={game.game_id}
-              id={game.game_index}
-              generationNumber={game.generation}
-              address="23232323423423423423432"
-            /> */
-}
+
+/*
+  <SnapshotCreator
+    onClick={() => Router.push(`/creator/game/${game.game_index}`)}
+    key={game.game_id}
+    id={game.game_index}
+    generationNumber={game.generation}
+    address="23232323423423423423432"
+  />
+*/
