@@ -260,7 +260,7 @@ const LandingScreen = () => {
             textDecoration: 'none',
           }}
         >
-          <div
+          <a
             style={{
               cursor: 'pointer',
             }}
@@ -268,7 +268,7 @@ const LandingScreen = () => {
             className={styles.message}
           >
             Press any key to continue
-          </div>
+          </a>
         </Link>
         {/* <button onClick={() => handleRead()}>Read</button>
         <button onClick={() => handleWrite()}>Write</button> */}

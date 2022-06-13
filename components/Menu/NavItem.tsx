@@ -37,7 +37,7 @@ const NavItem = ({
       }}
     >
       <Link href={to}>
-        <div
+        <a
           className={`link ${exClassName}`}
           style={{
             color: color,
@@ -80,7 +80,7 @@ const NavItem = ({
               }}
             />
           </span>
-        </div>
+        </a>
       </Link>
     </div>
   )

@@ -11,7 +11,7 @@ const DialogDownloadWallet = ({ open, onClose }) => {
         <Dialog.Content>
           <Dialog.Title>Download a wallet</Dialog.Title>
           <Dialog.ActionContainer>
-            <Link href={'https://github.com/argentlabs/argent-x'}>
+            <Link href='https://github.com/argentlabs/argent-x'>
               <a target="_blank">
                 <Button full label="Argent" secondary />
               </a>
