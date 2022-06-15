@@ -7,6 +7,7 @@ import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
 import { useStarknetCall } from '@starknet-react/core'
 import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
 import { dataToGrid } from '../../utils/dataToGrid'
+import Button from '../Button/Button'
 const animate = keyframes`
   from { 
     transform: translateX(-100%);
@@ -65,12 +66,21 @@ const StyledSkeletonGridContainer = styled.div`
   align-items: center;
   justify-content: center;
 `
+const StyledActions = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  width: 100%;
+  margin-top: 12px;
+`
 const StyledCard = styled(motion.li)`
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width: 290px;
-  height: 412px;
+  width: ${(props) => (props.large ? '525px' : '290px')};
+  height: ${(props) => (props.large ? '780px' : '412px')};
   background: #fefcfa;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -109,13 +119,14 @@ const StyledDivider = styled.div`
   margin-bottom: 5px;
 `
 const StyledGridContainer = styled.div`
-  width: 244px;
-  height: 244px;
+  width: ${(props) => (props.large ? '458px' : '244px')};
+  height: ${(props) => (props.large ? '520px' : '244px')};
   border: 1px solid #000000;
   border-radius: 4px;
   color: white;
-
+  pointer-events: none;
   background-color: #1d222c;
+  overflow: hidden;
 `
 const StyledGenLabel = styled.div`
   text-align: left;
@@ -177,7 +188,7 @@ const SkeletonImagePreview = () => {
   )
 }
 
-const Snapshot = ({ generationNumber, user, id, isLoading, ...rest }) => {
+const Snapshot = ({ onClick, onClickTwitter, large = false, generationNumber, user, id, isLoading, ...rest }) => {
   const { contract } = useInfiniteGameContract()
   const { data, loading, error } = useStarknetCall({
     contract: contract,
@@ -197,8 +208,8 @@ const Snapshot = ({ generationNumber, user, id, isLoading, ...rest }) => {
       </StyledSkeletonCard>
     )
   return (
-    <StyledCard {...rest}>
-      <StyledGridContainer>
+    <StyledCard large={large} {...rest} onClick={onClick}>
+      <StyledGridContainer large={large}>
         <ISnapshotGrid loading={loading} isSnapshot data={dataToGrid(data)} />
       </StyledGridContainer>
       <StyledGenLabel> Generation: </StyledGenLabel>
@@ -210,6 +221,11 @@ const Snapshot = ({ generationNumber, user, id, isLoading, ...rest }) => {
       <StyledUserAddress>
         <HiOutlineUser color="#57637b" size={16} /> {formattedUser}
       </StyledUserAddress>
+      {large && (
+        <StyledActions>
+          <Button secondary label="share to twitter" onClick={onClickTwitter} />
+        </StyledActions>
+      )}
     </StyledCard>
   )
 }

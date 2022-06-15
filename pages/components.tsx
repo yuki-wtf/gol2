@@ -8,6 +8,8 @@ import Button from '../components/Button/Button'
 import Loader from '../components/Loader/Loader'
 import ContainerInner from '../components/Layout/ContainerInner'
 import CreatorGameHeader from '../components/CreatorGameHeader/CreatorGameHeader'
+import Snapshot from '../components/Snapshot/Snapshot'
+import SnapshotEmpty from '../components/SnapshotEmpty/SnapshotEmpty'
 
 const Components = () => {
   const [open, setOpen] = useState(false)
@@ -24,6 +26,18 @@ const Components = () => {
           padding: 40,
         }}
       >
+        <Typography.H2>Snapshots default</Typography.H2>
+        <Snapshot generationNumber={12} user={'234234234234234'} onClick={() => console.log('hello')} />
+
+        <Typography.H2>Snapshots Loading</Typography.H2>
+        <Snapshot isLoading />
+        <Typography.H2>Snapshots Large</Typography.H2>
+        <Snapshot
+          large
+          onClickTwitter={() => console.log('hello twitter')}
+          generationNumber={12}
+          user={'234234234234234'}
+        />
         <CreatorGameHeader />
         <Typography.H2>Dialogs</Typography.H2>
         <div>
