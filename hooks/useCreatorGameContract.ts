@@ -1,5 +1,6 @@
 import { useContract } from '@starknet-react/core'
-import CreatorAbi from '../abi/GoL2_creator.json'
+import { CreatorAbi } from '../abi/GoL2_creator'
+
 export function useCreatorGameContract() {
   return useContract({
     abi: CreatorAbi,

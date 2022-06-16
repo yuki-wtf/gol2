@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname local.gol2.io --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "@argent/get-starknet": "4.0.2",
+    "@napi-rs/canvas": "^0.1.22",
     "@radix-ui/react-dialog": "^0.1.7",
     "@radix-ui/react-dropdown-menu": "^0.1.6",
     "@radix-ui/react-popover": "^0.1.6",
     "@radix-ui/react-toast": "^0.1.1",
     "@reduxjs/toolkit": "^1.8.1",
     "@starknet-react/core": "^0.11.0",
+    "canvaskit-wasm": "^0.34.1",
     "cellular-automata-react": "^1.2.4",
     "copy-to-clipboard": "^3.3.1",
     "framer-motion": "^6.3.3",
@@ -28,7 +30,7 @@
     "react-icons": "^4.3.1",
     "react-redux": "^8.0.1",
     "sharp": "^0.30.4",
-    "starknet": "^3.5",
+    "starknet": "^3.14.1",
     "styled-components": "^5.3.5",
     "uuidv4": "^6.2.13"
   },

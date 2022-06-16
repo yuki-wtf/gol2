@@ -1,4 +1,6 @@
-[
+import { Abi } from "starknet";
+
+export const InfiniteAbi: Abi = [
   {
     "inputs": [],
     "name": "constructor",

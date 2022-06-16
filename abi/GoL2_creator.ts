@@ -1,4 +1,6 @@
-[
+import { Abi } from "starknet";
+
+export const CreatorAbi: Abi = [
   {
     "inputs": [],
     "name": "constructor",
