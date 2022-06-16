@@ -8,11 +8,12 @@ import { useStarknetCall } from '@starknet-react/core'
 import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
 import { dataToGrid } from '../../utils/dataToGrid'
 import Button from '../Button/Button'
+
 const animate = keyframes`
-  from { 
+  from {
     transform: translateX(-100%);
-}
-to { 
+  }
+  to {
     transform: translateX(100%);
   }
 `

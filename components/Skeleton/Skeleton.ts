@@ -5,10 +5,10 @@ import styled, { keyframes } from 'styled-components'
 //   lg: 36,
 // } as const
 const animate = keyframes`
-  from { 
+  from {
     transform: translateX(-100%);
-}
-to { 
+  }
+  to {
     transform: translateX(100%);
   }
 `

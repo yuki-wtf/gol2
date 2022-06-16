@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "fmt": "yarn commands:prettier --write",
     "commands:prettier": "prettier **/*.{js,ts,tsx,json,md}"
   },
   "dependencies": {
