@@ -46,7 +46,7 @@ export const IHeader = ({ gameId }) => {
         <Button
           onClick={() => {
             if (account) {
-              console.log('clicked')
+              // console.log('clicked')
               invoke({
                 args: [gameId.toString()],
               })

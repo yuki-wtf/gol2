@@ -12,7 +12,7 @@ const StyledGridContainer = styled.div`
 `
 
 const GameContainer = ({ address, currentGen, gameId }) => {
-  console.log(address, currentGen, gameId)
+  // console.log(address, currentGen, gameId)
   return (
     <StyledGridContainer>
       <CHeader gameId={gameId} />

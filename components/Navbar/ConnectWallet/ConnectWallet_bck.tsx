@@ -35,7 +35,7 @@ const ConnectWallet = () => {
         marginLeft: 'auto',
       }}
     >
-      {console.log(connectors)}
+      {/* {console.log(connectors)} */}
       {!account &&
         !error &&
         open &&

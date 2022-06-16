@@ -28,7 +28,7 @@ const GetRecentlyCreated = ({ latestGeneration }) => {
   // console.log("get_recently_created_loading", loading);
   useEffect(() => {
     if (data && data !== undefined && data.length > 0) {
-      console.log('get_recently_created', data)
+      // console.log('get_recently_created', data)
       const latest_game_index = parseInt(data.game_index)
       const ownerA = {
         owner: toHex(data.a_owner),
@@ -55,8 +55,8 @@ const GetRecentlyCreated = ({ latestGeneration }) => {
         generation: parseInt(data.e_gen, 16),
         game_index: latest_game_index - 4,
       }
-      console.log('ownera', ownerA)
-      console.log('ownerb', ownerB)
+      // console.log('ownera', ownerA)
+      // console.log('ownerb', ownerB)
 
       // const generation = data.generation.toString();
       // console.log("latest_game_index", latest_game_index);
@@ -66,28 +66,28 @@ const GetRecentlyCreated = ({ latestGeneration }) => {
       // console.log("ownerD", ownerD);
       // console.log("ownerE", ownerE);
       if (ownerA.game_index !== 0 || ownerA.game_index !== '0x0' || !isNegative(ownerA.game_index)) {
-        console.log("I'm doing something A")
+        // console.log("I'm doing something A")
         // if (ownerA.game_index in games) return;
         dispatch(updateCreatorGames({ ...ownerA }))
       }
 
       if (ownerB.game_index !== 0 || ownerB.game_index !== '0x0' || !isNegative(ownerB.game_index)) {
-        console.log("I'm doing something b")
+        // console.log("I'm doing something b")
         dispatch(updateCreatorGames({ ...ownerB }))
       }
 
       if (ownerC.game_index !== 0 || ownerC.game_index !== '0x0' || !isNegative(ownerC.game_index)) {
-        console.log("I'm doing something b")
+        // console.log("I'm doing something b")
         dispatch(updateCreatorGames({ ...ownerC }))
       }
 
       if (ownerD.game_index !== 0 || ownerD.game_index !== '0x0' || !isNegative(ownerD.game_index)) {
-        console.log("I'm doing something b")
+        // console.log("I'm doing something b")
         dispatch(updateCreatorGames({ ...ownerD }))
       }
 
       if (ownerE.game_index !== 0 || ownerE.game_index !== '0x0' || !isNegative(ownerE.game_index)) {
-        console.log("I'm doing something b")
+        // console.log("I'm doing something b")
         dispatch(updateCreatorGames({ ...ownerE }))
       } //   if (latest_gen in generations) return;
       //   if (latest_gen !== undefined) {

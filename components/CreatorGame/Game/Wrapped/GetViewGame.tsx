@@ -13,14 +13,14 @@ const GetViewGame = ({ id, gen }) => {
     method: 'view_game',
     args: [id, gen, 'pending'],
   })
-  console.log('view_game_error', error)
-  console.log('view_game_loading', loading)
+  // console.log('view_game_error', error)
+  // console.log('view_game_loading', loading)
   useEffect(() => {
     if (data && data !== undefined && data.length > 0) {
-      console.log('view_game_game_id', data.game_id.toString())
-      console.log('view_game_game_index', data.game_index.toString())
-      console.log('view_game_generation', data.generation.toString())
-      console.log('view_game', data) //   if (latest_gen in generations) return;
+      // console.log('view_game_game_id', data.game_id.toString())
+      // console.log('view_game_game_index', data.game_index.toString())
+      // console.log('view_game_generation', data.generation.toString())
+      // console.log('view_game', data) //   if (latest_gen in generations) return;
       //   if (latest_gen !== undefined) {
       //     // console.log(data);
       //     dispatch(updateGenerations({ id: latest_gen, data }));

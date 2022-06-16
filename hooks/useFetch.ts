@@ -8,7 +8,7 @@ const useFetch = (url) => {
     setTimeout(() => {
       fetch(url)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
 
           if (!res.ok) {
             throw Error('could not fetch datsa')

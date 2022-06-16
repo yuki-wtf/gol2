@@ -29,9 +29,9 @@ const GetFirst20Gens = () => {
   // console.log(error);
   // console.log(loading);
   // console.log(data);
-  useEffect(() => {
-    console.log('Get First 20 states')
-  }, [])
+  // useEffect(() => {
+  //   console.log('Get First 20 states')
+  // }, [])
   useEffect(() => {
     if (data && data !== undefined && data.length >= 0) {
       const stringData = data.gen_ids_array_result
@@ -52,7 +52,7 @@ const GetFirst20Gens = () => {
   useEffect(() => {
     if (result.length) {
       ;[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((gen, i) => {
-        console.log('gen is', gen)
+        // console.log('gen is', gen)
         const newGen = gen
         if (newGen in generations) return
         dispatch(

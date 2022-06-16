@@ -12,21 +12,21 @@ const CreateGame = () => {
     contract,
     method: 'create',
   })
-  console.log(error)
-  console.log(data)
+  // console.log(error)
+  // console.log(data)
   return (
     <Button
       label="Create Game"
       onClick={() => {
         const chosenGameGrid = preSelectedGrid
-        console.log(chosenGameGrid)
+        // console.log(chosenGameGrid)
         let arr = new Array()
         chosenGameGrid.map((row) => {
           const formatRow = parseInt(row.join('').toString(), 2)
           arr.push(formatRow)
         })
         let invooke = [...arr]
-        console.log(invooke) // if (account) {
+        // console.log(invooke) // if (account) {
         //   console.log(arr);
         //   invoke({
         //     args: [...arr],

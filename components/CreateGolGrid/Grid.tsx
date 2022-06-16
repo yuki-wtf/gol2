@@ -12,7 +12,7 @@ const Grid = ({ data }) => {
   const { selectedCellRow, selectedCellColumn, rows } = useSelector((state) => state.createGame)
 
   const handleSelected = (row, col) => {
-    console.log(row, col)
+    // console.log(row, col)
     dispatch(
       setRows({
         row,
@@ -21,21 +21,22 @@ const Grid = ({ data }) => {
     )
   }
 
-  useUpdateEffect(() => {
-    // if (Object.keys(rows).length) {
-    //   for (const key in rows) {
-    //     if (rows.hasOwnProperty(key)) {
-    //       console.log(`${key}: ${rows[key]}`);
-    //     }
-    //   }
-    // }
-    console.log(rows)
-  }, [rows])
+  // useUpdateEffect(() => {
+  //   // if (Object.keys(rows).length) {
+  //   //   for (const key in rows) {
+  //   //     if (rows.hasOwnProperty(key)) {
+  //   //       console.log(`${key}: ${rows[key]}`);
+  //   //     }
+  //   //   }
+  //   // }
+  //   console.log(rows)
+  // }, [rows])
+
   return (
     <GameGrid>
       {data &&
         data.map((row, j) => {
-          console.log('row', row)
+          // console.log('row', row)
           return row.map((cell, i) => {
             if (!cell)
               return (

@@ -18,10 +18,10 @@ const GetNewestGame = ({ latestGeneration }) => {
   //   console.log("newest_game_loading", loading);
   useEffect(() => {
     if (data && data !== undefined && data.length > 0) {
-      console.log('newest_game_game_id', data.game_id.toString())
-      console.log('newest_game_game_index', data.game_index.toString())
-      console.log('newest_game_generation', data.generation.toString())
-      console.log('newest_game', data)
+      // console.log('newest_game_game_id', data.game_id.toString())
+      // console.log('newest_game_game_index', data.game_index.toString())
+      // console.log('newest_game_generation', data.generation.toString())
+      // console.log('newest_game', data)
       const game_index = data.game_index.toString()
       const game_id = data.game_id.toString()
       const generation = data.generation.toString()

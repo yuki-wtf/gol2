@@ -37,7 +37,7 @@ const isEmptyGrid = (grid) => {
 
 const countNeighbors = (grid) => {
   //2d array, each cell contain a number of neighbors
-  console.log('grid ', grid)
+  // console.log('grid ', grid)
   let count = generateGrid(32, 32)
   grid.map((row, rowIndex, grid) => {
     row.map((cell, cellIndex) => {
@@ -129,7 +129,7 @@ const UserCreatedGrid = () => {
     return setRequest(arr)
   }
 
-  console.log(request)
+  // console.log(request)
   return (
     <GameGrid>
       {cells &&

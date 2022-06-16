@@ -47,7 +47,7 @@ const GetPreviousGamesLarge = ({ missingGens }) => {
       }, [])
       missingGens &&
         missingGens.map((gen, i) => {
-          console.log('gen is', gen)
+          // console.log('gen is', gen)
           // if (i < 1) return;
           const newGen = gen
           if (newGen in generations) return
@@ -57,7 +57,7 @@ const GetPreviousGamesLarge = ({ missingGens }) => {
               data: result[i],
             })
           )
-          console.log('sending', newGen, result[i])
+          // console.log('sending', newGen, result[i])
           return
         })
     }

@@ -25,7 +25,7 @@ const Snapshots = () => {
   const { snapshots: snapshotsRedux } = useSelector((state) => state.user)
   const { snapshots, loading, error } = useFetchTokens()
   const { account } = useStarknet()
-  console.log('snapshots', snapshotsRedux)
+  // console.log('snapshots', snapshotsRedux)
   // console.log("loading", loading);
   // console.log("account", account);
   // console.log("mockdata", mockdata);

@@ -74,7 +74,7 @@ const ControlBar = () => {
         isPlaying={isPlaying}
         disabled={!playbackMode}
         onClick={() => {
-          console.log('clicked')
+          // console.log('clicked')
           dispatch(togglePlayPause(!isPlaying))
         }}
       />

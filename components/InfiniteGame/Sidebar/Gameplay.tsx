@@ -18,14 +18,9 @@ const Gameplay = ({ title, type }) => {
         }}
       >
         <div>
-          {transactions.length === 0
-            ? ''
-            : transactions
-                .map((tx, index) => {
-                  console.log(tx)
-                  return <TxnRow key={index} data={tx} />
-                })
-                .reverse()}
+          {transactions.reverse().map((tx, index) => (
+            <TxnRow key={index} data={tx} />
+          ))}
           {recentGames && recentGames.length ? (
             recentGames[0].map((game, index) => {
               const gameTxn = {

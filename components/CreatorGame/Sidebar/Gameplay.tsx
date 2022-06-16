@@ -25,7 +25,7 @@ const Gameplay = ({ title, type }) => {
         ) : (
           transactions
             .map((tx, index) => {
-              console.log(tx)
+              // console.log(tx)
               return <TxnRow key={index} data={tx} />
             })
             .reverse()

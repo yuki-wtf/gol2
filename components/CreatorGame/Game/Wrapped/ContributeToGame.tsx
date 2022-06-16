@@ -17,7 +17,7 @@ const ContributeToGame = () => {
       label="Testing Contribute to Game"
       onClick={() => {
         if (account) {
-          console.log('clicked')
+          // console.log('clicked')
           invoke({
             args: ['2'],
           })

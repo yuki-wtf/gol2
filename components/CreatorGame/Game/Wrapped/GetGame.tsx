@@ -5,7 +5,7 @@ import { updateGameState } from '../../../../features/creator/creatorGamesSlice'
 import { useCreatorGameContract } from '../../../../hooks/useCreatorGameContract'
 
 const GetGame = ({ gameId, currentGen }) => {
-  console.log(gameId, currentGen)
+  // console.log(gameId, currentGen)
   const dispatch = useDispatch()
   const { contract } = useCreatorGameContract()
   const { data, loading, error } = useStarknetCall({
@@ -14,7 +14,7 @@ const GetGame = ({ gameId, currentGen }) => {
     args: [gameId, currentGen],
   })
   useEffect(() => {
-    console.log('Get game')
+    // console.log('Get game')
 
     if (data !== undefined && data.length > 0) {
       dispatch(

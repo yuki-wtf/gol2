@@ -12,7 +12,7 @@ const MenuButtonWrapper = styled.a`
   }
 `
 
-const MenuButton = ({ onClick = () => console.log('rest'), ...rest }) => {
+const MenuButton = ({ onClick /* = () => console.log('rest') */, ...rest }) => {
   return (
     <Link href='/menu' passHref>
       <MenuButtonWrapper>
