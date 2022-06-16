@@ -22,6 +22,7 @@
   border-radius: 11px;
   opacity: 0;
   letter-spacing: 3.3px;
+  color: inherit;
 }
 .tagline {
   margin-top: 30px;
