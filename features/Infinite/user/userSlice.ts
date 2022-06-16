@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   tokenCount: 0,
   activeTokenCount: 0,
+  activeTokenCountLoaded: false,
   activeTokens: [],
   snapshots: [],
   creatorCreditsCount: 0,
@@ -29,16 +30,18 @@ export const userSlice = createSlice({
         // state.snapshots = action.payload;
         const activeTokens = action.payload.gave_life_at.filter((token) => token.words[0] !== 0)
         state.activeTokenCount = state.tokenCount - activeTokens.length
-        const activeTokensList = action.payload.gave_life_at.filter((token, index) => {
-          if (token.words[0] === 0) {
-            // console.log(index);
-            // console.log(state.snapshots[index]);
-            // state.activeTokens = [
-            //   ...state.activeTokens,
-            //   state.snapshots[index],
-            // ];
-          }
-        }) // state.activeTokens = activeTokensList;
+        state.activeTokenCountLoaded = true
+
+        // const activeTokensList = action.payload.gave_life_at.filter((token, index) => {
+        //   if (token.words[0] === 0) {
+        //     // console.log(index);
+        //     // console.log(state.snapshots[index]);
+        //     // state.activeTokens = [
+        //     //   ...state.activeTokens,
+        //     //   state.snapshots[index],
+        //     // ];
+        //   }
+        // }) // state.activeTokens = activeTokensList;
       } // state.activeTokens = activeTokens;
     },
   },
