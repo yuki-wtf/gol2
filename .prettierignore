@@ -1,2 +1,5 @@
-.next
-node_modules
+/node_modules
+/.vercel
+/.next
+/.netlify
+/_next

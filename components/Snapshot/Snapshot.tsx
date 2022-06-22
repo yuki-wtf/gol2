@@ -93,7 +93,7 @@ const StyledCard = styled(motion.li)`
   padding: 21px;
   text-align: left;
   color: #1d222c;
-  cursor: pointer;
+  cursor: ${(props) => (props.onClick != null ? 'pointer' : 'auto')};
   position: relative;
   &:hover {
     background: #fcfaf8;

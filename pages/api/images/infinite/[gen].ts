@@ -3,18 +3,21 @@ import { dataToGrid } from '../../../../utils/dataToGrid'
 import { createCanvas, Image, GlobalFonts } from '@napi-rs/canvas'
 import fs from 'fs/promises'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import path from 'path'
+import * as starknet from 'starknet'
 
-GlobalFonts.registerFromPath('assets/fonts/Mulish/Mulish-ExtraBold.ttf', 'Mulish-ExtraBold')
-GlobalFonts.registerFromPath('assets/fonts/Mulish/Mulish-Bold.ttf', 'Mulish-Bold')
+GlobalFonts.registerFromPath(
+  path.resolve(process.cwd(), 'assets/fonts/Mulish/Mulish-ExtraBold.ttf'),
+  'Mulish-ExtraBold'
+)
+GlobalFonts.registerFromPath(path.resolve(process.cwd(), 'assets/fonts/Mulish/Mulish-Bold.ttf'), 'Mulish-Bold')
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const starknet = await import('starknet')
-
     const canvas = createCanvas(514 * 4, 293 * 4)
     const ctx = canvas.getContext('2d')
 
-    const file = await fs.readFile('assets/images/infiniteGame_4x.png')
+    const file = await fs.readFile(path.resolve(process.cwd(), 'assets/images/infiniteGame_4x.png'))
     const image = new Image()
     image.src = file
 

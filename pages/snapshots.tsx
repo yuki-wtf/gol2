@@ -1,6 +1,6 @@
 import { useStarknet } from '@starknet-react/core'
 import React from 'react'
-import { HiOutlineLightningBolt, HiOutlineLink } from 'react-icons/hi'
+import { HiOutlineLink } from 'react-icons/hi'
 import ContainerInner from '../components/Layout/ContainerInner'
 import PageIntro from '../components/PageIntro/PageIntro'
 import Snapshot from '../components/Snapshot/Snapshot'
@@ -8,9 +8,10 @@ import SnapshotEmpty from '../components/SnapshotEmpty/SnapshotEmpty'
 import useFetchTokens from '../hooks/useFetchTokens'
 import styled from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
-import { data as mockdata } from '../data/data'
 import { dataToGrid } from '../utils/dataToGrid'
 import { useSelector } from 'react-redux'
+import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
+
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -23,12 +24,9 @@ const FlexContainer = styled.div`
 
 const Snapshots = () => {
   const { snapshots: snapshotsRedux } = useSelector((state) => state.user)
-  const { snapshots, loading, error } = useFetchTokens()
+  // const { snapshots, loading, error } = useFetchTokens()
   const { account } = useStarknet()
-  // console.log('snapshots', snapshotsRedux)
-  // console.log("loading", loading);
-  // console.log("account", account);
-  // console.log("mockdata", mockdata);
+
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
       <PageIntro.Container>
@@ -141,28 +139,62 @@ const Snapshots = () => {
           snapshotsRedux.length > 0 &&
           snapshotsRedux
             .map((snapshot, i) => (
-              <Snapshot
-                isSnapshot
-                key={snapshot}
-                generationNumber={snapshot}
-                user={account}
-                initial={{
-                  opacity: 0,
-                  y: 10,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: 1,
-                  },
-                }}
-              />
+              <SnapshotDialog.Dialog key={snapshot}>
+                <SnapshotDialog.DialogTrigger asChild>
+                  <Snapshot
+                    isSnapshot
+                    generationNumber={snapshot}
+                    user={account}
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        delay: 1,
+                      },
+                    }}
+                  />
+                </SnapshotDialog.DialogTrigger>
+                <SnapshotDialog.DialogContent>
+                  <Snapshot
+                    isSnapshot
+                    large
+                    generationNumber={snapshot}
+                    user={account}
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        delay: 1,
+                      },
+                    }}
+                    onClickTwitter={() => {
+                      open(
+                        twitter(
+                          `https://gol2-thecotne.netlify.app/infinite/${snapshot}`,
+                          `I helped evolve the Game of Life on StarkNet. Join us and shape the future! #GoL2 #Starknet`
+                        )
+                      )
+                    }}
+                  />
+                </SnapshotDialog.DialogContent>
+              </SnapshotDialog.Dialog>
             ))
             .reverse()}
       </FlexContainer>
     </ContainerInner>
   )
+}
+
+function twitter(url: string, text: string): string {
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
 }
 
 export default Snapshots
