@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['next', 'prettier'],
+  extends: ['@remix-run/eslint-config', '@remix-run/eslint-config/node', 'eslint-config-prettier'],
 }

@@ -1,9 +1,21 @@
 [build]
-  command = "yarn build"
-  publish = ".next"
+  command = "remix build"
+  publish = "public"
 
 [functions]
-  included_files = ["assets/**"]
+  included_files = ["app/assets/**"]
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+[dev]
+  command = "remix watch"
+  port = 3001
+  autoLaunch = false
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
+
+[[headers]]
+  for = "/build/*"
+  [headers.values]
+    "Cache-Control" = "public, max-age=31536000, s-maxage=31536000"
