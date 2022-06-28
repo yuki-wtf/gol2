@@ -29,7 +29,7 @@ const NavItem = ({
 }) => {
   return (
     <div
-      className='alink'
+      className="alink"
       key={to}
       style={{
         postion: 'relative',

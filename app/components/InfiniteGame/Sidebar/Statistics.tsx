@@ -26,14 +26,18 @@ const Statistics = ({ title }) => {
     args: ['', '', 'pending'],
   })
   const latestGenValue = useMemo(() => {
+    // console.log('[latestGenResult]')
+    // console.log(latestGenResult)
     if (latestGenResult && latestGenResult.length > 0) {
       const value = toBN(latestGenResult[0])
       return value.toString(10)
     }
   }, [latestGenResult])
   useEffect(() => {
-    dispatch(updateLatestGeneration(latestGenValue))
-    dispatch(updateSelectedGeneration(latestGenValue))
+    if (latestGenValue != null) {
+      dispatch(updateLatestGeneration(latestGenValue))
+      dispatch(updateSelectedGeneration(latestGenValue))
+    }
   }, [latestGenValue, dispatch])
   return (
     <SidebarSection title={title}>

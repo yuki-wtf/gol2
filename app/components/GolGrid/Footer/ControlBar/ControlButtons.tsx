@@ -73,7 +73,7 @@ export const StyledPlayPause = styled.button`
   ${primaryButton}
 `
 
-const PlayPauseBtn = ({ onClick, disabled, isPlaying, rest }) => {
+const PlayPauseBtn = ({ onClick, disabled, isPlaying, ...rest }) => {
   return (
     <StyledPlayPause onClick={onClick} disabled={disabled} {...rest}>
       {isPlaying ? (

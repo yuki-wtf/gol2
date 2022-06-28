@@ -14,7 +14,6 @@ import Typography from './components/Typography/Typography'
 import { useEffect, useLayoutEffect } from 'react'
 import { json } from '@remix-run/node'
 
-
 export async function loader() {
   // console.log(process.env)
 
@@ -22,7 +21,7 @@ export async function loader() {
     env: {
       BASE_URL: process.env.URL,
     },
-  });
+  })
 }
 
 export const meta: MetaFunction = () => ({
@@ -131,7 +130,5 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  return (
-    <AppLayout>{error.message}</AppLayout>
-  )
+  return <AppLayout>{error.message}</AppLayout>
 }

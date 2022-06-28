@@ -5,21 +5,21 @@ const config = [
   {
     source: {
       host: 'local.gol2.io',
-      port: 3000
+      port: 3000,
     },
     target: {
       host: 'localhost',
-      port: 3001
+      port: 3001,
     },
   },
   {
     source: {
       host: 'local.gol2.io',
-      port: 8002
+      port: 8002,
     },
     target: {
       host: 'localhost',
-      port: 8002
+      port: 8002,
     },
   },
 ]
@@ -34,9 +34,8 @@ const PROXY_READY_BANNER = `
    └───${PROXY_READY_MESSAGE.replace(/./g, '─')}───┘
 `
 
-
 function onReady() {
-  for (const {source, target} of config) {
+  for (const { source, target } of config) {
     const proxy = httpProxy.createProxyServer({
       target,
       ws: true,

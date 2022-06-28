@@ -1,5 +1,4 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
-import { truncate } from '../../../../utils/truncate'
 import { InjectedConnector } from '@starknet-react/core'
 import { HiChevronDown, HiOutlineGlobeAlt } from 'react-icons/hi'
 import { FaEthereum } from 'react-icons/fa'

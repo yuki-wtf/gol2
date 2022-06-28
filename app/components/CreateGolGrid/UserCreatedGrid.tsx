@@ -106,7 +106,7 @@ const UserCreatedGrid = () => {
 
     setCells(newGrid) //update grid and count
 
-    setCount(count+1)
+    setCount(count + 1)
   }, [cells, count])
   useEffect(() => {
     let intervalId

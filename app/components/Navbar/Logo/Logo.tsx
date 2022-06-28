@@ -21,7 +21,7 @@ export default function HeaderLogo() {
         <Route path="/snapshots/*" element={<SnapshotsLogo />}></Route>
         <Route path="/howitworks/*" element={<HowitworksLogo />}></Route>
         <Route path="/about/*" element={<AboutLogo />}></Route>
-        <Route path='/*' element={<DefaultLogo />}></Route>
+        <Route path="/*" element={<DefaultLogo />}></Route>
       </Routes>
     </LogoWrapper>
   )

@@ -1,13 +1,13 @@
 import React from 'react'
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled, { keyframes } from 'styled-components'
-import { truncate } from '../../utils/truncate'
 import { motion } from 'framer-motion'
 import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
 import { useStarknetCall } from '@starknet-react/core'
 import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
-import { dataToGrid } from '../../utils/dataToGrid'
+import { dataToGrid } from '../../helpers/dataToGrid'
 import Button from '../Button/Button'
+import { getShortChecksumAddress } from '~/helpers/starknet'
 
 const animate = keyframes`
   from {
@@ -199,7 +199,7 @@ const Snapshot = ({ onClick, onClickTwitter, large = false, generationNumber, us
   let formattedUser
 
   if (user) {
-    formattedUser = truncate(user, 12)
+    formattedUser = getShortChecksumAddress(user)
   }
 
   if (isLoading)

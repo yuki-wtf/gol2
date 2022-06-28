@@ -1,7 +1,7 @@
 import { useNavigate } from '@remix-run/react'
 import { HiOutlineArrowLeft, HiOutlineUser } from 'react-icons/hi'
 import styled from 'styled-components'
-import { truncate } from '../../utils/truncate'
+import { getShortChecksumAddress } from '~/helpers/starknet'
 import Button from '../Button/Button'
 import Typography from '../Typography/Typography'
 
@@ -77,7 +77,7 @@ export default function CreatorGameHeader({ address, gameId, title }: Props) {
             <StyledCreatedByText>Created by: </StyledCreatedByText>
             <StyledCreatedUser>
               <HiOutlineUser />
-              {truncate(address, 12)}
+              {getShortChecksumAddress(address)}
             </StyledCreatedUser>
           </StyledCreatedByWrapper>
         </StyledCreatedBy>

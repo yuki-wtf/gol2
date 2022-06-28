@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useAnimation, motion } from 'framer-motion'
-import Link from 'next/link'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { TxnRowStatus } from './TxnRow'
-import { truncate } from '../../utils/truncate'
 import { useStarknet } from '@starknet-react/core'
+import { getShortChecksumAddress } from '~/helpers/starknet'
+
 const Container = styled(motion.div)`
   height: 48px;
   display: flex;
@@ -200,7 +200,7 @@ const TransactionRow = ({ url = '/', type = 'give_life', status, delay = 1, dura
               }}
               status={status}
             >
-              {truncate(user, 12)} {isMyTxn && <span>(you)</span>}
+              {getShortChecksumAddress(user)} {isMyTxn && <span>(you)</span>}
             </UserContainer>
           )}
 

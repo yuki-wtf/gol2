@@ -1,51 +1,31 @@
-import { HiCheck, HiChevronDown, HiChevronRight } from 'react-icons/hi'
-import { useState } from 'react'
+import { HiCheck, HiChevronRight } from 'react-icons/hi'
 import DropUpMenu from '../../../DropUpMenu/DropUpMenu'
-import { setPlaybackSpeed } from '../../../../features/Infinite/playback/playbackSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import useUpdateEffect from '../../../../hooks/useUpdateEffect'
+import type { Actions, State } from '~/hooks/useInfiniteGamePlayback'
 
-const SpeedControl = (props) => {
-  const [speed, setSpeed] = useState(1000)
-  const dispatch = useDispatch()
+interface Props {
+  readonly state: State
+  readonly actions: Actions
+  readonly disabled?: boolean
+}
 
-  const renderPlaybackSpeed = () => {
-    switch (speed) {
-      case 1000:
-        return 'x1'
-
-      case 500:
-        return 'x2'
-
-      case 250:
-        return 'x3'
-
-      case 125:
-        return 'x4'
-
-      default:
-        return 'x1'
-    }
-  }
-
-  useUpdateEffect(() => {
-    if (speed === 1000) dispatch(setPlaybackSpeed(1000))
-    else if (speed === 500) dispatch(setPlaybackSpeed(1000))
-    else if (speed === 250) dispatch(setPlaybackSpeed(250))
-    else if (speed === 125) dispatch(setPlaybackSpeed(125))
-  }, [speed])
+const SpeedControl = ({ state, actions, disabled }: Props) => {
   return (
     <DropUpMenu.Root>
-      <DropUpMenu.Trigger {...props}>
-        {renderPlaybackSpeed()}
+      <DropUpMenu.Trigger disabled={disabled}>
+        x{state.playbackSpeed}
         <div>
           <HiChevronRight size={18} />
         </div>
       </DropUpMenu.Trigger>
 
       <DropUpMenu.Content side="top" align="center" sideOffset={5}>
-        <DropUpMenu.RadioGroup value={speed} onValueChange={setSpeed}>
-          <DropUpMenu.RadioItem value={1000}>
+        <DropUpMenu.RadioGroup
+          value={state.playbackSpeed.toString()}
+          onValueChange={(value) => {
+            actions.setPlaybackSpeed(parseInt(value))
+          }}
+        >
+          <DropUpMenu.RadioItem value="1">
             x1 Normal Speed
             <DropUpMenu.ItemIndicator>
               <div>
@@ -53,7 +33,7 @@ const SpeedControl = (props) => {
               </div>
             </DropUpMenu.ItemIndicator>
           </DropUpMenu.RadioItem>
-          <DropUpMenu.RadioItem value={500}>
+          <DropUpMenu.RadioItem value="2">
             x2
             <DropUpMenu.ItemIndicator>
               <div>
@@ -61,7 +41,7 @@ const SpeedControl = (props) => {
               </div>
             </DropUpMenu.ItemIndicator>
           </DropUpMenu.RadioItem>
-          <DropUpMenu.RadioItem value={250}>
+          <DropUpMenu.RadioItem value="3">
             x3
             <DropUpMenu.ItemIndicator>
               <div>
@@ -69,7 +49,7 @@ const SpeedControl = (props) => {
               </div>
             </DropUpMenu.ItemIndicator>
           </DropUpMenu.RadioItem>
-          <DropUpMenu.RadioItem value={125}>
+          <DropUpMenu.RadioItem value="4">
             x4
             <DropUpMenu.ItemIndicator>
               <div>

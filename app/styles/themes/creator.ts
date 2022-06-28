@@ -134,7 +134,8 @@ export const creator = {
       // rem
       md: 61,
       // rem
-      lg: 61, // rem
+      lg: 61,
+      // rem
     },
     breakpoints: {
       xs: 0,
@@ -143,7 +144,8 @@ export const creator = {
       // em
       md: 64,
       // em
-      lg: 75, // em
+      lg: 75,
+      // em
     },
   },
 }

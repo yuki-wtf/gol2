@@ -4,8 +4,9 @@ import { json } from '@remix-run/node'
 import fs from 'fs/promises'
 import path from 'path'
 import * as starknet from 'starknet'
-import { InfiniteAbi } from '~/abi/GoL2_infinite'
-import { dataToGrid } from '~/utils/dataToGrid'
+import { dataToGrid } from '~/helpers/dataToGrid'
+import { getShortChecksumAddress } from '~/helpers/starknet'
+import { InfiniteModeAbi, InfiniteModeAddress } from '~/smartContracts/InfiniteMode'
 
 function asset(src: string): string {
   return path.join(process.env.PWD, 'app/assets', src)
@@ -39,18 +40,13 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
 
     ctx.drawImage(image, 0, 0)
 
-    const infiniteGame = new starknet.Contract(
-      InfiniteAbi,
-      '0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f'
-    )
+    const infiniteGame = new starknet.Contract(InfiniteModeAbi, InfiniteModeAddress)
 
     const gen = parseInt(params.gen!)
 
     const data = await infiniteGame.call('get_arbitrary_state_arrays', [[gen], '0', ['0'], '0', '0'])
 
-    const account = starknet.getChecksumAddress(data.specific_state_owners[0])
-    const accountTruncated =
-      account.slice(0, 2) + ' ' + account.slice(2, 6) + ' ... ' + account.slice(account.length - 4)
+    const accountTruncated = getShortChecksumAddress(data.specific_state_owners[0])
 
     const grid = dataToGrid(data.gen_ids_array_result)!
 

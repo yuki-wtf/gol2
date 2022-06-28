@@ -1,16 +1,30 @@
 import { useState } from 'react'
 import copy from 'copy-to-clipboard'
-export default function useCopyToClipboard() {
-  const [value, setValue] = useState()
-  const [success, setSuccess] = useState()
 
-  const copyToClipboard = (text, options) => {
+type Return = [
+  typeof copy,
+  {
+    readonly value: string | null
+    readonly success: boolean | null
+  }
+]
+
+export default function useCopyToClipboard(): Return {
+  const [value, setValue] = useState<string>(null)
+  const [success, setSuccess] = useState(false)
+
+  const copyToClipboard: typeof copy = (text, options) => {
     const result = copy(text, options)
+
     if (result) setValue(text)
+
     setSuccess(result)
+
     setTimeout(() => {
-      setSuccess()
+      setSuccess(false)
     }, 2000)
+
+    return result
   }
 
   return [
@@ -20,15 +34,4 @@ export default function useCopyToClipboard() {
       success,
     },
   ]
-} // import useCopyToClipboard from "./useCopyToClipboard"
-// export default function CopyToClipboardComponent() {
-//   const [copyToClipboard, { success }] = useCopyToClipboard()
-//   return (
-//     <>
-//       <button onClick={() => copyToClipboard("This was copied")}>
-//         {success ? "Copied" : "Copy Text"}
-//       </button>
-//       <input type="text" />
-//     </>
-//   )
-// }
+}

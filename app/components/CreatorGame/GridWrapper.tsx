@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { dataToGrid } from '../../utils/dataToGrid'
+import { dataToGrid } from '../../helpers/dataToGrid'
 import Body from '../GolGrid/Body/Body'
 import Loader from '../Loader/Loader'
-import GetGame from './Game/Wrapped/GetGame'
 import Grid from './Grid'
+
 const StyledLoaderContainer = styled(motion.div)`
   width: 512px;
   height: 512px;

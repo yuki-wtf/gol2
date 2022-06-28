@@ -6,7 +6,7 @@ import Snapshot from '../components/Snapshot/Snapshot'
 import SnapshotEmpty from '../components/SnapshotEmpty/SnapshotEmpty'
 import styled from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
-import { dataToGrid } from '../utils/dataToGrid'
+import { dataToGrid } from '../helpers/dataToGrid'
 import { useSelector } from 'react-redux'
 import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
 
@@ -194,4 +194,3 @@ export default function Snapshots() {
     </ContainerInner>
   )
 }
-

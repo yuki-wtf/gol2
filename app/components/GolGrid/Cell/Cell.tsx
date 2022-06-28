@@ -81,29 +81,29 @@ const StyledCell2 = styled.div`
 `
 
 const Cell = ({ state = 'default', onClick, isSnapshot }) => {
-  const { playbackMode } = useSelector((state) => state.playback)
+  // const { playbackMode } = useSelector((state) => state.playback)
 
-  if (isSnapshot || playbackMode) {
-    return <StyledCell2 isSnapshot state={state} onClick={onClick} />
-  }
+  // if (isSnapshot || playbackMode) {
+  return <StyledCell2 isSnapshot state={state} onClick={onClick} />
+  // }
 
-  return (
-    <StyledCell
-      initial={{
-        opacity: 0,
-        scale: 0,
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        transition: {
-          delay: 0.4,
-        },
-      }}
-      state={state}
-      onClick={onClick}
-    />
-  )
+  // return (
+  //   <StyledCell
+  //     initial={{
+  //       opacity: 0,
+  //       scale: 0,
+  //     }}
+  //     animate={{
+  //       opacity: 1,
+  //       scale: 1,
+  //       transition: {
+  //         delay: 0.4,
+  //       },
+  //     }}
+  //     state={state}
+  //     onClick={onClick}
+  //   />
+  // )
 }
 
 export default Cell

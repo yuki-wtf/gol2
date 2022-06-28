@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import React from 'react'
 import { HiOutlineDesktopComputer } from 'react-icons/hi'
 
 const MobileMessage = () => {
@@ -10,12 +8,11 @@ const MobileMessage = () => {
       </div>
       <div className="mobileMessageLogoContainer">
         <div>
-          <Image
+          <img
             style={{
               width: 230,
             }}
             src="/assets/mobile/mobile_logo.png"
-            alt=""
           />
           <p className="mobileMessageLogoContainerTag">A layer 2 gaming experience.</p>
         </div>

@@ -1,17 +1,18 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
-import { truncate } from '../../../../utils/truncate'
 import { InjectedConnector } from '@starknet-react/core'
 import { HiChevronDown, HiOutlineClipboardCopy, HiOutlineDocumentSearch, HiOutlineLogout } from 'react-icons/hi'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
+import { getShortChecksumAddress } from '~/helpers/starknet'
 
 const UserDropdownMenu = ({ account, disconnect }) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <CgProfile size={15} />
-        {truncate(account, 12)}
+        {getShortChecksumAddress(account)}
         <HiChevronDown size={24} />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>

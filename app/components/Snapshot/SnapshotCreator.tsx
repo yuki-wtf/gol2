@@ -6,9 +6,9 @@ import styled from 'styled-components'
 import { updateGameState } from '../../features/creator/creatorGamesSlice'
 import { useCreatorGameContract } from '../../hooks/useCreatorGameContract'
 import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
-import { dataToGrid } from '../../utils/dataToGrid'
-import { truncate } from '../../utils/truncate'
+import { dataToGrid } from '../../helpers/dataToGrid'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
+import { getShortChecksumAddress } from '~/helpers/starknet'
 const StyledGridContainer = styled.div`
   width: 212px;
   height: 212px;
@@ -140,7 +140,7 @@ const SnapshotCreator = ({ onClick, generationNumber, address, id, grid }) => {
       <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
       <div>{error}</div>
       <StyledUserAddress>
-        <HiOutlineUser color="#c2b9b2" size={16} /> {truncate(address, 12)}
+        <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
       </StyledUserAddress>
     </StyledCard>
   )

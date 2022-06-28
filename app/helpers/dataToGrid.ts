@@ -10,7 +10,7 @@ function toBinaryStringArray(val) {
   )
 }
 
-export function dataToGrid(data) {
+export function dataToGrid(data): number[][] {
   if ((data && data !== null) || data !== undefined) {
     return Object.keys(data).map((key) => {
       // Start by creating a row with just zeroes

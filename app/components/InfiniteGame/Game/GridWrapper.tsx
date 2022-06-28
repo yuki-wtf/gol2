@@ -1,26 +1,24 @@
 import { motion } from 'framer-motion'
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Body from '../../GolGrid/Body/Body'
 import Loader from '../../Loader/Loader'
 import Grid from './Grid'
-import { dataToGrid } from '../../../utils/dataToGrid'
+
 const StyledLoaderContainer = styled(motion.div)`
   width: 512px;
   height: 512px;
   background-color: black;
 `
 
-const GridWrapper = () => {
-  const { latest_generation, generations, selected_generation } = useSelector((state) => state.generations)
+interface Props {
+  readonly grid: ReadonlyArray<ReadonlyArray<number>> | null
+}
+
+export default function GridWrapper({ grid }: Props) {
   return (
     <Body>
-      {latest_generation !== null &&
-      selected_generation !== null &&
-      generations !== undefined &&
-      generations[selected_generation] !== undefined ? (
-        <Grid data={dataToGrid(generations[selected_generation])} />
+      {grid != null ? (
+        <Grid data={grid} />
       ) : (
         <StyledLoaderContainer
           initial={{
@@ -39,5 +37,3 @@ const GridWrapper = () => {
     </Body>
   )
 }
-
-export default GridWrapper
