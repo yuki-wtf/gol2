@@ -1,4 +1,3 @@
-import React from 'react'
 import Footer from '../GolGrid/Footer/Footer'
 import CControlBar from './CControlBar'
 

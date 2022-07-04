@@ -13,6 +13,7 @@ const MobileMessage = () => {
               width: 230,
             }}
             src="/assets/mobile/mobile_logo.png"
+            alt=""
           />
           <p className="mobileMessageLogoContainerTag">A layer 2 gaming experience.</p>
         </div>

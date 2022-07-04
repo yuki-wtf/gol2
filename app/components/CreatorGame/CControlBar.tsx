@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import ControlButtons from '../GolGrid/Footer/ControlBar/ControlButtons'
 import SpeedDropdownMenu from '../GolGrid/Footer/ControlBar/SpeedControl'
+
 const StyledControlbar = styled.div`
   display: flex;
   flex-direction: row;

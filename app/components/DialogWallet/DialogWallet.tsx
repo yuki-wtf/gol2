@@ -1,4 +1,3 @@
-import React from 'react'
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineX } from 'react-icons/hi'
 import Button from '../Button/Button'

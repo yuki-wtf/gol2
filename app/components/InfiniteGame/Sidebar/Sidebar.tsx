@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react'
 import Statistics from './Statistics'
 import styled from 'styled-components'
 import Gameplay from './Gameplay'

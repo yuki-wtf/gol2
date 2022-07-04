@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useStarknetCall } from '@starknet-react/core'
 import { useInfiniteGameContract } from '../../../hooks/useInfiniteGameContract'
 import { toBN } from 'starknet/dist/utils/number'
 import SidebarSection from '../../SidebarSection/SidebarSection'
 import StatRow from '../../StatRow/StatRow'
-import { HiQrcode, HiOutlineUser, HiOutlineHeart } from 'react-icons/hi'
+import { HiQrcode, HiOutlineHeart } from 'react-icons/hi'
 import { FaSkull } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 import { useDispatch } from 'react-redux'
@@ -16,11 +16,7 @@ import {
 const Statistics = ({ title }) => {
   const dispatch = useDispatch()
   const { contract: infinite } = useInfiniteGameContract()
-  const {
-    data: latestGenResult,
-    loading,
-    error,
-  } = useStarknetCall({
+  const { data: latestGenResult, loading } = useStarknetCall({
     contract: infinite,
     method: 'current_generation_id',
     args: ['', '', 'pending'],

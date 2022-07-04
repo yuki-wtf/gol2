@@ -1,8 +1,5 @@
-import React, { useState } from 'react'
 import GameGrid from '../../GolGrid/GameGrid/GameGrid'
 import Cell from '../../GolGrid/Cell/Cell'
-import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedCellColumn, setSelectedCellRow } from '../../../features/Infinite/grid/infiniteGridSlice'
 
 const ISnapshotGrid = ({ data, isSnapshot = true }) => {
   // console.log("data is", data);

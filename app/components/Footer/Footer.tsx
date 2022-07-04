@@ -1,9 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
-import ContainerInner from '../Layout/ContainerInner'
 import Typography from '../Typography/Typography'
 import StarknetLogoLink from './Links/StarknetLogo'
-import YukiLogoLink from './Links/YukiLogo'
+
 const StyledFooter = styled.footer`
   height: 72px;
   display: flex;

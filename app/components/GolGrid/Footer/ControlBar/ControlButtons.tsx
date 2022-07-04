@@ -1,4 +1,3 @@
-import React from 'react'
 import styled, { css } from 'styled-components'
 const defaultButton = css`
   position: relative;
@@ -39,11 +38,11 @@ const focusedButtonPrimary = css`
     }
   }
 `
-const disabledButtonPrimary = css`
-  pointer-events: none;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};
-`
+// const disabledButtonPrimary = css`
+//   pointer-events: none;
+//   background: transparent;
+//   color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};
+// `
 const activeButtonPrimary = css`
   background: ${({ theme }) => theme.colors.buttonPrimary.activeBackground};
 `

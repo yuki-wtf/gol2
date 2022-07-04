@@ -1,4 +1,3 @@
-import React from 'react'
 import CreditsContainer from './CreditsContainer'
 
 const CreditsConnected = () => {

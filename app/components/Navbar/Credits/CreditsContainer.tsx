@@ -1,8 +1,8 @@
-import React from 'react'
 import styled from 'styled-components'
 import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
 import { HiOutlineHeart } from 'react-icons/hi'
+
 const StyledContainer = styled.div`
   display: flex;
   flex: 1;

@@ -1,10 +1,9 @@
-import React from 'react'
 import styled from 'styled-components'
 import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
-import { HiOutlineHeart, HiOutlineLightningBolt, HiPlus } from 'react-icons/hi'
+import { HiOutlineLightningBolt, HiPlus } from 'react-icons/hi'
 import Button from '../../Button/Button'
-import { useLocation, useNavigate } from '@remix-run/react'
+import { useNavigate } from '@remix-run/react'
 
 const StyledContainer = styled.div`
   display: flex;

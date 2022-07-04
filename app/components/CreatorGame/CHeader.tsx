@@ -1,17 +1,18 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
-import { useSelector } from 'react-redux'
 import { useCreatorGameContract } from '../../hooks/useCreatorGameContract'
 import Button from '../Button/Button'
 import DialogTxnError from '../DialogTxnError/DialogTxnError'
 import DialogWaiting from '../DialogWaiting/DialogWaiting'
 import Header from '../GolGrid/Header/Header'
+
 export const IHeader = ({ gameId }) => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useCreatorGameContract()
   const { account } = useStarknet()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
     method: 'contribute',

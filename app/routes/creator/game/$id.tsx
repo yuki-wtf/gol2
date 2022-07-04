@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { creator } from '../../../styles/themes/creator'
 import ContainerInner from '../../../components/Layout/ContainerInner'
@@ -6,7 +6,7 @@ import Sidebar from '../../../components/CreatorGame/Sidebar/Sidebar'
 import CreatorGameHeader from '../../../components/CreatorGameHeader/CreatorGameHeader'
 import GameContainer from '../../../components/CreatorGame/GameContainer'
 import GetGame from '../../../components/CreatorGame/Game/Wrapped/GetGame'
-import { useLocation, useSearchParams } from '@remix-run/react'
+import { useSearchParams } from '@remix-run/react'
 
 const CreatorGame = () => {
   const [needsData, setNeedsData] = useState(false)

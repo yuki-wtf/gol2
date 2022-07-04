@@ -1,6 +1,5 @@
-import * as React from 'react'
 import styled from 'styled-components'
-import Typography from '../../Typography/Typography'
+
 const StyledContainer = styled.div`
   display: inline-flex;
   flex-direction: row;
@@ -11,24 +10,24 @@ const StyledContainer = styled.div`
 const StyledLogo = styled.div`
   max-width: 78px;
 `
-const StyledPageTitle = styled.div`
-  position: relative;
-  top: -1px;
-  height: 20px;
-  padding-left: 16px;
-  display: flex;
-  align-items: center;
-  color: ${(props) => props.theme.colors.primary};
-  &:before {
-    content: '';
-    width: 1px;
-    height: 17px;
-    background-color: black;
-    position: absolute;
-    top: 3px;
-    left: -1px;
-  }
-`
+// const StyledPageTitle = styled.div`
+//   position: relative;
+//   top: -1px;
+//   height: 20px;
+//   padding-left: 16px;
+//   display: flex;
+//   align-items: center;
+//   color: ${(props) => props.theme.colors.primary};
+//   &:before {
+//     content: '';
+//     width: 1px;
+//     height: 17px;
+//     background-color: black;
+//     position: absolute;
+//     top: 3px;
+//     left: -1px;
+//   }
+// `
 
 const DefaultLogo = (props) => {
   return (

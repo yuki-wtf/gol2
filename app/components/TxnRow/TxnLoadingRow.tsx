@@ -13,18 +13,18 @@ const Container = styled(motion.div)`
 
   /* opacity: 0; */
 `
-const Progress = styled(motion.div)`
-  border: 1px solid #1d222c;
-  background-color: white;
+// const Progress = styled(motion.div)`
+//   border: 1px solid #1d222c;
+//   background-color: white;
 
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  z-index: 1;
-  border-radius: 6px;
-`
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   width: 0;
+//   z-index: 1;
+//   border-radius: 6px;
+// `
 const InnerContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
@@ -49,22 +49,22 @@ const ButtonContainer = styled.div`
     }
   }
 `
-const ButtonContainerCompleted = styled.div`
-  margin-left: auto;
-  a {
-    color: white;
-    &:hover {
-      opacity: 0.4;
-    }
-  }
-`
-const IconContainer = styled.div`
-  height: 100%;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: red;
-`
+// const ButtonContainerCompleted = styled.div`
+//   margin-left: auto;
+//   a {
+//     color: white;
+//     &:hover {
+//       opacity: 0.4;
+//     }
+//   }
+// `
+// const IconContainer = styled.div`
+//   height: 100%;
+//   justify-content: center;
+//   display: flex;
+//   flex-direction: column;
+//   color: red;
+// `
 const IconContainerComplete = styled.div`
   height: 100%;
   justify-content: center;

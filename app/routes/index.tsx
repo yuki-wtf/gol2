@@ -52,7 +52,7 @@ export default function Index() {
     setTimeout(() => {
       setGameActive(true)
     }, 1000)
-  }, [])
+  }, [navigate])
   useEffect(() => {
     if (gameActive) {
       setGameVisible(true)

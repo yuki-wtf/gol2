@@ -5,7 +5,7 @@ import useUpdateEffect from './useUpdateEffect'
 
 const useFetchTokens = () => {
   const { contract: infinite } = useInfiniteGameContract()
-  const { account, library, connectors } = useStarknet()
+  const { account } = useStarknet()
   const [snapshots, setSnapshots] = useState([])
   const {
     data: tokens,
@@ -33,7 +33,7 @@ const useFetchTokens = () => {
   // }, [tokens, snapshots]);
   useUpdateEffect(() => {
     if (tokens && tokens.length > 0) {
-      tokens.token_ids.map((item) => {
+      tokens.token_ids.forEach((item) => {
         if (!snapshots.includes(item.words[0])) {
           setSnapshots((oldArray) => [...oldArray, item.words[0]])
         }

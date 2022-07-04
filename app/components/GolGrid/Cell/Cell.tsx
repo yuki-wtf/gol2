@@ -1,7 +1,5 @@
-import { motion } from 'framer-motion'
-import React from 'react'
-import { useSelector } from 'react-redux'
 import styled, { css } from 'styled-components'
+
 const pendingCell = css`
   background-color: ${(p) => p.theme.colors.cell.cellPendingBackground};
   pointer-events: none;
@@ -29,29 +27,29 @@ const defaultCell = css`
     background-color: ${(p) => !p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
   }
 `
-const StyledCell = styled(motion.div)`
-  ${(p) => {
-    switch (p.state) {
-      case 'pending':
-        return pendingCell
+// const StyledCell = styled(motion.div)`
+//   ${(p) => {
+//     switch (p.state) {
+//       case 'pending':
+//         return pendingCell
 
-      case 'alive':
-        return aliveCell
+//       case 'alive':
+//         return aliveCell
 
-      case 'selected':
-        return selectedCell
+//       case 'selected':
+//         return selectedCell
 
-      case 'createSelected':
-        return createSelectedCell
+//       case 'createSelected':
+//         return createSelectedCell
 
-      case 'dead':
-        return defaultCell
+//       case 'dead':
+//         return defaultCell
 
-      default:
-        return defaultCell
-    }
-  }}
-`
+//       default:
+//         return defaultCell
+//     }
+//   }}
+// `
 const StyledCell2 = styled.div`
   ${(p) => {
     switch (p.state) {

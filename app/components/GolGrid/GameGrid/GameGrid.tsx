@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import React from 'react'
 import styled from 'styled-components'
+
 const StyledGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: ${(p) => (p.small ? 'repeat(32, 8px)' : 'repeat(32, 16px)')};

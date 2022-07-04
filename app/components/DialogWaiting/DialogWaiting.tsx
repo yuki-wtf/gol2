@@ -1,4 +1,3 @@
-import React from 'react'
 import Dialog from '../Dialog/Dialog'
 import Loader from '../Loader/Loader'
 import { HiOutlineX } from 'react-icons/hi'

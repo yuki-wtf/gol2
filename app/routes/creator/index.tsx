@@ -1,5 +1,4 @@
 import { useStarknet } from '@starknet-react/core'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import GetRecentlyCreated from '../../components/CreatorGame/Game/Wrapped/GetRecentlyCreated'
@@ -30,14 +29,12 @@ export default function Creator() {
   const navigate = useNavigate()
   const { games } = useSelector((state) => state.creatorGames)
   const { account } = useStarknet()
-  const [userHasGames, setUserHasGames] = useState(false)
+  // const [userHasGames, setUserHasGames] = useState(false)
   return (
     <ThemeProvider theme={creator}>
       <ContainerInner maxWidth={1000}>
         {/* <GetNewestGame /> */}
         <GetRecentlyCreated />
-
-        {/* <GetViewGame id={""} gen="0" /> */}
 
         <PageIntro.Container>
           <PageIntro.Icon color="#8AED9B" />
@@ -59,21 +56,23 @@ export default function Creator() {
         >
           {account && Object.keys(games).length > 0
             ? Object.entries(games).map(([key, value]) => {
-                if (account === games[key].owner) {
-                  return (
-                    <SnapshotCreator
-                      onClick={() =>
-                        navigate(
-                          `/creator/game/${games[key].game_index}?game_index=${games[key].game_index}&current_gen=${games[key].generation}&owner=${games[key].owner}`
-                        )
-                      }
-                      key={games[key].game_index}
-                      id={games[key].game_index}
-                      generationNumber={games[key].generation}
-                      address={games[key].owner}
-                    />
-                  )
+                if (account !== games[key].owner) {
+                  return null
                 }
+
+                return (
+                  <SnapshotCreator
+                    onClick={() =>
+                      navigate(
+                        `/creator/game/${games[key].game_index}?game_index=${games[key].game_index}&current_gen=${games[key].generation}&owner=${games[key].owner}`
+                      )
+                    }
+                    key={games[key].game_index}
+                    id={games[key].game_index}
+                    generationNumber={games[key].generation}
+                    address={games[key].owner}
+                  />
+                )
               })
             : [1, 2, 3, 4].map((i) => (
                 <Loading key={i}>
@@ -100,21 +99,23 @@ export default function Creator() {
         >
           {Object.keys(games).length > 0
             ? Object.entries(games && games).map(([key, value]) => {
-                if (account !== games[key].owner) {
-                  return (
-                    <SnapshotCreator
-                      onClick={() =>
-                        navigate(
-                          `/creator/game/${games[key].game_index}?game_index=${games[key].game_index}&current_gen=${games[key].generation}&owner=${games[key].owner}`
-                        )
-                      }
-                      key={games[key].game_index}
-                      id={games[key].game_index}
-                      generationNumber={games[key].generation}
-                      address={games[key].owner}
-                    />
-                  )
+                if (account === games[key].owner) {
+                  return null
                 }
+
+                return (
+                  <SnapshotCreator
+                    onClick={() =>
+                      navigate(
+                        `/creator/game/${games[key].game_index}?game_index=${games[key].game_index}&current_gen=${games[key].generation}&owner=${games[key].owner}`
+                      )
+                    }
+                    key={games[key].game_index}
+                    id={games[key].game_index}
+                    generationNumber={games[key].generation}
+                    address={games[key].owner}
+                  />
+                )
               })
             : [1, 2, 3, 4].map((i) => (
                 <Loading key={i}>

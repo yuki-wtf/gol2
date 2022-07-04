@@ -1,4 +1,4 @@
-import { Abi } from 'starknet'
+import type { Abi } from 'starknet'
 
 export const CreatorModeAddress = '0x021720286a97c4cb4504de696a28f60a421af77a21f5da9df717d071756d9734'
 

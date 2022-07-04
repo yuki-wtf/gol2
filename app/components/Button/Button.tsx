@@ -1,10 +1,16 @@
-import React from 'react'
 import styled, { css } from 'styled-components'
-import { motion } from 'framer-motion'
 import T from '../Typography/Typography'
 import Spinner from '../Spinner/Spinner'
+
+interface DefaultButtonProps {
+  readonly full?: boolean
+  readonly icon?: boolean
+  readonly isLoading?: boolean
+  readonly disabled?: boolean
+}
+
 // Defaults
-const defaultButton = css`
+const defaultButton = css<DefaultButtonProps>`
   position: relative;
   text-transform: uppercase;
   font-weight: 800;
@@ -52,7 +58,7 @@ const focusedButtonPrimary = css`
     }
   }
 `
-const disabledButtonPrimary = css`
+const disabledButtonPrimary = css<DefaultButtonProps>`
   pointer-events: none;
   background: ${({ theme }) => theme.colors.buttonPrimary.disabledBackground};
   color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};

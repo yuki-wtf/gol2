@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { motion, MotionStyle } from 'framer-motion'
+import type { MotionStyle } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 export const InfoList = styled.ul`
   margin-top: 32px;

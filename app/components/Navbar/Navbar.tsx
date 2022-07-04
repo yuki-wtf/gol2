@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
-import ContainerInner from '../Layout/ContainerInner'
 import ConnectWallet from './ConnectWallet/ConnectWallet'
 import Credits from './Credits/Credits'
 import CreatorCredits from './CreatorCredits/CreatorCredits'
@@ -11,8 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import useFetchTokens from '../../hooks/useFetchTokens'
 import { updateSnapshots, updateTokenCount, updateTokenIds } from '../../features/Infinite/user/userSlice'
 import GetUserCounts from '../CreatorGame/Game/Wrapped/GetUserCounts'
-import { useLocation } from '@remix-run/react'
 import { Route, Routes } from 'react-router-dom'
+
 const StyledNavbar = styled.header`
   position: relative;
   height: 120px;
@@ -41,7 +40,7 @@ const Navbar = () => {
   const { selectedCellRow } = useSelector((state) => state.infiniteGrid)
   const { creatorCreditsCount } = useSelector((state) => state.user)
   const dispatch = useDispatch()
-  const { tokenCount, tokens, snapshots, loading, error } = useFetchTokens()
+  const { tokenCount, tokens, snapshots } = useFetchTokens()
   // const [open, setOpen] = useState(false);
   useEffect(() => {
     dispatch(updateTokenCount(tokenCount))

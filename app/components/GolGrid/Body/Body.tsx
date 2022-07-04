@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 // import Cell from "../Cell/Cell";
 // import Grid from "../../InfiniteGame/Game/Grid/Grid";

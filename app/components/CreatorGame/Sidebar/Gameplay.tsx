@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import SidebarSection from '../../SidebarSection/SidebarSection'
 import TxnRow from '../../TxnRow/TxnRow'
 import { useStarknetTransactionManager } from '@starknet-react/core'

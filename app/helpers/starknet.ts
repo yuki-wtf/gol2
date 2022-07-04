@@ -1,5 +1,5 @@
 import { getChecksumAddress } from 'starknet'
-import { BigNumberish } from 'starknet/dist/utils/number'
+import type { BigNumberish } from 'starknet/dist/utils/number'
 
 export function getShortChecksumAddress(address: BigNumberish | string): string {
   if (typeof address !== 'string') {

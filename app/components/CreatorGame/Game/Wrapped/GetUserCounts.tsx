@@ -1,6 +1,6 @@
 import { useStarknet, useStarknetCall } from '@starknet-react/core'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { updateCreatorCredits, updateCreatorGamesOwned } from '../../../../features/Infinite/user/userSlice'
 import { useCreatorGameContract } from '../../../../hooks/useCreatorGameContract'
 
@@ -9,7 +9,7 @@ const GetUserCounts = ({ id, gen }) => {
   const { account } = useStarknet()
   const { contract } = useCreatorGameContract()
   // get latest game state
-  const { data, loading, error } = useStarknetCall({
+  const { data, loading } = useStarknetCall({
     contract: contract,
     method: 'user_counts',
     args: [account, '', 'pending'],

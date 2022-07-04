@@ -1,5 +1,5 @@
 import Infinite from '.'
-import { MetaFunction } from '@remix-run/react/routeModules'
+import type { MetaFunction } from '@remix-run/react/routeModules'
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   return {

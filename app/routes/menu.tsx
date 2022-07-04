@@ -1,11 +1,11 @@
-//Todo: Move to styled components
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import NavItem from '../components/Menu/NavItem'
 import MenuDescription from '../components/Menu/MenuDescription'
-import useFetchTokens from '../hooks/useFetchTokens'
+// import useFetchTokens from '../hooks/useFetchTokens'
 import NavContainer from '../components/Layout/NavContainer'
 import { useSelector } from 'react-redux'
+
 const container = {
   hidden: {
     opacity: 0,
@@ -27,10 +27,11 @@ const listItem = {
 }
 
 const Menu = () => {
-  const { tokenCount, activeTokenCount } = useSelector((state) => state.user)
+  const { tokenCount } = useSelector((state) => state.user)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedHover, setselectedHover] = useState(null)
   const [currentNav, setCurrentNav] = useState(null)
-  const { snapshots } = useFetchTokens()
+  // const { snapshots } = useFetchTokens()
   const menuItems = [
     {
       className: 'infinite',

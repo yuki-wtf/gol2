@@ -1,5 +1,5 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
 import { useInfiniteGameContract } from '../../../hooks/useInfiniteGameContract'
 import Button from '../../Button/Button'
@@ -8,12 +8,14 @@ import DialogWaiting from '../../DialogWaiting/DialogWaiting'
 import Header from '../../GolGrid/Header/Header'
 import { useSelector } from 'react-redux'
 import TempOverlay from '../../TempOverlay/TempOverlay'
+
 export const IHeader = () => {
   const { selectedCellRow } = useSelector((state) => state.infiniteGrid)
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useInfiniteGameContract()
   const { account } = useStarknet()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
     method: 'evolve_and_claim_next_generation',

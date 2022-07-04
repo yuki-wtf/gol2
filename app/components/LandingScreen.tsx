@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const LandingContainer = styled.div`
   display: flex;

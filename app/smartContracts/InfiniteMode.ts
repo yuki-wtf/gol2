@@ -1,4 +1,4 @@
-import { Abi } from 'starknet'
+import type { Abi } from 'starknet'
 
 export const InfiniteModeAddress = '0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f'
 

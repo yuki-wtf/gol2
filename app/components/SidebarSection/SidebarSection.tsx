@@ -1,7 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
-import Skeleton from '../Skeleton/Skeleton'
 import T from '../Typography/Typography'
+
 const StyledSidebarSection = styled.div`
   display: flex;
   max-width: 300px;

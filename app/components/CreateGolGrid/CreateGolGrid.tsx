@@ -1,11 +1,9 @@
-import React from 'react'
-import { HiOutlineLightningBolt } from 'react-icons/hi'
 import styled from 'styled-components'
-import Button from '../Button/Button'
 import Body from '../GolGrid/Body/Body'
 import Footer from '../GolGrid/Footer/Footer'
 import Header from '../GolGrid/Header/Header'
 import GridWrapper from './GridWrapper'
+
 const StyledGridContainer = styled.div`
   background-color: #000000;
   overflow: hidden;

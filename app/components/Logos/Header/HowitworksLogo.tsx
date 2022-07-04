@@ -1,6 +1,6 @@
-import * as React from 'react'
 import styled from 'styled-components'
 import Typography from '../../Typography/Typography'
+
 const StyledContainer = styled.div`
   display: inline-flex;
   flex-direction: row;

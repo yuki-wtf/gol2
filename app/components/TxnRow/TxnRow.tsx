@@ -1,5 +1,3 @@
-import React from 'react'
-import { AnimatePresence } from 'framer-motion'
 import TransactionRow from './TxnRow.styles'
 export const TxnRowStatus = {
   TRANSACTION_RECEIVED: {

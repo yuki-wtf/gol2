@@ -1,13 +1,13 @@
 import { useStarknetCall } from '@starknet-react/core'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { toHex } from 'starknet/dist/utils/number'
 import { updateCreatorGames } from '../../../../features/creator/creatorGamesSlice'
 import { useCreatorGameContract } from '../../../../hooks/useCreatorGameContract'
 
 const GetRecentlyCreated = ({ latestGeneration }) => {
   const dispatch = useDispatch()
-  const { games } = useSelector((state) => state.creatorGames)
+  // const { games } = useSelector((state) => state.creatorGames)
   const { contract } = useCreatorGameContract()
 
   function isNegative(num) {
@@ -19,7 +19,7 @@ const GetRecentlyCreated = ({ latestGeneration }) => {
   }
 
   // get latest game state
-  const { data, loading, error } = useStarknetCall({
+  const { data, loading } = useStarknetCall({
     contract: contract,
     method: 'get_recently_created',
     args: ['0', '', 'pending'],

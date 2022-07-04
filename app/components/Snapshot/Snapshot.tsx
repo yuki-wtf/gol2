@@ -1,4 +1,3 @@
-import React from 'react'
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled, { keyframes } from 'styled-components'
 import { motion } from 'framer-motion'
@@ -153,21 +152,21 @@ const StyledGenNumber = styled.div`
   margin-top: 0px;
   letter-spacing: 0.05em;
 `
-const StyledGenId = styled.div`
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 26px;
-  text-align: left;
-  width: 100%;
-  color: #2d3038;
-  margin-top: 4px;
-  & span {
-    color: #57637b;
-    font-weight: 600;
-  }
-`
+// const StyledGenId = styled.div`
+//   font-family: 'Mulish';
+//   font-style: normal;
+//   font-weight: 700;
+//   font-size: 13px;
+//   line-height: 26px;
+//   text-align: left;
+//   width: 100%;
+//   color: #2d3038;
+//   margin-top: 4px;
+//   & span {
+//     color: #57637b;
+//     font-weight: 600;
+//   }
+// `
 const StyledUserAddress = styled.div`
   font-family: 'Mulish';
   font-style: normal;
@@ -191,7 +190,7 @@ const SkeletonImagePreview = () => {
 
 const Snapshot = ({ onClick, onClickTwitter, large = false, generationNumber, user, id, isLoading, ...rest }) => {
   const { contract } = useInfiniteGameContract()
-  const { data, loading, error } = useStarknetCall({
+  const { data, loading } = useStarknetCall({
     contract: contract,
     method: 'view_game',
     args: [generationNumber && generationNumber.toString(), '', 'pending'],

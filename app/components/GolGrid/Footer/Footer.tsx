@@ -1,7 +1,5 @@
-import React from 'react'
 import styled from 'styled-components'
-import TempOverlay from '../../TempOverlay/TempOverlay'
-import ControlBar from './ControlBar/ControlBar'
+
 const StyledFooter = styled.footer`
   background-color: ${(props) => (props.empty ? '#1D222D' : props.theme.colors.neutral100)};
   border: 1px solid ${(props) => props.theme.colors.neutral400};

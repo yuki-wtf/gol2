@@ -1,5 +1,5 @@
 import { useStarknetCall } from '@starknet-react/core'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCreatorGames } from '../../../../features/creator/creatorGamesSlice'
 import { useCreatorGameContract } from '../../../../hooks/useCreatorGameContract'
@@ -9,7 +9,7 @@ const GetNewestGame = ({ latestGeneration }) => {
   const { contract } = useCreatorGameContract()
   const { games } = useSelector((state) => state.creatorGames)
   // get latest game state
-  const { data, loading, error } = useStarknetCall({
+  const { data, loading } = useStarknetCall({
     contract: contract,
     method: 'newest_game',
     args: ['0', '', 'pending'],

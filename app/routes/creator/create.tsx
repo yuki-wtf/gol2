@@ -1,4 +1,3 @@
-import React from 'react'
 import CreateGolGrid from '../../components/CreateGolGrid/CreateGolGrid'
 import CreatorGameHeader from '../../components/CreatorGameHeader/CreatorGameHeader'
 import ContainerInner from '../../components/Layout/ContainerInner'
@@ -174,7 +173,7 @@ const Create = () => {
           {gameExamples.map((example) => {
             return (
               <div key={example.url}>
-                <img width={144} height={144} src={example.url} alt="image" />
+                <img width={144} height={144} src={example.url} alt="" />
               </div>
             )
           })}

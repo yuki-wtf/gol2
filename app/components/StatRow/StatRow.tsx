@@ -1,14 +1,14 @@
-import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import Skeleton from '../Skeleton/Skeleton'
 import T from '../Typography/Typography'
-const Container = styled(motion.div)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 48px;
-`
+
+// const Container = styled(motion.div)`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   height: 48px;
+// `
 const StyledStat = styled(motion.div)`
   display: flex;
   flex-direction: row;

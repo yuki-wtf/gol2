@@ -1,7 +1,7 @@
-import React from 'react'
 import { useLottie } from 'lottie-react'
 import animation from '../../assets/animations/loader.json'
 import styled from 'styled-components'
+
 const options = {
   animationData: animation,
   height: 120,

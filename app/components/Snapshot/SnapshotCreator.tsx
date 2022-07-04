@@ -1,11 +1,10 @@
-import { useStarknet, useStarknetCall } from '@starknet-react/core'
-import React, { useEffect } from 'react'
+import { useStarknetCall } from '@starknet-react/core'
+import { useEffect } from 'react'
 import { HiOutlineUser } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { updateGameState } from '../../features/creator/creatorGamesSlice'
 import { useCreatorGameContract } from '../../hooks/useCreatorGameContract'
-import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
 import { dataToGrid } from '../../helpers/dataToGrid'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
@@ -80,21 +79,21 @@ const StyledGenNumber = styled.div`
   text-transform: uppercase;
   letter-spacing: 0.15em;
 `
-const StyledGenId = styled.div`
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 26px;
-  text-align: left;
-  width: 100%;
-  color: #2d3038;
-  margin-top: 4px;
-  & span {
-    color: #57637b;
-    font-weight: 600;
-  }
-`
+// const StyledGenId = styled.div`
+//   font-family: 'Mulish';
+//   font-style: normal;
+//   font-weight: 700;
+//   font-size: 13px;
+//   line-height: 26px;
+//   text-align: left;
+//   width: 100%;
+//   color: #2d3038;
+//   margin-top: 4px;
+//   & span {
+//     color: #57637b;
+//     font-weight: 600;
+//   }
+// `
 const StyledUserAddress = styled.div`
   font-family: 'Mulish';
   font-style: normal;
@@ -114,7 +113,7 @@ const StyledUserAddress = styled.div`
 const SnapshotCreator = ({ onClick, generationNumber, address, id, grid }) => {
   const dispatch = useDispatch()
   const { contract } = useCreatorGameContract()
-  const { account } = useStarknet()
+  // const { account } = useStarknet()
   const { data, loading, error } = useStarknetCall({
     contract: contract,
     method: 'view_game',

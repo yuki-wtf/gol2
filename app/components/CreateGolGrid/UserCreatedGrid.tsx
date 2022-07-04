@@ -1,5 +1,5 @@
 import produce from 'immer'
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateGridSelection } from '../../features/creator/create/CreateGameSlice'
 import Cell from '../GolGrid/Cell/Cell'
@@ -26,8 +26,8 @@ const generateGrid = (rows, columns, random = false) => {
 const isEmptyGrid = (grid) => {
   let empty = true //assume by default as empty
 
-  grid.map((row) => {
-    row.map((cell) => {
+  grid.forEach((row) => {
+    row.forEach((cell) => {
       //if found alive return true
       if (cell == 1) empty = false
     })
@@ -39,8 +39,8 @@ const countNeighbors = (grid) => {
   //2d array, each cell contain a number of neighbors
   // console.log('grid ', grid)
   let count = generateGrid(32, 32)
-  grid.map((row, rowIndex, grid) => {
-    row.map((cell, cellIndex) => {
+  grid.forEach((row, rowIndex, grid) => {
+    row.forEach((cell, cellIndex) => {
       const left = torus(cellIndex - 1, row.length)
       const right = torus(cellIndex + 1, row.length)
       const up = torus(rowIndex - 1, grid.length)
@@ -56,8 +56,6 @@ const countNeighbors = (grid) => {
         grid[down][right],
       ]
       count[rowIndex][cellIndex] = neighbours.reduce((x, y) => x + y) //counts numbers and puts in a cell
-
-      return cell
     })
   })
   return count
@@ -78,8 +76,10 @@ const UserCreatedGrid = () => {
   const dispatch = useDispatch()
   const [cells, setCells] = useState(generateGrid(32, 32, true))
   const [count, setCount] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isRunning, setIsRunning] = useState(false)
-  const [request, setRequest] = useState([])
+
+  // const [request, setRequest] = useState([])
   const nextGeneration = useCallback(() => {
     if (isEmptyGrid(cells)) {
       return //if all cells are 0, stop
@@ -94,9 +94,9 @@ const UserCreatedGrid = () => {
         if ((oldGrid[i][j] == 1 && neighbors[i][j] == 2) || neighbors[i][j] == 3) {
           //if alive and neighb 2 or 3, stays alive
           newGrid[i][j] = 1
-        } else if (oldGrid[i][j] == 0 && neighbors[i][j] == 3) {
-          //if dead and has 3 neighb new cell will be born
-          newGrid[i][j] = 1
+          // } else if (oldGrid[i][j] == 0 && neighbors[i][j] == 3) {
+          //   //if dead and has 3 neighb new cell will be born
+          //   newGrid[i][j] = 1
         } else {
           //otherwise death
           newGrid[i][j] = 0
@@ -118,16 +118,16 @@ const UserCreatedGrid = () => {
     return () => clearInterval(intervalId)
   }, [isRunning, nextGeneration])
 
-  function handleCreateGame() {
-    const chosenGameGrid = cells
-    // console.log(chosenGameGrid);
-    let arr = new Array()
-    chosenGameGrid.map((row) => {
-      const formatRow = parseInt(row.join('').toString(), 2)
-      arr.push(formatRow)
-    })
-    return setRequest(arr)
-  }
+  // function handleCreateGame() {
+  //   const chosenGameGrid = cells
+  //   // console.log(chosenGameGrid);
+  //   let arr = new Array()
+  //   chosenGameGrid.map((row) => {
+  //     const formatRow = parseInt(row.join('').toString(), 2)
+  //     arr.push(formatRow)
+  //   })
+  //   return setRequest(arr)
+  // }
 
   // console.log(request)
   return (

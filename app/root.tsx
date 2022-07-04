@@ -1,5 +1,5 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
-import { LinksFunction, MetaFunction } from '@remix-run/react/routeModules'
+import type { LinksFunction, MetaFunction } from '@remix-run/react/routeModules'
 import { InjectedConnector, StarknetProvider } from '@starknet-react/core'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'

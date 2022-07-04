@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useStarknet, ConnectorNotFoundError, InjectedConnector } from '@starknet-react/core'
+import { useState } from 'react'
+import { useStarknet, ConnectorNotFoundError } from '@starknet-react/core'
 import Button from '../../Button/Button'
 import UserDropdownMenu from './UserDropdownMenu/UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu'

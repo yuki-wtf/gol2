@@ -1,5 +1,5 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../Button/Button'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import DialogWaiting from '../../DialogWaiting/DialogWaiting'
 import DialogTxnError from '../../DialogTxnError/DialogTxnError'
 import { setSelectedCellColumn, setSelectedCellRow } from '../../../features/Infinite/grid/infiniteGridSlice'
 import Typography from '../../Typography/Typography'
+
 const ActionsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -54,7 +55,6 @@ const DialogGiveLife = () => {
   const { contract } = useInfiniteGameContract()
   const { account } = useStarknet()
   const {
-    data,
     loading,
     error,
     reset,
