@@ -2,15 +2,21 @@ import styled, { css } from 'styled-components'
 import T from '../Typography/Typography'
 import Spinner from '../Spinner/Spinner'
 
-interface DefaultButtonProps {
-  readonly full?: boolean
-  readonly icon?: boolean
+interface Props {
+  readonly primary?: boolean
+  readonly secondary?: boolean
+  readonly tertiary?: boolean
+  readonly icon?: React.ReactNode
   readonly isLoading?: boolean
+  readonly label?: React.ReactNode
   readonly disabled?: boolean
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
+  readonly full?: boolean
+  readonly tertiaryColor?: string
 }
 
 // Defaults
-const defaultButton = css<DefaultButtonProps>`
+const defaultButton = css<Props>`
   position: relative;
   text-transform: uppercase;
   font-weight: 800;
@@ -34,11 +40,11 @@ const defaultButton = css<DefaultButtonProps>`
   letter-spacing: 0.1em;
 `
 // Primary Button
-const hoveredButtonPrimary = css`
+const hoveredButtonPrimary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonPrimary.hoverBackground};
   color: ${({ theme }) => theme.colors.buttonPrimary.hoverText};
 `
-const focusedButtonPrimary = css`
+const focusedButtonPrimary = css<Props>`
   &:focus-visible {
     outline: 2px;
     &:after {
@@ -58,15 +64,15 @@ const focusedButtonPrimary = css`
     }
   }
 `
-const disabledButtonPrimary = css<DefaultButtonProps>`
+const disabledButtonPrimary = css<Props>`
   pointer-events: none;
   background: ${({ theme }) => theme.colors.buttonPrimary.disabledBackground};
   color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};
 `
-const activeButtonPrimary = css`
+const activeButtonPrimary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonPrimary.activeBackground};
 `
-const primaryButton = css`
+const primaryButton = css<Props>`
   background: ${({ theme }) => theme.colors.buttonPrimary.defaultBackground};
   color: ${({ theme }) => theme.colors.buttonPrimary.defaultText};
   &:hover {
@@ -83,11 +89,11 @@ const primaryButton = css`
   }
 `
 // Secondary Button
-const hoveredButtonSecondary = css`
+const hoveredButtonSecondary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonSecondary.hoverBackground};
   color: ${({ theme }) => theme.colors.buttonSecondary.hoverText};
 `
-const focusedButtonSecondary = css`
+const focusedButtonSecondary = css<Props>`
   &:focus-visible {
     background: ${({ theme }) => theme.colors.buttonSecondary.focusedBackground};
     outline: 2px;
@@ -108,16 +114,16 @@ const focusedButtonSecondary = css`
     }
   }
 `
-const disabledButtonSecondary = css`
+const disabledButtonSecondary = css<Props>`
   pointer-events: none;
   background: ${({ theme }) => theme.colors.buttonSecondary.disabledBackground};
   color: ${({ theme }) => theme.colors.buttonSecondary.disabledColor};
   border: 1px solid transparent;
 `
-const activeButtonSecondary = css`
+const activeButtonSecondary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonSecondary.activeBackground};
 `
-const secondaryButton = css`
+const secondaryButton = css<Props>`
   background: ${({ theme }) => theme.colors.buttonSecondary.defaultBackground};
   color: ${({ theme }) => theme.colors.buttonSecondary.defaultColor};
   &:hover {
@@ -134,12 +140,12 @@ const secondaryButton = css`
   }
 `
 // Tertiary Button
-const hoveredButtonTertiary = css`
+const hoveredButtonTertiary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonTertiary.hoverBackground};
   color: ${({ theme }) => theme.colors.buttonTertiary.hoverText};
   opacity: 0.7;
 `
-const focusedButtonTertiary = css`
+const focusedButtonTertiary = css<Props>`
   &:focus-visible {
     outline: 2px;
     border: 2px solid green;
@@ -159,15 +165,15 @@ const focusedButtonTertiary = css`
     }
   }
 `
-const disabledButtonTertiary = css`
+const disabledButtonTertiary = css<Props>`
   pointer-events: none;
   background: ${({ theme }) => theme.colors.buttonTertiary.disabledBackground};
   color: ${({ theme }) => theme.colors.buttonTertiary.disabledText};
 `
-const activeButtonTertiary = css`
+const activeButtonTertiary = css<Props>`
   background: ${({ theme }) => theme.colors.buttonTertiary.activeBackground};
 `
-const tertiaryButton = css`
+const tertiaryButton = css<Props>`
   background: transparent;
   text-transform: none;
   font-weight: 500;
@@ -186,7 +192,7 @@ const tertiaryButton = css`
     ${activeButtonTertiary}
   }
 `
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<Props>`
   ${defaultButton}
 
   ${({ primary, secondary, tertiary }) => {
@@ -206,7 +212,7 @@ export const StyledButton = styled.button`
   }}
 `
 
-const Button = ({ primary, secondary, tertiary, icon, isLoading, label, disabled, onClick, full, tertiaryColor }) => {
+const Button = ({ primary, secondary, tertiary, icon, isLoading, label, disabled, onClick, full, tertiaryColor }: Props) => {
   return (
     <StyledButton
       full={full}

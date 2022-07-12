@@ -2,7 +2,13 @@ import Dialog from '../Dialog/Dialog'
 import { HiOutlineFire, HiOutlineX } from 'react-icons/hi'
 import Button from '../Button/Button'
 
-const DialogError = ({ open, onClose }) => {
+
+interface Props {
+  readonly open?: boolean
+  readonly onClose?: React.MouseEventHandler<HTMLButtonElement>
+}
+
+const DialogError = ({ open, onClose }: Props) => {
   return (
     <Dialog.Root open={open}>
       <Dialog.Overlay>
