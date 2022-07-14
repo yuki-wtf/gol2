@@ -9,6 +9,7 @@
   command = "remix watch"
   port = 3001
   autoLaunch = false
+  framework = "remix"
 
 [[redirects]]
   from = "/*"

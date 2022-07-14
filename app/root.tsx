@@ -1,6 +1,5 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
-import type { LinksFunction, MetaFunction } from '@remix-run/react/routeModules'
-import { InjectedConnector, StarknetProvider } from '@starknet-react/core'
+import { getInstalledInjectedConnectors, StarknetProvider } from '@starknet-react/core'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import Layout from './components/layout'
@@ -12,6 +11,7 @@ import ContainerInner from './components/Layout/ContainerInner'
 import styled from 'styled-components'
 import Typography from './components/Typography/Typography'
 import { useEffect, useLayoutEffect } from 'react'
+import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node'
 
 export async function loader() {
@@ -48,7 +48,7 @@ export const links: LinksFunction = () => [
 const useLayoutEffectX = typeof document === 'undefined' ? useEffect : useLayoutEffect
 
 function AppLayout({ children }) {
-  const connectors = [new InjectedConnector()]
+  const connectors = getInstalledInjectedConnectors()
 
   useLayoutEffectX(() => {
     if (window.__style == null) {
