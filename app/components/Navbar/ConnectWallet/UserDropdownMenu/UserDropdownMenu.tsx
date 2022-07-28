@@ -1,5 +1,4 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
-import { InjectedConnector } from '@starknet-react/core'
 import { HiChevronDown, HiOutlineClipboardCopy, HiOutlineDocumentSearch, HiOutlineLogout } from 'react-icons/hi'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
@@ -32,7 +31,10 @@ const UserDropdownMenu = ({ account, disconnect }) => {
           <HiOutlineDocumentSearch size={24} />
           View on Explorer
         </DropdownMenu.Item>
-        <DropdownMenu.Item onClick={() => disconnect(new InjectedConnector())}>
+        <DropdownMenu.Item onClick={() => {
+          console.info('dsdsdsds', disconnect())
+
+        }}>
           <HiOutlineLogout size={24} />
           Disconnect
         </DropdownMenu.Item>

@@ -1,45 +1,57 @@
+import type { ForwardRefComponent, HTMLMotionProps} from 'framer-motion';
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-const StyledGrid = styled(motion.div)`
+// cell count
+const GRID_SIZE = 15
+
+// size in pixels
+const SMALL_GRID_SIZE = 244
+const LARGE_GRID_SIZE = 512
+
+interface Props {
+  readonly small?: boolean
+}
+
+const StyledGrid = styled<ForwardRefComponent<HTMLDivElement, HTMLMotionProps<"div"> & Props>>(motion.div)`
   display: grid;
-  grid-template-columns: ${(p) => (p.small ? 'repeat(32, 8px)' : 'repeat(32, 16px)')};
-  grid-template-rows: ${(p) => (p.small ? 'repeat(32, 8px)' : 'repeat(32, 16px)')};
+  grid-template-columns: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
+  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
   background: url('/assets/grid/grid-body.svg');
-  background-size: ${(p) => (p.small ? '244px' : '512px')};
+  background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   border: 0;
-  height: ${(p) => (p.small ? '244px' : '512px')};
-  width: ${(p) => (p.small ? '244px' : '512px')};
+  height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
+  width: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   position: relative;
   overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
 `
-const StyledGridNoMotion = styled.div`
+const StyledGridNoMotion = styled.div<Props>`
   display: grid;
-  grid-template-columns: ${(p) => (p.small ? 'repeat(32, 8px)' : 'repeat(32, 16px)')};
-  grid-template-rows: ${(p) => (p.small ? 'repeat(32, 8px)' : 'repeat(32, 16px)')};
+  grid-template-columns: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
+  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
-  background: url('/assets/grid/grid-body.svg');
-  background-size: ${(p) => (p.small ? '244px' : '512px')};
+  /* background: url('/assets/grid/grid-body.svg'); */
+  background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   border: 0;
-  height: ${(p) => (p.small ? '244px' : '512px')};
-  width: ${(p) => (p.small ? '244px' : '512px')};
+  height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
+  width: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   position: relative;
   overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
 `
-const StyledGridCreatorNoMotion = styled.div`
+const StyledGridCreatorNoMotion = styled.div<Props>`
   display: grid;
-  grid-template-columns: ${(p) => (p.small ? 'repeat(32, 6.625px)' : 'repeat(32, 6.625px)')};
-  grid-template-rows: ${(p) => (p.small ? 'repeat(32, 6.625px)' : 'repeat(32, 6.625px)')};
+  grid-template-columns: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
+  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE: LARGE_GRID_SIZE)/GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
-  background: url('/assets/grid/grid-body.svg');
-  background-size: ${(p) => (p.small ? '212px' : '512px')};
+  /* background: url('/assets/grid/grid-body.svg'); */
+  background-size: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
   border: 0;
-  height: ${(p) => (p.small ? '212px' : '512px')};
-  width: ${(p) => (p.small ? '212px' : '512px')};
+  height: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
+  width: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
   position: relative;
   overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
 `

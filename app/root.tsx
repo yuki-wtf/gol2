@@ -10,18 +10,39 @@ import { useCatch } from '@remix-run/react'
 import ContainerInner from './components/Layout/ContainerInner'
 import styled from 'styled-components'
 import Typography from './components/Typography/Typography'
-import { useEffect, useLayoutEffect } from 'react'
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { ActionArgs, LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import { getUserId, updateSession } from './session.server'
+import { useLayoutEffectX } from './hooks/useLayoutEffectX'
+import { UserIdProvider } from './hooks/useUserId'
 
-export async function loader() {
-  // console.log(process.env)
-
+export async function loader({ request }: LoaderArgs) {
   return json({
     env: {
       BASE_URL: process.env.URL,
     },
+    userId: await getUserId(request),
   })
+}
+
+export async function action({ request, params }: ActionArgs) {
+  const formData = await request.formData()
+  const userId = (formData.get('userId') as string) || null
+
+  return json(
+    {
+      env: {
+        BASE_URL: process.env.URL,
+      },
+      userId,
+    },
+    {
+      headers: await updateSession({
+        request,
+        userId,
+      }),
+    }
+  )
 }
 
 export const meta: MetaFunction = () => ({
@@ -44,8 +65,6 @@ export const links: LinksFunction = () => [
     href: 'https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,800&display=swap',
   },
 ]
-
-const useLayoutEffectX = typeof document === 'undefined' ? useEffect : useLayoutEffect
 
 function AppLayout({ children }) {
   const connectors = getInstalledInjectedConnectors()
@@ -86,7 +105,9 @@ function AppLayout({ children }) {
 export default function App() {
   return (
     <AppLayout>
-      <Outlet />
+      <UserIdProvider>
+        <Outlet />
+      </UserIdProvider>
     </AppLayout>
   )
 }

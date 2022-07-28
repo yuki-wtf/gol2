@@ -7,6 +7,7 @@ import { useInfiniteGameContract } from '../../hooks/useInfiniteGameContract'
 import { dataToGrid } from '../../helpers/dataToGrid'
 import Button from '../Button/Button'
 import { getShortChecksumAddress } from '~/helpers/starknet'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 
 const animate = keyframes`
   from {
@@ -188,15 +189,19 @@ const SkeletonImagePreview = () => {
   )
 }
 
-const Snapshot = ({ onClick, onClickTwitter, large = false, generationNumber, user, id, isLoading, ...rest }) => {
-  const { contract } = useInfiniteGameContract()
-  const { data, loading } = useStarknetCall({
-    contract: contract,
-    method: 'view_game',
-    args: [generationNumber && generationNumber.toString(), '', 'pending'],
-  })
+const Snapshot = ({
+  onClick,
+  onClickTwitter,
+  large = false,
+  gameGeneration,
+  gameState,
+  user,
+  id,
+  isLoading,
+  ...rest
+}) => {
   let formattedUser
-
+  console.log(user)
   if (user) {
     formattedUser = getShortChecksumAddress(user)
   }
@@ -210,10 +215,10 @@ const Snapshot = ({ onClick, onClickTwitter, large = false, generationNumber, us
   return (
     <StyledCard large={large} {...rest} onClick={onClick}>
       <StyledGridContainer large={large}>
-        <ISnapshotGrid loading={loading} isSnapshot data={dataToGrid(data)} />
+        <ISnapshotGrid loading={false} isSnapshot data={gameStateToGrid(gameState)} />
       </StyledGridContainer>
       <StyledGenLabel> Generation: </StyledGenLabel>
-      <StyledGenNumber> {generationNumber} </StyledGenNumber>
+      <StyledGenNumber> {gameGeneration} </StyledGenNumber>
       <StyledDivider />
       {/* <StyledGenId>
        <span>ID:</span> 32232323232323
