@@ -8,25 +8,14 @@ With StarkNet, Game of Life transitions can be computed inside the contract, wit
 
 ### Cairo Contracts
 
-Infinite and creator contracts can be found here - https://github.com/perama-v/GoL2
+Contract - https://github.com/software-mansion-labs/GoL2
 
-#### Deployed contracts
+#### Deployed contract
 
-Infinite - [0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f](https://goerli.voyager.online/contract/0x0296707849bfbcf454401229e471304d97abe10641440c9f3f754bb6e926620f#readContract) <br>
-Creator - [0x021720286a97c4cb4504de696a28f60a421af77a21f5da9df717d071756d9734](https://goerli.voyager.online/contract/0x021720286a97c4cb4504de696a28f60a421af77a21f5da9df717d071756d9734#readContract)
+Gol - [0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093](https://goerli.voyager.online/contract/0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093) <br>
+
 
 ### Getting Started
 
 First, install Argent X chrome extension - [https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb]
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-Secondly, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
