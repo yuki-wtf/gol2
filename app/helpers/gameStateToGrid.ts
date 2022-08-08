@@ -1,5 +1,3 @@
-import { toBN, toHex } from "starknet/utils/number"
-
 const GRID_SIZE = 15
 
 export function gameStateToGrid(data: string): number[][] {

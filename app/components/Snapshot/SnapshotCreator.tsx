@@ -8,6 +8,7 @@ import { useCreatorGameContract } from '../../hooks/useCreatorGameContract'
 import { dataToGrid } from '../../helpers/dataToGrid'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 const StyledGridContainer = styled.div`
   width: 212px;
   height: 212px;
@@ -110,34 +111,35 @@ const StyledUserAddress = styled.div`
   margin-top: 4px;
 `
 
-const SnapshotCreator = ({ onClick, generationNumber, address, id, grid }) => {
-  const dispatch = useDispatch()
-  const { contract } = useCreatorGameContract()
-  // const { account } = useStarknet()
-  const { data, loading, error } = useStarknetCall({
-    contract: contract,
-    method: 'view_game',
-    args: [id.toString(), generationNumber.toString(), 'pending'],
-  })
-  useEffect(() => {
-    if (data !== undefined && data.length > 0) {
-      dispatch(
-        updateGameState({
-          game_index: id,
-          data,
-        })
-      )
-    }
-  }, [data, dispatch, id])
+const SnapshotCreator = ({ onClick, generationNumber, address, id, gameState }) => {
+  // const dispatch = useDispatch()
+  // const { contract } = useCreatorGameContract()
+  // // const { account } = useStarknet()
+  // const { data, loading, error } = useStarknetCall({
+  //   contract: contract,
+  //   method: 'view_game',
+  //   args: [id.toString(), generationNumber.toString(), 'pending'],
+  // })
+  // useEffect(() => {
+  //   if (data !== undefined && data.length > 0) {
+  //     dispatch(
+  //       updateGameState({
+  //         game_index: id,
+  //         data,
+  //       })
+  //     )
+  //   }
+  // }, [data, dispatch, id])
+
   return (
     <StyledCard onClick={onClick}>
       <StyledGridContainer>
-        <CSnapshotGrid loading={loading} isSnapshotCreator data={dataToGrid(data)} />
+        <CSnapshotGrid loading={false} isSnapshotCreator data={gameStateToGrid(gameState)} />
       </StyledGridContainer>
 
       <StyledGenNumber> Game #{id} </StyledGenNumber>
       <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
-      <div>{error}</div>
+      {/* <div>{error}</div> */}
       <StyledUserAddress>
         <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
       </StyledUserAddress>

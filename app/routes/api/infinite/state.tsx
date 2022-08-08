@@ -1,0 +1,31 @@
+import type { LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import type { TypedResponse } from '@remix-run/react/dist/components'
+import { sql } from '~/db.server'
+
+export async function loader({ request }: LoaderArgs): Promise<TypedResponse<string[]>> {
+  const url = new URL(request.url)
+  const frames = url.searchParams.get('frames').split(',')
+
+  const result = await sql`
+    select (
+        select max("gameState")
+        from infinite
+        where (
+            (
+              "value" = 1
+              and "transactionType" = 'game_created'
+            )
+            or (
+              "value" = "gameGeneration"
+              and "transactionType" in ('game_evolved', 'cell_revived')
+            )
+          )
+      ) as "gameState"
+    from (
+        select unnest (${frames}::int []) as value
+      ) as ids
+  `
+
+  return json(result.rows.map((r) => r.gameState))
+}

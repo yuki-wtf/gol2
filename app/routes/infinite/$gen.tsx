@@ -1,5 +1,6 @@
 import type { MetaFunction } from '@remix-run/node'
-import Infinite from '.'
+
+export { default, loader } from '.'
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   return {
@@ -13,5 +14,3 @@ export const meta: MetaFunction = ({ params, parentsData }) => {
     'og:image:height': String(293 * 4),
   }
 }
-
-export default Infinite

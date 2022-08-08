@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import Body from '../../GolGrid/Body/Body'
 import Loader from '../../Loader/Loader'
 import Grid from './Grid'
@@ -11,14 +12,14 @@ const StyledLoaderContainer = styled(motion.div)`
 `
 
 interface Props {
-  readonly grid: ReadonlyArray<ReadonlyArray<number>> | null
+  readonly gameState: string | null
 }
 
-export default function GridWrapper({ grid }: Props) {
+export default function GridWrapper({ gameState }: Props) {
   return (
     <Body>
-      {grid != null ? (
-        <Grid data={grid} />
+      {gameState != null ? (
+        <Grid data={gameStateToGrid(gameState)} />
       ) : (
         <StyledLoaderContainer
           initial={{

@@ -13,18 +13,19 @@ const StyledGridContainer = styled.div`
   border-bottom-right-radius: 33px;
 `
 
-export default function GameContainer() {
-  const { latest_generation } = useSelector((state) => state.generations)
-  const [state, actions] = useInfiniteGamePlayback({
-    maxFrame: latest_generation ?? null,
-    currentFrame: latest_generation ?? null,
-  })
+interface Props {
+  readonly maxFrame: number
+  readonly currentFrame: number
+}
+
+export default function GameContainer({ currentFrame, maxFrame }: Props) {
+  const [state, actions] = useInfiniteGamePlayback({ maxFrame, currentFrame })
 
   return (
     <StyledGridContainer>
       <IHeader />
       <DialogGiveLife />
-      <GridWrapper grid={state.frames[state.currentFrame]?.grid ?? null} />
+      <GridWrapper gameState={state.frames[state.currentFrame]?.state ?? null} />
       <IFooter actions={actions} state={state} />
     </StyledGridContainer>
   )

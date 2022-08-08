@@ -2,26 +2,33 @@ import { getChecksumAddress } from 'starknet'
 import type { BigNumberish } from 'starknet/dist/utils/number'
 
 export function getShortChecksumAddress(address: BigNumberish | string): string {
-  if (typeof address !== 'string') {
-    address = getChecksumAddress(address)
-  }
+  const checksumAddress = getChecksumAddress(address)
 
-  return address.slice(0, 2) + ' ' + address.slice(2, 6) + ' ... ' + address.slice(address.length - 4)
+  return (
+    checksumAddress.slice(0, 2) +
+    ' ' +
+    checksumAddress.slice(2, 6) +
+    ' ... ' +
+    checksumAddress.slice(checksumAddress.length - 4)
+  )
 }
 
 if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest
 
-  it('getShortChecksumAddress', () => {
-    {
-      const long = '0x2bf0d1951393886de60fe3ef3d16482a1998d33e2572fac8b1fcfdcd59ead60'
-      const short = '0x 2bf0 ... ad60'
-      expect(getShortChecksumAddress(long)).toBe(short)
-    }
-    {
-      const long = '123456aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7890'
-      const short = '12 3456 ... 7890'
-      expect(getShortChecksumAddress(long)).toBe(short)
-    }
+  it('getShortChecksumAddress #1', () => {
+    const long = '0x2bf0d1951393886de60fe3ef3d16482a1998d33e2572fac8b1fcfdcd59ead60'
+    const short = '0x 02bF ... Ad60'
+    expect(getShortChecksumAddress(long)).toBe(short)
+  })
+  it('getShortChecksumAddress #2', () => {
+    const long = '1242183891794214040002074274514933996473193662983245409254398531555775393120'
+    const short = '0x 02bF ... Ad60'
+    expect(getShortChecksumAddress(long)).toBe(short)
+  })
+  it('getShortChecksumAddress #2', () => {
+    const long = '932097343094516780977311641685690157093908922685193531952538698512374685643'
+    const short = '0x 020F ... dFcB'
+    expect(getShortChecksumAddress(long)).toBe(short)
   })
 }
