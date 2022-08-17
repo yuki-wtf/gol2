@@ -1,10 +1,11 @@
-import { useInfiniteGamePlayback } from '~/hooks/useInfiniteGamePlayback'
+import { useFetchInfiniteFrames, useGamePlayback } from '~/hooks/useGamePlayback'
 import ContainerInner from '../components/Layout/ContainerInner'
 
 export default function Playground() {
-  const [state, actions] = useInfiniteGamePlayback({
+  const [state, actions] = useGamePlayback({
     maxFrame: 690,
     currentFrame: 10,
+    fetchFrames: useFetchInfiniteFrames(),
   })
 
   return (

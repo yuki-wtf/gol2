@@ -14,8 +14,6 @@ Contract - https://github.com/software-mansion-labs/GoL2
 
 Gol - [0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093](https://goerli.voyager.online/contract/0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093) <br>
 
-
 ### Getting Started
 
 First, install Argent X chrome extension - [https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb]
-

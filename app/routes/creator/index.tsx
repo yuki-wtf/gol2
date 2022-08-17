@@ -3,15 +3,17 @@ import ContainerInner from '../../components/Layout/ContainerInner'
 import PageIntro from '../../components/PageIntro/PageIntro'
 import SnapshotCreator from '../../components/Snapshot/SnapshotCreator'
 import Typography from '../../components/Typography/Typography'
-import styled from 'styled-components'
 import { creator } from '../../styles/themes/creator'
 import { useNavigate } from '@remix-run/react'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import type { Creator } from '~/db.server'
+import type { CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
 import type { TypedResponse } from '@remix-run/react/dist/components'
+import { useUserId } from '~/hooks/useUserId'
+import { getUserId } from '~/session.server'
+import { hexToDecimalString } from 'starknet/utils/number'
 
 // const Loading = styled.div`
 //   width: 210px;
@@ -24,11 +26,15 @@ import type { TypedResponse } from '@remix-run/react/dist/components'
 //   margin-bottom: 16px;
 // `
 interface LoaderData {
-  readonly communityGames: Creator[]
+  readonly yourGames: CreatorGame[]
+  readonly communityGames: CreatorGame[]
 }
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
-  const communityGames = await sql<Creator>`
+  const userId = await getUserId(request)
+
+  if (userId == null) {
+    const communityGames = await sql<CreatorGame>`
     with games as (
       select "transactionOwner" "gameOwner",
         "gameId",
@@ -39,40 +45,92 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     )
     select *,
       (
-        select max("gameGeneration")
+        select COALESCE(max(c."gameGeneration"), 1)
         from creator c
         where c."gameId" = g."gameId"
         group by c."gameId"
-      ) as gameGeneration,
+      ) as "gameGeneration",
       (
-        select max("gameState")
+        select max(c."gameState")
         from creator c
         where c."gameId" = g."gameId"
         group by c."gameId"
-      ) as gameState
+      ) as "gameState"
+    from games g
+    order by "createdAt"
+  `
+
+    return json<LoaderData>({
+      yourGames: [],
+      communityGames: communityGames.rows,
+    })
+  }
+
+  const yourGames = await sql<CreatorGame>`
+    with games as (
+      select "transactionOwner" "gameOwner",
+        "gameId",
+        "createdAt"
+      from creator
+      where "transactionType" = 'game_created' and "transactionOwner" = ${hexToDecimalString(userId)}
+      order by "createdAt"
+    )
+    select *,
+      (
+        select COALESCE(max(c."gameGeneration"), 1)
+        from creator c
+        where c."gameId" = g."gameId"
+        group by c."gameId"
+      ) as "gameGeneration",
+      (
+        select max(c."gameState")
+        from creator c
+        where c."gameId" = g."gameId"
+        group by c."gameId"
+      ) as "gameState"
+    from games g
+    order by "createdAt"
+  `
+  const communityGames = await sql<CreatorGame>`
+    with games as (
+      select "transactionOwner" "gameOwner",
+        "gameId",
+        "createdAt"
+      from creator
+      where "transactionType" = 'game_created' and "transactionOwner" != ${hexToDecimalString(userId)}
+      order by "createdAt"
+    )
+    select *,
+      (
+        select COALESCE(max(c."gameGeneration"), 1)
+        from creator c
+        where c."gameId" = g."gameId"
+        group by c."gameId"
+      ) as "gameGeneration",
+      (
+        select max(c."gameState")
+        from creator c
+        where c."gameId" = g."gameId"
+        group by c."gameId"
+      ) as "gameState"
     from games g
     order by "createdAt"
   `
 
   return json<LoaderData>({
+    yourGames: yourGames.rows,
     communityGames: communityGames.rows,
   })
 }
 
 export default function CreatorPage() {
-  // const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const { games } = useSelector((state) => state.creatorGames)
-  // const { account } = useStarknet()
-  // const [userHasGames, setUserHasGames] = useState(false)
-  const { communityGames } = useLoaderData<typeof loader>()
+  const { communityGames, yourGames } = useLoaderData<typeof loader>()
+  const userId = useUserId()
 
   return (
     <ThemeProvider theme={creator}>
       <ContainerInner maxWidth={1000}>
-        {/* <GetNewestGame /> */}
-        {/* <GetRecentlyCreated /> */}
-
         <PageIntro.Container>
           <PageIntro.Icon color="#8AED9B" />
           <PageIntro.Text>
@@ -81,7 +139,7 @@ export default function CreatorPage() {
           </PageIntro.Text>
         </PageIntro.Container>
         <div></div>
-        {/* {userid && <Typography.H2>Your Games</Typography.H2>}
+        {userId && <Typography.H2>Your Games</Typography.H2>}
 
         <div
           style={{
@@ -91,39 +149,20 @@ export default function CreatorPage() {
             marginTop: 24,
           }}
         >
-          {userid && Object.keys(games).length > 0
-            ? Object.entries(games).map(([key, value]) => {
-                if (account !== games[key].owner) {
-                  return null
-                }
-
-                return (
-                  <SnapshotCreator
-                    onClick={() =>
-                      navigate(
-                        `/creator/game/${games[key].game_index}?game_index=${games[key].game_index}&current_gen=${games[key].generation}&owner=${games[key].owner}`
-                      )
-                    }
-                    key={games[key].game_index}
-                    id={games[key].game_index}
-                    generationNumber={games[key].generation}
-                    address={games[key].owner}
-                  />
-                )
-              })
-            : [1, 2, 3, 4].map((i) => (
-                <Loading key={i}>
-                  <div
-                    style={{
-                      width: '100%',
-                      opacity: 0.1,
-                    }}
-                  >
-                    <Skeleton />
-                  </div>
-                </Loading>
-              ))}
-        </div> */}
+          {userId &&
+            yourGames.map((game) => {
+              return (
+                <SnapshotCreator
+                  onClick={() => navigate(`/creator/game/${game.gameId}`)}
+                  key={game.gameId}
+                  id={game.gameId}
+                  generationNumber={game.gameGeneration}
+                  address={game.gameOwner}
+                  gameState={game.gameState}
+                />
+              )
+            })}
+        </div>
         <Typography.H2>Community Games</Typography.H2>
 
         <div
@@ -137,13 +176,12 @@ export default function CreatorPage() {
           {communityGames.map((game) => {
             return (
               <SnapshotCreator
-                onClick={() =>
-                  navigate(`/creator/game/${game.gameId}?current_gen=${game.gameGeneration}&owner=${game.gameOwner}`)
-                }
+                onClick={() => navigate(`/creator/game/${game.gameId}`)}
                 key={game.gameId}
                 id={game.gameId}
                 generationNumber={game.gameGeneration}
                 address={game.gameOwner}
+                gameState={game.gameState}
               />
             )
           })}

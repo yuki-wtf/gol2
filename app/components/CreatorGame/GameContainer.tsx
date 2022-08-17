@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import GridWrapper from './GridWrapper'
 import CHeader from './CHeader'
 import CFooter from './CFooter'
+import { useFetchCreatorFrames, useGamePlayback } from '~/hooks/useGamePlayback'
 
 const StyledGridContainer = styled.div`
   background-color: #000000;
@@ -9,16 +10,21 @@ const StyledGridContainer = styled.div`
   border-bottom-left-radius: 33px;
   border-bottom-right-radius: 33px;
 `
+interface Props {
+  readonly gameId: string
+  readonly maxFrame: number
+  readonly currentFrame: number
+}
 
-const GameContainer = ({ address, currentGen, gameId }) => {
-  // console.log(address, currentGen, gameId)
+export default function GameContainer({ currentFrame, maxFrame, gameId }: Props) {
+  const fetchFrames = useFetchCreatorFrames(gameId)
+  const [state, actions] = useGamePlayback({ maxFrame, currentFrame, fetchFrames })
+
   return (
     <StyledGridContainer>
       <CHeader gameId={gameId} />
-      <GridWrapper gameId={gameId} address={address} currentGen={currentGen} />
-      <CFooter gameId={gameId} />
+      <GridWrapper gameState={state.frames[state.currentFrame]?.state ?? null} />
+      <CFooter actions={actions} state={state} />
     </StyledGridContainer>
   )
 }
-
-export default GameContainer

@@ -2,7 +2,6 @@ import Dialog from '../Dialog/Dialog'
 import { HiOutlineFire, HiOutlineX } from 'react-icons/hi'
 import Button from '../Button/Button'
 
-
 interface Props {
   readonly open?: boolean
   readonly onClose?: React.MouseEventHandler<HTMLButtonElement>

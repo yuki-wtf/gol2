@@ -2,7 +2,7 @@ import ControlBar from '../../GolGrid/Footer/ControlBar/ControlBar'
 import Footer from '../../GolGrid/Footer/Footer'
 import { useSelector } from 'react-redux'
 import TempOverlay from '../../TempOverlay/TempOverlay'
-import type { Actions, State } from '~/hooks/useInfiniteGamePlayback'
+import type { Actions, State } from '~/hooks/useGamePlayback'
 
 interface Props {
   readonly state: State

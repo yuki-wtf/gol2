@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 import IHeader from './IHeader'
-import { useSelector } from 'react-redux'
 import DialogGiveLife from '../../GolGrid/DialogGiveLife/DialogGiveLife'
 import IFooter from './IFooter'
 import GridWrapper from './GridWrapper'
-import { useInfiniteGamePlayback } from '~/hooks/useInfiniteGamePlayback'
+import { useFetchInfiniteFrames, useGamePlayback } from '~/hooks/useGamePlayback'
 
 const StyledGridContainer = styled.div`
   background-color: #000000;
@@ -19,7 +18,8 @@ interface Props {
 }
 
 export default function GameContainer({ currentFrame, maxFrame }: Props) {
-  const [state, actions] = useInfiniteGamePlayback({ maxFrame, currentFrame })
+  const fetchFrames = useFetchInfiniteFrames()
+  const [state, actions] = useGamePlayback({ maxFrame, currentFrame, fetchFrames })
 
   return (
     <StyledGridContainer>

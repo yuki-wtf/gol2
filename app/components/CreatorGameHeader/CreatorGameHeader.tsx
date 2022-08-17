@@ -48,12 +48,12 @@ const StyledCreatedUser = styled.div`
 `
 
 interface Props {
-  readonly address: string
-  readonly gameId: string
-  readonly title: string
+  readonly gameOwner?: string
+  readonly gameId?: string
+  readonly title?: string
 }
 
-export default function CreatorGameHeader({ address, gameId, title }: Props) {
+export default function CreatorGameHeader({ gameOwner, gameId, title }: Props) {
   const navigate = useNavigate()
 
   return (
@@ -68,16 +68,16 @@ export default function CreatorGameHeader({ address, gameId, title }: Props) {
             tertiary
           />
         </StyledButtonWrapper>
-        {gameId && <StyledId>Game #{gameId}</StyledId>}
+        {gameId && <StyledId>Game #{gameId.slice(0, 3)}</StyledId>}
         {title && <StyledId>{title}</StyledId>}
       </StyledButtonIdWrapper>
-      {address && (
+      {gameOwner && (
         <StyledCreatedBy>
           <StyledCreatedByWrapper>
             <StyledCreatedByText>Created by: </StyledCreatedByText>
             <StyledCreatedUser>
               <HiOutlineUser />
-              {getShortChecksumAddress(address)}
+              {getShortChecksumAddress(gameOwner)}
             </StyledCreatedUser>
           </StyledCreatedByWrapper>
         </StyledCreatedBy>

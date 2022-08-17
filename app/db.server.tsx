@@ -44,6 +44,18 @@ export interface Infinite {
 }
 
 export interface Creator {
+  readonly transactionHash: string
+  readonly transactionType: string
+  readonly transactionOwner: string
+  readonly gameId: string
+  readonly gameGeneration: string
+  readonly gameState: string
+  readonly txStatus: string
+  readonly gameOver: boolean
+  readonly createdAt: Date
+}
+
+export interface CreatorGame {
   readonly gameOwner: string
   readonly gameId: string
   readonly gameGeneration: string

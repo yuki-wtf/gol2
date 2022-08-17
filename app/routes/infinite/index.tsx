@@ -5,7 +5,7 @@ import { GameWrapper, GameGridWrapper, SideBarWrapper } from '../../components/L
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import type { Infinite} from '~/db.server';
+import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import type { TypedResponse } from '@remix-run/react/dist/components'
 
@@ -19,7 +19,7 @@ interface LoaderData {
 }
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
-  const statistics = await sql<{ label: string; value: number }>`
+  const statistics = await sql<{ label: string; value: string }>`
     (
       select 'Generations' "label",
         max("gameGeneration") "value"
@@ -51,16 +51,16 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   `
 
   return json<LoaderData>({
-    generations: statistics.rows.find((r) => r.label === 'Generations').value,
-    livesGiven: statistics.rows.find((r) => r.label === 'Lives given').value,
-    extinctions: statistics.rows.find((r) => r.label === 'Extinctions').value,
+    generations: parseInt(statistics.rows.find((r) => r.label === 'Generations').value),
+    livesGiven: parseInt(statistics.rows.find((r) => r.label === 'Lives given').value),
+    extinctions: parseInt(statistics.rows.find((r) => r.label === 'Extinctions').value),
     longestStablePeriod: 0,
-    onChainPlay: onChainPlay.rows
+    onChainPlay: onChainPlay.rows,
   })
 }
 
 export default function InfinitePage() {
-  const { extinctions, generations, livesGiven, longestStablePeriod, onChainPlay} = useLoaderData<typeof loader>()
+  const { extinctions, generations, livesGiven, longestStablePeriod, onChainPlay } = useLoaderData<typeof loader>()
 
   return (
     <ContainerInner>

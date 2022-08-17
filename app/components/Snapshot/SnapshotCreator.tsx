@@ -1,14 +1,9 @@
-import { useStarknetCall } from '@starknet-react/core'
-import { useEffect } from 'react'
 import { HiOutlineUser } from 'react-icons/hi'
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { updateGameState } from '../../features/creator/creatorGamesSlice'
-import { useCreatorGameContract } from '../../hooks/useCreatorGameContract'
-import { dataToGrid } from '../../helpers/dataToGrid'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+
 const StyledGridContainer = styled.div`
   width: 212px;
   height: 212px;
@@ -137,7 +132,7 @@ const SnapshotCreator = ({ onClick, generationNumber, address, id, gameState }) 
         <CSnapshotGrid loading={false} isSnapshotCreator data={gameStateToGrid(gameState)} />
       </StyledGridContainer>
 
-      <StyledGenNumber> Game #{id} </StyledGenNumber>
+      <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
       <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
       {/* <div>{error}</div> */}
       <StyledUserAddress>

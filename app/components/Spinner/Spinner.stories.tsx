@@ -1,6 +1,6 @@
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Spinner from './Spinner';
+import Spinner from './Spinner'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -10,14 +10,14 @@ export default {
   argTypes: {
     color: {
       defaultValue: null,
-      type: "string",
+      type: 'string',
     },
   },
-} as ComponentMeta<typeof Spinner>;
+} as ComponentMeta<typeof Spinner>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Spinner> = (args) => <Spinner {...args} />;
+const Template: ComponentStory<typeof Spinner> = (args) => <Spinner {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {}

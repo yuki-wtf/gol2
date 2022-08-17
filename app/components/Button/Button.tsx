@@ -212,7 +212,18 @@ export const StyledButton = styled.button<Props>`
   }}
 `
 
-const Button = ({ primary, secondary, tertiary, icon, isLoading, label, disabled, onClick, full, tertiaryColor }: Props) => {
+const Button = ({
+  primary,
+  secondary,
+  tertiary,
+  icon,
+  isLoading,
+  label,
+  disabled,
+  onClick,
+  full,
+  tertiaryColor,
+}: Props) => {
   return (
     <StyledButton
       full={full}

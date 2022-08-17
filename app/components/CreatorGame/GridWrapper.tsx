@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { dataToGrid } from '../../helpers/dataToGrid'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import Body from '../GolGrid/Body/Body'
 import Loader from '../Loader/Loader'
 import Grid from './Grid'
@@ -12,12 +11,15 @@ const StyledLoaderContainer = styled(motion.div)`
   background-color: black;
 `
 
-const GridWrapper = ({ address, currentGen, gameId }) => {
-  const { gameStates } = useSelector((state) => state.creatorGames)
+interface Props {
+  readonly gameState: string | null
+}
+
+export default function GridWrapper({ gameState }: Props) {
   return (
     <Body>
-      {gameStates && gameStates[gameId] ? (
-        <Grid data={dataToGrid(gameStates[gameId].data)} />
+      {gameState != null ? (
+        <Grid data={gameStateToGrid(gameState)} />
       ) : (
         <StyledLoaderContainer
           initial={{
@@ -36,5 +38,3 @@ const GridWrapper = ({ address, currentGen, gameId }) => {
     </Body>
   )
 }
-
-export default GridWrapper

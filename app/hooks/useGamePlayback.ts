@@ -1,13 +1,11 @@
-import { useFetcher } from '@remix-run/react'
 import produce from 'immer'
 import { useCallback, useEffect, useState } from 'react'
 import { useInterval } from 'react-use'
-import { dataToGrid } from '~/helpers/dataToGrid'
-import { useInfiniteGameContract } from './useInfiniteGameContract'
 
 interface Params {
   readonly maxFrame: number
   readonly currentFrame: number
+  readonly fetchFrames: (frames: number[]) => Promise<string[]>
 }
 
 export interface State {
@@ -32,7 +30,7 @@ export interface Actions {
   readonly goToLastFrame: () => void
 }
 
-export function useInfiniteGamePlayback({ maxFrame, currentFrame }: Params): [State, Actions] {
+export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params): [State, Actions] {
   // state
   const [state, setState] = useState<State>({
     currentFrame,
@@ -146,18 +144,16 @@ export function useInfiniteGamePlayback({ maxFrame, currentFrame }: Params): [St
       })
     )
 
-    const request = fetch(`/api/infinite/state?frames=${framesToLoad.join(',')}`)
+    const request = fetchFrames(framesToLoad)
 
     request
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
+      .then((data: string[]) => {
         setState(
           produce((draft) => {
             for (let i = 0; i < framesToLoad.length; i++) {
-              if (data[framesToLoad[i]] != null) {
+              if (data[i] != null) {
                 draft.frames[framesToLoad[i]] = {
-                  state: data[framesToLoad[i]],
+                  state: data[i],
                 }
               } else {
                 draft.frames[framesToLoad[i]] = null
@@ -175,8 +171,7 @@ export function useInfiniteGamePlayback({ maxFrame, currentFrame }: Params): [St
           })
         )
       })
-  }, [state.currentFrame, state.frames, state.maxFrame])
-  console.log(state)
+  }, [fetchFrames, state.currentFrame, state.frames, state.maxFrame])
 
   return [
     state,
@@ -190,4 +185,19 @@ export function useInfiniteGamePlayback({ maxFrame, currentFrame }: Params): [St
       goToLastFrame,
     },
   ]
+}
+
+export function useFetchInfiniteFrames(): (frames: number[]) => Promise<string[]> {
+  return useCallback((frames: number[]) => {
+    return fetch(`/api/infinite/state?frames=${frames.join(',')}`).then((response) => response.json())
+  }, [])
+}
+
+export function useFetchCreatorFrames(gameId: string): (frames: number[]) => Promise<string[]> {
+  return useCallback(
+    (frames: number[]) => {
+      return fetch(`/api/creator/${gameId}/state?frames=${frames.join(',')}`).then((response) => response.json())
+    },
+    [gameId]
+  )
 }

@@ -12,7 +12,7 @@ interface Props {
   readonly onChainPlay: UseDataFunctionReturn<readonly Infinite[]>
 }
 
-export default function Gameplay  ({ title, type, onChainPlay }: Props) {
+export default function Gameplay({ title, type, onChainPlay }: Props) {
   // const { transactions } = useStarknetTransactionManager()
   // const { recentGames } = useSelector((state) => state.gameplay)
   console.log(onChainPlay)
@@ -25,14 +25,16 @@ export default function Gameplay  ({ title, type, onChainPlay }: Props) {
         }}
       >
         <div>
-          {Array.from(onChainPlay).reverse().map((data, index) => (
-            <TransactionRow
-              key={index}
-              label={TxnRowStatus[data.txStatus ?? 'ACCEPTED_ON_L1'].statusText}
-              status={data.txStatus ?? 'ACCEPTED_ON_L1'}
-              user={getChecksumAddress(data.transactionOwner)}
-            />
-          ))}
+          {Array.from(onChainPlay)
+            .reverse()
+            .map((data, index) => (
+              <TransactionRow
+                key={index}
+                label={TxnRowStatus[data.txStatus ?? 'ACCEPTED_ON_L1'].statusText}
+                status={data.txStatus ?? 'ACCEPTED_ON_L1'}
+                user={getChecksumAddress(data.transactionOwner)}
+              />
+            ))}
 
           {/* {recentGames && recentGames.length ? (
             recentGames[0].map((game, index) => {

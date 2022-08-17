@@ -1,6 +1,6 @@
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Button from './Button';
+import Button from './Button'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -10,47 +10,47 @@ export default {
   argTypes: {
     primary: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     secondary: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     tertiary: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     icon: {
-      type: 'symbol'
+      type: 'symbol',
     },
     isLoading: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     label: {
       defaultValue: 'Click!',
-      type: 'string'
+      type: 'string',
     },
     disabled: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     onClick: {
-      type: 'function'
+      type: 'function',
     },
     full: {
       defaultValue: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     tertiaryColor: {
-      type: 'string'
+      type: 'string',
     },
   },
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<typeof Button>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {}

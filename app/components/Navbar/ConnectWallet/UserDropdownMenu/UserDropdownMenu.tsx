@@ -31,10 +31,11 @@ const UserDropdownMenu = ({ account, disconnect }) => {
           <HiOutlineDocumentSearch size={24} />
           View on Explorer
         </DropdownMenu.Item>
-        <DropdownMenu.Item onClick={() => {
-          console.info('dsdsdsds', disconnect())
-
-        }}>
+        <DropdownMenu.Item
+          onClick={() => {
+            console.info('dsdsdsds', disconnect())
+          }}
+        >
           <HiOutlineLogout size={24} />
           Disconnect
         </DropdownMenu.Item>

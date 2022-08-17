@@ -1,12 +1,16 @@
+import ControlBar from '../GolGrid/Footer/ControlBar/ControlBar'
 import Footer from '../GolGrid/Footer/Footer'
-import CControlBar from './CControlBar'
+import type { Actions, State } from '~/hooks/useGamePlayback'
 
-const IFooter = ({ gameId }) => {
+interface Props {
+  readonly state: State
+  readonly actions: Actions
+}
+
+export default function CFooter({ state, actions }: Props) {
   return (
     <Footer>
-      <CControlBar gameId={gameId} />
+      <ControlBar actions={actions} state={state} />
     </Footer>
   )
 }
-
-export default IFooter

@@ -8,7 +8,7 @@ import { AnimatePresence } from 'framer-motion'
 import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import type { Infinite } from '~/db.server';
+import type { Infinite } from '~/db.server'
 import { getDB } from '~/db.server'
 import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
@@ -64,7 +64,8 @@ export default function Snapshots() {
       </PageIntro.Container>
       <FlexContainer>
         <AnimatePresence>
-          {userId && data == null &&
+          {userId &&
+            data == null &&
             [1, 2, 3].map((item, i) => (
               <Snapshot
                 key={item}
