@@ -3,10 +3,10 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "concurrently -n netlify,proxify 'yarn dev:netlify' 'yarn dev:proxify'",
-    "dev:netlify": "cross-env NODE_ENV=development netlify dev",
-    "dev:proxify": "node proxify.js",
-    "start": "cross-env NODE_ENV=production netlify dev",
+    "dev": "concurrently -n remix,proxy 'yarn dev:remix' 'yarn dev:proxy'",
+    "dev:remix": "cross-env NODE_ENV=development remix dev --port 3001",
+    "dev:proxy": "node proxy.js",
+    "start": "cross-env NODE_ENV=production remix dev",
     "fmt": "yarn commands:prettier --write",
     "lint": "yarn commands:eslint",
     "commands:prettier": "prettier **/*.{js,ts,tsx,json,md}",
@@ -15,10 +15,9 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@argent/get-starknet": "4.6.0",
+    "@argent/get-starknet": "4.7.0",
     "@babel/core": "^7.18.9",
-    "@napi-rs/canvas": "0.1.25",
-    "@netlify/functions": "^1.0.0",
+    "@napi-rs/canvas": "0.1.28",
     "@radix-ui/react-dialog": "^0.1.7",
     "@radix-ui/react-dropdown-menu": "^0.1.6",
     "@radix-ui/react-popover": "^0.1.6",
@@ -27,7 +26,6 @@
     "@reduxjs/toolkit": "^1.8.3",
     "@remix-run/dev": "^1.6.5",
     "@remix-run/eslint-config": "^1.6.5",
-    "@remix-run/netlify": "^1.6.5",
     "@remix-run/node": "^1.6.5",
     "@remix-run/react": "^1.6.5",
     "@remix-run/serve": "^1.6.5",
@@ -51,7 +49,7 @@
     "concurrently": "^7.3.0",
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.3",
-    "eslint": "8.20.0",
+    "eslint": "8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-storybook": "^0.6.1",
     "framer-motion": "^6.5.1",
@@ -60,7 +58,6 @@
     "http-proxy": "^1.18.1",
     "immer": "^9.0.15",
     "lottie-react": "^2.3.1",
-    "netlify-cli": "^10.12.1",
     "pg": "^8.7.3",
     "prettier": "2.7.1",
     "react": "18.2.0",
@@ -75,6 +72,6 @@
     "typescript": "^4.7.4",
     "vite": "^3.0.3",
     "vite-tsconfig-paths": "^3.5.0",
-    "vitest": "^0.19.1"
+    "vitest": "^0.22.1"
   }
 }

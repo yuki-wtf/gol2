@@ -11,17 +11,7 @@ const config = [
       host: 'localhost',
       port: 3001,
     },
-  },
-  {
-    source: {
-      host: 'local.gol2.io',
-      port: 8002,
-    },
-    target: {
-      host: 'localhost',
-      port: 8002,
-    },
-  },
+  }
 ]
 
 const PROXY_SOURCE = `http://${config[0].source.host}:${config[0].source.port}`
