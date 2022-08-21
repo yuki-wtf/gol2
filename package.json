@@ -6,7 +6,7 @@
     "dev": "concurrently -n remix,proxy 'yarn dev:remix' 'yarn dev:proxy'",
     "dev:remix": "cross-env NODE_ENV=development remix dev --port 3001",
     "dev:proxy": "node proxy.js",
-    "start": "cross-env NODE_ENV=production remix dev",
+    "start": "remix-serve build",
     "fmt": "yarn commands:prettier --write",
     "lint": "yarn commands:eslint",
     "commands:prettier": "prettier **/*.{js,ts,tsx,json,md}",
