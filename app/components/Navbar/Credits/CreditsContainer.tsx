@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
-import { HiOutlineHeart } from 'react-icons/hi'
+import GolToken from '~/components/Logos/Token/GolToken'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const StyledTokenIconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   position: relative;
-  gap: 4px;
+  gap: 8px;
   height: 27px;
   &:before {
     content: '';
@@ -40,7 +40,7 @@ const StyledTokenIconWrapper = styled.div`
     top: -5px;
     right: -16px;
   }
-  color: ${(props) => props.theme.colors.infinitePrimary};
+  color: ${(props) => props.theme.colors.creatorPrimary};
   @media (max-width: 750px) {
     flex-direction: column;
     justify-content: center;
@@ -60,14 +60,18 @@ const CreditsContainer = ({ loading, tokenCount, error }) => {
     <StyledContainer>
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
-          {loading && !error ? <Skeleton size={6} /> : <T.H4SemiBold> {tokenCount} </T.H4SemiBold>}
+          {loading && !error ? (
+            <Skeleton size={6} />
+          ) : (
+            <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {tokenCount} </T.H4SemiBold>
+          )}
         </StyledTextWrapper>
         <StyledIconWrapper>
-          <HiOutlineHeart size={24} />
+          <GolToken />
         </StyledIconWrapper>
       </StyledTokenIconWrapper>
       <StyledTextWrapper>
-        <T.H4SemiBold>Life Credits</T.H4SemiBold>
+        <T.H4SemiBold>Gol Tokens</T.H4SemiBold>
       </StyledTextWrapper>
     </StyledContainer>
   )
