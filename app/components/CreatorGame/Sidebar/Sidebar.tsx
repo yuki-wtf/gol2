@@ -1,5 +1,5 @@
 import Statistics from './Statistics'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Gameplay from './Gameplay'
 import type { UseDataFunctionReturn } from '@remix-run/react/dist/components'
 import type { Creator } from '~/db.server'

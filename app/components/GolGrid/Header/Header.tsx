@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const StyledHeader = styled.header`
   background-color: ${(props) => (props.empty ? '#1D222D' : props.theme.colors.neutral100)};

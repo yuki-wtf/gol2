@@ -2,7 +2,7 @@ import CreateGolGrid from '../../components/CreateGolGrid/CreateGolGrid'
 import CreatorGameHeader from '../../components/CreatorGameHeader/CreatorGameHeader'
 import ContainerInner from '../../components/Layout/ContainerInner'
 import Typography from '../../components/Typography/Typography'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Button from '../../components/Button/Button'
 import CreateGame from '../../components/CreatorGame/Game/Wrapped/CreateGame'
 

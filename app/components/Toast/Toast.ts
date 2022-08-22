@@ -1,5 +1,5 @@
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 export const Provider = ToastPrimitive.Provider
 export const Root = styled(ToastPrimitive.Root)`
   display: flex;

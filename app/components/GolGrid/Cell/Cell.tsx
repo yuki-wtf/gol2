@@ -1,31 +1,32 @@
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
-const pendingCell = css`
-  background-color: ${(p) => p.theme.colors.cell.cellPendingBackground};
+const pendingCell = (p: any) => css`
+  background-color: ${p.theme.colors.cell.cellPendingBackground};
   pointer-events: none;
-  box-shadow: inset 0 0 0 1px ${(p) => p.theme.colors.cell.cellLiveBackground};
+  box-shadow: inset 0 0 0 1px ${p.theme.colors.cell.cellLiveBackground};
 `
-const aliveCell = css`
-  background-color: ${(p) => p.theme.colors.cell.cellLiveBackground};
-  pointer-events: none;
-`
-const selectedCell = css`
-  background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
+const aliveCell = (p: any) => css`
+  background-color: ${p.theme.colors.cell.cellLiveBackground};
   pointer-events: none;
 `
-const createSelectedCell = css`
-  background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
+const selectedCell = (p: any) => css`
+  background-color: ${p.theme.colors.cell.cellPreLiveBackground};
+  pointer-events: none;
+`
+const createSelectedCell = (p: any) => css`
+  background-color: ${p.theme.colors.cell.cellPreLiveBackground};
   cursor: pointer;
   > &:hover {
-    background-color: ${(p) => p.theme.colors.cell.cellPreLiveBackground};
+    background-color: ${p.theme.colors.cell.cellPreLiveBackground};
   }
 `
-const defaultCell = css`
-  background-color: ${(p) => p.theme.colors.cell.cellDefaultBackground};
+const defaultCell = (p: any) => css`
+  background-color: ${p.theme.colors.cell.cellDefaultBackground};
   border: 0.5px solid #2d3038;
-  cursor: ${(p) => (!p.isSnapshot ? 'pointer' : 'default')};
+  cursor: ${!p.isSnapshot ? 'pointer' : 'default'};
   &:hover {
-    background-color: ${(p) => !p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
+    background-color: ${!p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
   }
 `
 // const StyledCell = styled(motion.div)`
@@ -55,22 +56,22 @@ const StyledCell2 = styled.div`
   ${(p) => {
     switch (p.state) {
       case 'pending':
-        return pendingCell
+        return pendingCell(p)
 
       case 'alive':
-        return aliveCell
+        return aliveCell(p)
 
       case 'selected':
-        return selectedCell
+        return selectedCell(p)
 
       case 'createSelected':
-        return createSelectedCell
+        return createSelectedCell(p)
 
       case 'dead':
-        return defaultCell
+        return defaultCell(p)
 
       default:
-        return defaultCell
+        return defaultCell(p)
     }
   }}
 

@@ -1,4 +1,4 @@
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from '@emotion/styled'
 import { withThemes } from '@react-theming/storybook-addon'
 import { infinite } from '../app/styles/themes/infinite'
 import { creator } from '../app/styles/themes/creator'

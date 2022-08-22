@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 // import Cell from "../Cell/Cell";
 // import Grid from "../../InfiniteGame/Game/Grid/Grid";
 // import { data as mockdata } from "../../../data/data";

@@ -1,4 +1,4 @@
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from '@emotion/react'
 import { creator } from '../../../styles/themes/creator'
 import ContainerInner from '../../../components/Layout/ContainerInner'
 import Sidebar from '../../../components/CreatorGame/Sidebar/Sidebar'

@@ -1,6 +1,6 @@
 import type { ForwardRefComponent, HTMLMotionProps } from 'framer-motion'
 import { motion } from 'framer-motion'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 // cell count
 const GRID_SIZE = 15

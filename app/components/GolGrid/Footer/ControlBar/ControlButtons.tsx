@@ -1,5 +1,7 @@
-import styled, { css } from 'styled-components'
-const defaultButton = css`
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
+
+const defaultButton = (p: any) => css`
   position: relative;
   height: 48px;
   width: 48px;
@@ -9,16 +11,16 @@ const defaultButton = css`
   justify-content: center;
   align-items: center;
   align-self: center;
-  border: 2px solid ${({ theme }) => theme.colors.buttonPrimary.defaultBorder};
+  border: 2px solid ${p.theme.colors.buttonPrimary.defaultBorder};
   border-radius: 50%;
   text-align: center;
 `
 // Primary Button
-const hoveredButtonPrimary = css`
-  background: ${({ theme }) => theme.colors.buttonPrimary.hoverBackground};
-  color: ${({ theme }) => theme.colors.buttonPrimary.hoverText};
+const hoveredButtonPrimary = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.hoverBackground};
+  color: ${p.theme.colors.buttonPrimary.hoverText};
 `
-const focusedButtonPrimary = css`
+const focusedButtonPrimary = (p: any) => css`
   &:focus-visible {
     outline: 2px;
     &:after {
@@ -29,8 +31,8 @@ const focusedButtonPrimary = css`
       left: -2px;
       right: -2px;
       bottom: -2px;
-      border: 2px solid ${({ theme }) => theme.colors.buttonPrimary.focusedBorder};
-      outline: 3px solid ${({ theme }) => theme.colors.buttonPrimary.focusedBackground};
+      border: 2px solid ${p.theme.colors.buttonPrimary.focusedBorder};
+      outline: 3px solid ${p.theme.colors.buttonPrimary.focusedBackground};
       border-radius: 50%;
       z-index: 2;
       width: 100%;
@@ -43,17 +45,17 @@ const focusedButtonPrimary = css`
 //   background: transparent;
 //   color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};
 // `
-const activeButtonPrimary = css`
-  background: ${({ theme }) => theme.colors.buttonPrimary.activeBackground};
+const activeButtonPrimary = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.activeBackground};
 `
-const primaryButton = css`
-  background: ${({ theme }) => theme.colors.buttonPrimary.defaultBackground};
-  color: ${({ theme }) => theme.colors.buttonPrimary.defaultText};
+const primaryButton = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.defaultBackground};
+  color: ${p.theme.colors.buttonPrimary.defaultText};
   &:hover {
-    ${(p) => !p.disabled && hoveredButtonPrimary}
+    ${!p.disabled && hoveredButtonPrimary(p)}
   }
   &:focus {
-    ${(p) => !p.disabled && focusedButtonPrimary}
+    ${!p.disabled && focusedButtonPrimary(p)}
   }
   &:disabled {
     /* border: 20px solid red; */
@@ -64,12 +66,13 @@ const primaryButton = css`
     }
   }
   &:active {
-    ${activeButtonPrimary}
+    ${activeButtonPrimary(p)}
   }
 `
 export const StyledPlayPause = styled.button`
   ${defaultButton}
   ${primaryButton}
+  ${(a) => css``}
 `
 
 const PlayPauseBtn = ({ onClick, disabled, isPlaying, ...rest }) => {

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import GridWrapper from './GridWrapper'
 import CHeader from './CHeader'
 import CFooter from './CFooter'

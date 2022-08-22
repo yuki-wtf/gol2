@@ -1,6 +1,6 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Button from '../../Button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { useInfiniteGameContract } from '../../../hooks/useInfiniteGameContract'

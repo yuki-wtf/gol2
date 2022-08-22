@@ -1,5 +1,5 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const Root = styled(DropdownMenuPrimitive.Root)``
 const Trigger = styled(DropdownMenuPrimitive.Trigger)`
   border-radius: 4px;

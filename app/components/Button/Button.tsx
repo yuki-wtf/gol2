@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
 import T from '../Typography/Typography'
 import Spinner from '../Spinner/Spinner'
+import { css } from '@emotion/react'
 
 interface Props {
   readonly primary?: boolean
@@ -16,7 +17,8 @@ interface Props {
 }
 
 // Defaults
-const defaultButton = css<Props>`
+const defaultButton = (p: any) => css`
+  background-color: red;
   position: relative;
   text-transform: uppercase;
   font-weight: 800;
@@ -24,27 +26,27 @@ const defaultButton = css<Props>`
   cursor: pointer;
   display: inline-flex;
   flex: 0 0 auto;
-  width: ${(p) => (p.full ? '100%' : 'auto')};
+  width: ${(p.full ? '100%' : 'auto')};
   flex-direction: row;
   justify-content: center;
   align-items: center;
   align-self: center;
   padding: 0;
-  padding-left: ${(p) => (p.icon ? '16px' : '24px')};
-  padding-right: ${(p) => (p.icon ? '18px' : '24px')};
-  border: 1px solid ${({ theme }) => theme.colors.buttonPrimary.defaultBorder};
+  padding-left: ${(p.icon ? '16px' : '24px')};
+  padding-right: ${(p.icon ? '18px' : '24px')};
+  border: 1px solid ${p.theme.colors.buttonPrimary.defaultBorder};
   border-radius: 5px;
   text-align: center;
   gap: 4px;
-  pointer-events: ${(p) => (p.isLoading ? 'none' : 'default')};
+  pointer-events: ${(p.isLoading ? 'none' : 'default')};
   letter-spacing: 0.1em;
 `
 // Primary Button
-const hoveredButtonPrimary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonPrimary.hoverBackground};
-  color: ${({ theme }) => theme.colors.buttonPrimary.hoverText};
+const hoveredButtonPrimary = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.hoverBackground};
+  color: ${p.theme.colors.buttonPrimary.hoverText};
 `
-const focusedButtonPrimary = css<Props>`
+const focusedButtonPrimary = (p: any) => css`
   &:focus-visible {
     outline: 2px;
     &:after {
@@ -55,8 +57,8 @@ const focusedButtonPrimary = css<Props>`
       left: -2px;
       right: -2px;
       bottom: -2px;
-      border: 2px solid ${({ theme }) => theme.colors.buttonPrimary.focusedBorder};
-      outline: 3px solid ${({ theme }) => theme.colors.buttonPrimary.focusedBackground};
+      border: 2px solid ${p.theme.colors.buttonPrimary.focusedBorder};
+      outline: 3px solid ${p.theme.colors.buttonPrimary.focusedBackground};
       border-radius: 5px;
       z-index: 2;
       width: 100%;
@@ -64,38 +66,38 @@ const focusedButtonPrimary = css<Props>`
     }
   }
 `
-const disabledButtonPrimary = css<Props>`
+const disabledButtonPrimary = (p: any) => css`
   pointer-events: none;
-  background: ${({ theme }) => theme.colors.buttonPrimary.disabledBackground};
-  color: ${({ theme }) => theme.colors.buttonPrimary.disabledText};
+  background: ${p.theme.colors.buttonPrimary.disabledBackground};
+  color: ${p.theme.colors.buttonPrimary.disabledText};
 `
-const activeButtonPrimary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonPrimary.activeBackground};
+const activeButtonPrimary = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.activeBackground};
 `
-const primaryButton = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonPrimary.defaultBackground};
-  color: ${({ theme }) => theme.colors.buttonPrimary.defaultText};
+const primaryButton = (p: any) => css`
+  background: ${p.theme.colors.buttonPrimary.defaultBackground};
+  color: ${p.theme.colors.buttonPrimary.defaultText};
   &:hover {
-    ${(p) => !p.disabled && hoveredButtonPrimary}
+    ${!p.disabled && hoveredButtonPrimary(p)}
   }
   &:focus {
-    ${(p) => !p.disabled && focusedButtonPrimary}
+    ${!p.disabled && focusedButtonPrimary(p)}
   }
   &:disabled {
-    ${disabledButtonPrimary}
+    ${disabledButtonPrimary(p)}
   }
   &:active {
-    ${activeButtonPrimary}
+    ${activeButtonPrimary(p)}
   }
 `
 // Secondary Button
-const hoveredButtonSecondary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonSecondary.hoverBackground};
-  color: ${({ theme }) => theme.colors.buttonSecondary.hoverText};
+const hoveredButtonSecondary = (p: any) => css`
+  background: ${p.theme.colors.buttonSecondary.hoverBackground};
+  color: ${p.theme.colors.buttonSecondary.hoverText};
 `
-const focusedButtonSecondary = css<Props>`
+const focusedButtonSecondary = (p: any) => css`
   &:focus-visible {
-    background: ${({ theme }) => theme.colors.buttonSecondary.focusedBackground};
+    background: ${p.theme.colors.buttonSecondary.focusedBackground};
     outline: 2px;
     &:after {
       content: '';
@@ -105,8 +107,8 @@ const focusedButtonSecondary = css<Props>`
       left: -2px;
       right: -2px;
       bottom: -2px;
-      border: 2px solid ${({ theme }) => theme.colors.buttonSecondary.focusedBorder};
-      outline: 3px solid ${({ theme }) => theme.colors.buttonSecondary.focusedBackground};
+      border: 2px solid ${p.theme.colors.buttonSecondary.focusedBorder};
+      outline: 3px solid ${p.theme.colors.buttonSecondary.focusedBackground};
       border-radius: 5px;
       z-index: 2;
       width: 100%;
@@ -114,38 +116,38 @@ const focusedButtonSecondary = css<Props>`
     }
   }
 `
-const disabledButtonSecondary = css<Props>`
+const disabledButtonSecondary = (p: any) => css`
   pointer-events: none;
-  background: ${({ theme }) => theme.colors.buttonSecondary.disabledBackground};
-  color: ${({ theme }) => theme.colors.buttonSecondary.disabledColor};
+  background: ${p.theme.colors.buttonSecondary.disabledBackground};
+  color: ${p.theme.colors.buttonSecondary.disabledColor};
   border: 1px solid transparent;
 `
-const activeButtonSecondary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonSecondary.activeBackground};
+const activeButtonSecondary = (p: any) => css`
+  background: ${p.theme.colors.buttonSecondary.activeBackground};
 `
-const secondaryButton = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonSecondary.defaultBackground};
-  color: ${({ theme }) => theme.colors.buttonSecondary.defaultColor};
+const secondaryButton = (p: any) => css`
+  background: ${p.theme.colors.buttonSecondary.defaultBackground};
+  color: ${p.theme.colors.buttonSecondary.defaultColor};
   &:hover {
-    ${(p) => !p.disabled && hoveredButtonSecondary}
+    ${!p.disabled && hoveredButtonSecondary(p)}
   }
   &:focus {
-    ${(p) => !p.disabled && focusedButtonSecondary}
+    ${!p.disabled && focusedButtonSecondary(p)}
   }
   &:disabled {
-    ${disabledButtonSecondary}
+    ${disabledButtonSecondary(p)}
   }
   &:active {
-    ${activeButtonSecondary}
+    ${activeButtonSecondary(p)}
   }
 `
 // Tertiary Button
-const hoveredButtonTertiary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonTertiary.hoverBackground};
-  color: ${({ theme }) => theme.colors.buttonTertiary.hoverText};
+const hoveredButtonTertiary = (p: any) => css`
+  background: ${p.theme.colors.buttonTertiary.hoverBackground};
+  color: ${p.theme.colors.buttonTertiary.hoverText};
   opacity: 0.7;
 `
-const focusedButtonTertiary = css<Props>`
+const focusedButtonTertiary = (p: any) => css`
   &:focus-visible {
     outline: 2px;
     border: 2px solid green;
@@ -165,51 +167,51 @@ const focusedButtonTertiary = css<Props>`
     }
   }
 `
-const disabledButtonTertiary = css<Props>`
+const disabledButtonTertiary = (p: any) => css`
   pointer-events: none;
-  background: ${({ theme }) => theme.colors.buttonTertiary.disabledBackground};
-  color: ${({ theme }) => theme.colors.buttonTertiary.disabledText};
+  background: ${p.theme.colors.buttonTertiary.disabledBackground};
+  color: ${p.theme.colors.buttonTertiary.disabledText};
 `
-const activeButtonTertiary = css<Props>`
-  background: ${({ theme }) => theme.colors.buttonTertiary.activeBackground};
+const activeButtonTertiary = (p: any) => css`
+  background: ${p.theme.colors.buttonTertiary.activeBackground};
 `
-const tertiaryButton = css<Props>`
+const tertiaryButton = (p: any) => css`
   background: transparent;
   text-transform: none;
   font-weight: 500;
   border: none;
-  color: ${(p) => (p.tertiaryColor ? p.tertiaryColor : 'white')};
+  color: ${(p.tertiaryColor ? p.tertiaryColor : 'white')};
   &:hover {
-    ${(p) => !p.disabled && hoveredButtonTertiary}
+    ${!p.disabled && hoveredButtonTertiary(p)}
   }
   &:focus {
-    ${(p) => !p.disabled && focusedButtonTertiary}
+    ${!p.disabled && focusedButtonTertiary(p)}
   }
   &:disabled {
-    ${disabledButtonTertiary}
+    ${disabledButtonTertiary(p)}
   }
   &:active {
-    ${activeButtonTertiary}
+    ${activeButtonTertiary(p)}
   }
 `
 export const StyledButton = styled.button<Props>`
-  ${defaultButton}
+  ${(p) => defaultButton(p)};
 
-  ${({ primary, secondary, tertiary }) => {
+  ${(p) => {
     switch (true) {
-      case primary:
-        return primaryButton
+      case p.primary:
+        return primaryButton(p)
 
-      case secondary:
-        return secondaryButton
+      case p.secondary:
+        return secondaryButton(p)
 
-      case tertiary:
-        return tertiaryButton
+      case p.tertiary:
+        return tertiaryButton(p)
 
       default:
-        return primaryButton
+        return primaryButton(p)
     }
-  }}
+  }};
 `
 
 const Button = ({

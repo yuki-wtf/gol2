@@ -1,5 +1,5 @@
 import * as DialogPrimitve from '@radix-ui/react-dialog'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const Root = styled(DialogPrimitve.Root)``
 const Portal = styled(DialogPrimitve.Portal)``
 const Overlay = styled(DialogPrimitve.Overlay)`

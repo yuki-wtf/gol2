@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
 import { HiOutlineLightningBolt, HiPlus } from 'react-icons/hi'

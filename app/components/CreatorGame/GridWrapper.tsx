@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import Body from '../GolGrid/Body/Body'
 import Loader from '../Loader/Loader'

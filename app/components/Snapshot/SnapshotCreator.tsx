@@ -1,5 +1,5 @@
 import { HiOutlineUser } from 'react-icons/hi'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'

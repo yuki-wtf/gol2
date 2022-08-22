@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import AboutLogo from '../../Logos/Header/AboutLogo'
 import CreatorLogo from '../../Logos/Header/CreatorLogo'
 import DefaultLogo from '../../Logos/Header/DefaultLogo'

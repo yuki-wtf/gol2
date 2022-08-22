@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import T from '../Typography/Typography'
 
 const StyledSidebarSection = styled.div`

@@ -1,4 +1,4 @@
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from '@emotion/react'
 import ContainerInner from '../../components/Layout/ContainerInner'
 import PageIntro from '../../components/PageIntro/PageIntro'
 import SnapshotCreator from '../../components/Snapshot/SnapshotCreator'

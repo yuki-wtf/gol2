@@ -1,5 +1,5 @@
 import { HiOutlineLightBulb } from 'react-icons/hi'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Typography from '../Typography/Typography'
 const Container = styled.div`
   display: flex;

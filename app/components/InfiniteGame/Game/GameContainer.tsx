@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import IHeader from './IHeader'
 import DialogGiveLife from '../../GolGrid/DialogGiveLife/DialogGiveLife'
 import IFooter from './IFooter'

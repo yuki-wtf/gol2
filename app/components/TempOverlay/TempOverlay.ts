@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const TempOverlay = styled.div`
   background: #1d222c;
   opacity: 0.9;

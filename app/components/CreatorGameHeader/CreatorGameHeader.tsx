@@ -1,6 +1,6 @@
 import { useNavigate } from '@remix-run/react'
 import { HiOutlineArrowLeft, HiOutlineUser } from 'react-icons/hi'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import Button from '../Button/Button'
 import Typography from '../Typography/Typography'

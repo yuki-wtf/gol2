@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const ContainerContentInner = styled.div`
   max-width: 882px;
   margin: 0 auto;

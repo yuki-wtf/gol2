@@ -1,5 +1,5 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const Root = styled(PopoverPrimitive.Root)``
 const Content = styled(PopoverPrimitive.Content)``
 const Close = styled(PopoverPrimitive.Close)``

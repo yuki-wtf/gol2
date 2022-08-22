@@ -1,10 +1,11 @@
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
-import styled, { keyframes } from 'styled-components'
+import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
 import Button from '../Button/Button'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+import { keyframes } from '@emotion/react'
 
 const animate = keyframes`
   from {

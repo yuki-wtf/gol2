@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Body from '../GolGrid/Body/Body'
 import Footer from '../GolGrid/Footer/Footer'
 import Header from '../GolGrid/Header/Header'

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 const Typography = {
   H1: styled.h1`
     font-size: 36px;

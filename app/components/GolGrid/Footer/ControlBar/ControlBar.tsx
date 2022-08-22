@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import type { Actions, State } from '~/hooks/useInfiniteGamePlayback'
 import ControlButtons from './ControlButtons'
 import SpeedDropdownMenu from './SpeedControl'

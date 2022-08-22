@@ -1,6 +1,6 @@
 import { useLottie } from 'lottie-react'
 import animation from '../../assets/animations/loader.json'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const options = {
   animationData: animation,

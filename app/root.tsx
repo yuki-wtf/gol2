@@ -1,20 +1,23 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
 import { getInstalledInjectedConnectors, StarknetProvider } from '@starknet-react/core'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from '@emotion/react'
 import Layout from './components/layout'
 import { store } from './store'
 import { GlobalStyle } from './styles/globalStyle'
 import { infinite } from './styles/themes/infinite'
 import { useCatch } from '@remix-run/react'
 import ContainerInner from './components/Layout/ContainerInner'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import Typography from './components/Typography/Typography'
 import type { ActionArgs, LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { getUserId, updateSession } from './session.server'
-import { useLayoutEffectX } from './hooks/useLayoutEffectX'
 import { UserIdProvider } from './hooks/useUserId'
+import { withEmotionCache } from '@emotion/react'
+import ServerStyleContext from './styles/server.context'
+import ClientStyleContext from './styles/client.context'
+import { useContext, useEffect } from 'react'
 
 export async function loader({ request }: LoaderArgs) {
   return json({
@@ -66,39 +69,70 @@ export const links: LinksFunction = () => [
   },
 ]
 
-function AppLayout({ children }) {
-  const connectors = getInstalledInjectedConnectors()
+interface DocumentProps {
+  children: React.ReactNode
+  title?: string
+}
 
-  useLayoutEffectX(() => {
-    if (window.__style == null) {
-      window.__style = document.head.querySelector('style[data-styled]')
-    } else if (!document.head.querySelector('style[data-styled]')) {
-      document.head.appendChild(window.__style)
-    }
+const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
+  const serverStyleData = useContext(ServerStyleContext)
+  const clientStyleData = useContext(ClientStyleContext)
+
+  // Only executed on client
+  useEffect(() => {
+    // re-link sheet container
+    emotionCache.sheet.container = document.head
+
+    // re-inject tags
+    const tags = emotionCache.sheet.tags
+    emotionCache.sheet.flush()
+    tags.forEach((tag) => {
+      ;(emotionCache.sheet as any)._insertTag(tag)
+    })
+
+    // reset cache to re-apply global styles
+    clientStyleData.reset()
   }, [])
 
   return (
     <html lang="en">
+      <head>
+        {title ? <title>{title}</title> : null}
+        <Meta />
+        <Links />
+        {serverStyleData?.map(({ key, ids, css }) => (
+          <style
+            key={key}
+            data-emotion={`${key} ${ids.join(' ')}`}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: css }}
+          />
+        ))}
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  )
+})
+
+function AppLayout({ children }) {
+  const connectors = getInstalledInjectedConnectors()
+
+  return (
+    <Document>
       <Provider store={store}>
         <ThemeProvider theme={infinite}>
           <GlobalStyle />
           <StarknetProvider autoConnect connectors={connectors}>
-            <head>
-              <Meta />
-              <Links />
-
-              {typeof document === 'undefined' ? '__STYLES__' : null}
-            </head>
-            <body>
-              <Layout>{children}</Layout>
-              <ScrollRestoration />
-              <Scripts />
-              <LiveReload />
-            </body>
+            <Layout>{children}</Layout>
           </StarknetProvider>
         </ThemeProvider>
       </Provider>
-    </html>
+    </Document>
   )
 }
 
