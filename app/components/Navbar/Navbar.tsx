@@ -58,7 +58,7 @@ const Navbar = () => {
 
         <Routes>
           <Route path="/infinite/*" element={<Credits />}></Route>
-          <Route path="/creator/*" element={<CreatorCredits tokenCount={creatorCreditsCount} />}></Route>
+          <Route path="/creator/*" element={<Credits />}></Route>
         </Routes>
 
         <ConnectWallet />

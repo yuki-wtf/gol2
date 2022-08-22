@@ -20,7 +20,6 @@ const StyledGrid = styled<ForwardRefComponent<HTMLDivElement, HTMLMotionProps<'d
   grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
-  background: url('/assets/grid/grid-body.svg');
   background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   border: 0;
   height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
@@ -35,7 +34,7 @@ const StyledGridNoMotion = styled.div<Props>`
   grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
-  /* background: url('/assets/grid/grid-body.svg'); */
+
   background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   border: 0;
   height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
@@ -50,7 +49,7 @@ const StyledGridCreatorNoMotion = styled.div<Props>`
   grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
   grid-gap: 0;
   gap: 0;
-  /* background: url('/assets/grid/grid-body.svg'); */
+
   background-size: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
   border: 0;
   height: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};

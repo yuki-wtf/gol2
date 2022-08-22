@@ -97,7 +97,7 @@ const DialogGiveLife = () => {
       {selectedCellRow !== null && (
         <DialogContent>
           <DialogTitle>GIVE LIFE</DialogTitle>
-          <DialogSubtitle>2 Credits</DialogSubtitle>
+          <DialogSubtitle>1 Credits</DialogSubtitle>
           <DialogDesc>
             You can select any cell in the game to give to it life. Click confirm to submit your move
           </DialogDesc>

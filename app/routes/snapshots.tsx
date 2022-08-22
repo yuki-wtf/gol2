@@ -94,7 +94,7 @@ export default function Snapshots() {
               exit={{
                 opacity: 0,
                 transition: {
-                  delay: 3,
+                  delay: 0,
                 },
               }}
               icon={<HiOutlineLightningBolt size={40} />}
@@ -131,7 +131,7 @@ export default function Snapshots() {
                       opacity: 1,
                       y: 0,
                       transition: {
-                        delay: 1,
+                        delay: 0,
                       },
                     }}
                     onClick={undefined}
@@ -155,7 +155,7 @@ export default function Snapshots() {
                       opacity: 1,
                       y: 0,
                       transition: {
-                        delay: 1,
+                        delay: 0,
                       },
                     }}
                     onClickTwitter={() => {
