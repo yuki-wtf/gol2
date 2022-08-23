@@ -34,6 +34,7 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
                 status={data.txStatus ?? 'ACCEPTED_ON_L1'}
                 user={getChecksumAddress(data.transactionOwner)}
                 url={data.transactionHash}
+                type={data.transactionType}
               />
             ))}
 
