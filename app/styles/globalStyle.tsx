@@ -78,6 +78,83 @@ export const GlobalStyle = () => {
         a {
           text-decoration: none;
         }
+        .mobileMessage {
+          display: none;
+        }
+        @media (max-width: 750px) {
+          .appContainer {
+            display: none;
+          }
+          .mobileMessage {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background-color: #1d222c;
+            height: 100vh;
+            padding: 20px;
+          }
+          .mobileMessageIconContainer {
+            position: absolute;
+            width: 122px;
+            height: 122px;
+            border-radius: 50%;
+            border: 1px solid #0a0c10;
+            z-index: 3;
+            left: 50%;
+            top: 50%;
+            margin-left: -61px;
+            margin-top: -61px;
+            background-color: #1d222c;
+            color: #f9c7d8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .mobileMessageLogoContainerTag {
+            text-align: center;
+            color: #ff7979;
+            text-transform: uppercase;
+
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12.2651px;
+            line-height: 14px;
+            letter-spacing: 1px;
+          }
+          .mobileMessageLogoContainer {
+            width: 100%;
+            flex: 1;
+            border: 1px solid #0a0c10;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #f9c7d8;
+          }
+          .mobileMessageTextContainer {
+            flex: 1;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            font-size: 18px;
+
+            border: 1px solid #0a0c10;
+            border-top: 0;
+            color: #f9c7d8;
+            line-height: 170%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .mobileMessageTextContainer p {
+            max-width: 320px;
+            text-align: center;
+          }
+        }
       `}
     />
   )
