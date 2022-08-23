@@ -1,9 +1,7 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
 import { getInstalledInjectedConnectors, StarknetProvider } from '@starknet-react/core'
-import { Provider } from 'react-redux'
 import { ThemeProvider } from '@emotion/react'
 import Layout from './components/layout'
-import { store } from './store'
 import { GlobalStyle } from './styles/globalStyle'
 import { infinite } from './styles/themes/infinite'
 import { useCatch } from '@remix-run/react'
@@ -18,13 +16,32 @@ import { withEmotionCache } from '@emotion/react'
 import ServerStyleContext from './styles/server.context'
 import ClientStyleContext from './styles/client.context'
 import { useContext, useEffect } from 'react'
+import { sql } from './db.server'
+import { hexToDecimalString } from 'starknet/utils/number'
+import { SelectedCellProvider } from './hooks/SelectedCell'
+import { CreatorGridProvider } from './hooks/CreatorGrid'
 
 export async function loader({ request }: LoaderArgs) {
+  const userId = await getUserId(request)
+
+  let balance: number = null
+
+  if (userId != null) {
+    const res = await sql<{ balance: number }>`
+      select "balance"
+      from balance
+      where "userId" = ${hexToDecimalString(userId)}
+    `
+
+    balance = res.rows[0]?.balance ?? 0
+  }
+
   return json({
     env: {
       BASE_URL: process.env.URL,
     },
     userId: await getUserId(request),
+    balance,
   })
 }
 
@@ -92,6 +109,8 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
 
     // reset cache to re-apply global styles
     clientStyleData.reset()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -120,29 +139,31 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
 })
 
 function AppLayout({ children }) {
-  const connectors = getInstalledInjectedConnectors()
-
   return (
     <Document>
-      <Provider store={store}>
-        <ThemeProvider theme={infinite}>
-          <GlobalStyle />
-          <StarknetProvider autoConnect connectors={connectors}>
+      <ThemeProvider theme={infinite}>
+        <SelectedCellProvider>
+          <CreatorGridProvider>
+            <GlobalStyle />
             <Layout>{children}</Layout>
-          </StarknetProvider>
-        </ThemeProvider>
-      </Provider>
+          </CreatorGridProvider>
+        </SelectedCellProvider>
+      </ThemeProvider>
     </Document>
   )
 }
 
 export default function App() {
+  const connectors = getInstalledInjectedConnectors()
+
   return (
-    <AppLayout>
+    <StarknetProvider autoConnect connectors={connectors}>
       <UserIdProvider>
-        <Outlet />
+        <AppLayout>
+          <Outlet />
+        </AppLayout>
       </UserIdProvider>
-    </AppLayout>
+    </StarknetProvider>
   )
 }
 

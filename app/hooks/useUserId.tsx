@@ -15,6 +15,8 @@ export function UserIdProvider({ children }: Props) {
   const data = useLoaderData<typeof loader>()
 
   const { account } = starknet
+  console.log('account UserIdProvider', account)
+
 
   const [userId, setUserId] = useState(data.userId)
   const fetcher = useFetcher()

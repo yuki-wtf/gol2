@@ -2,12 +2,14 @@ import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Button from '../../Button/Button'
-import { useDispatch, useSelector } from 'react-redux'
-import { useInfiniteGameContract } from '../../../hooks/useInfiniteGameContract'
+
 import DialogWaiting from '../../DialogWaiting/DialogWaiting'
 import DialogTxnError from '../../DialogTxnError/DialogTxnError'
-import { setSelectedCellColumn, setSelectedCellRow } from '../../../features/Infinite/grid/infiniteGridSlice'
+
 import Typography from '../../Typography/Typography'
+import { useGameContract } from '~/hooks/useGameContract'
+import { useSelectedCell } from '~/hooks/SelectedCell'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -49,26 +51,29 @@ const DialogDesc = styled(Typography.BaseRegular)`
 const DialogGiveLife = () => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
-  const { selectedCellRow, selectedCellColumn } = useSelector((state) => state.infiniteGrid)
-  const { snapshots } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const { contract } = useInfiniteGameContract()
-  const { account } = useStarknet()
+  const [selectedCell, setSelectedCell] = useSelectedCell()
+  const { balance } = useRootLoaderData()
+  const { contract } = useGameContract()
+
   const {
     loading,
     error,
     reset,
-    invoke: invokeGiveLife,
+    invoke,
   } = useStarknetInvoke({
     contract: contract,
     method: 'give_life_to_cell',
   })
+
   useEffect(() => {
     if (loading) {
       setApprovalDialogOpen(true)
       setUserCancelledDialogOpen(true)
     }
   }, [loading])
+
+  console.log(selectedCell)
+
   return (
     <div
       style={{
@@ -94,7 +99,7 @@ const DialogGiveLife = () => {
           }}
         />
       )}
-      {selectedCellRow !== null && (
+      {selectedCell != null && (
         <DialogContent>
           <DialogTitle>GIVE LIFE</DialogTitle>
           <DialogSubtitle>1 Credits</DialogSubtitle>
@@ -105,24 +110,21 @@ const DialogGiveLife = () => {
             <Button
               secondary
               onClick={() => {
-                if (account && snapshots) {
-                  invokeGiveLife({
+                if (balance > 0) {
+                  // TODO test this
+                  invoke({
                     args: [
-                      account.toString(),
-                      selectedCellRow.toString(),
-                      selectedCellColumn.toString(),
-                      snapshots[0].toString(),
+                      selectedCell.row * 15 + selectedCell.col
                     ],
                   })
-                  dispatch(setSelectedCellRow(null))
+                  setSelectedCell(null)
                 }
               }}
               label="Confirm"
             />
             <Button
               onClick={() => {
-                dispatch(setSelectedCellRow(null))
-                dispatch(setSelectedCellColumn(null))
+                setSelectedCell(null)
               }}
               tertiary
               tertiaryColor="black"

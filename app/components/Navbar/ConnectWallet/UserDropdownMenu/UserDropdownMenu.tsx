@@ -33,7 +33,7 @@ const UserDropdownMenu = ({ account, disconnect }) => {
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={() => {
-            console.info('dsdsdsds', disconnect())
+            console.info('disconnect', disconnect())
           }}
         >
           <HiOutlineLogout size={24} />
