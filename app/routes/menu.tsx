@@ -39,7 +39,7 @@ const Menu = () => {
       heading: 'One game to rule them all',
       desc: 'A single game. Multiple players. No end point.',
       desc2:
-        'Evolve the game to earn credits, which are then used to Give Life to a cell and change the course of the game for all.',
+        'Evolve the game to earn GOL tokens, which are then used to Give Life to a cell and change the course of the game for all.',
       image_url: '/assets/menu/infinite.png',
       width: 353,
       height: 353,
@@ -50,8 +50,8 @@ const Menu = () => {
       color: 'var(--creator-primary)',
       to: '/creator',
       badge: 0,
-      heading: 'Create your own game (coming soon)',
-      desc: 'Explore the communities games and create your own games. Earn 10 credits to spawn your own game and share it with the community.',
+      heading: 'Create your own game',
+      desc: 'Explore the communities games and create your own games. Earn 10 GOL tokens to spawn your own game and share it with the community.',
       image_url: '/assets/menu/creator.png',
       width: 354,
       height: 354,
@@ -64,7 +64,7 @@ const Menu = () => {
       // TODO number of user owned Snapshots
       badge: 0,
       heading: 'Proof of play',
-      desc: 'Evolve the game in infinite mode to generate and store a unique snapshot of your play. ',
+      desc: 'Evolve the game in infinite mode to generate and store a unique snapshot of your play. Share on Twitter ',
       image_url: '/assets/menu/snapshot.png',
       width: 290,
       height: 382,

@@ -33,6 +33,7 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
                 label={TxnRowStatus[data.txStatus ?? 'ACCEPTED_ON_L1'].statusText}
                 status={data.txStatus ?? 'ACCEPTED_ON_L1'}
                 user={getChecksumAddress(data.transactionOwner)}
+                url={data.transactionHash}
               />
             ))}
 
