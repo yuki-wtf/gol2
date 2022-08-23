@@ -199,7 +199,7 @@ const Snapshot = ({
   ...rest
 }) => {
   let formattedUser
-  console.log(user)
+  // console.log(user)
   if (user) {
     formattedUser = getShortChecksumAddress(user)
   }

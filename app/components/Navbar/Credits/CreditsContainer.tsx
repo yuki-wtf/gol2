@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { useUser } from '~/hooks/useUserId'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -56,13 +56,13 @@ const StyledTokenIconWrapper = styled.div`
 `
 
 export default function CreditsContainer() {
-  const { balance } = useRootLoaderData()
+  const user = useUser()
 
   return (
     <StyledContainer>
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
-          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {balance ?? 0} </T.H4SemiBold>
+          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {user?.balance ?? 0} </T.H4SemiBold>
         </StyledTextWrapper>
         <StyledIconWrapper>
           <GolToken />
