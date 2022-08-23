@@ -11,7 +11,7 @@ import { useLoaderData } from '@remix-run/react'
 import type { CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
 import type { TypedResponse } from '@remix-run/react/dist/components'
-import { useUserId } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUserId'
 import { getUserId } from '~/session.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 
@@ -126,7 +126,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 export default function CreatorPage() {
   const navigate = useNavigate()
   const { communityGames, yourGames } = useLoaderData<typeof loader>()
-  const userId = useUserId()
+  const user = useUser()
 
   return (
     <ThemeProvider theme={creator}>
@@ -139,7 +139,7 @@ export default function CreatorPage() {
           </PageIntro.Text>
         </PageIntro.Container>
         <div></div>
-        {userId && <Typography.H2>Your Games</Typography.H2>}
+        {user != null && <Typography.H2>Your Games</Typography.H2>}
 
         <div
           style={{
@@ -149,7 +149,7 @@ export default function CreatorPage() {
             marginTop: 24,
           }}
         >
-          {userId &&
+          {user != null &&
             yourGames.map((game) => {
               return (
                 <SnapshotCreator

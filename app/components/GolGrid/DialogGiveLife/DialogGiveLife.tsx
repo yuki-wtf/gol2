@@ -1,15 +1,13 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
+import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Button from '../../Button/Button'
-
 import DialogWaiting from '../../DialogWaiting/DialogWaiting'
 import DialogTxnError from '../../DialogTxnError/DialogTxnError'
-
 import Typography from '../../Typography/Typography'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useSelectedCell } from '~/hooks/SelectedCell'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { useUser } from '~/hooks/useUserId'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -52,15 +50,10 @@ const DialogGiveLife = () => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const [selectedCell, setSelectedCell] = useSelectedCell()
-  const { balance } = useRootLoaderData()
+  const user = useUser()
   const { contract } = useGameContract()
 
-  const {
-    loading,
-    error,
-    reset,
-    invoke,
-  } = useStarknetInvoke({
+  const { loading, error, reset, invoke } = useStarknetInvoke({
     contract: contract,
     method: 'give_life_to_cell',
   })
@@ -72,7 +65,7 @@ const DialogGiveLife = () => {
     }
   }, [loading])
 
-  console.log(selectedCell)
+  // console.log(selectedCell)
 
   return (
     <div
@@ -110,12 +103,10 @@ const DialogGiveLife = () => {
             <Button
               secondary
               onClick={() => {
-                if (balance > 0) {
+                if (user != null && user.balance > 0) {
                   // TODO test this
                   invoke({
-                    args: [
-                      selectedCell.row * 15 + selectedCell.col
-                    ],
+                    args: [selectedCell.row * 15 + selectedCell.col],
                   })
                   setSelectedCell(null)
                 }

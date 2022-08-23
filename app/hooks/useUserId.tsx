@@ -4,19 +4,25 @@ import React, { useState } from 'react'
 import type { loader } from '~/root'
 import { useLayoutEffectX } from './useLayoutEffectX'
 
-const UserIdContext = React.createContext<string>(null)
+interface User {
+  readonly userId: string
+  readonly balance: number
+}
+
+const UserContext = React.createContext<User>(null)
 
 interface Props {
   readonly children: React.ReactNode
 }
 
-export function UserIdProvider({ children }: Props) {
+export function UserProvider({ children }: Props) {
   const starknet = useStarknet()
   const data = useLoaderData<typeof loader>()
 
   const { account } = starknet
   console.log('account UserIdProvider', account)
 
+  const user = data.userId != null && data.balance != null ? { userId: data.userId, balance: data.balance } : null
 
   const [userId, setUserId] = useState(data.userId)
   const fetcher = useFetcher()
@@ -37,9 +43,9 @@ export function UserIdProvider({ children }: Props) {
     )
   }, [account, userId])
 
-  return <UserIdContext.Provider value={userId}>{children}</UserIdContext.Provider>
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>
 }
 
-export function useUserId() {
-  return React.useContext(UserIdContext)
+export function useUser() {
+  return React.useContext(UserContext)
 }

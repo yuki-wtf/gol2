@@ -1,10 +1,10 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
+import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
 import { INFINITE_GAME_GENESIS } from '~/env'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useUserId } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUserId'
 import Button from '../../Button/Button'
 import DialogTxnError from '../../DialogTxnError/DialogTxnError'
 import DialogWaiting from '../../DialogWaiting/DialogWaiting'
@@ -16,7 +16,7 @@ export const IHeader = () => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
-  const userId = useUserId()
+  const user = useUser()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
@@ -54,7 +54,7 @@ export const IHeader = () => {
         {selectedCell != null && <TempOverlay />}
         <Button
           onClick={() => {
-            if (userId) {
+            if (user != null) {
               // TODO test this
               invoke({
                 args: [INFINITE_GAME_GENESIS],

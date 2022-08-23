@@ -8,12 +8,12 @@ import { AnimatePresence } from 'framer-motion'
 import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Infinite, sql } from '~/db.server'
-import { getDB } from '~/db.server'
+import type { Infinite } from '~/db.server'
+import { sql } from '~/db.server'
 import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
 import { hexToDecimalString } from 'starknet/utils/number'
-import { useUserId } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUserId'
 import type { TypedResponse } from '@remix-run/react/dist/components'
 
 const FlexContainer = styled.div`
@@ -46,7 +46,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 }
 
 export default function Snapshots() {
-  const userId = useUserId()
+  const user = useUser()
   const data = useLoaderData<typeof loader>()
 
   return (
@@ -60,7 +60,7 @@ export default function Snapshots() {
       </PageIntro.Container>
       <FlexContainer>
         <AnimatePresence>
-          {userId &&
+          {user != null &&
             data == null &&
             [1, 2, 3].map((item, i) => (
               <Snapshot
@@ -83,7 +83,7 @@ export default function Snapshots() {
         </AnimatePresence>
 
         <AnimatePresence>
-          {userId && data && data.length === 0 && (
+          {user != null && data && data.length === 0 && (
             <SnapshotEmpty
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -99,7 +99,7 @@ export default function Snapshots() {
           )}
         </AnimatePresence>
         <AnimatePresence>
-          {!userId && (
+          {user == null && (
             <SnapshotEmpty
               icon={<HiOutlineLink size={40} />}
               label="Connect your wallet to view snapshots from your previous plays"
@@ -107,7 +107,7 @@ export default function Snapshots() {
           )}
         </AnimatePresence>
 
-        {userId &&
+        {user != null &&
           data &&
           data.length > 0 &&
           data
@@ -118,7 +118,7 @@ export default function Snapshots() {
                     isSnapshot
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    user={userId}
+                    user={user?.userId}
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -142,7 +142,7 @@ export default function Snapshots() {
                     large
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    user={userId}
+                    user={user?.userId}
                     initial={{
                       opacity: 0,
                       y: 10,
