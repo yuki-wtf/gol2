@@ -15,7 +15,8 @@ interface Props {
 export default function Gameplay({ title, type, onChainPlay }: Props) {
   // const { transactions } = useStarknetTransactionManager()
   // const { recentGames } = useSelector((state) => state.gameplay)
-  console.log(onChainPlay)
+  // console.log(onChainPlay)
+
   return (
     <SidebarSection type={type} title={title}>
       <div

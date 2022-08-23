@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import NavItem from '../components/Menu/NavItem'
 import MenuDescription from '../components/Menu/MenuDescription'
-// import useFetchTokens from '../hooks/useFetchTokens'
 import NavContainer from '../components/Layout/NavContainer'
-import { useSelector } from 'react-redux'
 
 const container = {
   hidden: {
@@ -27,11 +25,10 @@ const listItem = {
 }
 
 const Menu = () => {
-  const { tokenCount } = useSelector((state) => state.user)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedHover, setselectedHover] = useState(null)
   const [currentNav, setCurrentNav] = useState(null)
-  // const { snapshots } = useFetchTokens()
+
   const menuItems = [
     {
       className: 'infinite',
@@ -64,7 +61,8 @@ const Menu = () => {
       title: 'Snapshots',
       color: 'var(--snapshots-primary)',
       to: '/snapshots',
-      badge: tokenCount ? tokenCount : 0,
+      // TODO number of user owned Snapshots
+      badge: 0,
       heading: 'Proof of play',
       desc: 'Evolve the game in infinite mode to generate and store a unique snapshot of your play. ',
       image_url: '/assets/menu/snapshot.png',

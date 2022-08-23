@@ -8,7 +8,8 @@ import DialogDownloadWallet from '../../DialogDownloadWallet/DialogDownloadWalle
 const ConnectWallet = () => {
   const [open, setOpen] = useState(true)
   const { account, connect, error, disconnect, connectors } = useStarknet()
-
+  console.log('account', account)
+  console.log('account', error)
   // useEffect(() => {
   //   setTimeout(() => {
   //     connect(new InjectedConnector());

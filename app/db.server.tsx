@@ -1,29 +1,22 @@
-import { Client } from 'pg'
+import { Pool } from 'pg'
 import invariant from 'tiny-invariant'
 
 invariant(process.env.DATABASE_URL, 'DATABASE_URL must be set')
 
 declare global {
-  var __db__: Promise<Client> | null | undefined
+  var __DB_POOL__: Pool | null | undefined
 }
 
-export async function getDB() {
-  global.__db__ ??= new Promise((resolve, reject) => {
-    const client = new Client({
-      connectionString: process.env.DATABASE_URL,
-    })
-
-    client
-      .connect()
-      .then(() => resolve(client))
-      .catch((err) => reject(err))
+export async function getPool() {
+  global.__DB_POOL__ ??= new Pool({
+    connectionString: process.env.DATABASE_URL,
   })
 
-  return global.__db__
+  return global.__DB_POOL__
 }
 
 export async function sql<T = any>(strings: TemplateStringsArray, ...values: any[]) {
-  const db = await getDB()
+  const db = await getPool()
 
   return db.query<T>({
     text: String.raw(strings, ...values.map((_, i) => `$${i + 1}`)),

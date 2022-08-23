@@ -1,8 +1,8 @@
 import ControlBar from '../../GolGrid/Footer/ControlBar/ControlBar'
 import Footer from '../../GolGrid/Footer/Footer'
-import { useSelector } from 'react-redux'
 import TempOverlay from '../../TempOverlay/TempOverlay'
 import type { Actions, State } from '~/hooks/useGamePlayback'
+import { useSelectedCell } from '~/hooks/SelectedCell'
 
 interface Props {
   readonly state: State
@@ -10,11 +10,11 @@ interface Props {
 }
 
 export default function IFooter({ state, actions }: Props) {
-  const { selectedCellRow } = useSelector((state) => state.infiniteGrid)
+  const [selectedCell] = useSelectedCell()
 
   return (
     <Footer>
-      {selectedCellRow !== null && <TempOverlay />}
+      {selectedCell != null && <TempOverlay />}
       <ControlBar actions={actions} state={state} />
     </Footer>
   )

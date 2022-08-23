@@ -1,16 +1,10 @@
-import { useEffect } from 'react'
 import styled from '@emotion/styled'
 import ConnectWallet from './ConnectWallet/ConnectWallet'
-import Credits from './Credits/Credits'
-import CreatorCredits from './CreatorCredits/CreatorCredits'
 import HeaderLogo from './Logo/Logo'
 import MenuButton from './MenuButton/MenuButton'
 import TempOverlay from '../TempOverlay/TempOverlay'
-import { useSelector, useDispatch } from 'react-redux'
-import useFetchTokens from '../../hooks/useFetchTokens'
-import { updateSnapshots, updateTokenCount, updateTokenIds } from '../../features/Infinite/user/userSlice'
-import GetUserCounts from '../CreatorGame/Game/Wrapped/GetUserCounts'
-import { Route, Routes } from 'react-router-dom'
+import CreditsContainer from './Credits/CreditsContainer'
+import { useSelectedCell } from '~/hooks/SelectedCell'
 
 const StyledNavbar = styled.header`
   position: relative;
@@ -37,29 +31,18 @@ const StyledNavbarInner = styled.header`
 `
 
 const Navbar = () => {
-  const { selectedCellRow } = useSelector((state) => state.infiniteGrid)
-  const { creatorCreditsCount } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const { tokenCount, tokens, snapshots } = useFetchTokens()
-  // const [open, setOpen] = useState(false);
-  useEffect(() => {
-    dispatch(updateTokenCount(tokenCount))
-    dispatch(updateTokenIds(tokens))
-    dispatch(updateSnapshots(snapshots))
-  }, [tokenCount, snapshots, tokens, dispatch])
+  const [selectedCell] = useSelectedCell()
+
   return (
     <StyledNavbar>
-      <GetUserCounts />
-      {selectedCellRow !== null && <TempOverlay />}
+      {selectedCell !== null && <TempOverlay />}
+
       <StyledNavbarInner>
-        <MenuButton onClick={() => console.log('test')} />
+        <MenuButton />
 
         <HeaderLogo />
 
-        <Routes>
-          <Route path="/infinite/*" element={<Credits />}></Route>
-          <Route path="/creator/*" element={<Credits />}></Route>
-        </Routes>
+        <CreditsContainer />
 
         <ConnectWallet />
       </StyledNavbarInner>

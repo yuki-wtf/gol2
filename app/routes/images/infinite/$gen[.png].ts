@@ -3,10 +3,10 @@ import type { DataFunctionArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import fs from 'fs/promises'
 import path from 'path'
-import * as starknet from 'starknet'
-import { dataToGrid } from '~/helpers/dataToGrid'
-import { getShortChecksumAddress } from '~/helpers/starknet'
-import { InfiniteModeAbi, InfiniteModeAddress } from '~/smartContracts/InfiniteMode'
+// import * as starknet from 'starknet'
+// import { dataToGrid } from '~/helpers/dataToGrid'
+// import { getShortChecksumAddress } from '~/helpers/starknet'
+// import { InfiniteModeAbi, InfiniteModeAddress } from '~/smartContracts/InfiniteMode'
 
 function asset(src: string): string {
   return path.join(process.env.PWD, 'app/assets', src)
@@ -40,15 +40,17 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
 
     ctx.drawImage(image, 0, 0)
 
-    const infiniteGame = new starknet.Contract(InfiniteModeAbi, InfiniteModeAddress)
+    // const infiniteGame = new starknet.Contract(InfiniteModeAbi, InfiniteModeAddress)
 
     const gen = parseInt(params.gen!)
 
-    const data = await infiniteGame.call('get_arbitrary_state_arrays', [[gen], '0', ['0'], '0', '0'])
+    // const data = await infiniteGame.call('get_arbitrary_state_arrays', [[gen], '0', ['0'], '0', '0'])
 
-    const accountTruncated = getShortChecksumAddress(data.specific_state_owners[0])
+    // const accountTruncated = getShortChecksumAddress(data.specific_state_owners[0])
+    const accountTruncated = '123'
 
-    const grid = dataToGrid(data.gen_ids_array_result)!
+    const grid = []
+    // const grid = dataToGrid(data.gen_ids_array_result)!
 
     let x = 18 * 4
     let y = 18 * 4

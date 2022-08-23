@@ -8,7 +8,7 @@ import { AnimatePresence } from 'framer-motion'
 import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import type { Infinite } from '~/db.server'
+import { Infinite, sql } from '~/db.server'
 import { getDB } from '~/db.server'
 import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
@@ -35,16 +35,12 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 
   if (userId == null) return json(null)
 
-  const db = await getDB()
-
-  const result = await db.query<Infinite>(
-    ` select *
-      from "infinite"
-      where "transactionType" = 'game_evolved'
-        and "transactionOwner" = $1
-    `,
-    [hexToDecimalString(userId)]
-  )
+  const result = await sql<Infinite>`
+    select *
+    from "infinite"
+    where "transactionType" = 'game_evolved'
+      and "transactionOwner" = ${hexToDecimalString(userId)}
+  `
 
   return json(result.rows)
 }

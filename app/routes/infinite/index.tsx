@@ -8,6 +8,8 @@ import { useLoaderData } from '@remix-run/react'
 import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import type { TypedResponse } from '@remix-run/react/dist/components'
+import { createStateContext } from 'react-use'
+import { SelectedCellProvider } from '~/hooks/SelectedCell'
 
 interface LoaderData {
   readonly generations: number

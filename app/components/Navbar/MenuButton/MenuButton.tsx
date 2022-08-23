@@ -14,10 +14,10 @@ const MenuButtonWrapper = styled(Link)`
   }
 `
 
-const MenuButton = ({ onClick /* = () => console.log('rest') */, ...rest }) => {
+const MenuButton = () => {
   return (
     <MenuButtonWrapper to="/menu">
-      <svg width={26} height={20} viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <svg width={26} height={20} viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M2.333 2h21.334M2.333 10h21.334M2.333 18h21.334"
           stroke="#F3E9E1"

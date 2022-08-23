@@ -104,7 +104,9 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
 
 export default function CreatorGamePage() {
   const { cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay, game } = useLoaderData<typeof loader>()
-  console.log({ cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay, game })
+
+  // console.log({ cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay, game })
+
   return (
     <ThemeProvider theme={creator}>
       <ContainerInner>

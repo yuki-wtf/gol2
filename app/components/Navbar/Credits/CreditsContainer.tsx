@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -55,16 +55,14 @@ const StyledTokenIconWrapper = styled.div`
   }
 `
 
-const CreditsContainer = ({ loading, tokenCount, error }) => {
+export default function CreditsContainer() {
+  const { balance } = useRootLoaderData()
+
   return (
     <StyledContainer>
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
-          {loading && !error ? (
-            <Skeleton size={6} />
-          ) : (
-            <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {tokenCount} </T.H4SemiBold>
-          )}
+          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {balance ?? 0} </T.H4SemiBold>
         </StyledTextWrapper>
         <StyledIconWrapper>
           <GolToken />
@@ -76,5 +74,3 @@ const CreditsContainer = ({ loading, tokenCount, error }) => {
     </StyledContainer>
   )
 }
-
-export default CreditsContainer

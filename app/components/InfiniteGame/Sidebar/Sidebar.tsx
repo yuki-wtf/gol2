@@ -2,9 +2,9 @@ import Statistics from './Statistics'
 import styled from '@emotion/styled'
 import Gameplay from './Gameplay'
 import TempOverlay from '../../TempOverlay/TempOverlay'
-import { useSelector } from 'react-redux'
 import type { Infinite } from '~/db.server'
 import type { UseDataFunctionReturn } from '@remix-run/react/dist/components'
+import { useSelectedCell } from '~/hooks/SelectedCell'
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -25,11 +25,12 @@ interface Props {
 }
 
 export default function Sidebar({ extinctions, generations, livesGiven, longestStablePeriod, onChainPlay }: Props) {
-  const { selectedCellRow } = useSelector((state) => state.infiniteGrid)
+  const [selectedCell] = useSelectedCell()
 
   return (
     <StyledSidebar>
-      {selectedCellRow !== null && <TempOverlay />}
+      {selectedCell !== null && <TempOverlay />}
+
       <Statistics
         title="Statistics"
         extinctions={extinctions}
