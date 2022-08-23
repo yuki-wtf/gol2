@@ -4,9 +4,7 @@ import {
   HiOutlineClipboardCopy,
   HiOutlineDocumentSearch,
   HiOutlineLogout,
-  HiOutlinePlus,
   HiOutlinePlusCircle,
-  HiPlusCircle,
 } from 'react-icons/hi'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
