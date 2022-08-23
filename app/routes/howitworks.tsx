@@ -89,7 +89,7 @@ export default function Howitworks() {
           <InfoParagraph>The are four primary differences between GoL2 and GoL classic:</InfoParagraph>
           <InfoList>
             <InfoListItem>
-              GoL2 is played on a fixed grid (32x32) as opposed to the classic game of life which takes place on an
+              GoL2 is played on a fixed grid (15x15) as opposed to the classic game of life which takes place on an
               infinite grid.
             </InfoListItem>
             <InfoListItem>
