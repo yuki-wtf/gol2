@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useAnimation, motion } from 'framer-motion'
-import { HiOutlineHeart } from 'react-icons/hi'
+import { HiOutlineHeart, HiOutlineLightningBolt } from 'react-icons/hi'
 import { TxnRowStatus } from './TxnRow'
 import { useStarknet } from '@starknet-react/core'
 import { getShortChecksumAddress } from '~/helpers/starknet'
@@ -80,7 +80,7 @@ const StatusContainer = styled.div`
   color: ${(p) => TxnRowStatus[p.status].textColor};
 `
 
-const TransactionRow = ({ url = '/', type = 'give_life', status, delay = 1, duration = 0.4, label, user }) => {
+const TransactionRow = ({ url = '/', type = 'game_evolved', status, delay = 1, duration = 0.4, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
   const controls = useAnimation()
   const { account } = useStarknet()
@@ -151,7 +151,7 @@ const TransactionRow = ({ url = '/', type = 'give_life', status, delay = 1, dura
   }, [status, controls, statusInternal, delay, duration])
   const showUserAddress = statusInternal === 'REJECTED' || statusInternal === 'COMPLETED'
   const isMyTxn = account === user && status !== 'REJECTED'
-  const typeOfTxn = type === 'give_life'
+  const typeOfTxn = type === 'game_evolved'
   return (
     <Container
       status={status}
@@ -181,11 +181,15 @@ const TransactionRow = ({ url = '/', type = 'give_life', status, delay = 1, dura
       <InnerContainer>
         {statusInternal !== 'COMPLETED' ? (
           <IconContainer status={status}>
-            {typeOfTxn ? <HiOutlineHeart size={18} /> : <HiOutlineHeart size={18} />}
+            {typeOfTxn ? <HiOutlineHeart size={18} /> : <HiOutlineLightningBolt size={18} />}
           </IconContainer>
         ) : (
           <IconContainerComplete>
-            {typeOfTxn ? <HiOutlineHeart size={18} color="white" /> : <HiOutlineHeart size={18} color="white" />}
+            {typeOfTxn ? (
+              <HiOutlineHeart size={18} color="white" />
+            ) : (
+              <HiOutlineLightningBolt size={18} color="white" />
+            )}
           </IconContainerComplete>
         )}
 
