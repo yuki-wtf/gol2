@@ -208,13 +208,13 @@ const TransactionRow = ({ url = '/', type = 'give_life', status, delay = 1, dura
         </StatusContainer>
         {statusInternal !== 'COMPLETED' ? (
           <ButtonContainer status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/tx/${user}`}>
+            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/tx/${url}`}>
               view
             </a>
           </ButtonContainer>
         ) : (
           <ButtonContainerCompleted status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/contract/${user}`}>
+            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/tx/${url}`}>
               view
             </a>
           </ButtonContainerCompleted>

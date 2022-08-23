@@ -22,6 +22,7 @@ const ConnectWallet = () => {
           marginLeft: 'auto',
           display: 'flex',
           gap: 8,
+          minWidth: 330,
         }}
       >
         <NetworkDropdownMenu account={account} disconnect={disconnect} />
@@ -34,6 +35,7 @@ const ConnectWallet = () => {
     <div
       style={{
         marginLeft: 'auto',
+        minWidth: 330,
       }}
     >
       {!account &&
