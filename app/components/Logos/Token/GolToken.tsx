@@ -19,7 +19,14 @@ const GolToken = (props) => {
   return (
     <StyledContainer>
       <StyledLogo>
-        <svg width="21" height="21" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          style={{ position: 'relative', top: 2 }}
+          width="21"
+          height="21"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <mask
             id="mask0_1967_77552"
             style={{ maskType: 'alpha' }}
