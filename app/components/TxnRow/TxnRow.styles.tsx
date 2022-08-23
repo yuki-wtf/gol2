@@ -80,7 +80,7 @@ const StatusContainer = styled.div`
   color: ${(p) => TxnRowStatus[p.status].textColor};
 `
 
-const TransactionRow = ({ url = '/', type = 'cell_revived', status, delay = 1, duration = 0.4, label, user }) => {
+const TransactionRow = ({ url = '/', type = 'game_evolved', status, delay = 1, duration = 0.4, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
   const controls = useAnimation()
   const { account } = useStarknet()
@@ -151,7 +151,7 @@ const TransactionRow = ({ url = '/', type = 'cell_revived', status, delay = 1, d
   }, [status, controls, statusInternal, delay, duration])
   const showUserAddress = statusInternal === 'REJECTED' || statusInternal === 'COMPLETED'
   const isMyTxn = account === user && status !== 'REJECTED'
-  const typeOfTxn = type === 'cell_revived'
+  const typeOfTxn = type === 'game_evolved'
   return (
     <Container
       status={status}
