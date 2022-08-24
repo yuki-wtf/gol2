@@ -127,7 +127,7 @@ export default function Howitworks() {
           </InfoParagraph>
           <Spacer size={32} />
           <InfoParagraph weight={700}>Gameplay:</InfoParagraph>
-          <InfoParagraph>In order to give life you must first earn credits, here’s how it works:</InfoParagraph>
+          <InfoParagraph>In order to give life you must first earn GOL tokens, here’s how it works:</InfoParagraph>
           <InfoList>
             <InfoListItem>
               When in infinite mode you can evolve the game via the &apos;Evolve&apos; button. This will take the grid
@@ -150,13 +150,13 @@ export default function Howitworks() {
         <InfoSection>
           <InfoParagraph>
             Creator mode contains multiple games created by the community. You can observe these games or evolve them to
-            earn credits. 10 credits gives you the ability to create (or spawn) your own game and share it with
+            earn GOL tokens. 10 GOL tokens gives you the ability to create (or spawn) your own game and share it with
             everybody.{' '}
           </InfoParagraph>
           <Spacer size={32} />
           <InfoParagraph weight={700}>Gameplay:</InfoParagraph>
           <InfoParagraph>
-            In order to create your own game you must first earn credits, here’s how it works:
+            In order to create your own game you must first earn GOL Tokens, here’s how it works:
           </InfoParagraph>
           <InfoList>
             <InfoListItem>
@@ -173,8 +173,8 @@ export default function Howitworks() {
             </InfoListItem>
             <InfoListItem>For every evolution you make, you will earn 1 credit.</InfoListItem>
             <InfoListItem>
-              Once you have earned 10 credits you can then choose to create a new game by clicking on the ‘+ New game”
-              button.
+              Once you have earned 10 GOL tokens you can then choose to create a new game by clicking on the ‘+ New
+              game” button.
             </InfoListItem>
           </InfoList>
         </InfoSection>

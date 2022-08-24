@@ -20,6 +20,7 @@ import { sql } from './db.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { SelectedCellProvider } from './hooks/SelectedCell'
 import { CreatorGridProvider } from './hooks/CreatorGrid'
+import MobileMessage from './components/MobileMessage/MobileMessage'
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
@@ -129,7 +130,11 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         ))}
       </head>
       <body>
-        {children}
+        <div className="mobile-message">
+          <MobileMessage />
+        </div>
+        <div className="appContainer">{children}</div>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

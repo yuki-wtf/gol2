@@ -1,5 +1,11 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
-import { HiChevronDown, HiOutlineClipboardCopy, HiOutlineDocumentSearch, HiOutlineLogout } from 'react-icons/hi'
+import {
+  HiChevronDown,
+  HiOutlineClipboardCopy,
+  HiOutlineDocumentSearch,
+  HiOutlineLogout,
+  HiOutlinePlusCircle,
+} from 'react-icons/hi'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
@@ -18,6 +24,12 @@ const UserDropdownMenu = ({ account, disconnect }) => {
         <DropdownMenu.Label>
           Connected to <strong>ArgentX</strong> via <strong>Starknet</strong>
         </DropdownMenu.Label>
+
+        {/* // TODO show this only if a user has not added gol token to wallet */}
+        <DropdownMenu.Item>
+          <HiOutlinePlusCircle size={24} />
+          Add GOL token to wallet
+        </DropdownMenu.Item>
         <DropdownMenu.Item
           onClick={(e) => {
             e.preventDefault()
