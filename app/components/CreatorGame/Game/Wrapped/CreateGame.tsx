@@ -6,7 +6,7 @@ import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
 import { gridToGameState } from '~/helpers/gridToGameState'
 import { useCreatorGrid } from '~/hooks/CreatorGrid'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useUser } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUser'
 import Button from '../../../Button/Button'
 
 export default function CreateGame() {

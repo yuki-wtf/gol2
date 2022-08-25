@@ -11,7 +11,7 @@ import { useLoaderData } from '@remix-run/react'
 import type { CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
 import type { TypedResponse } from '@remix-run/react/dist/components'
-import { useUser } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUser'
 import { getUserId } from '~/session.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 

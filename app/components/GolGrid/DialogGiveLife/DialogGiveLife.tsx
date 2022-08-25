@@ -7,7 +7,7 @@ import DialogTxnError from '../../DialogTxnError/DialogTxnError'
 import Typography from '../../Typography/Typography'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useSelectedCell } from '~/hooks/SelectedCell'
-import { useUser } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUser'
 
 const ActionsContainer = styled.div`
   display: flex;

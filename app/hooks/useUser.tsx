@@ -1,6 +1,6 @@
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import { useStarknet } from '@starknet-react/core'
-import React, { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type { loader } from '~/root'
 import { useLayoutEffectX } from './useLayoutEffectX'
 
@@ -9,7 +9,7 @@ interface User {
   readonly balance: number
 }
 
-const UserContext = React.createContext<User>(null)
+const UserContext = createContext<User>(null)
 
 interface Props {
   readonly children: React.ReactNode
@@ -47,5 +47,5 @@ export function UserProvider({ children }: Props) {
 }
 
 export function useUser() {
-  return React.useContext(UserContext)
+  return useContext(UserContext)
 }

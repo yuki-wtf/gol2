@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
-import { useUser } from '~/hooks/useUserId'
+import { useUser } from '~/hooks/useUser'
 import Button from '~/components/Button/Button'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HiPlus } from 'react-icons/hi'
