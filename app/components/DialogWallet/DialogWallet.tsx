@@ -1,18 +1,14 @@
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineX } from 'react-icons/hi'
-import Button from '../Button/Button'
 
-const DialogWallet = ({ open, onClose }) => {
+const DialogWallet = ({ children, open, onClose }) => {
   return (
     <Dialog.Root open={open}>
       <Dialog.Overlay>
         <Dialog.Content>
-          <Dialog.Title>Connect a wallet provide to play</Dialog.Title>
+          <Dialog.Title>Connect a wallet provider to play</Dialog.Title>
           <Dialog.Description>More options coming soon!</Dialog.Description>
-          <Dialog.ActionContainer>
-            <Button onClick={onClose} full label="Argent" secondary />
-            <Button onClick={onClose} full label="Torus" secondary />
-          </Dialog.ActionContainer>
+          <Dialog.ActionContainer>{children}</Dialog.ActionContainer>
           <Dialog.SmallCopy>
             <p
               style={{
