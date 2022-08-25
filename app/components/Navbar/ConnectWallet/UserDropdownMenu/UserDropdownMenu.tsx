@@ -22,7 +22,7 @@ const UserDropdownMenu = ({ account, disconnect }) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>
-          Connected to <strong>ArgentX</strong> via <strong>Starknet</strong>
+          Connected to <strong>{'ArgentX'}</strong> via <strong>Starknet</strong>
         </DropdownMenu.Label>
 
         {/* // TODO show this only if a user has not added gol token to wallet */}
@@ -39,7 +39,7 @@ const UserDropdownMenu = ({ account, disconnect }) => {
           <HiOutlineClipboardCopy size={24} />
           {success ? 'Copied' : ' Copy Address'}
         </DropdownMenu.Item>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item onClick={() => window.open(`https://voyager.online/contract/${account}`, '_blank')}>
           <HiOutlineDocumentSearch size={24} />
           View on Explorer
         </DropdownMenu.Item>

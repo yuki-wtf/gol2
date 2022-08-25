@@ -4,17 +4,12 @@ import Button from '../../Button/Button'
 import UserDropdownMenu from './UserDropdownMenu/UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu'
 import DialogDownloadWallet from '../../DialogDownloadWallet/DialogDownloadWallet'
+import DialogWallet from '~/components/DialogWallet/DialogWallet'
 
 const ConnectWallet = () => {
-  const [open, setOpen] = useState(true)
-  const { account, connect, error, disconnect, connectors } = useStarknet()
-  console.log('account', account)
-  console.log('account', error)
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     connect(new InjectedConnector());
-  //   }, 1000);
-  // }, [connect]);
+  const [open, setOpen] = useState(false)
+  const { account, error, connectors, connect, disconnect } = useStarknet()
+
   if (account) {
     return (
       <div
@@ -23,6 +18,7 @@ const ConnectWallet = () => {
           display: 'flex',
           gap: 8,
           minWidth: 330,
+          justifyContent: 'flex-end',
         }}
       >
         <NetworkDropdownMenu account={account} disconnect={disconnect} />
@@ -34,34 +30,39 @@ const ConnectWallet = () => {
   return (
     <div
       style={{
+        display: 'flex',
         marginLeft: 'auto',
         minWidth: 330,
+        justifyContent: 'flex-end',
       }}
     >
-      {!account &&
-        !error &&
-        open &&
-        connectors.map((connector, i) =>
-          connector.available() ? (
-            <Button primary label="Connect" key={connector.id} onClick={() => connect(connector)} />
-          ) : null
-        )}
-      {
-        error instanceof ConnectorNotFoundError && (
-          <DialogDownloadWallet
-            open={open}
-            onClose={() => {
-              setOpen(false)
-            }}
-          />
-        ) // <div>
-        //   <p>
-        //     <a href="https://github.com/argentlabs/argent-x">
-        //       Download Argent-X
-        //     </a>
-        //   </p>
-        // </div>
-      }
+      {!account && <Button primary label="Connect" onClick={() => setOpen(true)} />}
+
+      <DialogWallet open={open} onClose={() => setOpen(false)}>
+        {!account &&
+          !error &&
+          connectors.map((connector, i) =>
+            connector.available() ? (
+              <Button
+                onClick={() => {
+                  setOpen(false)
+                  connect(connector)
+                }}
+                full
+                label={connector.id()}
+                secondary
+                key={connector.id()}
+              />
+            ) : null
+          )}
+      </DialogWallet>
+
+      <DialogDownloadWallet
+        open={open && !connectors.length}
+        onClose={() => {
+          setOpen(false)
+        }}
+      />
     </div>
   )
 }
