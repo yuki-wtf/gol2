@@ -10,9 +10,20 @@ const DialogDownloadWallet = ({ open, onClose }) => {
         <Dialog.Content>
           <Dialog.Title>Download a wallet</Dialog.Title>
           <Dialog.ActionContainer>
-            <Link to="https://github.com/argentlabs/argent-x" target="_blank">
+            <a
+              href="https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button full label="Argent" secondary />
-            </Link>
+            </a>
+            <a
+              href="https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button full label="Braavos" secondary />
+            </a>
           </Dialog.ActionContainer>
           <Dialog.SmallCopy>
             <p
