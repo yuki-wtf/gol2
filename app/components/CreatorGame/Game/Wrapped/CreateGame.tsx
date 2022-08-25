@@ -13,7 +13,7 @@ export default function CreateGame() {
   const [grid] = useCreatorGrid()
   const user = useUser()
   const { contract } = useGameContract()
-  const { loading, error, reset, invoke } = useStarknetInvoke({
+  const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
     method: 'create',
   })
@@ -29,6 +29,12 @@ export default function CreateGame() {
   }, [loading])
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (data) {
+      navigate('/creator')
+    }
+  }, [data, navigate])
 
   return (
     <>
@@ -61,10 +67,6 @@ export default function CreateGame() {
             // TODO test this
             invoke({
               args: [gameState],
-            }).then((tx) => {
-              if (tx != null) {
-                navigate('/creator')
-              }
             })
           }
         }}
