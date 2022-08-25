@@ -2,6 +2,9 @@ import styled from '@emotion/styled'
 import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
 import { useUser } from '~/hooks/useUserId'
+import Button from '~/components/Button/Button'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { HiPlus } from 'react-icons/hi'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -54,15 +57,21 @@ const StyledTokenIconWrapper = styled.div`
     }
   }
 `
+const StyledButtonWrapper = styled.div`
+  margin-left: 16px;
+`
 
 export default function CreditsContainer() {
   const user = useUser()
+  const navigate = useNavigate()
+  const balance = user?.balance ?? 0
+  const location = useLocation()
 
   return (
     <StyledContainer>
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
-          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {user?.balance ?? 0} </T.H4SemiBold>
+          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {balance} </T.H4SemiBold>
         </StyledTextWrapper>
         <StyledIconWrapper>
           <GolToken />
@@ -71,6 +80,17 @@ export default function CreditsContainer() {
       <StyledTextWrapper>
         <T.H4SemiBold>Gol Tokens</T.H4SemiBold>
       </StyledTextWrapper>
+      {/^\/creator(\/|$)/.test(location.pathname) && (
+        <StyledButtonWrapper>
+          <Button
+            onClick={() => navigate('/creator/create')}
+            icon={<HiPlus size={24} />}
+            label="new game"
+            secondary
+            disabled={balance < 10}
+          />
+        </StyledButtonWrapper>
+      )}
     </StyledContainer>
   )
 }

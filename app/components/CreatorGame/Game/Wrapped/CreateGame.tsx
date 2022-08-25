@@ -1,43 +1,74 @@
+import { useStarknetInvoke } from '@starknet-react/core'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
+import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
+import { gridToGameState } from '~/helpers/gridToGameState'
 import { useCreatorGrid } from '~/hooks/CreatorGrid'
+import { useGameContract } from '~/hooks/useGameContract'
+import { useUser } from '~/hooks/useUserId'
 import Button from '../../../Button/Button'
 
-const CreateGame = () => {
-  const [grid, setGrid] = useCreatorGrid()
+export default function CreateGame() {
+  const [grid] = useCreatorGrid()
+  const user = useUser()
+  const { contract } = useGameContract()
+  const { loading, error, reset, invoke } = useStarknetInvoke({
+    contract,
+    method: 'create',
+  })
 
-  // TODO create game button flow
+  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
+  const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
 
-  // const { preSelectedGrid } = useSelector((state) => state.createGame)
-  // const { contract } = useCreatorGameContract()
-  // const { account } = useStarknet()
-  // const { data, loading, error, reset, invoke } = useStarknetInvoke({
-  //   contract,
-  //   method: 'create',
-  // })
-  // console.log(error)
-  // console.log(data)
+  useEffect(() => {
+    if (loading) {
+      setApprovalDialogOpen(true)
+      setUserCancelledDialogOpen(true)
+    }
+  }, [loading])
+
+  const navigate = useNavigate()
+
   return (
-    <Button
-      label="Create Game"
-      onClick={() => {
-        console.log(grid)
+    <>
+      {loading && (
+        <DialogWaiting
+          open={approvalDialogOpen}
+          onClose={() => {
+            setApprovalDialogOpen(false)
+            reset()
+          }}
+        />
+      )}
+      {error && (
+        <DialogTxnError
+          open={userCancelledDialogOpen}
+          onClose={() => {
+            setUserCancelledDialogOpen(false)
+            reset()
+          }}
+        />
+      )}
+      <Button
+        label="Create Game"
+        isLoading={loading}
+        onClick={() => {
+          if (user != null) {
+            const gameState = gridToGameState(grid)
+            console.log(gameState)
 
-        // const chosenGameGrid = preSelectedGrid
-        // // console.log(chosenGameGrid)
-        // let arr = []
-        // chosenGameGrid.forEach((row) => {
-        //   const formatRow = parseInt(row.join('').toString(), 2)
-        //   arr.push(formatRow)
-        // })
-        // let invooke = [...arr]
-        // console.log(invooke) // if (account) {
-        //   console.log(arr);
-        //   invoke({
-        //     args: [...arr],
-        //   });
-        // }
-      }}
-    />
+            // TODO test this
+            invoke({
+              args: [gameState],
+            }).then((tx) => {
+              if (tx != null) {
+                navigate('/creator')
+              }
+            })
+          }
+        }}
+      />
+    </>
   )
 }
-
-export default CreateGame
