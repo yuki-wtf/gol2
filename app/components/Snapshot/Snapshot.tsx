@@ -20,7 +20,7 @@ const StyledSkeletonCard = styled(motion.li)`
   margin: 0;
   padding: 0;
   width: 290px;
-  height: 412px;
+  height: 394px;
   background: #1b202b;
   border: 1px solid #0a0c10;
   padding-top: 24px;
@@ -79,7 +79,7 @@ const StyledCard = styled(motion.li)`
   margin: 0;
   padding: 0;
   width: ${(props) => (props.large ? '525px' : '290px')};
-  height: ${(props) => (props.large ? '780px' : '412px')};
+  height: ${(props) => (props.large ? '780px' : '394px')};
   background: #fefcfa;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -88,7 +88,7 @@ const StyledCard = styled(motion.li)`
   flex-direction: column;
   align-items: center;
 
-  padding: 21px;
+  padding: 24px 24px 0 24px;
   text-align: left;
   color: #1d222c;
   cursor: ${(props) => (props.onClick != null ? 'pointer' : 'auto')};
@@ -102,7 +102,7 @@ const StyledCard = styled(motion.li)`
     content: '';
     position: absolute;
     width: 10px;
-    height: 129px;
+    height: 103px;
     left: 0px;
     bottom: -2px;
     background: #dbf267;
@@ -137,7 +137,7 @@ const StyledGenLabel = styled.div`
   line-height: 26px;
   color: #57637b;
   text-transform: uppercase;
-  margin-top: 16px;
+  padding-top: 16px;
 `
 const StyledGenNumber = styled.div`
   text-align: left;
@@ -177,6 +177,7 @@ const StyledUserAddress = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  margin-top: 8px;
 `
 
 const SkeletonImagePreview = () => {
@@ -213,7 +214,7 @@ const Snapshot = ({
   return (
     <StyledCard large={large} {...rest} onClick={onClick}>
       <StyledGridContainer large={large}>
-        <ISnapshotGrid loading={false} isSnapshot data={gameStateToGrid(gameState)} />
+        <ISnapshotGrid isSnapshot data={gameStateToGrid(gameState)} />
       </StyledGridContainer>
       <StyledGenLabel> Generation: </StyledGenLabel>
       <StyledGenNumber> {gameGeneration} </StyledGenNumber>
