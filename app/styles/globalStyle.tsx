@@ -27,7 +27,7 @@ export const GlobalStyle = () => {
           background-color: #000;
           font-size: 16px;
         }
-        .tagline2 span {
+        .tagline2 {
           opacity: 0;
         }
         .link {
