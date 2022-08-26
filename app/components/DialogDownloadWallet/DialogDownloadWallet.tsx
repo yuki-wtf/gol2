@@ -15,7 +15,7 @@ const DialogDownloadWallet = ({ open, onClose }) => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button full label="Argent" secondary />
+              <Button full label="Argent-X" secondary />
             </a>
             <a
               href="https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma"
