@@ -24,8 +24,9 @@ const createSelectedCell = (p: any) => css`
 const defaultCell = (p: any) => css`
   background-color: ${p.theme.colors.cell.cellDefaultBackground};
   border: 0.5px solid #2d3038;
+
   cursor: ${!p.isSnapshot ? 'pointer' : 'default'};
-  &:hover {
+  > &:hover {
     background-color: ${!p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
   }
 `

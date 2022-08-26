@@ -94,12 +94,12 @@ export default function Index() {
       .fromTo(
         taglineRef2.current,
         {
-          autoAlpha: 0,
           y: 10,
         },
         {
           duration: 0.75,
-          autoAlpha: 1,
+
+          opacity: 1,
           y: 0,
           ease: 'expo.EaseInOut',
         },
@@ -226,8 +226,9 @@ export default function Index() {
           className="tagline2"
           ref={taglineRef2}
           style={{
-            marginBottom: 105,
+            marginBottom: 107,
             fontSize: 18,
+            opacity: 0,
           }}
         >
           <span> A layer 2 gaming experience.</span>

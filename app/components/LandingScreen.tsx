@@ -33,6 +33,7 @@ export const Tagline = styled.div`
   margin-top: 30px;
   color: #737373;
   font-size: 22px;
+  line-height: 20px;
   font-weight: 600;
   margin-bottom: 8px;
   padding: 0;
@@ -45,9 +46,9 @@ export const Tagline = styled.div`
   letter-spacing: 2.3px;
   opacity: 0;
 
-  > span {
+  & > span {
     padding-right: 12px;
-    border-right: 2px solid var(--color-neutral-neutral-100);
+    border-right: 2px solid #3b3f49;
   }
 `
 export const Last = styled.span`
