@@ -89,7 +89,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     select *
     from creator
     where "gameId" = ${params.gameId}
-    order by "createdAt"
+    order by COALESCE("gameGeneration", 1) desc
     limit 5
   `
 

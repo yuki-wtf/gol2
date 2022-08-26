@@ -46,7 +46,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   const onChainPlay = await sql<Infinite>`
     select *
     from infinite
-    order by "transactionType" = 'game_created', "gameGeneration", "gameState"
+    order by COALESCE("gameGeneration", 1) desc, "gameState" desc
     limit 5
   `
 
