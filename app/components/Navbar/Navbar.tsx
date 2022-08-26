@@ -5,6 +5,7 @@ import MenuButton from './MenuButton/MenuButton'
 import TempOverlay from '../TempOverlay/TempOverlay'
 import CreditsContainer from './Credits/CreditsContainer'
 import { useSelectedCell } from '~/hooks/SelectedCell'
+import { Link } from '@remix-run/react'
 
 const StyledNavbar = styled.header`
   position: relative;
@@ -39,9 +40,9 @@ const Navbar = () => {
 
       <StyledNavbarInner>
         <MenuButton />
-
-        <HeaderLogo />
-
+        <Link to="/" title="Home">
+          <HeaderLogo />
+        </Link>
         <CreditsContainer />
 
         <ConnectWallet />
