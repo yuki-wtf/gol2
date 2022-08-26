@@ -44,6 +44,8 @@ export default function Index() {
   const taglineRef2 = useRef(null)
   const continueRef = useRef(null)
   const navigate = useNavigate()
+
+  //TODO - REMOVE GSAP AND REPLACE WITH FRAMER MOTION
   useEffect(() => {
     window.onkeypress = function (e) {
       navigate('/menu')
@@ -221,6 +223,7 @@ export default function Index() {
           <LandingScreen.Last>Evolve</LandingScreen.Last>
         </LandingScreen.Tagline>
         <div
+          className="tagline2"
           ref={taglineRef2}
           style={{
             marginBottom: 105,
