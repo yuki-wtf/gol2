@@ -2,14 +2,12 @@ import ContainerInner from '../../components/Layout/ContainerInner'
 import Sidebar from '../../components/InfiniteGame/Sidebar/Sidebar'
 import GameContainer from '../../components/InfiniteGame/Game/GameContainer'
 import { GameWrapper, GameGridWrapper, SideBarWrapper } from '../../components/Layout/GameLayouts'
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
 import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
-import type { TypedResponse } from '@remix-run/react/dist/components'
-import { createStateContext } from 'react-use'
-import { SelectedCellProvider } from '~/hooks/SelectedCell'
+import { useLoaderData } from '@remix-run/react'
+import { useAutoRefresh } from '~/hooks/useAutoRefresh'
 
 interface LoaderData {
   readonly generations: number
@@ -62,6 +60,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 }
 
 export default function InfinitePage() {
+  useAutoRefresh()
   const { extinctions, generations, livesGiven, longestStablePeriod, onChainPlay } = useLoaderData<typeof loader>()
 
   return (

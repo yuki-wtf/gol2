@@ -7,7 +7,7 @@ const StyledContainer = styled.span`
   align-items: center;
   gap: 16px;
 `
-const StyledLogo = styled.a`
+const StyledLogo = styled.span`
   max-width: 78px;
   svg {
     filter: grayscale(1);

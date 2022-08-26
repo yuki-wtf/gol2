@@ -18,12 +18,11 @@ export default function Statistics({ title, extinctions, generations, livesGiven
       <StatRow icon={<HiQrcode size={24} />} title="Generations" loading={false} value={generations} />
       <StatRow icon={<HiOutlineHeart size={24} />} title="Lives given" loading={false} value={livesGiven} />
       <StatRow icon={<FaSkull size={24} />} title="Extinctions" loading={false} value={extinctions} />
-      <StatRow
-        icon={<BiTimeFive size={24} />}
-        title="Longest stable period"
-        loading={false}
-        value={longestStablePeriod}
-      />
+
+      {/* TODO remove quick fix */}
+      {extinctions === 0 && (
+        <StatRow icon={<BiTimeFive size={24} />} title="Longest stable period" loading={false} value={generations} />
+      )}
     </SidebarSection>
   )
 }

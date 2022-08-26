@@ -2,14 +2,14 @@ import SidebarSection from '../../SidebarSection/SidebarSection'
 import { TxnRowStatus } from '../../TxnRow/TxnRow'
 import type { Infinite } from '~/db.server'
 import TransactionRow from '~/components/TxnRow/TxnRow.styles'
-import type { UseDataFunctionReturn } from '@remix-run/react/dist/components'
 import { getChecksumAddress } from 'starknet'
+import type { SerializeFrom } from '@remix-run/node'
 
 interface Props {
   readonly title: string
   readonly type: string
 
-  readonly onChainPlay: UseDataFunctionReturn<readonly Infinite[]>
+  readonly onChainPlay: SerializeFrom<readonly Infinite[]>
 }
 
 export default function Gameplay({ title, type, onChainPlay }: Props) {
