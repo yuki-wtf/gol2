@@ -102,7 +102,7 @@ const StyledCard = styled(motion.li)`
     content: '';
     position: absolute;
     width: 10px;
-    height: 103px;
+    height: 109px;
     left: 0px;
     bottom: -2px;
     background: #dbf267;
@@ -137,7 +137,7 @@ const StyledGenLabel = styled.div`
   line-height: 26px;
   color: #57637b;
   text-transform: uppercase;
-  padding-top: 16px;
+  padding-top: 11px;
 `
 const StyledGenNumber = styled.div`
   text-align: left;
