@@ -44,6 +44,8 @@ export default function Index() {
   const taglineRef2 = useRef(null)
   const continueRef = useRef(null)
   const navigate = useNavigate()
+
+  //TODO - REMOVE GSAP AND REPLACE WITH FRAMER MOTION
   useEffect(() => {
     window.onkeypress = function (e) {
       navigate('/menu')
@@ -216,26 +218,12 @@ export default function Index() {
         </LandingScreen.Logo>
 
         <LandingScreen.Tagline ref={taglineRef}>
-          <div
-            style={{
-              position: 'absolute',
-              right: -120,
-              top: -190,
-              fontSize: 12,
-              backgroundColor: '#ff7979',
-              color: '#1d202c',
-              padding: 4,
-              borderRadius: 3,
-              letterSpacing: 0.3,
-            }}
-          >
-            Alpha
-          </div>
           <span>Create games </span>
           <span>Give life </span>
           <LandingScreen.Last>Evolve</LandingScreen.Last>
         </LandingScreen.Tagline>
         <div
+          className="tagline2"
           ref={taglineRef2}
           style={{
             marginBottom: 105,

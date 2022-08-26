@@ -14,7 +14,7 @@ const StyledLogo = styled.a`
   }
   &:hover {
     svg {
-      filter: grayscale(0);
+      opacity: 0.4;
     }
   }
   &:active {

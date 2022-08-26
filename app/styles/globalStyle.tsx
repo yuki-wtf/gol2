@@ -27,9 +27,8 @@ export const GlobalStyle = () => {
           background-color: #000;
           font-size: 16px;
         }
-
-        .alink {
-          opacity: 1;
+        .tagline2 span {
+          opacity: 0;
         }
         .link {
           font-size: 36px;
