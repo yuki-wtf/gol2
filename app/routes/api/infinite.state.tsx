@@ -1,6 +1,5 @@
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import type { TypedResponse } from '@remix-run/react/dist/components'
 import { sql } from '~/db.server'
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<string[]>> {

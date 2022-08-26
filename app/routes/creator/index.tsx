@@ -4,16 +4,15 @@ import PageIntro from '../../components/PageIntro/PageIntro'
 import SnapshotCreator from '../../components/Snapshot/SnapshotCreator'
 import Typography from '../../components/Typography/Typography'
 import { creator } from '../../styles/themes/creator'
-import { useNavigate } from '@remix-run/react'
-import type { LoaderArgs } from '@remix-run/node'
+import { useLoaderData, useNavigate } from '@remix-run/react'
+import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
 import type { CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
-import type { TypedResponse } from '@remix-run/react/dist/components'
 import { useUser } from '~/hooks/useUser'
 import { getUserId } from '~/session.server'
 import { hexToDecimalString } from 'starknet/utils/number'
+import { useAutoRefresh } from '~/hooks/useAutoRefresh'
 
 // const Loading = styled.div`
 //   width: 210px;
@@ -124,6 +123,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 }
 
 export default function CreatorPage() {
+  useAutoRefresh()
   const navigate = useNavigate()
   const { communityGames, yourGames } = useLoaderData<typeof loader>()
   const user = useUser()

@@ -1,4 +1,4 @@
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from '@remix-run/react'
 import { getInstalledInjectedConnectors, StarknetProvider } from '@starknet-react/core'
 import { ThemeProvider } from '@emotion/react'
 import Layout from './components/layout'
@@ -114,6 +114,8 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const location = useLocation()
+
   return (
     <html lang="en">
       <head>
@@ -135,7 +137,12 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         </div>
         <div className="appContainer">{children}</div>
 
-        <ScrollRestoration />
+        {!(
+          location.state &&
+          typeof location.state === 'object' &&
+          (location.state as { scroll: boolean }).scroll === false
+        ) && <ScrollRestoration />}
+
         <Scripts />
         <LiveReload />
       </body>

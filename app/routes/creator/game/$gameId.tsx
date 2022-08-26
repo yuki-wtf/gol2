@@ -4,13 +4,14 @@ import ContainerInner from '../../../components/Layout/ContainerInner'
 import Sidebar from '../../../components/CreatorGame/Sidebar/Sidebar'
 import CreatorGameHeader from '../../../components/CreatorGameHeader/CreatorGameHeader'
 import GameContainer from '../../../components/CreatorGame/GameContainer'
-import { useLoaderData } from '@remix-run/react'
 import type { Creator, CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import type { TypedResponse } from '@remix-run/server-runtime'
 import { bitCount } from '~/helpers/bitCount'
+import { useLoaderData } from '@remix-run/react'
+import { useAutoRefresh } from '~/hooks/useAutoRefresh'
 
 interface LoaderData {
   readonly generations: number
@@ -88,7 +89,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     select *
     from creator
     where "gameId" = ${params.gameId}
-    order by "createdAt"
+    order by COALESCE("gameGeneration", 1) desc
     limit 5
   `
 
@@ -103,9 +104,8 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
 }
 
 export default function CreatorGamePage() {
+  useAutoRefresh()
   const { cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay, game } = useLoaderData<typeof loader>()
-
-  // console.log({ cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay, game })
 
   return (
     <ThemeProvider theme={creator}>

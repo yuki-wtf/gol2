@@ -3,8 +3,8 @@ import styled from '@emotion/styled'
 import Gameplay from './Gameplay'
 import TempOverlay from '../../TempOverlay/TempOverlay'
 import type { Infinite } from '~/db.server'
-import type { UseDataFunctionReturn } from '@remix-run/react/dist/components'
 import { useSelectedCell } from '~/hooks/SelectedCell'
+import type { SerializeFrom } from '@remix-run/node'
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ interface Props {
   readonly livesGiven: number
   readonly extinctions: number
   readonly longestStablePeriod: number
-  readonly onChainPlay: UseDataFunctionReturn<readonly Infinite[]>
+  readonly onChainPlay: SerializeFrom<readonly Infinite[]>
 }
 
 export default function Sidebar({ extinctions, generations, livesGiven, longestStablePeriod, onChainPlay }: Props) {
