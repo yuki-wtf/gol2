@@ -157,7 +157,7 @@ export default function Snapshots() {
                     onClickTwitter={() => {
                       open(
                         twitter(
-                          `https://gol2-thecotne.netlify.app/infinite/${snapshot.gameGeneration}`,
+                          `https://goerli.gol2.io/infinite/${snapshot.gameGeneration}`,
                           `I helped evolve the Game of Life on StarkNet. Join us and shape the future! #GoL2 #Starknet`
                         )
                       )
