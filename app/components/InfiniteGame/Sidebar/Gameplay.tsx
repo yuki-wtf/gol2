@@ -4,6 +4,7 @@ import type { Infinite } from '~/db.server'
 import TransactionRow from '~/components/TxnRow/TxnRow.styles'
 import { getChecksumAddress } from 'starknet'
 import type { SerializeFrom } from '@remix-run/node'
+import TransactionRowTemp from '~/components/TxnRow/TransactionRowTemp'
 
 interface Props {
   readonly title: string
@@ -28,7 +29,7 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
           {Array.from(onChainPlay)
             .reverse()
             .map((data, index) => (
-              <TransactionRow
+              <TransactionRowTemp
                 key={index}
                 label={TxnRowStatus[data.txStatus ?? 'ACCEPTED_ON_L1'].statusText}
                 status={data.txStatus ?? 'ACCEPTED_ON_L1'}
@@ -36,7 +37,8 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
                 url={data.transactionHash}
                 type={data.transactionType}
               />
-            ))}
+            ))
+            .reverse()}
 
           {/* {recentGames && recentGames.length ? (
             recentGames[0].map((game, index) => {
