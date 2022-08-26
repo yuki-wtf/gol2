@@ -216,21 +216,6 @@ export default function Index() {
         </LandingScreen.Logo>
 
         <LandingScreen.Tagline ref={taglineRef}>
-          <div
-            style={{
-              position: 'absolute',
-              right: -120,
-              top: -190,
-              fontSize: 12,
-              backgroundColor: '#ff7979',
-              color: '#1d202c',
-              padding: 4,
-              borderRadius: 3,
-              letterSpacing: 0.3,
-            }}
-          >
-            Alpha
-          </div>
           <span>Create games </span>
           <span>Give life </span>
           <LandingScreen.Last>Evolve</LandingScreen.Last>
