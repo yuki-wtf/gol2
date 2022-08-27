@@ -4,6 +4,9 @@ import * as LandingScreen from '../components/LandingScreen'
 import { motion } from 'framer-motion'
 import NavContainer from '../components/Layout/NavContainer'
 import { useNavigate } from '@remix-run/react'
+import { COLUMNS } from '../utils/constants'
+import useGame from '../hooks/useGame'
+import LandingAnimation from '~/components/LandingAnimation/LandingAnimation'
 
 const active = {
   hidden: {
@@ -37,8 +40,6 @@ const visible = {
 }
 
 export default function Index() {
-  const [gameActive, setGameActive] = useState(false)
-  const [gameVisible, setGameVisible] = useState(false)
   const logoRef = useRef(null)
   const taglineRef = useRef(null)
   const taglineRef2 = useRef(null)
@@ -50,16 +51,8 @@ export default function Index() {
     window.onkeypress = function (e) {
       navigate('/menu')
     }
+  }, [])
 
-    setTimeout(() => {
-      setGameActive(true)
-    }, 1000)
-  }, [navigate])
-  useEffect(() => {
-    if (gameActive) {
-      setGameVisible(true)
-    }
-  }, [gameActive])
   useEffect(() => {
     const tl = gsap.timeline({
       delay: 0.8,
@@ -122,37 +115,7 @@ export default function Index() {
   }, [])
   return (
     <NavContainer>
-      <motion.div
-        initial="hidden"
-        variants={active}
-        animate={gameActive ? 'visible' : 'hidden'}
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          overflow: 'hidden',
-        }}
-      >
-        <motion.div variants={visible} initial="hide" animate={gameVisible ? 'show' : 'hide'}>
-          {/* <AutomataGrid
-           className={"golGrid"}
-           pixelStyles={{
-             activeColor: "var( --color-neutral-neutral-100)",
-             inactiveColor: "transparent",
-             width: 100,
-             height: 100,
-             border: 1,
-             borderColor: "black",
-           }}
-           pixelsActive={generateSoup(16)}
-           iterationTimeInMs={1000}
-           size={25}
-           rules={conwaysGameOfLifePreset}
-          /> */}
-        </motion.div>
-      </motion.div>
+      <LandingAnimation />
 
       <LandingScreen.LandingContainer
         style={{

@@ -11,6 +11,7 @@ const StyledFooter = styled.footer`
   border-bottom-left-radius: 33px;
   border-bottom-right-radius: 33px;
   position: relative;
+  z-index: 1;
 `
 
 const Footer = ({ children }) => {
