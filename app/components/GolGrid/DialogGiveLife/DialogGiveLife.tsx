@@ -50,6 +50,7 @@ const DialogGiveLife = () => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const [selectedCell, setSelectedCell] = useSelectedCell()
+  const [payload, setPayload] = useState<number>()
   const user = useUser()
   const { contract } = useGameContract()
 
@@ -70,13 +71,11 @@ const DialogGiveLife = () => {
 
     const formData = new FormData()
 
-    const cellIndex = selectedCell.row * 15 + selectedCell.col
-
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'give_life_to_cell')
     formData.append('functionCaller', user.userId)
-    formData.append('functionInputCellIndex', cellIndex.toString())
+    formData.append('functionInputCellIndex', payload.toString())
 
     fetch('/api/transaction', {
       body: formData,
@@ -124,10 +123,15 @@ const DialogGiveLife = () => {
               secondary
               onClick={() => {
                 if (user != null && user.balance > 0) {
+                  const payload = selectedCell.row * 15 + selectedCell.col
+
+                  setPayload(payload)
+
                   // TODO test this
                   invoke({
-                    args: [selectedCell.row * 15 + selectedCell.col],
+                    args: [payload],
                   })
+
                   setSelectedCell(null)
                 }
               }}
