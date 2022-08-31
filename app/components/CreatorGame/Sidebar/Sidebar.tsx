@@ -1,7 +1,7 @@
 import Statistics from './Statistics'
 import styled from '@emotion/styled'
 import Gameplay from './Gameplay'
-import type { Creator } from '~/db.server'
+import type { OnChainPlay } from '~/db.server'
 import type { SerializeFrom } from '@remix-run/node'
 
 const StyledSidebar = styled.div`
@@ -21,7 +21,7 @@ interface Props {
   readonly cellsToStart: number
   readonly gamesByUser: number
 
-  readonly onChainPlay: SerializeFrom<readonly Creator[]>
+  readonly onChainPlay: SerializeFrom<readonly OnChainPlay[]>
 }
 
 export default function Sidebar({ cellsToStart, gamesByUser, generations, uniquePlayers, onChainPlay }: Props) {

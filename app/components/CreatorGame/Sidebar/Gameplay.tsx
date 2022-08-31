@@ -1,7 +1,6 @@
 import SidebarSection from '../../SidebarSection/SidebarSection'
 import { TxnRowStatus } from '../../TxnRow/TxnRow'
-import type { Creator } from '~/db.server'
-import TransactionRow from '~/components/TxnRow/TxnRow.styles'
+import type { OnChainPlay } from '~/db.server'
 import { getChecksumAddress } from 'starknet'
 import type { SerializeFrom } from '@remix-run/node'
 import TransactionRowTemp from '~/components/TxnRow/TransactionRowTemp'
@@ -10,7 +9,7 @@ interface Props {
   readonly title: string
   readonly type: string
 
-  readonly onChainPlay: SerializeFrom<readonly Creator[]>
+  readonly onChainPlay: SerializeFrom<readonly OnChainPlay[]>
 }
 
 export default function Gameplay({ title, type, onChainPlay }: Props) {
@@ -27,14 +26,15 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
         }}
       >
         <div>
-          {Array.from(onChainPlay)
-            .reverse()
-            .map((data, index) => (
+          {onChainPlay
+            .map(data => (
               <TransactionRowTemp
-                key={index}
-                label={TxnRowStatus[data.txStatus ?? 'ACCEPTED_ON_L1'].statusText}
-                status={data.txStatus ?? 'ACCEPTED_ON_L1'}
-                user={getChecksumAddress(data.transactionOwner)}
+                key={data.hash}
+                label={TxnRowStatus[data.status ?? 'ACCEPTED_ON_L1'].statusText}
+                status={data.status ?? 'ACCEPTED_ON_L1'}
+                user={getChecksumAddress(data.owner)}
+                url={data.hash}
+                type={data.type}
               />
             ))}
 

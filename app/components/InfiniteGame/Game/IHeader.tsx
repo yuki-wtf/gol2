@@ -30,6 +30,26 @@ export const IHeader = () => {
       setUserCancelledDialogOpen(true)
     }
   }, [loading])
+
+  useEffect(() => {
+    if (data == null) return undefined
+
+    const formData = new FormData()
+
+    formData.append('hash', data)
+    formData.append('status', 'RECEIVED')
+    formData.append('functionName', 'evolve')
+    formData.append('functionCaller', user.userId)
+    formData.append('functionInputGameId', INFINITE_GAME_GENESIS)
+
+    fetch('/api/transaction', {
+      body: formData,
+      method: 'post'
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
   return (
     <>
       {loading && (

@@ -31,9 +31,26 @@ export default function CreateGame() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (data) {
-      navigate('/creator')
-    }
+    if (data == null) return undefined
+
+    const gameState = gridToGameState(grid)
+
+    const formData = new FormData()
+
+    formData.append('hash', data)
+    formData.append('status', 'RECEIVED')
+    formData.append('functionName', 'create')
+    formData.append('functionCaller', user.userId)
+    formData.append('functionInputGameState', gameState)
+
+    fetch('/api/transaction', {
+      body: formData,
+      method: 'post'
+    })
+
+    navigate('/creator')
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, navigate])
 
   return (

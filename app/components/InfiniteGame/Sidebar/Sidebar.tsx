@@ -2,7 +2,7 @@ import Statistics from './Statistics'
 import styled from '@emotion/styled'
 import Gameplay from './Gameplay'
 import TempOverlay from '../../TempOverlay/TempOverlay'
-import type { Infinite } from '~/db.server'
+import type { OnChainPlay } from '~/db.server'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import type { SerializeFrom } from '@remix-run/node'
 
@@ -21,7 +21,7 @@ interface Props {
   readonly livesGiven: number
   readonly extinctions: number
   readonly longestStablePeriod: number
-  readonly onChainPlay: SerializeFrom<readonly Infinite[]>
+  readonly onChainPlay: SerializeFrom<readonly OnChainPlay[]>
 }
 
 export default function Sidebar({ extinctions, generations, livesGiven, longestStablePeriod, onChainPlay }: Props) {

@@ -55,3 +55,12 @@ export interface CreatorGame {
   readonly gameState: string
   readonly createdAt: Date
 }
+
+
+export interface OnChainPlay {
+  readonly hash: string
+  readonly status: string
+  readonly type: 'game_created' | 'game_evolved' | 'cell_revived'
+  readonly owner: string
+  readonly createdAt: Date
+}

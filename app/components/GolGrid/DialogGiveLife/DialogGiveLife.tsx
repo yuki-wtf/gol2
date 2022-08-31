@@ -53,7 +53,7 @@ const DialogGiveLife = () => {
   const user = useUser()
   const { contract } = useGameContract()
 
-  const { loading, error, reset, invoke } = useStarknetInvoke({
+  const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract: contract,
     method: 'give_life_to_cell',
   })
@@ -65,7 +65,27 @@ const DialogGiveLife = () => {
     }
   }, [loading])
 
-  // console.log(selectedCell)
+  useEffect(() => {
+    if (data == null) return undefined
+
+    const formData = new FormData()
+
+    const cellIndex = selectedCell.row * 15 + selectedCell.col
+
+    formData.append('hash', data)
+    formData.append('status', 'RECEIVED')
+    formData.append('functionName', 'give_life_to_cell')
+    formData.append('functionCaller', user.userId)
+    formData.append('functionInputCellIndex', cellIndex.toString())
+
+    fetch('/api/transaction', {
+      body: formData,
+      method: 'post'
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
 
   return (
     <div

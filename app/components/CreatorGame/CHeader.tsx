@@ -14,7 +14,6 @@ export const IHeader = ({ gameId }) => {
   const { contract } = useGameContract()
   const user = useUser()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
     method: 'evolve',
@@ -26,6 +25,26 @@ export const IHeader = ({ gameId }) => {
       setUserCancelledDialogOpen(true)
     }
   }, [loading])
+
+  useEffect(() => {
+    if (data == null) return undefined
+
+    const formData = new FormData()
+
+    formData.append('hash', data)
+    formData.append('status', 'RECEIVED')
+    formData.append('functionName', 'evolve')
+    formData.append('functionCaller', user.userId)
+    formData.append('functionInputGameId', gameId)
+
+    fetch('/api/transaction', {
+      body: formData,
+      method: 'post'
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
   return (
     <>
       {loading && (

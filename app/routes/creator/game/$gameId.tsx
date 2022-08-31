@@ -4,7 +4,7 @@ import ContainerInner from '../../../components/Layout/ContainerInner'
 import Sidebar from '../../../components/CreatorGame/Sidebar/Sidebar'
 import CreatorGameHeader from '../../../components/CreatorGameHeader/CreatorGameHeader'
 import GameContainer from '../../../components/CreatorGame/GameContainer'
-import type { Creator, CreatorGame } from '~/db.server'
+import type { CreatorGame, OnChainPlay } from '~/db.server'
 import { sql } from '~/db.server'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -19,7 +19,7 @@ interface LoaderData {
   readonly cellsToStart: number
   readonly gamesByUser: number
   readonly game: CreatorGame
-  readonly onChainPlay: readonly Creator[]
+  readonly onChainPlay: readonly OnChainPlay[]
 }
 
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
@@ -85,12 +85,43 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     )
   `
 
-  const onChainPlay = await sql<Creator>`
-    select *
-    from creator
-    where "gameId" = ${params.gameId}
-    order by COALESCE("gameGeneration", 1) desc
-    limit 5
+  const onChainPlay = await sql<OnChainPlay>`
+    (
+      SELECT
+        "hash",
+        "status",
+        CASE "functionName"
+          WHEN 'create' THEN 'game_created'
+          WHEN 'evolve' THEN 'game_evolved'
+          WHEN 'give_life_to_cell' THEN 'cell_revived'
+        END "type",
+        "functionCaller" "owner",
+        "createdAt"
+      FROM transaction
+      WHERE status = 'RECEIVED'
+        AND CASE "functionName"
+          WHEN 'create' THEN "functionInputGameState" = ${params.gameId}
+          WHEN 'evolve' THEN "functionInputGameId" = ${params.gameId}
+          WHEN 'give_life_to_cell' THEN FALSE
+        END
+      ORDER BY "createdAt" DESC
+    )
+
+    UNION ALL
+
+    (
+      SELECT
+        "transactionHash" "hash",
+        "txStatus" "status",
+        "transactionType" "type",
+        "transactionOwner" "owner",
+        "createdAt"
+      FROM creator
+      WHERE "gameId" = ${params.gameId}
+      ORDER BY COALESCE("gameGeneration", 1) DESC
+      LIMIT 5
+    )
+
   `
 
   return json<LoaderData>({
