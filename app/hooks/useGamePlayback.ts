@@ -6,6 +6,7 @@ interface Params {
   readonly maxFrame: number
   readonly currentFrame: number
   readonly fetchFrames: (frames: number[]) => Promise<string[]>
+  readonly lastFrameRefreshInterval?: number | null | undefined
 }
 
 export interface State {
@@ -15,6 +16,7 @@ export interface State {
   readonly isPlaying: boolean
   readonly frames: {
     readonly [frame: number]: {
+      readonly shouldRefresh?: boolean
       readonly state?: string
     }
   }
@@ -30,7 +32,12 @@ export interface Actions {
   readonly goToLastFrame: () => void
 }
 
-export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params): [State, Actions] {
+export function useGamePlayback({
+  maxFrame,
+  currentFrame,
+  fetchFrames,
+  lastFrameRefreshInterval,
+}: Params): [State, Actions] {
   // state
   const [state, setState] = useState<State>({
     currentFrame,
@@ -108,6 +115,14 @@ export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params)
 
   useInterval(goToNextFrame, getInterval())
 
+  useInterval(() => {
+    setState(
+      produce((draft) => {
+        draft.frames[maxFrame].shouldRefresh = true
+      })
+    )
+  }, lastFrameRefreshInterval)
+
   useEffect(() => {
     if (state.maxFrame == null) return
     if (state.currentFrame == null) return
@@ -127,7 +142,7 @@ export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params)
             ? Array.from({ length: chunkSize }, (v, k) => k + currentChunkEnd)
             : []),
         ].filter((frame) => {
-          return frame <= state.maxFrame && state.frames[frame] == null
+          return frame <= state.maxFrame && (state.frames[frame] == null || state.frames[frame].shouldRefresh === true)
         })
       ).values()
     )
@@ -137,8 +152,12 @@ export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params)
     setState(
       produce((draft) => {
         framesToLoad.forEach((frame) => {
-          draft.frames[frame] = {
-            state: null,
+          if (draft.frames[frame]?.state != null) {
+            draft.frames[frame].shouldRefresh = false
+          } else {
+            draft.frames[frame] = {
+              state: null,
+            }
           }
         })
       })
@@ -166,7 +185,9 @@ export function useGamePlayback({ maxFrame, currentFrame, fetchFrames }: Params)
         setState(
           produce((draft) => {
             for (let i = 0; i < framesToLoad.length; i++) {
-              draft.frames[framesToLoad[i]] = null
+              if (draft.frames[framesToLoad[i]] != null) {
+                draft.frames[framesToLoad[i]].shouldRefresh = true
+              }
             }
           })
         )
