@@ -22,13 +22,21 @@ interface Props {
 
 export default function GameContainer({ currentFrame, maxFrame, receivedCells }: Props) {
   const fetchFrames = useFetchInfiniteFrames()
-  const [state, actions] = useGamePlayback({ maxFrame, currentFrame, fetchFrames })
+  const [state, actions] = useGamePlayback({
+    maxFrame,
+    currentFrame,
+    fetchFrames,
+    lastFrameRefreshInterval: 5000,
+  })
 
   return (
     <StyledGridContainer>
       <IHeader />
       <DialogGiveLife />
-      <GridWrapper receivedCells={receivedCells} gameState={state.frames[state.currentFrame]?.state ?? null} />
+      <GridWrapper
+        receivedCells={state.currentFrame === state.maxFrame ? receivedCells : []}
+        gameState={state.frames[state.currentFrame]?.state ?? null}
+      />
       <IFooter actions={actions} state={state} />
     </StyledGridContainer>
   )
