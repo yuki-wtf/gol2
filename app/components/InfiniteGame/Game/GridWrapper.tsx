@@ -4,6 +4,8 @@ import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import Body from '../../GolGrid/Body/Body'
 import Loader from '../../Loader/Loader'
 import Grid from './Grid'
+import type { SerializeFrom } from '@remix-run/node'
+import type { ReceivedCell } from '~/db.server'
 
 const StyledLoaderContainer = styled(motion.div)`
   width: 512px;
@@ -13,13 +15,14 @@ const StyledLoaderContainer = styled(motion.div)`
 
 interface Props {
   readonly gameState: string | null
+  readonly receivedCells: SerializeFrom<readonly ReceivedCell[]>
 }
 
-export default function GridWrapper({ gameState }: Props) {
+export default function GridWrapper({ gameState, receivedCells }: Props) {
   return (
     <Body>
       {gameState != null ? (
-        <Grid data={gameStateToGrid(gameState)} />
+        <Grid receivedCells={receivedCells} data={gameStateToGrid(gameState)} />
       ) : (
         <StyledLoaderContainer
           initial={{

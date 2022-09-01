@@ -4,7 +4,7 @@ import GameContainer from '../../components/InfiniteGame/Game/GameContainer'
 import { GameWrapper, GameGridWrapper, SideBarWrapper } from '../../components/Layout/GameLayouts'
 import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import type { Infinite, OnChainPlay } from '~/db.server'
+import type { OnChainPlay, ReceivedCell } from '~/db.server'
 import { sql } from '~/db.server'
 import { useLoaderData } from '@remix-run/react'
 import { useAutoRefresh } from '~/hooks/useAutoRefresh'
@@ -17,6 +17,7 @@ interface LoaderData {
   readonly longestStablePeriod: number
 
   readonly onChainPlay: OnChainPlay[]
+  readonly receivedCells: ReceivedCell[]
 }
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
@@ -42,6 +43,19 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
       where "transactionType" = 'game_evolved'
         and "gameExtinct" = True
     )
+  `
+
+  const receivedCells = await sql<ReceivedCell>`
+    SELECT
+      "hash",
+      "status",
+      "functionCaller" "owner",
+      "functionInputCellIndex" "cellIndex",
+      "createdAt"
+    FROM transaction
+    WHERE status = 'RECEIVED'
+      AND "functionName" = 'give_life_to_cell'
+    ORDER BY "createdAt" DESC
   `
 
   const onChainPlay = await sql<OnChainPlay>`
@@ -87,26 +101,31 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     extinctions: parseInt(statistics.rows.find((r) => r.label === 'Extinctions').value),
     longestStablePeriod: 0,
     onChainPlay: onChainPlay.rows,
+    receivedCells: receivedCells.rows,
   })
 }
 
 export default function InfinitePage() {
   useAutoRefresh()
-  const { extinctions, generations, livesGiven, longestStablePeriod, onChainPlay } = useLoaderData<typeof loader>()
+  const data = useLoaderData<typeof loader>()
 
   return (
     <ContainerInner>
       <GameWrapper>
         <GameGridWrapper>
-          <GameContainer currentFrame={generations} maxFrame={generations} />
+          <GameContainer
+            currentFrame={data.generations}
+            maxFrame={data.generations}
+            receivedCells={data.receivedCells}
+          />
         </GameGridWrapper>
         <SideBarWrapper>
           <Sidebar
-            extinctions={extinctions}
-            generations={generations}
-            livesGiven={livesGiven}
-            longestStablePeriod={longestStablePeriod}
-            onChainPlay={onChainPlay}
+            extinctions={data.extinctions}
+            generations={data.generations}
+            livesGiven={data.livesGiven}
+            longestStablePeriod={data.longestStablePeriod}
+            onChainPlay={data.onChainPlay}
           />
         </SideBarWrapper>
       </GameWrapper>

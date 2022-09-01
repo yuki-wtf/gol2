@@ -64,3 +64,11 @@ export interface OnChainPlay {
   readonly owner: string
   readonly createdAt: Date
 }
+
+export interface ReceivedCell {
+  readonly hash: string
+  readonly status: string
+  readonly owner: string
+  readonly cellIndex: number
+  readonly createdAt: Date
+}
