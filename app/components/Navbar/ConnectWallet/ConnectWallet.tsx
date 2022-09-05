@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useStarknet, ConnectorNotFoundError } from '@starknet-react/core'
+import { useStarknet } from '@starknet-react/core'
 import Button from '../../Button/Button'
 import UserDropdownMenu from './UserDropdownMenu/UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu'
@@ -49,7 +49,7 @@ const ConnectWallet = () => {
                   connect(connector)
                 }}
                 full
-                label={connector.id()}
+                label={connector.name()}
                 secondary
                 key={connector.id()}
               />

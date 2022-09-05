@@ -9,6 +9,8 @@ import {
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
+import { ContractAddress } from '~/hooks/useGameContract'
+import golTokenIcon from '~/assets/images/gol-token-icon.png'
 
 const UserDropdownMenu = ({ account, disconnect }) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
@@ -22,11 +24,31 @@ const UserDropdownMenu = ({ account, disconnect }) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>
-          Connected to <strong>{'ArgentX'}</strong> via <strong>Starknet</strong>
+          Connected to <strong>{window.starknet?.name ?? 'Argent X'}</strong>
+          {' via '} <strong>Starknet</strong>
         </DropdownMenu.Label>
 
         {/* // TODO show this only if a user has not added gol token to wallet */}
-        <DropdownMenu.Item>
+        <DropdownMenu.Item
+          onClick={() => {
+            if (window.starknet != null) {
+              window.starknet.request({
+                type: 'wallet_watchAsset',
+                params: {
+                  type: 'ERC20',
+                  options: {
+                    address: ContractAddress,
+                    name: 'Game of Life Token',
+                    symbol: 'GOL',
+                    decimals: '0',
+                    network: 'goerli-alpha',
+                    image: golTokenIcon,
+                  },
+                },
+              })
+            }
+          }}
+        >
           <HiOutlinePlusCircle size={24} />
           Add GOL token to wallet
         </DropdownMenu.Item>
