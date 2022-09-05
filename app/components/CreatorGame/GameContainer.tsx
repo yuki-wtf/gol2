@@ -18,7 +18,12 @@ interface Props {
 
 export default function GameContainer({ currentFrame, maxFrame, gameId }: Props) {
   const fetchFrames = useFetchCreatorFrames(gameId)
-  const [state, actions] = useGamePlayback({ maxFrame, currentFrame, fetchFrames })
+  const [state, actions] = useGamePlayback({
+    maxFrame,
+    currentFrame,
+    fetchFrames,
+    lastFrameRefreshInterval: 5000
+  })
 
   return (
     <StyledGridContainer>
