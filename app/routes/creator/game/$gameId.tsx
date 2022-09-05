@@ -24,30 +24,28 @@ interface LoaderData {
 
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
   const games = await sql<CreatorGame>`
-    with games as (
-      select "transactionOwner" "gameOwner",
-        "gameId",
-        "createdAt"
-      from creator
-      where "transactionType" = 'game_created'
-      order by "createdAt"
-    )
-    select *,
+    select
+      "transactionOwner" "gameOwner",
+      "gameId",
+      "createdAt",
       (
-        select COALESCE(max(c."gameGeneration"), 1)
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
+        select c2."gameGeneration"
+        from creator c2
+        where c2."gameId" = c1."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
       ) as "gameGeneration",
       (
-        select max(c."gameState")
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
+        select c2."gameState"
+        from creator c2
+        where c2."gameId" = c1."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
       ) as "gameState"
-    from games g
-    where g."gameId" = ${params.gameId}
-    order by "createdAt"
+    from creator c1
+    where "transactionType" = 'game_created'
+      and "gameId" = ${params.gameId}
+    limit 1
   `
 
   const game = games.rows[0]

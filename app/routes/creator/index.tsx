@@ -34,30 +34,20 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 
   if (userId == null) {
     const communityGames = await sql<CreatorGame>`
-    with games as (
-      select "transactionOwner" "gameOwner",
+      select
+        "transactionOwner" "gameOwner",
         "gameId",
+        "gameState",
+        (
+          select COALESCE(max(c2."gameGeneration"), 1)
+          from creator c2
+          where c1."gameId" = c2."gameId"
+        ) as "gameGeneration",
         "createdAt"
-      from creator
+      from creator c1
       where "transactionType" = 'game_created'
       order by "createdAt"
-    )
-    select *,
-      (
-        select COALESCE(max(c."gameGeneration"), 1)
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
-      ) as "gameGeneration",
-      (
-        select max(c."gameState")
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
-      ) as "gameState"
-    from games g
-    order by "createdAt"
-  `
+    `
 
     return json<LoaderData>({
       yourGames: [],
@@ -66,53 +56,35 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   }
 
   const yourGames = await sql<CreatorGame>`
-    with games as (
-      select "transactionOwner" "gameOwner",
-        "gameId",
-        "createdAt"
-      from creator
-      where "transactionType" = 'game_created' and "transactionOwner" = ${hexToDecimalString(userId)}
-      order by "createdAt"
-    )
-    select *,
+    select
+      "transactionOwner" "gameOwner",
+      "gameId",
+      "gameState",
       (
-        select COALESCE(max(c."gameGeneration"), 1)
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
+        select COALESCE(max(c2."gameGeneration"), 1)
+        from creator c2
+        where c1."gameId" = c2."gameId"
       ) as "gameGeneration",
-      (
-        select max(c."gameState")
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
-      ) as "gameState"
-    from games g
+      "createdAt"
+    from creator c1
+    where "transactionType" = 'game_created'
+      and "transactionOwner" = ${hexToDecimalString(userId)}
     order by "createdAt"
   `
   const communityGames = await sql<CreatorGame>`
-    with games as (
-      select "transactionOwner" "gameOwner",
-        "gameId",
-        "createdAt"
-      from creator
-      where "transactionType" = 'game_created' and "transactionOwner" != ${hexToDecimalString(userId)}
-      order by "createdAt"
-    )
-    select *,
+    select
+      "transactionOwner" "gameOwner",
+      "gameId",
+      "gameState",
       (
-        select COALESCE(max(c."gameGeneration"), 1)
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
+        select COALESCE(max(c2."gameGeneration"), 1)
+        from creator c2
+        where c1."gameId" = c2."gameId"
       ) as "gameGeneration",
-      (
-        select max(c."gameState")
-        from creator c
-        where c."gameId" = g."gameId"
-        group by c."gameId"
-      ) as "gameState"
-    from games g
+      "createdAt"
+    from creator c1
+    where "transactionType" = 'game_created'
+      and "transactionOwner" != ${hexToDecimalString(userId)}
     order by "createdAt"
   `
 
