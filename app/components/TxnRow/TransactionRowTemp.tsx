@@ -151,7 +151,8 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
   }, [status, controls, statusInternal, delay, duration])
   const showUserAddress = statusInternal === 'REJECTED' || statusInternal === 'COMPLETED'
   const isMyTxn = account === user && status !== 'REJECTED'
-  const typeOfTxn = type === 'game_evolved'
+  const isCellRevivedTxn = type === 'cell_revived'
+
   return (
     <Container
       status={status}
@@ -181,11 +182,11 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       <InnerContainer>
         {statusInternal !== 'COMPLETED' ? (
           <IconContainer status={status}>
-            {typeOfTxn ? <HiOutlineHeart size={18} /> : <HiOutlineLightningBolt size={18} />}
+            {isCellRevivedTxn ? <HiOutlineHeart size={18} /> : <HiOutlineLightningBolt size={18} />}
           </IconContainer>
         ) : (
           <IconContainerComplete>
-            {typeOfTxn ? (
+            {isCellRevivedTxn ? (
               <HiOutlineHeart size={18} color="white" />
             ) : (
               <HiOutlineLightningBolt size={18} color="white" />
