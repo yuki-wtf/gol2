@@ -3,10 +3,9 @@ import type { DataFunctionArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import fs from 'fs/promises'
 import path from 'path'
-// import * as starknet from 'starknet'
-// import { dataToGrid } from '~/helpers/dataToGrid'
-// import { getShortChecksumAddress } from '~/helpers/starknet'
-// import { InfiniteModeAbi, InfiniteModeAddress } from '~/smartContracts/InfiniteMode'
+import { sql } from '~/db.server'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+import { getShortChecksumAddress } from '~/helpers/starknet'
 
 function asset(src: string): string {
   return path.join(process.env.PWD, 'app/assets', src)
@@ -40,28 +39,49 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
 
     ctx.drawImage(image, 0, 0)
 
-    // const infiniteGame = new starknet.Contract(InfiniteModeAbi, InfiniteModeAddress)
+    const gameGeneration = parseInt(params.gameGeneration!)
 
-    const gen = parseInt(params.gen!)
+    if (Number.isNaN(gameGeneration)) {
+      throw new Error(`Could not parse $gameGeneration into a number!`)
+    }
 
-    // const data = await infiniteGame.call('get_arbitrary_state_arrays', [[gen], '0', ['0'], '0', '0'])
+    const data = await sql<{ gameState: string; transactionOwner: string }>`
+      select "gameState", "transactionOwner"
+      from infinite
+      where COALESCE("gameGeneration", 1) = ${gameGeneration}
+      order by "gameState" desc
+      limit 1
+    `
 
-    // const accountTruncated = getShortChecksumAddress(data.specific_state_owners[0])
-    const accountTruncated = '123'
+    if (data.rows[0] == null) {
+      throw new Error(`Game generation ${gameGeneration} not found!`)
+    }
 
-    const grid = []
-    // const grid = dataToGrid(data.gen_ids_array_result)!
+    const { gameState, transactionOwner } = data.rows[0]
+
+    const accountTruncated = getShortChecksumAddress(transactionOwner)
+
+    const grid = gameStateToGrid(gameState)
 
     let x = 18 * 4
     let y = 18 * 4
-    let s = 8 * 4
+    let s = ((8 * 32) / 15) * 4
 
-    ctx.fillStyle = '#dbf267'
+    ctx.fillStyle = '#1d222c'
+    ctx.fillRect(x, y, s * 15, s * 15)
 
     for (const row of grid) {
       for (const cell of row) {
         if (cell) {
+          ctx.lineWidth = 0
+          ctx.fillStyle = '#dbf267'
           ctx.fillRect(x, y, s, s)
+        } else {
+          ctx.lineWidth = 0.5 * 4
+          ctx.strokeStyle = '#2b2e36'
+          ctx.fillStyle = '#1d222c'
+          ctx.fillRect(x, y, s, s)
+          ctx.strokeRect(x, y, s, s)
         }
 
         x += s
@@ -73,7 +93,7 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
     ctx.font = `${34 * 4}px Mulish-ExtraBold`
     ctx.textBaseline = 'middle'
     ctx.fillStyle = '#FCFAF8'
-    ctx.fillText(gen.toString(), 292 * 4, (173 + 26 / 2) * 4)
+    ctx.fillText(gameGeneration.toString(), 292 * 4, (173 + 26 / 2) * 4)
 
     ctx.font = `${14 * 4}px Mulish-Bold`
     ctx.textBaseline = 'middle'
