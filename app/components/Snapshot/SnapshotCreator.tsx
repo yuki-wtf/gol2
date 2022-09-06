@@ -107,34 +107,14 @@ const StyledUserAddress = styled.div`
 `
 
 const SnapshotCreator = ({ onClick, generationNumber, address, id, gameState }) => {
-  // const dispatch = useDispatch()
-  // const { contract } = useCreatorGameContract()
-  // // const { account } = useStarknet()
-  // const { data, loading, error } = useStarknetCall({
-  //   contract: contract,
-  //   method: 'view_game',
-  //   args: [id.toString(), generationNumber.toString(), 'pending'],
-  // })
-  // useEffect(() => {
-  //   if (data !== undefined && data.length > 0) {
-  //     dispatch(
-  //       updateGameState({
-  //         game_index: id,
-  //         data,
-  //       })
-  //     )
-  //   }
-  // }, [data, dispatch, id])
-
   return (
     <StyledCard onClick={onClick}>
       <StyledGridContainer>
-        <CSnapshotGrid loading={false} isSnapshotCreator data={gameStateToGrid(gameState)} />
+        <CSnapshotGrid data={gameStateToGrid(gameState)} />
       </StyledGridContainer>
 
       <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
       <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
-      {/* <div>{error}</div> */}
       <StyledUserAddress>
         <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
       </StyledUserAddress>

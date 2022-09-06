@@ -1,68 +1,28 @@
-import type { ForwardRefComponent, HTMLMotionProps } from 'framer-motion'
 import { motion } from 'framer-motion'
 import styled from '@emotion/styled'
+import type { PropsWithChildren } from 'react'
 
-// cell count
-const GRID_SIZE = 15
-
-// size in pixels
-const SMALL_GRID_SIZE = 244
-const LARGE_GRID_SIZE = 512
-
-interface Props {
-  readonly small?: boolean
-}
-
-const StyledGrid = styled<ForwardRefComponent<HTMLDivElement, HTMLMotionProps<'div'> & Props>>(motion.div)`
+const StyledGridWithoutMotion = styled.div`
   display: grid;
-  grid-template-columns: ${(p) =>
-    `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
-  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(15, 1fr);
   grid-gap: 0;
   gap: 0;
-  background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
   border: 0;
-  height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
-  width: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
+  height: 100%;
+  width: 100%;
   position: relative;
-  overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
-`
-const StyledGridNoMotion = styled.div<Props>`
-  display: grid;
-  grid-template-columns: ${(p) =>
-    `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
-  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
-  grid-gap: 0;
-  gap: 0;
-
-  background-size: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
-  border: 0;
-  height: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
-  width: ${(p) => (p.small ? `${SMALL_GRID_SIZE}px` : `${LARGE_GRID_SIZE}px`)};
-  position: relative;
-  overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
-`
-const StyledGridCreatorNoMotion = styled.div<Props>`
-  display: grid;
-  grid-template-columns: ${(p) =>
-    `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
-  grid-template-rows: ${(p) => `repeat(${GRID_SIZE}, ${(p.small ? SMALL_GRID_SIZE : LARGE_GRID_SIZE) / GRID_SIZE}px)`};
-  grid-gap: 0;
-  gap: 0;
-
-  background-size: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
-  border: 0;
-  height: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
-  width: ${(p) => (p.small ? '212px' : `${LARGE_GRID_SIZE}px`)};
-  position: relative;
-  overflow: ${(p) => (p.small ? 'hidden' : 'visible')};
 `
 
-const GameGrid = ({ children, small, isSnapshot, isSnapshotCreator }) => {
-  if (isSnapshot) return <StyledGridNoMotion small={small}>{children}</StyledGridNoMotion>
+const StyledGrid = StyledGridWithoutMotion.withComponent(motion.div)
 
-  if (isSnapshotCreator) {
-    return <StyledGridCreatorNoMotion small={small}>{children}</StyledGridCreatorNoMotion>
+type Props = PropsWithChildren<{
+  readonly isWithoutMotion?: boolean
+}>
+
+export default function GameGrid({ children, isWithoutMotion }: Props) {
+  if (isWithoutMotion) {
+    return <StyledGridWithoutMotion>{children}</StyledGridWithoutMotion>
   }
 
   return (
@@ -81,5 +41,3 @@ const GameGrid = ({ children, small, isSnapshot, isSnapshotCreator }) => {
     </StyledGrid>
   )
 }
-
-export default GameGrid

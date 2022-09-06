@@ -1,33 +1,16 @@
 import GameGrid from '../GolGrid/GameGrid/GameGrid'
 import Cell from '../GolGrid/Cell/Cell'
 
-const CSnapshotGrid = ({ loading = true, data, isSnapshot = true }) => {
+interface Props {
+  readonly data: number[][]
+}
+
+export default function CSnapshotGrid({ data }: Props) {
   return (
-    <GameGrid isSnapshotCreator small>
-      {!loading && data && data.length ? (
-        data.map((row, j) => {
-          return row.map((cell, i) => {
-            if (cell === 0) return <Cell isSnapshot key={`${i}${cell}`} />
-            else {
-              return <Cell isSnapshot state="alive" key={`${i}${cell}`} />
-            }
-          })
-        })
-      ) : (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          fetching...
-        </div>
+    <GameGrid isWithoutMotion>
+      {data.map((row, j) =>
+        row.map((cell, i) => <Cell isSnapshot state={cell === 0 ? 'default' : 'alive'} key={`${i}${cell}`} />)
       )}
     </GameGrid>
   )
 }
-
-export default CSnapshotGrid
