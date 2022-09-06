@@ -37,11 +37,19 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
       select
         "transactionOwner" "gameOwner",
         "gameId",
-        "gameState",
         (
-          select COALESCE(max(c2."gameGeneration"), 1)
+          select c2."gameState"
           from creator c2
           where c1."gameId" = c2."gameId"
+          order by COALESCE(c2."gameGeneration", 1) desc
+          limit 1
+        ) as "gameState",
+        (
+          select COALESCE(c2."gameGeneration", 1)
+          from creator c2
+          where c1."gameId" = c2."gameId"
+          order by COALESCE(c2."gameGeneration", 1) desc
+          limit 1
         ) as "gameGeneration",
         "createdAt"
       from creator c1
@@ -59,11 +67,19 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     select
       "transactionOwner" "gameOwner",
       "gameId",
-      "gameState",
       (
-        select COALESCE(max(c2."gameGeneration"), 1)
+        select c2."gameState"
         from creator c2
         where c1."gameId" = c2."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
+      ) as "gameState",
+      (
+        select COALESCE(c2."gameGeneration", 1)
+        from creator c2
+        where c1."gameId" = c2."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
       ) as "gameGeneration",
       "createdAt"
     from creator c1
@@ -75,11 +91,19 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     select
       "transactionOwner" "gameOwner",
       "gameId",
-      "gameState",
       (
-        select COALESCE(max(c2."gameGeneration"), 1)
+        select c2."gameState"
         from creator c2
         where c1."gameId" = c2."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
+      ) as "gameState",
+      (
+        select COALESCE(c2."gameGeneration", 1)
+        from creator c2
+        where c1."gameId" = c2."gameId"
+        order by COALESCE(c2."gameGeneration", 1) desc
+        limit 1
       ) as "gameGeneration",
       "createdAt"
     from creator c1
