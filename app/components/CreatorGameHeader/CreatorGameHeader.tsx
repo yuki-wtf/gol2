@@ -1,4 +1,3 @@
-import { useNavigate } from '@remix-run/react'
 import { HiOutlineArrowLeft, HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import { getShortChecksumAddress } from '~/helpers/starknet'
@@ -54,14 +53,12 @@ interface Props {
 }
 
 export default function CreatorGameHeader({ gameOwner, gameId, title }: Props) {
-  const navigate = useNavigate()
-
   return (
     <StyledCreatorHeader>
       <StyledButtonIdWrapper>
         <StyledButtonWrapper>
           <Button
-            onClick={() => navigate('/creator')}
+            to='/creator'
             tertiaryColor="#C2B9B2"
             icon={<HiOutlineArrowLeft />}
             label="All games"
