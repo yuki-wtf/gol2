@@ -4,7 +4,16 @@ import ContainerInner from '../../components/Layout/ContainerInner'
 import Typography from '../../components/Typography/Typography'
 import styled from '@emotion/styled'
 import Button from '../../components/Button/Button'
-import CreateGame from '../../components/CreatorGame/Game/Wrapped/CreateGame'
+import { useCreatorGrid } from '~/hooks/CreatorGrid'
+import { useUser } from '~/hooks/useUser'
+import { useGameContract } from '~/hooks/useGameContract'
+import { useStarknetInvoke } from '@starknet-react/core'
+import { useEffect, useState } from 'react'
+import { useNavigate } from '@remix-run/react'
+import { gridToGameState } from '~/helpers/gridToGameState'
+import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
+import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
+import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 
 const gameExamples = [
   {
@@ -95,6 +104,49 @@ const StyledlistItem = styled.li`
 `
 
 const Create = () => {
+  const [grid, setGrid] = useCreatorGrid()
+  const user = useUser()
+  const { contract } = useGameContract()
+  const { data, loading, error, reset, invoke } = useStarknetInvoke({
+    contract,
+    method: 'create',
+  })
+
+  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
+  const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
+
+  useEffect(() => {
+    if (loading) {
+      setApprovalDialogOpen(true)
+      setUserCancelledDialogOpen(true)
+    }
+  }, [loading])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (data == null) return undefined
+
+    const gameState = gridToGameState(grid)
+
+    const formData = new FormData()
+
+    formData.append('hash', data)
+    formData.append('status', 'RECEIVED')
+    formData.append('functionName', 'create')
+    formData.append('functionCaller', user.userId)
+    formData.append('functionInputGameState', gameState)
+
+    fetch('/api/transaction', {
+      body: formData,
+      method: 'post',
+    })
+
+    navigate('/creator')
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, navigate])
+
   return (
     <ContainerInner>
       <div
@@ -143,8 +195,46 @@ const Create = () => {
                 </StyledlistItem>
               </Styledlist>
               <div>
-                <CreateGame />
-                <Button tertiary label="CLEAR" />
+                {loading && (
+                  <DialogWaiting
+                    open={approvalDialogOpen}
+                    onClose={() => {
+                      setApprovalDialogOpen(false)
+                      reset()
+                    }}
+                  />
+                )}
+                {error && (
+                  <DialogTxnError
+                    open={userCancelledDialogOpen}
+                    onClose={() => {
+                      setUserCancelledDialogOpen(false)
+                      reset()
+                    }}
+                  />
+                )}
+                <Button
+                  label="Create Game"
+                  isLoading={loading}
+                  onClick={() => {
+                    if (user != null) {
+                      const gameState = gridToGameState(grid)
+                      console.log(gameState)
+
+                      // TODO test this
+                      invoke({
+                        args: [gameState],
+                      })
+                    }
+                  }}
+                />
+                <Button
+                  onClick={() => {
+                    setGrid(gameStateToGrid('0'))
+                  }}
+                  tertiary
+                  label="CLEAR"
+                />
               </div>
             </div>
           </div>
