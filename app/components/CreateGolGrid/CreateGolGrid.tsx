@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Body from '../GolGrid/Body/Body'
 import Footer from '../GolGrid/Footer/Footer'
 import Header from '../GolGrid/Header/Header'
-import GridWrapper from './GridWrapper'
+import UserCreatedGrid from './UserCreatedGrid'
 
 const StyledGridContainer = styled.div`
   background-color: #000000;
@@ -18,7 +18,7 @@ const CreateGolGrid = () => {
     <StyledGridContainer>
       <Header empty />
       <Body>
-        <GridWrapper />
+        <UserCreatedGrid />
       </Body>
       <Footer empty />
     </StyledGridContainer>

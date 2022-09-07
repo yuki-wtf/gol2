@@ -19,7 +19,7 @@ const UserCreatedGrid = () => {
               setGrid(newCells)
             }}
             key={`${rowIndex}-${colIndex}`}
-            state={grid[rowIndex][colIndex] ? 'createSelected' : 'dead'}
+            state={cell ? 'createSelected' : 'dead'}
           />
         ))
       )}
