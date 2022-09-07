@@ -29,7 +29,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       "gameId",
       "createdAt",
       (
-        select c2."gameGeneration"
+        select COALESCE(c2."gameGeneration", 1)
         from creator c2
         where c2."gameId" = c1."gameId"
         order by COALESCE(c2."gameGeneration", 1) desc
