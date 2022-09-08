@@ -71,7 +71,7 @@ export default function CreditsContainer() {
     <StyledContainer>
       <StyledTokenIconWrapper>
         <StyledTextWrapper>
-          <T.H4SemiBold style={{ fontSize: 20, fontWeight: 500 }}> {balance} </T.H4SemiBold>
+          <T.H4SemiBold style={{fontSize: 20, fontWeight: 500, WebkitBackgroundClip:"text",  WebkitTextFillColor: "transparent", backgroundImage:"linear-gradient(180deg, #79FFF7 0%, #79EDA1 100%)" }}> {balance} </T.H4SemiBold>
         </StyledTextWrapper>
         <StyledIconWrapper>
           <GolToken />
