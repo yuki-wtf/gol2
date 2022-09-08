@@ -5,6 +5,7 @@ import MenuButton from './MenuButton/MenuButton'
 import TempOverlay from '../TempOverlay/TempOverlay'
 import CreditsContainer from './Credits/CreditsContainer'
 import { useSelectedCell } from '~/hooks/SelectedCell'
+import { useLocation } from 'react-router-dom'
 import { Link } from '@remix-run/react'
 
 const StyledNavbar = styled.header`
@@ -33,17 +34,20 @@ const StyledNavbarInner = styled.header`
 
 const Navbar = () => {
   const [selectedCell] = useSelectedCell()
+  const location = useLocation()
 
   return (
     <StyledNavbar>
       {selectedCell !== null && <TempOverlay />}
 
       <StyledNavbarInner>
-        <MenuButton />
+      {/^\/menu(\/|$)/.test(location.pathname) ?  null :  ( <MenuButton />) }
+       
         <Link to="/" title="Home">
           <HeaderLogo />
         </Link>
-        <CreditsContainer />
+        {/^\/menu(\/|$)/.test(location.pathname) ?  null :  (   <CreditsContainer />) }
+      
 
         <ConnectWallet />
       </StyledNavbarInner>
