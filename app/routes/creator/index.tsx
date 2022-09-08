@@ -130,8 +130,8 @@ export default function CreatorPage() {
         <PageIntro.Container>
           <PageIntro.Icon color="#8AED9B" />
           <PageIntro.Text>
-            Create your own games by evolving the communities games. <br />
-            Earn 10 GOL tokens and you can spawn a brand new game.
+          Evolve community games to earn GOL tokens. <br />
+          Earn 10 GOL tokens and you can create a new game.
           </PageIntro.Text>
         </PageIntro.Container>
         <div></div>

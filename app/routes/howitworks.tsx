@@ -133,13 +133,13 @@ export default function Howitworks() {
               When in infinite mode you can evolve the game via the &apos;Evolve&apos; button. This will take the grid
               in its current state and then progress the game to the next generation, based on the GoL rules.
             </InfoListItem>
-            <InfoListItem>For every evolution you make, you will earn 1 credit.</InfoListItem>
+            <InfoListItem>For every evolution you make, you will earn 1 GOL token.</InfoListItem>
             <InfoListItem>
               Each time you evolve the game, a snapshot will be automatically generated and saved in the snapshots area
               (more on this below). This is essentially a unique image which is a representation of your specific move
               in the game.
             </InfoListItem>
-            <InfoListItem>You can then use the earned credit to give life to a cell on the grid.</InfoListItem>
+            <InfoListItem>You can then use the earned GOL token to give life to a cell on the grid.</InfoListItem>
             <InfoListItem>
               Any player can then evolve the grid to observe how the cells behave and you can observe how your input
               will impact the game.
@@ -171,7 +171,7 @@ export default function Howitworks() {
               You can evolve a game via the &apos;Evolve&apos; button. This will take the grid in its current state and
               then progress the game to the next generation, based on the GoL rules.
             </InfoListItem>
-            <InfoListItem>For every evolution you make, you will earn 1 credit.</InfoListItem>
+            <InfoListItem>For every evolution you make, you will earn 1 GOL token.</InfoListItem>
             <InfoListItem>
               Once you have earned 10 GOL tokens you can then choose to create a new game by clicking on the ‘+ New
               game” button.
