@@ -36,12 +36,12 @@ const DialogTitle = styled(Typography.BaseBold)`
 const DialogSubtitle = styled(Typography.H2)`
   color: #252b38;
   margin: 0;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 `
 const DialogDesc = styled(Typography.BaseRegular)`
   color: #252b38;
   margin: 0;
-  margin-top: 32px;
+  margin-top: 16px;
   margin-bottom: 32px;
   width: 75%;
 `
@@ -79,12 +79,11 @@ const DialogGiveLife = () => {
 
     fetch('/api/transaction', {
       body: formData,
-      method: 'post'
+      method: 'post',
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
-
 
   return (
     <div
@@ -113,10 +112,10 @@ const DialogGiveLife = () => {
       )}
       {selectedCell != null && (
         <DialogContent>
-          <DialogTitle>GIVE LIFE</DialogTitle>
+          <DialogSubtitle>GIVE LIFE</DialogSubtitle>
           {/* <DialogSubtitle>1 Credits</DialogSubtitle> */}
           <DialogDesc>
-          Select any inactive cell in the game to give to it life. Click confirm to submit your move.
+            Select any inactive cell in the game to give to it life. Click confirm to submit your move.
           </DialogDesc>
           <ActionsContainer>
             <Button

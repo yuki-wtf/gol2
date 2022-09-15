@@ -1,6 +1,12 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
+interface Props {
+  readonly state?: 'pending' | 'alive' | 'selected' | 'createSelected' | 'dead'
+  readonly hasHoverState?: boolean
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
+}
+
 const pendingCell = (p: any) => css`
   background-color: ${p.theme.colors.cell.cellPendingBackground};
   pointer-events: none;
@@ -21,39 +27,13 @@ const createSelectedCell = (p: any) => css`
     background-color: ${p.theme.colors.cell.cellPreLiveBackground};
   }
 `
+
 const defaultCell = (p: any) => css`
   background-color: ${p.theme.colors.cell.cellDefaultBackground};
   border: 0.5px solid #2d3038;
-
-  cursor: ${!p.isSnapshot ? 'pointer' : 'default'};
-  > &:hover {
-    background-color: ${!p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
-  }
 `
-// const StyledCell = styled(motion.div)`
-//   ${(p) => {
-//     switch (p.state) {
-//       case 'pending':
-//         return pendingCell
 
-//       case 'alive':
-//         return aliveCell
-
-//       case 'selected':
-//         return selectedCell
-
-//       case 'createSelected':
-//         return createSelectedCell
-
-//       case 'dead':
-//         return defaultCell
-
-//       default:
-//         return defaultCell
-//     }
-//   }}
-// `
-const StyledCell2 = styled.div`
+const StyledCell = styled.div<Props>`
   ${(p) => {
     switch (p.state) {
       case 'pending':
@@ -74,37 +54,14 @@ const StyledCell2 = styled.div`
       default:
         return defaultCell(p)
     }
-  }}
-
-  &:hover {
-    background-color: ${(p) => !p.isSnapshot && p.theme.colors.cell.cellDefaultHover};
+  }} &:hover {
+    background-color: ${(p) => p.hasHoverState && p.theme.colors.cell.cellDefaultHover};
+    cursor: ${(p) => (p.hasHoverState ? 'pointer' : 'default')};
   }
 `
 
-const Cell = ({ state = 'default', onClick, isSnapshot }) => {
-  // const { playbackMode } = useSelector((state) => state.playback)
-
-  // if (isSnapshot || playbackMode) {
-  return <StyledCell2 isSnapshot state={state} onClick={onClick} />
-  // }
-
-  // return (
-  //   <StyledCell
-  //     initial={{
-  //       opacity: 0,
-  //       scale: 0,
-  //     }}
-  //     animate={{
-  //       opacity: 1,
-  //       scale: 1,
-  //       transition: {
-  //         delay: 0.4,
-  //       },
-  //     }}
-  //     state={state}
-  //     onClick={onClick}
-  //   />
-  // )
+const Cell = ({ state, onClick, hasHoverState = false }: Props) => {
+  return <StyledCell state={state} onClick={onClick} hasHoverState={hasHoverState} />
 }
 
 export default Cell
