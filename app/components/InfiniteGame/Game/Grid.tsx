@@ -37,6 +37,7 @@ export default function Grid({ data, receivedCells }: Props) {
                     row: rowIndex,
                   })
                 }}
+                hasHoverState
                 key={key}
               />
             )
