@@ -5,6 +5,7 @@ import { useUser } from '~/hooks/useUser'
 import Button from '~/components/Button/Button'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HiPlus } from 'react-icons/hi'
+import Highlight from '~/components/Highlight/Highlight'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -60,6 +61,15 @@ const StyledTokenIconWrapper = styled.div`
 const StyledButtonWrapper = styled.div`
   margin-left: 16px;
 `
+const TestContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`
 
 export default function CreditsContainer() {
   const user = useUser()
@@ -69,17 +79,40 @@ export default function CreditsContainer() {
 
   return (
     <StyledContainer>
-      <StyledTokenIconWrapper>
-        <StyledTextWrapper>
-          <T.H4SemiBold style={{fontSize: 20, fontWeight: 500, WebkitBackgroundClip:"text",  WebkitTextFillColor: "transparent", backgroundImage:"linear-gradient(180deg, #79FFF7 0%, #79EDA1 100%)" }}> {balance} </T.H4SemiBold>
-        </StyledTextWrapper>
-        <StyledIconWrapper>
-          <GolToken />
-        </StyledIconWrapper>
-      </StyledTokenIconWrapper>
-      <StyledTextWrapper>
-        <T.H4SemiBold>Gol Tokens</T.H4SemiBold>
-      </StyledTextWrapper>
+      <Highlight
+        style={{ height: 38, lineHeight: 38, alignItems: 'center', paddingLeft: 24, paddingRight: 24 }}
+        highlightRadius={100}
+        title="Not enough Tokens"
+        desc="1 GOL token = 1 Give Life to a cell "
+        active={false}
+        sideOffset={5}
+      >
+        <TestContainer>
+          <StyledTokenIconWrapper>
+            <StyledTextWrapper>
+              <T.H4SemiBold
+                style={{
+                  fontSize: 20,
+                  fontWeight: 500,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundImage: 'linear-gradient(180deg, #79FFF7 0%, #79EDA1 100%)',
+                }}
+              >
+                {' '}
+                {balance}{' '}
+              </T.H4SemiBold>
+            </StyledTextWrapper>
+            <StyledIconWrapper>
+              <GolToken />
+            </StyledIconWrapper>
+          </StyledTokenIconWrapper>
+
+          <StyledTextWrapper>
+            <T.H4SemiBold color="#EBEBEB">Gol Tokens</T.H4SemiBold>
+          </StyledTextWrapper>
+        </TestContainer>
+      </Highlight>
       {/^\/creator(\/|$)/.test(location.pathname) && (
         <StyledButtonWrapper>
           <Button

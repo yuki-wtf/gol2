@@ -41,13 +41,12 @@ const Navbar = () => {
       {selectedCell !== null && <TempOverlay />}
 
       <StyledNavbarInner>
-      {/^\/menu(\/|$)/.test(location.pathname) ?  null :  ( <MenuButton />) }
-       
+        {/^\/menu(\/|$)/.test(location.pathname) ? null : <MenuButton />}
+
         <Link to="/" title="Home">
           <HeaderLogo />
         </Link>
-        {/^\/menu(\/|$)/.test(location.pathname) ?  null :  (   <CreditsContainer />) }
-      
+        {/^\/menu(\/|$)/.test(location.pathname) ? null : <CreditsContainer />}
 
         <ConnectWallet />
       </StyledNavbarInner>
