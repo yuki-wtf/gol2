@@ -21,7 +21,7 @@ export default function About() {
             It’s a fun and interactive way to introduce new users and developers to smart contracts written in Cairo.
           </InfoParagraph>
           <InfoParagraph>
-            With StarkNet, Game of Life transitions can be computed inside the contract, with each of the 1024 cells
+            With StarkNet, Game of Life transitions can be computed inside the contract, with each of the 225 cells
             living or dying according to the game rules. These rules are enforced by a STARK proof, which then displays
             the game updates to Ethereum - this means the results are guaranteed to be correct.
           </InfoParagraph>
@@ -62,7 +62,7 @@ export default function About() {
           <Spacer size={32} />
           <InfoParagraph>
             This particular version of Game of Life, or GoL2 as it’s called, is somewhat different in that it exists not
-            on an infinite grid but on a fixed-sized grid. 32 x 32 to be precise. This means that cells on the edges can
+            on an infinite grid but on a fixed-sized grid. 15 x 15 to be precise. This means that cells on the edges can
             wrap and reappear on the opposite side of the grid
           </InfoParagraph>
           <Spacer size={32} />
