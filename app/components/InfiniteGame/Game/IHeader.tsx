@@ -21,6 +21,7 @@ export const IHeader = () => {
   const { contract } = useGameContract()
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+  const balance = user?.balance ?? 0
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
@@ -85,6 +86,10 @@ export const IHeader = () => {
         >
           <Button
             onClick={() => {
+              if (user != null && balance == 0) {
+                setHelpMessage('balanceMessage')
+                return
+              }
               if (user != null) {
                 // TODO test this
                 invoke({
@@ -92,6 +97,7 @@ export const IHeader = () => {
                 })
                 return
               }
+
               setHelpMessage('connectWalletMessage')
             }}
             isLoading={loading}

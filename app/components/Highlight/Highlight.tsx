@@ -64,7 +64,7 @@ const StyledContainer = styled.span`
   padding: 2px;
   position: relative;
   pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-  z-index: 5 !important;
+  z-index: 5;
   transition: all 0.5s ease;
 
   /* overflow: hidden; */
@@ -82,13 +82,13 @@ const StyledContainer = styled.span`
     border-radius: ${(p) => (p.highlightRadius ? `${p.highlightRadius}px` : '8px')};
     border: 2px solid ${(p) => (p.active ? '#f06b97' : 'transparent')};
     pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-    z-index: 12 !important;
+    z-index: 5 !important;
     transition: all 0.5s ease;
     visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
   }
   &::after {
-    /* content: '';
-    opacity: ${(p) => (p.active ? '0.7' : '0')};
+    content: '';
+    opacity: ${(p) => (p.active ? '0.4' : '0')};
 
     position: fixed;
     inset: 0;
@@ -96,12 +96,12 @@ const StyledContainer = styled.span`
     background-color: #1d222c;
     visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
     pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-    transition: all 0.5s ease; */
+    transition: all 0.5s ease;
   }
 `
 
 const StyledBackdrop = styled.div`
-  opacity: ${(p) => (p.active ? '0.7' : '0')};
+  opacity: ${(p) => (p.active ? '0.4' : '0')};
   /* Section/Snapshots-200 */
   position: fixed;
   inset: 0;
@@ -171,26 +171,40 @@ const ProgressIndicator = StyledIndicator
 function Content({ children, ...props }) {
   const [progress, setProgress] = useState(0)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((oldValue) => {
-        const newValue = oldValue + 10
-        if (newValue === 100) {
-          clearInterval(interval)
-        }
-        return newValue
-      })
-    }, 600)
-  }, [])
+  // useEffect(() => {
+  //   console.log('mount')
+  //   const timer = setTimeout(() => setProgress(100), 3000)
+  //   return () => {
+  //     clearTimeout(timer)
+  //     console.log('unmounted')
+  //   }
+  // }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setProgress((oldValue) => {
+  //       const newValue = oldValue + 20
+  //       if (newValue === 100) {
+  //         clearInterval(interval)
+  //         setProgress(0)
+  //       }
+
+  //       return newValue
+  //     })
+  //   }, 500)
+  //   return () => {
+  //     setProgress(0)
+  //     clearInterval(interval)
+  //   }
+  // }, [])
 
   return (
     <PopoverPrimitive.Portal>
       <StyledContent {...props}>
         {children}
         <StyledArrow width={27} height={10} />
-        <Progress value={0}>
+        {/* <Progress value={100}>
           <ProgressIndicator style={{ transform: `translateX(-${100 - progress}%)` }} />
-        </Progress>
+        </Progress> */}
       </StyledContent>
     </PopoverPrimitive.Portal>
   )
@@ -261,7 +275,7 @@ const Highlight = ({
   return (
     <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
       <Popover defaultOpen={true} open={active}>
-        <StyledBackdrop active={active} />
+        {/* <StyledBackdrop active={active} /> */}
         <StyledTrigger>
           <>{children} </>
         </StyledTrigger>

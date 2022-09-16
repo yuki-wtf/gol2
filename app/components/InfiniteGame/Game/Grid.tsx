@@ -15,6 +15,7 @@ export default function Grid({ data, receivedCells }: Props) {
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const [selectedCell, setSelectedCell] = useSelectedCell()
   const user = useUser()
+  const balance = user?.balance ?? 0
 
   return (
     <GameGrid>
@@ -36,6 +37,10 @@ export default function Grid({ data, receivedCells }: Props) {
                     : 'default'
                 }
                 onClick={() => {
+                  if (user != null && balance == 0) {
+                    setHelpMessage('balanceMessage')
+                    return
+                  }
                   if (user != null) {
                     setSelectedCell({
                       col: colIndex,
