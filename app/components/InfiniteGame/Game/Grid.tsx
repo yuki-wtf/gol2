@@ -3,6 +3,8 @@ import Cell from '../../GolGrid/Cell/Cell'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import type { SerializeFrom } from '@remix-run/node'
 import type { ReceivedCell } from '~/db.server'
+import { useUser } from '~/hooks/useUser'
+import { useHelpMessage } from '~/hooks/HelpMessage'
 
 interface Props {
   readonly data: number[][]
@@ -10,7 +12,9 @@ interface Props {
 }
 
 export default function Grid({ data, receivedCells }: Props) {
+  const [helpMessage, setHelpMessage] = useHelpMessage()
   const [selectedCell, setSelectedCell] = useSelectedCell()
+  const user = useUser()
 
   return (
     <GameGrid>
@@ -32,10 +36,14 @@ export default function Grid({ data, receivedCells }: Props) {
                     : 'default'
                 }
                 onClick={() => {
-                  setSelectedCell({
-                    col: colIndex,
-                    row: rowIndex,
-                  })
+                  if (user != null) {
+                    setSelectedCell({
+                      col: colIndex,
+                      row: rowIndex,
+                    })
+                    return
+                  }
+                  setHelpMessage('connectWalletMessage')
                 }}
                 hasHoverState
                 key={key}
