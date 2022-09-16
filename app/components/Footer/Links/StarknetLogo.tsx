@@ -8,7 +8,7 @@ const StyledContainer = styled.div`
   gap: 16px;
 `
 const StyledLogo = styled.a`
-  max-width: 78px;
+  /* max-width: 78px; */
   svg {
     filter: grayscale(1);
   }
