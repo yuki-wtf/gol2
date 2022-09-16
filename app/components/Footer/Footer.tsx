@@ -3,10 +3,6 @@ import Typography from '../Typography/Typography'
 import StarknetLogoLink from './Links/StarknetLogo'
 import YukiLogoLink from './Links/YukiLogo'
 
-import { getSelectorFromName } from 'starknet/utils/hash'
-
-console.log('SelectorName', getSelectorFromName('initializer'))
-
 const StyledFooter = styled.footer`
   height: 72px;
   display: flex;

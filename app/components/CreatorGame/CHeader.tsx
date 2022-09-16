@@ -1,6 +1,7 @@
 import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
+import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useUser } from '~/hooks/useUser'
 import Button from '../Button/Button'
@@ -13,6 +14,7 @@ export const IHeader = ({ gameId }) => {
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
   const user = useUser()
+  const [helpMessage, setHelpMessage] = useHelpMessage()
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
@@ -39,7 +41,7 @@ export const IHeader = ({ gameId }) => {
 
     fetch('/api/transaction', {
       body: formData,
-      method: 'post'
+      method: 'post',
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +75,9 @@ export const IHeader = ({ gameId }) => {
               invoke({
                 args: [gameId],
               })
+              return
             }
+            setHelpMessage('connectWalletMessage')
           }}
           isLoading={loading}
           label="Evolve"

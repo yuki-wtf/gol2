@@ -1,14 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStarknet } from '@starknet-react/core'
 import Button from '../../Button/Button'
 import UserDropdownMenu from './UserDropdownMenu/UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu.client'
 import DialogDownloadWallet from '../../DialogDownloadWallet/DialogDownloadWallet'
 import DialogWallet from '~/components/DialogWallet/DialogWallet'
+import Highlight from '~/components/Highlight/Highlight'
+import { useHelpMessage } from '~/hooks/HelpMessage'
 
 const ConnectWallet = () => {
   const [open, setOpen] = useState(false)
   const { account, error, connectors, connect, disconnect } = useStarknet()
+  const [helpMessage, setHelpMessage] = useHelpMessage()
+
+  useEffect(() => {
+    if (helpMessage === 'connectWalletMessage') {
+      setTimeout(() => {
+        setHelpMessage(null)
+      }, 5000)
+    }
+  }, [helpMessage, setHelpMessage])
 
   if (account) {
     return (
@@ -36,7 +47,17 @@ const ConnectWallet = () => {
         justifyContent: 'flex-end',
       }}
     >
-      {!account && <Button primary label="Connect" onClick={() => setOpen(true)} />}
+      {!account && (
+        <Highlight
+          collisonPadding={{ right: 24 }}
+          active={helpMessage === 'connectWalletMessage'}
+          onClose={() => setHelpMessage(null)}
+          title="Connect wallet"
+          desc="Start playing Game of Life!"
+        >
+          <Button primary label="Connect" onClick={() => setOpen(true)} />
+        </Highlight>
+      )}
 
       <DialogWallet open={open} onClose={() => setOpen(false)}>
         {!account &&

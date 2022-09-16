@@ -1,7 +1,9 @@
 import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
+import Highlight from '~/components/Highlight/Highlight'
 import { INFINITE_GAME_GENESIS } from '~/env'
+import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useUser } from '~/hooks/useUser'
@@ -12,11 +14,13 @@ import Header from '../../GolGrid/Header/Header'
 import TempOverlay from '../../TempOverlay/TempOverlay'
 
 export const IHeader = () => {
+  const [active, setActive] = useState(false)
   const [selectedCell] = useSelectedCell()
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
   const user = useUser()
+  const [helpMessage, setHelpMessage] = useHelpMessage()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
@@ -44,7 +48,7 @@ export const IHeader = () => {
 
     fetch('/api/transaction', {
       body: formData,
-      method: 'post'
+      method: 'post',
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,19 +76,29 @@ export const IHeader = () => {
       )}
       <Header>
         {selectedCell != null && <TempOverlay />}
-        <Button
-          onClick={() => {
-            if (user != null) {
-              // TODO test this
-              invoke({
-                args: [INFINITE_GAME_GENESIS],
-              })
-            }
-          }}
-          isLoading={loading}
-          label="Evolve"
-          icon={<HiOutlineLightningBolt size={24} />}
-        />
+        <Highlight
+          collisonPadding={{ left: 24 }}
+          onClose={() => setHelpMessage(null)}
+          active={active}
+          title="Evolve game & earn tokens"
+          desc="1 GOL token = 1 Give Life to a cell "
+        >
+          <Button
+            onClick={() => {
+              if (user != null) {
+                // TODO test this
+                invoke({
+                  args: [INFINITE_GAME_GENESIS],
+                })
+                return
+              }
+              setHelpMessage('connectWalletMessage')
+            }}
+            isLoading={loading}
+            label="Evolve"
+            icon={<HiOutlineLightningBolt size={24} />}
+          />
+        </Highlight>
       </Header>
     </>
   )

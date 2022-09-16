@@ -64,8 +64,9 @@ const StyledContainer = styled.span`
   padding: 2px;
   position: relative;
   pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-  z-index: 5;
+  z-index: 5 !important;
   transition: all 0.5s ease;
+
   /* overflow: hidden; */
 
   &::before {
@@ -86,17 +87,29 @@ const StyledContainer = styled.span`
     visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
   }
   &::after {
-    content: '';
+    /* content: '';
     opacity: ${(p) => (p.active ? '0.7' : '0')};
-    /* Section/Snapshots-200 */
+
     position: fixed;
     inset: 0;
     z-index: 4;
     background-color: #1d222c;
     visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
     pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-    transition: all 0.5s ease;
+    transition: all 0.5s ease; */
   }
+`
+
+const StyledBackdrop = styled.div`
+  opacity: ${(p) => (p.active ? '0.7' : '0')};
+  /* Section/Snapshots-200 */
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #1d222c;
+  visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
+  pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
+  transition: all 0.5s ease;
 `
 
 const StyledContent = styled(PopoverPrimitive.Content)`
@@ -248,6 +261,7 @@ const Highlight = ({
   return (
     <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
       <Popover defaultOpen={true} open={active}>
+        <StyledBackdrop active={active} />
         <StyledTrigger>
           <>{children} </>
         </StyledTrigger>

@@ -20,6 +20,7 @@ import { sql } from './db.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { SelectedCellProvider } from './hooks/SelectedCell'
 import { CreatorGridProvider } from './hooks/CreatorGrid'
+import { HelpMessageProvider } from './hooks/HelpMessage'
 import MobileMessage from './components/MobileMessage/MobileMessage'
 
 export async function loader({ request }: LoaderArgs) {
@@ -154,12 +155,14 @@ function AppLayout({ children }) {
   return (
     <Document>
       <ThemeProvider theme={infinite}>
-        <SelectedCellProvider>
-          <CreatorGridProvider>
-            <GlobalStyle />
-            <Layout>{children}</Layout>
-          </CreatorGridProvider>
-        </SelectedCellProvider>
+        <HelpMessageProvider>
+          <SelectedCellProvider>
+            <CreatorGridProvider>
+              <GlobalStyle />
+              <Layout>{children}</Layout>
+            </CreatorGridProvider>
+          </SelectedCellProvider>
+        </HelpMessageProvider>
       </ThemeProvider>
     </Document>
   )
