@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+import { Link } from '@remix-run/react'
 
 const StyledGridContainer = styled.div`
   width: 212px;
@@ -13,7 +14,7 @@ const StyledGridContainer = styled.div`
   background-color: #1d222c;
   pointer-events: none;
 `
-const StyledCard = styled.li`
+const StyledCard = styled(Link)`
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -106,9 +107,9 @@ const StyledUserAddress = styled.div`
   margin-top: 4px;
 `
 
-const SnapshotCreator = ({ onClick, generationNumber, address, id, gameState }) => {
+const SnapshotCreator = ({ to, generationNumber, address, id, gameState }) => {
   return (
-    <StyledCard onClick={onClick}>
+    <StyledCard to={to}>
       <StyledGridContainer>
         <CSnapshotGrid data={gameStateToGrid(gameState)} />
       </StyledGridContainer>

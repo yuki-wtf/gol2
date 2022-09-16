@@ -3,7 +3,6 @@ import Skeleton from '../../Skeleton/Skeleton'
 import T from '../../Typography/Typography'
 import { HiOutlineLightningBolt, HiPlus } from 'react-icons/hi'
 import Button from '../../Button/Button'
-import { useNavigate } from '@remix-run/react'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -62,8 +61,6 @@ const StyledTokenIconWrapper = styled.div`
 `
 
 const CreatorCredits = ({ loading, tokenCount, error }) => {
-  const navigate = useNavigate()
-
   return (
     <StyledContainer>
       <StyledTokenIconWrapper>
@@ -79,7 +76,7 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
       </StyledTextWrapper>
       <StyledButtonWrapper>
         <Button
-          onClick={() => navigate('/creator/create')}
+          to='/creator/create'
           icon={<HiPlus size={24} />}
           label="new game"
           secondary

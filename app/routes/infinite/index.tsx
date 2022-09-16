@@ -24,7 +24,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   const statistics = await sql<{ label: string; value: string }>`
     (
       select 'Generations' "label",
-        max("gameGeneration") "value"
+        max(COALESCE("gameGeneration", 1)) "value"
       from infinite
       limit 1
     )
@@ -108,7 +108,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 export default function InfinitePage() {
   useAutoRefresh()
   const data = useLoaderData<typeof loader>()
-
+  console.log(data)
   return (
     <ContainerInner>
       <GameWrapper>

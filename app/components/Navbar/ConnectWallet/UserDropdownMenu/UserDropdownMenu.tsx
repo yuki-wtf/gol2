@@ -11,9 +11,26 @@ import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { ContractAddress } from '~/hooks/useGameContract'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
+import { useStarknet } from '@starknet-react/core'
+import { useEffect, useState } from 'react'
+import { getChecksumAddress } from 'starknet4'
 
 const UserDropdownMenu = ({ account, disconnect }) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
+
+  const { connectors } = useStarknet()
+
+  const [walletName, setWalletName] = useState<string>()
+
+  useEffect(() => {
+    ;(async () => {
+      for (const connector of connectors) {
+        if (getChecksumAddress((await connector.account()).address) === getChecksumAddress(account)) {
+          setWalletName(connector.name())
+        }
+      }
+    })()
+  }, [account, connectors])
 
   return (
     <DropdownMenu.Root>
@@ -24,7 +41,7 @@ const UserDropdownMenu = ({ account, disconnect }) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>
-          Connected to <strong>{window.starknet?.name ?? 'Argent X'}</strong>
+          Connected to <strong>{walletName ?? 'Argent X'}</strong>
           {' via '} <strong>Starknet</strong>
         </DropdownMenu.Label>
 

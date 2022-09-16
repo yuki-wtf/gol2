@@ -4,7 +4,7 @@ import PageIntro from '../../components/PageIntro/PageIntro'
 import SnapshotCreator from '../../components/Snapshot/SnapshotCreator'
 import Typography from '../../components/Typography/Typography'
 import { creator } from '../../styles/themes/creator'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import type { CreatorGame } from '~/db.server'
@@ -120,7 +120,6 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 
 export default function CreatorPage() {
   useAutoRefresh()
-  const navigate = useNavigate()
   const { communityGames, yourGames } = useLoaderData<typeof loader>()
   const user = useUser()
 
@@ -149,7 +148,7 @@ export default function CreatorPage() {
             yourGames.map((game) => {
               return (
                 <SnapshotCreator
-                  onClick={() => navigate(`/creator/game/${game.gameId}`)}
+                  to={`/creator/game/${game.gameId}`}
                   key={game.gameId}
                   id={game.gameId}
                   generationNumber={game.gameGeneration}
@@ -172,7 +171,7 @@ export default function CreatorPage() {
           {communityGames.map((game) => {
             return (
               <SnapshotCreator
-                onClick={() => navigate(`/creator/game/${game.gameId}`)}
+                to={`/creator/game/${game.gameId}`}
                 key={game.gameId}
                 id={game.gameId}
                 generationNumber={game.gameGeneration}

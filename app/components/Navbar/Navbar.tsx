@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import ConnectWallet from './ConnectWallet/ConnectWallet'
+import ConnectWallet from './ConnectWallet/ConnectWallet.client'
 import HeaderLogo from './Logo/Logo'
 import MenuButton from './MenuButton/MenuButton'
 import TempOverlay from '../TempOverlay/TempOverlay'
@@ -7,6 +7,7 @@ import CreditsContainer from './Credits/CreditsContainer'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useLocation } from 'react-router-dom'
 import { Link } from '@remix-run/react'
+import ClientOnly from '../ClientOnly'
 
 const StyledNavbar = styled.header`
   position: relative;
@@ -48,7 +49,7 @@ const Navbar = () => {
         </Link>
         {/^\/menu(\/|$)/.test(location.pathname) ? null : <CreditsContainer />}
 
-        <ConnectWallet />
+        <ClientOnly>{() => <ConnectWallet />}</ClientOnly>
       </StyledNavbarInner>
     </StyledNavbar>
   )

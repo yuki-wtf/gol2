@@ -1,10 +1,14 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
 import { HiChevronDown, HiOutlineGlobeAlt } from 'react-icons/hi'
 import { FaEthereum } from 'react-icons/fa'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const NetworkDropdownMenu = ({ account, disconnect }) => {
-  const [network, setNetwork] = useState('goerli')
+function currentNetwork() {
+  return location.hostname === 'gol2.io' ? 'mainnet' : 'goerli'
+}
+
+const NetworkDropdownMenu = () => {
+  const [network, setNetwork] = useState(currentNetwork)
 
   const renderNetworkIcon = () => {
     switch (network) {
@@ -18,6 +22,16 @@ const NetworkDropdownMenu = ({ account, disconnect }) => {
         return <HiOutlineGlobeAlt size={15} />
     }
   }
+
+  useEffect(() => {
+    if (currentNetwork() !== network) {
+      if (network === 'goerli') {
+        location.href = 'https://goerli.gol2.io/'
+      } else if (network === 'mainnet') {
+        location.href = 'https://gol2.io/'
+      }
+    }
+  }, [network])
 
   return (
     <DropdownMenu.Root>

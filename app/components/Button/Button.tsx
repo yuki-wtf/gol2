@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import T from '../Typography/Typography'
 import Spinner from '../Spinner/Spinner'
 import { css } from '@emotion/react'
+import { Link } from '@remix-run/react'
+import type { To } from 'react-router-dom'
 
 interface Props {
   readonly primary?: boolean
@@ -11,7 +13,8 @@ interface Props {
   readonly isLoading?: boolean
   readonly label?: React.ReactNode
   readonly disabled?: boolean
-  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>
+  readonly to?: To
   readonly full?: boolean
   readonly tertiaryColor?: string
 }
@@ -26,19 +29,19 @@ const defaultButton = (p: any) => css`
   cursor: pointer;
   display: inline-flex;
   flex: 0 0 auto;
-  width: ${(p.full ? '100%' : 'auto')};
+  width: ${p.full ? '100%' : 'auto'};
   flex-direction: row;
   justify-content: center;
   align-items: center;
   align-self: center;
   padding: 0;
-  padding-left: ${(p.icon ? '16px' : '24px')};
-  padding-right: ${(p.icon ? '18px' : '24px')};
+  padding-left: ${p.icon ? '16px' : '24px'};
+  padding-right: ${p.icon ? '18px' : '24px'};
   border: 1px solid ${p.theme.colors.buttonPrimary.defaultBorder};
   border-radius: 5px;
   text-align: center;
   gap: 4px;
-  pointer-events: ${(p.isLoading ? 'none' : 'default')};
+  pointer-events: ${p.isLoading ? 'none' : 'default'};
   letter-spacing: 0.1em;
 `
 // Primary Button
@@ -180,7 +183,7 @@ const tertiaryButton = (p: any) => css`
   text-transform: none;
   font-weight: 500;
   border: none;
-  color: ${(p.tertiaryColor ? p.tertiaryColor : 'white')};
+  color: ${p.tertiaryColor ? p.tertiaryColor : 'white'};
   &:hover {
     ${!p.disabled && hoveredButtonTertiary(p)}
   }
@@ -214,6 +217,8 @@ export const StyledButton = styled.button<Props>`
   }};
 `
 
+const StyledLink = StyledButton.withComponent(Link)
+
 const Button = ({
   primary,
   secondary,
@@ -223,11 +228,14 @@ const Button = ({
   label,
   disabled,
   onClick,
+  to,
   full,
   tertiaryColor,
 }: Props) => {
+  const Component = to != null ? StyledLink : StyledButton
+
   return (
-    <StyledButton
+    <Component
       full={full}
       primary={primary}
       secondary={secondary}
@@ -235,12 +243,13 @@ const Button = ({
       isLoading={isLoading}
       icon={icon}
       disabled={disabled}
+      to={to}
       onClick={onClick}
       tertiaryColor={tertiaryColor}
     >
       {icon && !isLoading && icon}
       {isLoading ? <Spinner /> : <T.Button>{label}</T.Button>}
-    </StyledButton>
+    </Component>
   )
 }
 

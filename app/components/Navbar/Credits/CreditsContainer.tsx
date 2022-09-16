@@ -3,7 +3,7 @@ import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
 import { useUser } from '~/hooks/useUser'
 import Button from '~/components/Button/Button'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { HiPlus } from 'react-icons/hi'
 import Highlight from '~/components/Highlight/Highlight'
 
@@ -73,7 +73,6 @@ const TestContainer = styled.div`
 
 export default function CreditsContainer() {
   const user = useUser()
-  const navigate = useNavigate()
   const balance = user?.balance ?? 0
   const location = useLocation()
 
@@ -116,7 +115,7 @@ export default function CreditsContainer() {
       {/^\/creator(\/|$)/.test(location.pathname) && (
         <StyledButtonWrapper>
           <Button
-            onClick={() => navigate('/creator/create')}
+            to='/creator/create'
             icon={<HiPlus size={24} />}
             label="new game"
             secondary
