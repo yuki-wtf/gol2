@@ -71,10 +71,6 @@ export const IHeader = ({ gameId }) => {
       <Header>
         <Button
           onClick={() => {
-            if (user != null && balance == 0) {
-              setHelpMessage('balanceMessage')
-              return
-            }
             if (user != null) {
               // TODO test this
               invoke({
