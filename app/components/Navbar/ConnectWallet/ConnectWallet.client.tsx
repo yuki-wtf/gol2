@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useStarknet } from '@starknet-react/core'
 import Button from '../../Button/Button'
 import UserDropdownMenu from './UserDropdownMenu/UserDropdownMenu'
-import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu'
+import NetworkDropdownMenu from './NetworkDropdownMenu/NetworkDropdownMenu.client'
 import DialogDownloadWallet from '../../DialogDownloadWallet/DialogDownloadWallet'
 import DialogWallet from '~/components/DialogWallet/DialogWallet'
 
@@ -21,7 +21,7 @@ const ConnectWallet = () => {
           justifyContent: 'flex-end',
         }}
       >
-        <NetworkDropdownMenu account={account} disconnect={disconnect} />
+        <NetworkDropdownMenu />
         <UserDropdownMenu account={account} disconnect={disconnect} />
       </div>
     )
