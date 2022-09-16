@@ -7,6 +7,7 @@ import DialogDownloadWallet from '../../DialogDownloadWallet/DialogDownloadWalle
 import DialogWallet from '~/components/DialogWallet/DialogWallet'
 import Highlight from '~/components/Highlight/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
+import { clearTimeout } from 'timers'
 
 const ConnectWallet = () => {
   const [open, setOpen] = useState(false)
@@ -14,10 +15,14 @@ const ConnectWallet = () => {
   const [helpMessage, setHelpMessage] = useHelpMessage()
 
   useEffect(() => {
+    let timer
     if (helpMessage === 'connectWalletMessage') {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         setHelpMessage(null)
-      }, 5000)
+      }, 3000)
+      return () => {
+        clearTimeout(timer)
+      }
     }
   }, [helpMessage, setHelpMessage])
 

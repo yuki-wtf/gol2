@@ -6,6 +6,8 @@ import Button from '~/components/Button/Button'
 import { useLocation } from 'react-router-dom'
 import { HiPlus } from 'react-icons/hi'
 import Highlight from '~/components/Highlight/Highlight'
+import { useHelpMessage } from '~/hooks/HelpMessage'
+import { useEffect } from 'react'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -75,6 +77,19 @@ export default function CreditsContainer() {
   const user = useUser()
   const balance = user?.balance ?? 0
   const location = useLocation()
+  const [helpMessage, setHelpMessage] = useHelpMessage()
+
+  useEffect(() => {
+    let timer
+    if (helpMessage === 'balanceMessage') {
+      timer = setTimeout(() => {
+        setHelpMessage(null)
+      }, 3000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [helpMessage, setHelpMessage])
 
   return (
     <StyledContainer>
@@ -83,8 +98,9 @@ export default function CreditsContainer() {
         highlightRadius={100}
         title="Not enough Tokens"
         desc="1 GOL token = 1 Give Life to a cell "
-        active={false}
+        active={helpMessage === 'balanceMessage'}
         sideOffset={5}
+        onClose={() => setHelpMessage(null)}
       >
         <TestContainer>
           <StyledTokenIconWrapper>
@@ -114,13 +130,7 @@ export default function CreditsContainer() {
       </Highlight>
       {/^\/creator(\/|$)/.test(location.pathname) && (
         <StyledButtonWrapper>
-          <Button
-            to='/creator/create'
-            icon={<HiPlus size={24} />}
-            label="new game"
-            secondary
-            disabled={balance < 10}
-          />
+          <Button to="/creator/create" icon={<HiPlus size={24} />} label="new game" secondary disabled={balance < 10} />
         </StyledButtonWrapper>
       )}
     </StyledContainer>

@@ -15,6 +15,7 @@ export const IHeader = ({ gameId }) => {
   const { contract } = useGameContract()
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+  const balance = user?.balance ?? 0
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
@@ -70,6 +71,10 @@ export const IHeader = ({ gameId }) => {
       <Header>
         <Button
           onClick={() => {
+            if (user != null && balance == 0) {
+              setHelpMessage('balanceMessage')
+              return
+            }
             if (user != null) {
               // TODO test this
               invoke({
