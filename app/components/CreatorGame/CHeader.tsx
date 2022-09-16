@@ -8,6 +8,7 @@ import Button from '../Button/Button'
 import DialogTxnError from '../DialogTxnError/DialogTxnError'
 import DialogWaiting from '../DialogWaiting/DialogWaiting'
 import Header from '../GolGrid/Header/Header'
+import Highlight from '../Highlight/Highlight'
 
 export const IHeader = ({ gameId }) => {
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
@@ -21,6 +22,24 @@ export const IHeader = ({ gameId }) => {
     contract,
     method: 'evolve',
   })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHelpMessage('evolveCreator')
+    }, 2000)
+  }, [])
+
+  useEffect(() => {
+    let timer
+    if (helpMessage === 'evolveCreator') {
+      timer = setTimeout(() => {
+        setHelpMessage(null)
+      }, 5000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [helpMessage, setHelpMessage])
 
   useEffect(() => {
     if (loading) {
@@ -69,21 +88,29 @@ export const IHeader = ({ gameId }) => {
         />
       )}
       <Header>
-        <Button
-          onClick={() => {
-            if (user != null) {
-              // TODO test this
-              invoke({
-                args: [gameId],
-              })
-              return
-            }
-            setHelpMessage('connectWalletMessage')
-          }}
-          isLoading={loading}
-          label="Evolve"
-          icon={<HiOutlineLightningBolt size={24} />}
-        />
+        <Highlight
+          collisonPadding={{ left: 24 }}
+          onClose={() => setHelpMessage(null)}
+          active={helpMessage === 'evolveCreator'}
+          title="Evolve game & earn tokens"
+          desc="10 GOL tokens = 1 new game"
+        >
+          <Button
+            onClick={() => {
+              if (user != null) {
+                // TODO test this
+                invoke({
+                  args: [gameId],
+                })
+                return
+              }
+              setHelpMessage('connectWalletMessage')
+            }}
+            isLoading={loading}
+            label="Evolve"
+            icon={<HiOutlineLightningBolt size={24} />}
+          />
+        </Highlight>
       </Header>
     </>
   )

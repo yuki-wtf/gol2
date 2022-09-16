@@ -30,6 +30,24 @@ export const IHeader = () => {
   })
 
   useEffect(() => {
+    setTimeout(() => {
+      setHelpMessage('evolveInfinite')
+    }, 2000)
+  }, [])
+
+  useEffect(() => {
+    let timer
+    if (helpMessage === 'evolveInfinite') {
+      timer = setTimeout(() => {
+        setHelpMessage(null)
+      }, 5000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [helpMessage, setHelpMessage])
+
+  useEffect(() => {
     if (loading) {
       setApprovalDialogOpen(true)
       setUserCancelledDialogOpen(true)
@@ -80,7 +98,7 @@ export const IHeader = () => {
         <Highlight
           collisonPadding={{ left: 24 }}
           onClose={() => setHelpMessage(null)}
-          active={active}
+          active={helpMessage === 'evolveInfinite'}
           title="Evolve game & earn tokens"
           desc="1 GOL token = 1 Give Life to a cell "
         >
