@@ -13,6 +13,8 @@ import { useUser } from '~/hooks/useUser'
 import { getUserId } from '~/session.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useAutoRefresh } from '~/hooks/useAutoRefresh'
+import SnapshotEmpty from '~/components/SnapshotEmpty/SnapshotEmpty'
+import { HiOutlineCube, HiOutlineLightningBolt } from 'react-icons/hi'
 
 // const Loading = styled.div`
 //   width: 210px;
@@ -129,12 +131,12 @@ export default function CreatorPage() {
         <PageIntro.Container>
           <PageIntro.Icon color="#8AED9B" />
           <PageIntro.Text>
-          Evolve community games to earn GOL tokens. <br />
-          Earn 10 GOL tokens and you can create a new game.
+            Evolve community games to earn GOL tokens. <br />
+            Earn 10 GOL tokens and you can create a new game.
           </PageIntro.Text>
         </PageIntro.Container>
         <div></div>
-        {user != null && <Typography.H2>Your Games</Typography.H2>}
+        <Typography.H2>Your Games</Typography.H2>
 
         <div
           style={{
@@ -144,6 +146,20 @@ export default function CreatorPage() {
             marginTop: 24,
           }}
         >
+          {user == null && (
+            <SnapshotEmpty
+              style={{ height: 212, marginBottom: 56 }}
+              icon={<HiOutlineCube size={40} />}
+              label="You haven’t created any games! Earn 10 GOL tokens to create your first game."
+            />
+          )}
+          {user != null && Object.keys(yourGames).length === 0 && (
+            <SnapshotEmpty
+              style={{ height: 212, marginBottom: 56 }}
+              icon={<HiOutlineCube size={40} />}
+              label="You haven’t created any games! Earn 10 GOL tokens to create your first game."
+            />
+          )}
           {user != null &&
             yourGames.map((game) => {
               return (
