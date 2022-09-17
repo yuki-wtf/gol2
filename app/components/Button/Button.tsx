@@ -86,9 +86,9 @@ const primaryButton = (p: any) => css`
   &:focus {
     ${!p.disabled && focusedButtonPrimary(p)}
   }
-  &:disabled {
-    ${disabledButtonPrimary(p)}
-  }
+
+  ${p.disabled && disabledButtonPrimary(p)}
+
   &:active {
     ${activeButtonPrimary(p)}
   }
@@ -137,9 +137,9 @@ const secondaryButton = (p: any) => css`
   &:focus {
     ${!p.disabled && focusedButtonSecondary(p)}
   }
-  &:disabled {
-    ${disabledButtonSecondary(p)}
-  }
+
+  ${p.disabled && disabledButtonSecondary(p)}
+
   &:active {
     ${activeButtonSecondary(p)}
   }
@@ -190,9 +190,7 @@ const tertiaryButton = (p: any) => css`
   &:focus {
     ${!p.disabled && focusedButtonTertiary(p)}
   }
-  &:disabled {
-    ${disabledButtonTertiary(p)}
-  }
+  ${p.disabled && disabledButtonTertiary(p)}
   &:active {
     ${activeButtonTertiary(p)}
   }
