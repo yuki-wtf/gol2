@@ -96,7 +96,7 @@ const Footer = () => {
             </Typography.XL1Semibold>
           </StyledYuki>
           <StyledStarkware>
-            powered by <StarknetLogoLink />
+            Powered by <StarknetLogoLink />
           </StyledStarkware>
         </StyledCredits>
       </StyledFooterInner>

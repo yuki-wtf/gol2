@@ -1,4 +1,4 @@
-import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
+import { HiOutlinePhotograph, HiOutlineUser, HiOutlineX } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
@@ -6,6 +6,7 @@ import Button from '../Button/Button'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { keyframes } from '@emotion/react'
+import SnapshotLogo from './SnapshotLogo'
 
 const animate = keyframes`
   from {
@@ -73,13 +74,15 @@ const StyledActions = styled.div`
 
   width: 100%;
   margin-top: 12px;
+  padding-left: ${(props) => (props.large ? '40px' : '0')};
+  padding-top: ${(props) => (props.large ? '30px' : '0')};
 `
 const StyledCard = styled(motion.li)`
   list-style-type: none;
   margin: 0;
   padding: 0;
   width: ${(props) => (props.large ? '525px' : '290px')};
-  height: ${(props) => (props.large ? '780px' : '394px')};
+  height: ${(props) => (props.large ? '763px' : '394px')};
   background: #fefcfa;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -87,8 +90,10 @@ const StyledCard = styled(motion.li)`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 24px 24px 0 24px;
+  padding-top: ${(props) => (props.large ? '36px' : '24px')};
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 0px;
   text-align: left;
   color: #1d222c;
   cursor: ${(props) => (props.onClick != null ? 'pointer' : 'auto')};
@@ -101,8 +106,8 @@ const StyledCard = styled(motion.li)`
   &:before {
     content: '';
     position: absolute;
-    width: 10px;
-    height: 109px;
+    width: ${(props) => (props.large ? '20px' : '10px')};
+    height: ${(props) => (props.large ? '165px' : '109px')};
     left: 0px;
     bottom: -2px;
     background: #dbf267;
@@ -120,12 +125,17 @@ const StyledDivider = styled.div`
 const StyledGridContainer = styled.div`
   width: ${(props) => (props.large ? '458px' : '244px')};
   height: ${(props) => (props.large ? '520px' : '244px')};
+
   border: 1px solid #000000;
-  border-radius: 4px;
+  border-radius: ${(props) => (props.large ? '10px' : '4px')};
   color: white;
   pointer-events: none;
   background-color: #1d222c;
   overflow: hidden;
+  padding-top: ${(props) => (props.large ? '25px' : '0')};
+  padding-left: ${(props) => (props.large ? '24px' : '0')};
+  padding-right: ${(props) => (props.large ? '24px' : '0')};
+  padding-bottom: ${(props) => (props.large ? '85px' : '0')};
 `
 const StyledGenLabel = styled.div`
   text-align: left;
@@ -137,7 +147,22 @@ const StyledGenLabel = styled.div`
   line-height: 26px;
   color: #57637b;
   text-transform: uppercase;
-  padding-top: 11px;
+  padding-top: ${(props) => (props.large ? '37px' : '11px')};
+  padding-left: ${(props) => (props.large ? '40px' : '0')};
+`
+const StyledGenLabelLarge = styled.div`
+  text-align: left;
+  width: 100%;
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 26px;
+  color: #0a0c10;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding-top: 37px;
+  padding-left: 40px;
 `
 const StyledGenNumber = styled.div`
   text-align: left;
@@ -150,6 +175,7 @@ const StyledGenNumber = styled.div`
   color: #2d3038;
   margin-top: 0px;
   letter-spacing: 0.05em;
+  padding-left: ${(props) => (props.large ? '40px' : '0')};
 `
 // const StyledGenId = styled.div`
 //   font-family: 'Mulish';
@@ -178,6 +204,15 @@ const StyledUserAddress = styled.div`
   align-items: center;
   gap: 4px;
   margin-top: 8px;
+  padding-left: ${(props) => (props.large ? '40px' : '0')};
+`
+const StyledCloseBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
+  outline: none;
+  border: 0;
 `
 
 const SkeletonImagePreview = () => {
@@ -197,6 +232,7 @@ const Snapshot = ({
   user,
   id,
   isLoading,
+  onClose,
   ...rest
 }) => {
   let formattedUser
@@ -214,19 +250,37 @@ const Snapshot = ({
   return (
     <StyledCard large={large} {...rest} onClick={onClick}>
       <StyledGridContainer large={large}>
-        <ISnapshotGrid isSnapshot data={gameStateToGrid(gameState)} />
+        <div
+          style={{
+            height: '100%',
+            overflow: 'hidden',
+            borderRadius: large ? '7px' : 0,
+            border: large ? '2px solid #000000 ' : '0px',
+          }}
+        >
+          <ISnapshotGrid large={large} isSnapshot data={gameStateToGrid(gameState)} />
+        </div>
+        {large && <SnapshotLogo />}
       </StyledGridContainer>
-      <StyledGenLabel> Generation: </StyledGenLabel>
-      <StyledGenNumber> {gameGeneration} </StyledGenNumber>
-      <StyledDivider />
+      {!large && (
+        <>
+          <StyledGenLabel large={large}> Generation: </StyledGenLabel>
+          <StyledGenNumber large={large}> {gameGeneration} </StyledGenNumber>
+        </>
+      )}
+
+      {large && <StyledGenLabelLarge>Generation : {gameGeneration}</StyledGenLabelLarge>}
+
+      {!large && <StyledDivider />}
+
       {/* <StyledGenId>
        <span>ID:</span> 32232323232323
       </StyledGenId> */}
-      <StyledUserAddress>
+      <StyledUserAddress large={large}>
         <HiOutlineUser color="#57637b" size={16} /> {formattedUser}
       </StyledUserAddress>
       {large && (
-        <StyledActions>
+        <StyledActions large={large}>
           <Button secondary label="share to twitter" onClick={onClickTwitter} />
         </StyledActions>
       )}

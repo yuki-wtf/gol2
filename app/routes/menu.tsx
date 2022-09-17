@@ -3,6 +3,12 @@ import { motion } from 'framer-motion'
 import NavItem from '../components/Menu/NavItem'
 import MenuDescription from '../components/Menu/MenuDescription'
 import NavContainer from '../components/Layout/NavContainer'
+import { getUserId } from '~/session.server'
+import { json } from '@remix-run/node'
+import { sql } from '~/db.server'
+import type { Infinite } from '~/db.server'
+import { hexToDecimalString } from 'starknet/utils/number'
+import { useLoaderData } from '@remix-run/react'
 
 const container = {
   hidden: {
@@ -24,11 +30,28 @@ const listItem = {
   },
 }
 
+export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[]>> {
+  const userId = await getUserId(request)
+
+  if (userId == null) return json(null)
+
+  const result = await sql<Infinite>`
+    select *
+    from "infinite"
+    where "transactionType" = 'game_evolved'
+      and "transactionOwner" = ${hexToDecimalString(userId)}
+  `
+
+  return json(result.rows)
+}
+
 const Menu = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedHover, setselectedHover] = useState(null)
   const [currentNav, setCurrentNav] = useState(null)
 
+  const data = useLoaderData<typeof loader>()
+  console.log('data', data)
   const menuItems = [
     {
       className: 'infinite',
@@ -38,8 +61,7 @@ const Menu = () => {
       badge: 0,
       heading: 'One game. Multiple players. No end point.',
       desc: 'Evolve the game to earn GOL tokens. ',
-      desc2:
-        '1 GOL token = 1 Give Life to a cell, changing the course of the game for all.',
+      desc2: '1 GOL token = 1 Give Life to a cell, changing the course of the game for all.',
       image_url: '/assets/menu/infinite.png',
       width: 353,
       height: 353,
@@ -62,8 +84,7 @@ const Menu = () => {
       title: 'Snapshots',
       color: 'var(--snapshots-primary)',
       to: '/snapshots',
-      // TODO number of user owned Snapshots
-      badge: 0,
+      badge: data?.length ? data?.length : 0,
       heading: 'Proof of play.',
       desc: 'Evolve the game in infinite mode to generate and store a unique snapshot of your play.',
       desc2: 'Share to twitter.',

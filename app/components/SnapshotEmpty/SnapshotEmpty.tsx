@@ -23,9 +23,9 @@ const TextWrapper = styled.div`
   text-align: center;
 `
 
-const SnapshotEmpty = ({ label = 'Connect your wallet to view snapshots from your previous plays', icon }) => {
+const SnapshotEmpty = ({ label = 'Connect your wallet to view snapshots from your previous plays', icon, style }) => {
   return (
-    <Container>
+    <Container style={{ ...style }}>
       <IconWrapper>{icon}</IconWrapper>
       <TextWrapper>
         <Typography.BaseSemiBold>{label}</Typography.BaseSemiBold>

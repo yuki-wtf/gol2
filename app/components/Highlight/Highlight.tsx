@@ -88,7 +88,7 @@ const StyledContainer = styled.span`
   }
   &::after {
     content: '';
-    opacity: ${(p) => (p.active ? '0.4' : '0')};
+    opacity: ${(p) => (p.active ? '0.7' : '0')};
 
     position: fixed;
     inset: 0;
