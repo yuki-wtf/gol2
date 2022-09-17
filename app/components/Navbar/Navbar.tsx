@@ -48,7 +48,7 @@ const Navbar = () => {
           <HeaderLogo />
         </Link>
         {/^\/menu(\/|$)/.test(location.pathname) ? null : <CreditsContainer />}
-        <div style={{ minWidth: 330 }}>
+        <div style={{ minWidth: 330, marginLeft: 'auto' }}>
           <ClientOnly>{() => <ConnectWallet />}</ClientOnly>
         </div>
       </StyledNavbarInner>
