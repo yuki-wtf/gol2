@@ -4,9 +4,9 @@ import NavItem from '../components/Menu/NavItem'
 import MenuDescription from '../components/Menu/MenuDescription'
 import NavContainer from '../components/Layout/NavContainer'
 import { getUserId } from '~/session.server'
+import type { LoaderArgs, TypedResponse } from '@remix-run/node';
 import { json } from '@remix-run/node'
 import { sql } from '~/db.server'
-import type { Infinite } from '~/db.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useLoaderData } from '@remix-run/react'
 
@@ -30,19 +30,25 @@ const listItem = {
   },
 }
 
-export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[]>> {
+interface LoaderData {
+  readonly snapshots?: number
+}
+
+export async function loader({ request }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
   const userId = await getUserId(request)
 
-  if (userId == null) return json(null)
+  if (userId == null) return json({})
 
-  const result = await sql<Infinite>`
-    select *
+  const result = await sql<{ snapshots: number }>`
+    select count(*) as "snapshots"
     from "infinite"
     where "transactionType" = 'game_evolved'
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  return json(result.rows)
+  return json({
+    snapshots: result.rows[0].snapshots
+  })
 }
 
 const Menu = () => {
@@ -51,7 +57,7 @@ const Menu = () => {
   const [currentNav, setCurrentNav] = useState(null)
 
   const data = useLoaderData<typeof loader>()
-  console.log('data', data)
+
   const menuItems = [
     {
       className: 'infinite',
@@ -84,7 +90,7 @@ const Menu = () => {
       title: 'Snapshots',
       color: 'var(--snapshots-primary)',
       to: '/snapshots',
-      badge: data?.length ? data?.length : 0,
+      badge: data.snapshots ?? 0,
       heading: 'Proof of play.',
       desc: 'Evolve the game in infinite mode to generate and store a unique snapshot of your play.',
       desc2: 'Share to twitter.',
