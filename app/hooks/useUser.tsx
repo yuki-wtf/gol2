@@ -10,6 +10,8 @@ import { useLayoutEffectX } from './useLayoutEffectX'
 interface User {
   readonly userId: string
   readonly balance: number
+  readonly hasIncomingTransfer: boolean
+  readonly hasOutgoingTransfer: boolean
 }
 
 const UserContext = createContext<User>(null)
@@ -26,7 +28,15 @@ export function UserProvider({ children }: Props) {
   // const { account, connectors } = starknet
   console.log('account UserIdProvider', account)
 
-  const user = data.userId != null && data.balance != null ? { userId: data.userId, balance: data.balance } : null
+  const user: User =
+    data.userId != null
+      ? {
+          userId: data.userId,
+          balance: data.balance,
+          hasIncomingTransfer: data.hasIncomingTransfer,
+          hasOutgoingTransfer: data.hasOutgoingTransfer,
+        }
+      : null
 
   const [userId, setUserId] = useState(data.userId)
   const fetcher = useFetcher()
