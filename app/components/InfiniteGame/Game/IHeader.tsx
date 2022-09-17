@@ -29,23 +29,23 @@ export const IHeader = () => {
     method: 'evolve',
   })
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHelpMessage('evolveInfinite')
-    }, 2000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setHelpMessage('evolveInfinite')
+  //   }, 2000)
+  // }, [])
 
-  useEffect(() => {
-    let timer
-    if (helpMessage === 'evolveInfinite') {
-      timer = setTimeout(() => {
-        setHelpMessage(null)
-      }, 5000)
-      return () => {
-        clearTimeout(timer)
-      }
-    }
-  }, [helpMessage, setHelpMessage])
+  // useEffect(() => {
+  //   let timer
+  //   if (helpMessage === 'evolveInfinite') {
+  //     timer = setTimeout(() => {
+  //       setHelpMessage(null)
+  //     }, 5000)
+  //     return () => {
+  //       clearTimeout(timer)
+  //     }
+  //   }
+  // }, [helpMessage, setHelpMessage])
 
   useEffect(() => {
     if (loading) {

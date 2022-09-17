@@ -23,23 +23,23 @@ export const IHeader = ({ gameId }) => {
     method: 'evolve',
   })
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHelpMessage('evolveCreator')
-    }, 2000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setHelpMessage('evolveCreator')
+  //   }, 2000)
+  // }, [])
 
-  useEffect(() => {
-    let timer
-    if (helpMessage === 'evolveCreator') {
-      timer = setTimeout(() => {
-        setHelpMessage(null)
-      }, 5000)
-      return () => {
-        clearTimeout(timer)
-      }
-    }
-  }, [helpMessage, setHelpMessage])
+  // useEffect(() => {
+  //   let timer
+  //   if (helpMessage === 'evolveCreator') {
+  //     timer = setTimeout(() => {
+  //       setHelpMessage(null)
+  //     }, 5000)
+  //     return () => {
+  //       clearTimeout(timer)
+  //     }
+  //   }
+  // }, [helpMessage, setHelpMessage])
 
   useEffect(() => {
     if (loading) {
