@@ -17,20 +17,23 @@ import { getChecksumAddress } from 'starknet4'
 
 const UserDropdownMenu = ({ account, disconnect }) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
-
   const { connectors } = useStarknet()
-
   const [walletName, setWalletName] = useState<string>()
 
   useEffect(() => {
     ;(async () => {
       for (const connector of connectors) {
-        if (getChecksumAddress((await connector.account()).address) === getChecksumAddress(account)) {
-          setWalletName(connector.name())
+        const accountObj = await connector.account()
+        if (accountObj != null) {
+          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
+            setWalletName(connector.name())
+          }
         }
       }
     })()
-  }, [account, connectors])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account])
 
   return (
     <DropdownMenu.Root>
