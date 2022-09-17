@@ -128,7 +128,7 @@ export default function CreatorPage() {
   return (
     <ThemeProvider theme={creator}>
       <ContainerInner maxWidth={1000}>
-        <PageIntro.Container>
+        <PageIntro.Container style={{ marginTop: 32 }}>
           <PageIntro.Icon color="#8AED9B" />
           <PageIntro.Text>
             Evolve community games to earn GOL tokens. <br />
