@@ -9,6 +9,9 @@ import Highlight from '~/components/Highlight/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import DialogAddGolTokenToWallet from '~/components/DialogAddGolTokenToWallet/DialogAddGolTokenToWallet'
+import { ContractAddress } from '~/hooks/useGameContract'
+import golTokenIcon from '~/assets/images/gol-token-icon.png'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -76,6 +79,7 @@ const TestContainer = styled.div`
 `
 
 export default function CreditsContainer() {
+  const [addTokenDialogVisible, setaddTokenDialogVisible] = useState(false)
   const [title, setTitle] = useState('Not enough Tokens')
   const [desc, setDesc] = useState('1 GOL token = 1 Give Life to a cell')
   const user = useUser()
@@ -110,6 +114,29 @@ export default function CreditsContainer() {
 
   return (
     <StyledContainer>
+      <DialogAddGolTokenToWallet
+        onClick={() => {
+          if (window.starknet != null) {
+            window.starknet.request({
+              type: 'wallet_watchAsset',
+              params: {
+                type: 'ERC20',
+                options: {
+                  address: ContractAddress,
+                  name: 'Game of Life Token',
+                  symbol: 'GOL',
+                  decimals: '0',
+                  network: 'goerli-alpha',
+                  image: golTokenIcon,
+                },
+              },
+            })
+          }
+          setaddTokenDialogVisible(false)
+        }}
+        open={addTokenDialogVisible}
+        onClose={() => setaddTokenDialogVisible(false)}
+      />
       <Highlight
         style={{ height: 38, lineHeight: 38, alignItems: 'center', paddingLeft: 24, paddingRight: 24 }}
         highlightRadius={100}
