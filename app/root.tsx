@@ -27,15 +27,36 @@ export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
 
   let balance: number = null
+  let hasIncomingTransfer: boolean = false
+  let hasOutgoingTransfer: boolean = false
 
   if (userId != null) {
-    const res = await sql<{ balance: number }>`
-      select "balance"
-      from balance
-      where "userId" = ${hexToDecimalString(userId)}
+    const res = await sql<{ balance: number, hasIncomingTransfer: boolean, hasOutgoingTransfer: boolean }>`
+      SELECT
+        (
+          select "balance"
+          from balance
+          where "userId" = ${hexToDecimalString(userId)}
+        ),
+        (
+          select "createdAt"
+          from event
+          where name = 'Transfer'
+              and (content->'to') = ${hexToDecimalString(userId)}
+          limit 1
+        ) is not null as "hasIncomingTransfer",
+        (
+          select "createdAt"
+          from event
+          where name = 'Transfer'
+              and (content->'from_') = ${hexToDecimalString(userId)}
+          limit 1
+        ) is not null as "hasOutgoingTransfer"
     `
 
     balance = res.rows[0]?.balance ?? 0
+    hasIncomingTransfer = res.rows[0]?.hasIncomingTransfer ?? false
+    hasOutgoingTransfer = res.rows[0]?.hasOutgoingTransfer ?? false
   }
 
   return json({
@@ -44,6 +65,8 @@ export async function loader({ request }: LoaderArgs) {
     },
     userId: await getUserId(request),
     balance,
+    hasIncomingTransfer,
+    hasOutgoingTransfer
   })
 }
 

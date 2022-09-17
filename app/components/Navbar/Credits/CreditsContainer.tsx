@@ -12,6 +12,7 @@ import { motion } from 'framer-motion'
 import DialogAddGolTokenToWallet from '~/components/DialogAddGolTokenToWallet/DialogAddGolTokenToWallet'
 import { ContractAddress } from '~/hooks/useGameContract'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
+import { useLocalStorage } from 'react-use'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -79,38 +80,55 @@ const TestContainer = styled.div`
 `
 
 export default function CreditsContainer() {
-  const [addTokenDialogVisible, setaddTokenDialogVisible] = useState(false)
-  const [title, setTitle] = useState('Not enough Tokens')
-  const [desc, setDesc] = useState('1 GOL token = 1 Give Life to a cell')
+  const [addTokenDialogVisible, setAddTokenDialogVisible] = useState(false)
   const user = useUser()
   const balance = user?.balance ?? 0
+  const hasIncomingTransfer = user?.hasIncomingTransfer ?? false
+  const hasOutgoingTransfer = user?.hasOutgoingTransfer ?? false
   const location = useLocation()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+  const [hasDismissedFirstTokenEarnedMessage, setHasDismissedFirstTokenEarnedMessage] = useLocalStorage(
+    'has-dismissed-first-token-earned-message',
+    false
+  )
+
+  useEffect(() => {
+    if (hasIncomingTransfer && hasOutgoingTransfer && !hasDismissedFirstTokenEarnedMessage) {
+      setHelpMessage('firstTokenEarnedMessage')
+    }
+  }, [hasDismissedFirstTokenEarnedMessage, hasIncomingTransfer, hasOutgoingTransfer, setHelpMessage])
 
   useEffect(() => {
     let timer
     if (helpMessage === 'balanceMessage' || helpMessage === 'firstTokenEarnedMessage') {
       timer = setTimeout(() => {
+        if (helpMessage === 'firstTokenEarnedMessage') {
+          setHasDismissedFirstTokenEarnedMessage(true)
+          setAddTokenDialogVisible(true)
+        }
         setHelpMessage(null)
       }, 3000)
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [helpMessage, setHelpMessage])
+  }, [helpMessage, setHasDismissedFirstTokenEarnedMessage, setHelpMessage])
 
-  useEffect(() => {
+  function getMessageData() {
     if (helpMessage == 'balanceMessage') {
-      setTitle('Not enough Tokens')
-      setDesc('You can give life to a cell by clicking the grid.')
-      return
+      return {
+        title: 'Not enough Tokens',
+        desc: 'You can give life to a cell by clicking the grid.',
+      }
     }
+
     if (helpMessage == 'firstTokenEarnedMessage') {
-      setTitle('You earned your first GOL token!')
-      setDesc('1 GOL token = 1 Give Life to a cell')
-      return
+      return {
+        title: 'You earned your first GOL token!',
+        desc: '1 GOL token = 1 Give Life to a cell',
+      }
     }
-  }, [helpMessage])
+  }
 
   return (
     <StyledContainer>
@@ -132,19 +150,24 @@ export default function CreditsContainer() {
               },
             })
           }
-          setaddTokenDialogVisible(false)
+          setAddTokenDialogVisible(false)
         }}
         open={addTokenDialogVisible}
-        onClose={() => setaddTokenDialogVisible(false)}
+        onClose={() => setAddTokenDialogVisible(false)}
       />
       <Highlight
         style={{ height: 38, lineHeight: 38, alignItems: 'center', paddingLeft: 24, paddingRight: 24 }}
         highlightRadius={100}
-        title={title}
-        desc={desc}
+        {...getMessageData()}
         active={helpMessage === 'balanceMessage' || helpMessage === 'firstTokenEarnedMessage'}
         sideOffset={5}
-        onClose={() => setHelpMessage(null)}
+        onClose={() => {
+          if (helpMessage === 'firstTokenEarnedMessage') {
+            setHasDismissedFirstTokenEarnedMessage(true)
+            setAddTokenDialogVisible(true)
+          }
+          setHelpMessage(null)
+        }}
       >
         <TestContainer>
           <StyledTokenIconWrapper
@@ -160,8 +183,7 @@ export default function CreditsContainer() {
                   backgroundImage: 'linear-gradient(180deg, #79FFF7 0%, #79EDA1 100%)',
                 }}
               >
-                {' '}
-                {balance}{' '}
+                {balance}
               </T.H4SemiBold>
             </StyledTextWrapper>
             <StyledIconWrapper>
