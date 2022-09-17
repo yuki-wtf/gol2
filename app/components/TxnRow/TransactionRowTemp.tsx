@@ -5,6 +5,7 @@ import { HiOutlineHeart, HiOutlineLightningBolt } from 'react-icons/hi'
 import { TxnRowStatus } from './TxnRow'
 import { useStarknet } from '@starknet-react/core'
 import { getShortChecksumAddress } from '~/helpers/starknet'
+import { currentNetwork } from '../Navbar/ConnectWallet/NetworkDropdownMenu/NetworkDropdownMenu.client'
 
 const Container = styled(motion.div)`
   height: 48px;
@@ -82,10 +83,18 @@ const StatusContainer = styled.div`
 
 const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 0, duration = 0.1, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
+  const [network, setNetwork] = useState('voyager.online')
   const controls = useAnimation()
   const { account } = useStarknet()
+
   // console.log(user);
   // console.log(status);
+  useEffect(() => {
+    const currentUrl = currentNetwork()
+    if (currentUrl === 'mainnet') setNetwork('voyager.online')
+    return setNetwork('goerli.voyager.online')
+  }, [])
+
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
       controls.start({
@@ -213,13 +222,13 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         </StatusContainer>
         {statusInternal !== 'COMPLETED' ? (
           <ButtonContainer status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`https://${network}/tx/${url}`}>
               view
             </a>
           </ButtonContainer>
         ) : (
           <ButtonContainerCompleted status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://goerli.voyager.online/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`https://${network}/tx/${url}`}>
               view
             </a>
           </ButtonContainerCompleted>

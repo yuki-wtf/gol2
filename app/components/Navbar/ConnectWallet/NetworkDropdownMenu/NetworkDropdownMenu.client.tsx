@@ -3,7 +3,7 @@ import { HiChevronDown, HiOutlineGlobeAlt } from 'react-icons/hi'
 import { FaEthereum } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
-function currentNetwork() {
+export function currentNetwork() {
   return location.hostname === 'gol2.io' ? 'mainnet' : 'goerli'
 }
 
