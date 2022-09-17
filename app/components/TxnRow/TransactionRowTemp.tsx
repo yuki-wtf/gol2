@@ -83,7 +83,7 @@ const StatusContainer = styled.div`
 
 const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 0, duration = 0.1, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
-  const [network, setNetwork] = useState('gol2.io')
+  const [network, setNetwork] = useState('voyager.online')
   const controls = useAnimation()
   const { account } = useStarknet()
 
