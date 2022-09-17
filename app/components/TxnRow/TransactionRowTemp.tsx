@@ -91,7 +91,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
   // console.log(status);
   useEffect(() => {
     const currentUrl = currentNetwork()
-    if (currentUrl === 'mainnet') setNetwork('voyager.online')
+    if (currentUrl === 'mainnet') return setNetwork('voyager.online')
     return setNetwork('goerli.voyager.online')
   }, [])
 
