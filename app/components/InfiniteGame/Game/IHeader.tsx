@@ -1,6 +1,7 @@
 import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
+import { useLocalStorage } from 'react-use'
 import Highlight from '~/components/Highlight/Highlight'
 import { INFINITE_GAME_GENESIS } from '~/env'
 import { useHelpMessage } from '~/hooks/HelpMessage'
@@ -14,6 +15,7 @@ import Header from '../../GolGrid/Header/Header'
 import TempOverlay from '../../TempOverlay/TempOverlay'
 
 export const IHeader = () => {
+  const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
   const [active, setActive] = useState(false)
   const [selectedCell] = useSelectedCell()
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
@@ -29,23 +31,24 @@ export const IHeader = () => {
     method: 'evolve',
   })
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setHelpMessage('evolveInfinite')
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    if (hasClickedEvolveInfinite) return
+    setTimeout(() => {
+      setHelpMessage('evolveInfinite')
+    }, 1500)
+  }, [])
 
-  // useEffect(() => {
-  //   let timer
-  //   if (helpMessage === 'evolveInfinite') {
-  //     timer = setTimeout(() => {
-  //       setHelpMessage(null)
-  //     }, 5000)
-  //     return () => {
-  //       clearTimeout(timer)
-  //     }
-  //   }
-  // }, [helpMessage, setHelpMessage])
+  useEffect(() => {
+    let timer
+    if (helpMessage === 'evolveInfinite') {
+      timer = setTimeout(() => {
+        setHelpMessage(null)
+      }, 3000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [helpMessage, setHelpMessage])
 
   useEffect(() => {
     if (loading) {
@@ -104,8 +107,8 @@ export const IHeader = () => {
         >
           <Button
             onClick={() => {
+              setHasClickedEvolveInfinite(true)
               if (user != null) {
-                // TODO test this
                 invoke({
                   args: [INFINITE_GAME_GENESIS],
                 })
