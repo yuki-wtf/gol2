@@ -1,9 +1,9 @@
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import { useStarknet } from '@starknet-react/core'
 import { createContext, useContext, useState } from 'react'
-import type { AccountInterface } from 'starknet3'
-import { getChecksumAddress } from 'starknet3'
-import { StarknetChainId } from 'starknet3/dist/constants'
+// import type { AccountInterface } from 'starknet3'
+// import { getChecksumAddress } from 'starknet3'
+// import { StarknetChainId } from 'starknet3/dist/constants'
 import type { loader } from '~/root'
 import { useLayoutEffectX } from './useLayoutEffectX'
 
@@ -22,7 +22,8 @@ export function UserProvider({ children }: Props) {
   const starknet = useStarknet()
   const data = useLoaderData<typeof loader>()
 
-  const { account, connectors } = starknet
+  const { account } = starknet
+  // const { account, connectors } = starknet
   console.log('account UserIdProvider', account)
 
   const user = data.userId != null && data.balance != null ? { userId: data.userId, balance: data.balance } : null
@@ -30,35 +31,41 @@ export function UserProvider({ children }: Props) {
   const [userId, setUserId] = useState(data.userId)
   const fetcher = useFetcher()
 
-  const [accountObj, setAccountObj] = useState<AccountInterface>()
+  // const [accountObj, setAccountObj] = useState<AccountInterface>()
 
-  useLayoutEffectX(() => {
-    ;(async () => {
-      for (const connector of connectors) {
-        const accountObj = await connector.account()
-        if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
-          setAccountObj(accountObj)
-        }
-      }
-    })()
-  }, [account, connectors])
+  // useLayoutEffectX(() => {
+  //   if (account == null) return
 
-  useLayoutEffectX(() => {
-    if (accountObj == null) return
+  //   ;(async () => {
+  //     for (const connector of connectors) {
+  //       const accountObj = await connector.account()
 
-    const currentNet = location.hostname === 'gol2.io' ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  //       if (accountObj != null) {
+  //         if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
+  //           setAccountObj(accountObj)
+  //         }
+  //       }
+  //     }
+  //   })()
+  // }, [account])
 
-    if (currentNet !== accountObj.chainId) {
-      if (window.starknet != null) {
-        window.starknet.request({
-          type: 'wallet_switchStarknetChain',
-          params: {
-            chainId: currentNet,
-          },
-        })
-      }
-    }
-  }, [accountObj])
+  // useLayoutEffectX(() => {
+  //   if (accountObj == null) return
+
+  //   const currentNet = location.hostname === 'gol2.io' ? 'SN_MAIN' : 'SN_GOERLI'
+  //   console.log(accountObj.chainId)
+
+  //   if (currentNet !== (accountObj.chainId as any)) {
+  //     if (window.starknet != null) {
+  //       window.starknet.request({
+  //         type: 'wallet_switchStarknetChain',
+  //         params: {
+  //           chainId: currentNet,
+  //         },
+  //       })
+  //     }
+  //   }
+  // }, [accountObj])
 
   useLayoutEffectX(() => {
     console.log([userId, account])
