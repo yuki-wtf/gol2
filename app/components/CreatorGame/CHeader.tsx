@@ -1,6 +1,7 @@
 import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
+import { useLocalStorage } from 'react-use'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useUser } from '~/hooks/useUser'
@@ -11,6 +12,7 @@ import Header from '../GolGrid/Header/Header'
 import Highlight from '../Highlight/Highlight'
 
 export const IHeader = ({ gameId }) => {
+  const [hasClickedEvolveCreator, setHasClickedEvolveCreator] = useLocalStorage('has-clicked-evolve-creator', false)
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
@@ -23,23 +25,24 @@ export const IHeader = ({ gameId }) => {
     method: 'evolve',
   })
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setHelpMessage('evolveCreator')
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    if (hasClickedEvolveCreator) return
+    setTimeout(() => {
+      setHelpMessage('evolveCreator')
+    }, 1500)
+  }, [])
 
-  // useEffect(() => {
-  //   let timer
-  //   if (helpMessage === 'evolveCreator') {
-  //     timer = setTimeout(() => {
-  //       setHelpMessage(null)
-  //     }, 5000)
-  //     return () => {
-  //       clearTimeout(timer)
-  //     }
-  //   }
-  // }, [helpMessage, setHelpMessage])
+  useEffect(() => {
+    let timer
+    if (helpMessage === 'evolveCreator') {
+      timer = setTimeout(() => {
+        setHelpMessage(null)
+      }, 3000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [helpMessage, setHelpMessage])
 
   useEffect(() => {
     if (loading) {
@@ -97,6 +100,7 @@ export const IHeader = ({ gameId }) => {
         >
           <Button
             onClick={() => {
+              setHasClickedEvolveCreator(true)
               if (user != null) {
                 // TODO test this
                 invoke({
