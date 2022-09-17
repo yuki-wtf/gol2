@@ -22,9 +22,10 @@ const contentShow = keyframes`
 `
 
 const StyledOverlay = styled(DialogPrimitive.Overlay)`
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(29, 34, 44, 0.94);
   position: fixed;
   inset: 0;
+  z-index: 9;
   @media (prefers-reduced-motion: no-preference) {
     animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
@@ -37,6 +38,7 @@ const StyledContent = styled(DialogPrimitive.Content)`
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 10;
   transform: translate(-50%, -50%);
   /* width: 90vw;
   max-width: 450px;
@@ -47,6 +49,16 @@ const StyledContent = styled(DialogPrimitive.Content)`
   }
   &:focus {
     outline: 'none';
+  }
+`
+
+const StyledClose = styled(DialogPrimitive.Close)`
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
   }
 `
 
@@ -62,4 +74,4 @@ function Content({ children, ...props }) {
 export const Dialog = DialogPrimitive.Root
 export const DialogTrigger = DialogPrimitive.Trigger
 export const DialogContent = Content
-export const DialogClose = DialogPrimitive.Close
+export const DialogClose = StyledClose

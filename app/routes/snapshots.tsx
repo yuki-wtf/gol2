@@ -1,4 +1,4 @@
-import { HiOutlineLightningBolt, HiOutlineLink } from 'react-icons/hi'
+import { HiOutlineLightningBolt, HiOutlineLink, HiOutlineX } from 'react-icons/hi'
 import ContainerInner from '../components/Layout/ContainerInner'
 import PageIntro from '../components/PageIntro/PageIntro'
 import Snapshot from '../components/Snapshot/Snapshot'
@@ -137,7 +137,13 @@ export default function Snapshots() {
                   />
                 </SnapshotDialog.DialogTrigger>
                 <SnapshotDialog.DialogContent>
+                  <div style={{ position: 'absolute', top: 10, right: 5, zIndex: 100 }}>
+                    <SnapshotDialog.DialogClose onClick={undefined}>
+                      <HiOutlineX size={24} />
+                    </SnapshotDialog.DialogClose>
+                  </div>
                   <Snapshot
+                    onClose={undefined}
                     isSnapshot
                     large
                     gameGeneration={snapshot.gameGeneration}
@@ -159,7 +165,6 @@ export default function Snapshots() {
                         twitter(
                           `I own generation ${snapshot.gameGeneration} in @GoL2io 💪  #GoL2 #Starknet`,
                           `https://goerli.gol2.io/infinite/${snapshot.gameGeneration}`
-                          
                         )
                       )
                     }}
