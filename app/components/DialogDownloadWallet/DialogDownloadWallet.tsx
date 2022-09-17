@@ -8,21 +8,21 @@ const DialogDownloadWallet = ({ open, onClose }) => {
     <Dialog.Root open={open}>
       <Dialog.Overlay>
         <Dialog.Content>
-          <Dialog.Title>Download a wallet</Dialog.Title>
+          <Dialog.Title>Install a wallet</Dialog.Title>
           <Dialog.ActionContainer>
             <a
               href="https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb"
               target="_blank"
               rel="noreferrer"
             >
-              <Button full label="Argent-X" secondary />
+              <Button full label="Install Argent X" secondary />
             </a>
             <a
               href="https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma"
               target="_blank"
               rel="noreferrer"
             >
-              <Button full label="Braavos" secondary />
+              <Button full label="Install Braavos" secondary />
             </a>
           </Dialog.ActionContainer>
           <Dialog.SmallCopy>
