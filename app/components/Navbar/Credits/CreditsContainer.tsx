@@ -118,14 +118,14 @@ export default function CreditsContainer() {
     if (helpMessage == 'balanceMessage') {
       return {
         title: 'Not enough Tokens',
-        desc: 'You can give life to a cell by clicking the grid.',
+        desc: '1 GOL token = 1 Give Life to a cell',
       }
     }
 
     if (helpMessage == 'firstTokenEarnedMessage') {
       return {
         title: 'You earned your first GOL token!',
-        desc: '1 GOL token = 1 Give Life to a cell',
+        desc: 'You can give life to a cell by clicking the grid.',
       }
     }
   }
