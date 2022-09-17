@@ -135,7 +135,7 @@ export default function CreatorPage() {
             Earn 10 GOL tokens and you can create a new game.
           </PageIntro.Text>
         </PageIntro.Container>
-        <div></div>
+
         <Typography.H2>Your Games</Typography.H2>
 
         <div
@@ -148,14 +148,14 @@ export default function CreatorPage() {
         >
           {user == null && (
             <SnapshotEmpty
-              style={{ height: 212, marginBottom: 56 }}
+              style={{ height: 196, marginBottom: 32 }}
               icon={<HiOutlineCube size={40} />}
               label="You haven’t created any games! Earn 10 GOL tokens to create your first game."
             />
           )}
           {user != null && Object.keys(yourGames).length === 0 && (
             <SnapshotEmpty
-              style={{ height: 212, marginBottom: 56 }}
+              style={{ height: 196, marginBottom: 32 }}
               icon={<HiOutlineCube size={40} />}
               label="You haven’t created any games! Earn 10 GOL tokens to create your first game."
             />
