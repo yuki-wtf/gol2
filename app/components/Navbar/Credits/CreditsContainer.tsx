@@ -93,7 +93,7 @@ export default function CreditsContainer() {
   )
 
   useEffect(() => {
-    if (hasIncomingTransfer && hasOutgoingTransfer && !hasDismissedFirstTokenEarnedMessage) {
+    if (hasIncomingTransfer && !hasOutgoingTransfer && !hasDismissedFirstTokenEarnedMessage) {
       setHelpMessage('firstTokenEarnedMessage')
     }
   }, [hasDismissedFirstTokenEarnedMessage, hasIncomingTransfer, hasOutgoingTransfer, setHelpMessage])
