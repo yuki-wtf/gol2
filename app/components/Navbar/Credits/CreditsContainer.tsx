@@ -45,11 +45,11 @@ const StyledTokenIconWrapper = styled(motion.div)`
   &:before {
     content: '';
     width: 1px;
-    height: ${(props) => (props.active ? '29px' : '36px')};
+    height: ${(props) => (props.active ? '29px' : '33px')};
     background-color: black;
     position: absolute;
     top: -5px;
-    top: ${(props) => (props.active ? '-1px' : '-5px')};
+    top: ${(props) => (props.active ? '-1px' : '-2px')};
     right: -16px;
   }
   color: ${(props) => props.theme.colors.creatorPrimary};
