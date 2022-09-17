@@ -67,20 +67,22 @@ const ConnectWallet = () => {
       <DialogWallet open={open} onClose={() => setOpen(false)}>
         {!account &&
           !error &&
-          connectors.map((connector, i) =>
-            connector.available() ? (
-              <Button
-                onClick={() => {
-                  setOpen(false)
-                  connect(connector)
-                }}
-                full
-                label={connector.name()}
-                secondary
-                key={connector.id()}
-              />
-            ) : null
-          )}
+          connectors
+            .sort((a, b) => a.id().localeCompare(b.id()))
+            .map((connector, i) =>
+              connector.available() ? (
+                <Button
+                  onClick={() => {
+                    setOpen(false)
+                    connect(connector)
+                  }}
+                  full
+                  label={connector.name()}
+                  secondary
+                  key={connector.id()}
+                />
+              ) : null
+            )}
       </DialogWallet>
 
       <DialogDownloadWallet
