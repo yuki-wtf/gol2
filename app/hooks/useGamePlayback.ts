@@ -169,8 +169,6 @@ export function useGamePlayback({
       .then((data: string[]) => {
         setState(
           produce((draft) => {
-            console.log(data)
-            console.log(framesToLoad)
             for (let i = 0; i < framesToLoad.length; i++) {
               if (data[i] != null) {
                 draft.frames[framesToLoad[i]] = {
@@ -186,9 +184,6 @@ export function useGamePlayback({
       .catch(() => {
         setState(
           produce((draft) => {
-            // console.log(data)
-            console.log(framesToLoad)
-
             for (let i = 0; i < framesToLoad.length; i++) {
               if (draft.frames[framesToLoad[i]] != null) {
                 draft.frames[framesToLoad[i]].shouldRefresh = true
