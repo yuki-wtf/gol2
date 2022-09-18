@@ -8,8 +8,8 @@ import type { SerializeFrom } from '@remix-run/node'
 import type { ReceivedCell } from '~/db.server'
 
 const StyledLoaderContainer = styled(motion.div)`
-  width: 512px;
-  height: 512px;
+  width: 510px;
+  height: 510px;
   background-color: black;
 `
 
