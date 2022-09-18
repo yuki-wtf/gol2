@@ -1,17 +1,11 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
 import { HiChevronDown, HiOutlineGlobeAlt } from 'react-icons/hi'
 import { FaEthereum } from 'react-icons/fa'
-import { useEffect, useState } from 'react'
-
-export function currentNetwork() {
-  return location.hostname === 'gol2.io' ? 'mainnet' : 'goerli'
-}
+import { CurrentNetwork } from '~/hooks/useGameContract'
 
 const NetworkDropdownMenu = () => {
-  const [network, setNetwork] = useState(currentNetwork)
-
   const renderNetworkIcon = () => {
-    switch (network) {
+    switch (CurrentNetwork) {
       case 'goerli':
         return <HiOutlineGlobeAlt size={15} />
 
@@ -23,26 +17,27 @@ const NetworkDropdownMenu = () => {
     }
   }
 
-  useEffect(() => {
-    if (currentNetwork() !== network) {
-      if (network === 'goerli') {
-        location.href = 'https://goerli.gol2.io/'
-      } else if (network === 'mainnet') {
-        location.href = 'https://gol2.io/'
-      }
-    }
-  }, [network])
-
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         {renderNetworkIcon()}
-        {network}
+        {CurrentNetwork}
         <HiChevronDown size={24} />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>Select a network</DropdownMenu.Label>
-        <DropdownMenu.RadioGroup value={network} onValueChange={setNetwork}>
+        <DropdownMenu.RadioGroup
+          value={CurrentNetwork}
+          onValueChange={(value) => {
+            if (CurrentNetwork !== value) {
+              if (value === 'goerli') {
+                location.href = 'https://goerli.gol2.io/'
+              } else if (value === 'mainnet') {
+                location.href = 'https://gol2.io/'
+              }
+            }
+          }}
+        >
           <DropdownMenu.RadioItem value="mainnet">
             <FaEthereum size={24} />
             Mainnet

@@ -10,9 +10,11 @@ export function useGameContract() {
 export const GoerliContractAddress = '0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093'
 export const MainnetContractAddress = '0x06a05844a03bb9e744479e3298f54705a35966ab04140d3d8dd797c1f6dc49d0'
 
-export const ContractAddress = typeof location !== 'undefined' && location.hostname === 'gol2.io'
-  ? MainnetContractAddress
-  : GoerliContractAddress
+export const CurrentNetwork = typeof location !== 'undefined' && location.hostname === 'gol2.io' ? 'mainnet' : 'goerli'
+
+export const VoyagerUrl = CurrentNetwork === 'mainnet' ? 'https://voyager.online' : 'https://goerli.voyager.online'
+
+export const ContractAddress = CurrentNetwork === 'mainnet' ? MainnetContractAddress : GoerliContractAddress
 
 export const ContractAbi = [
   {

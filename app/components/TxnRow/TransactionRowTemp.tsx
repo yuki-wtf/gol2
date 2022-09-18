@@ -3,11 +3,10 @@ import styled from '@emotion/styled'
 import { useAnimation, motion } from 'framer-motion'
 import { HiOutlineHeart, HiOutlineLightningBolt } from 'react-icons/hi'
 import { TxnRowStatus } from './TxnRow'
-import { useStarknet } from '@starknet-react/core'
 import { getShortChecksumAddress } from '~/helpers/starknet'
-import { currentNetwork } from '../Navbar/ConnectWallet/NetworkDropdownMenu/NetworkDropdownMenu.client'
 import { useUser } from '~/hooks/useUser'
 import { hexToDecimalString } from 'starknet/utils/number'
+import { VoyagerUrl } from '~/hooks/useGameContract'
 
 const Container = styled(motion.div)`
   height: 48px;
@@ -85,20 +84,11 @@ const StatusContainer = styled.div`
 
 const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duration = 0.3, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
-  const [network, setNetwork] = useState('voyager.online')
   const controls = useAnimation()
   const currentUser = useUser()
   const currentUserFormatted = currentUser && hexToDecimalString(currentUser.userId)
   const currentUserId = currentUserFormatted ?? null
   const currentRowUser = user && hexToDecimalString(user)
-
-  // console.log(user);
-  // console.log(status);
-  useEffect(() => {
-    const currentUrl = currentNetwork()
-    if (currentUrl === 'mainnet') return setNetwork('voyager.online')
-    return setNetwork('goerli.voyager.online')
-  }, [])
 
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
@@ -237,13 +227,13 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         </StatusContainer>
         {statusInternal !== 'COMPLETED' ? (
           <ButtonContainer status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://${network}/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`${VoyagerUrl}/tx/${url}`}>
               view
             </a>
           </ButtonContainer>
         ) : (
           <ButtonContainerCompleted status={status}>
-            <a rel="noreferrer" target="_blank" href={`https://${network}/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`${VoyagerUrl}/tx/${url}`}>
               view
             </a>
           </ButtonContainerCompleted>
