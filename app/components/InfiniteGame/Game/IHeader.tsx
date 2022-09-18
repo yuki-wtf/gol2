@@ -35,7 +35,7 @@ export const IHeader = () => {
     if (hasClickedEvolveInfinite) return
     setTimeout(() => {
       setHelpMessage('evolveInfinite')
-    }, 1500)
+    }, 1000)
   }, [])
 
   useEffect(() => {
