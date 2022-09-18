@@ -109,7 +109,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
           duration: duration,
         },
       })
-    } else if (status === 'ACCEPTED_ON_L2' || status === 'ACCEPTED_ON_L1') {
+    } else if (status === 'PENDING' || status === 'ACCEPTED_ON_L2' || status === 'ACCEPTED_ON_L1') {
       controls.set({
         width: '0%',
       })
