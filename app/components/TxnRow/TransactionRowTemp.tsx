@@ -6,6 +6,8 @@ import { TxnRowStatus } from './TxnRow'
 import { useStarknet } from '@starknet-react/core'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { currentNetwork } from '../Navbar/ConnectWallet/NetworkDropdownMenu/NetworkDropdownMenu.client'
+import { useUser } from '~/hooks/useUser'
+import { hexToDecimalString } from 'starknet/utils/number'
 
 const Container = styled(motion.div)`
   height: 48px;
@@ -81,11 +83,14 @@ const StatusContainer = styled.div`
   color: ${(p) => TxnRowStatus[p.status].textColor};
 `
 
-const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 0, duration = 0.1, label, user }) => {
+const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duration = 0.3, label, user }) => {
   const [statusInternal, setStatusInternal] = useState(null)
   const [network, setNetwork] = useState('voyager.online')
   const controls = useAnimation()
-  const { account } = useStarknet()
+  const currentUser = useUser()
+  const currentUserFormatted = currentUser && hexToDecimalString(currentUser.userId)
+  const currentUserId = currentUserFormatted ?? null
+  const currentRowUser = user && hexToDecimalString(user)
 
   // console.log(user);
   // console.log(status);
@@ -108,18 +113,18 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       controls.set({
         width: '0%',
       })
-      // controls.start({
-      //   width: '100%',
-      //   transition: {
-      //     duration: duration,
-      //   },
-      // })
-      // setTimeout(() => {
-      //   controls.start({
-      //     width: "0%",
-      //     transition: { duration: 0.3 },
-      //   });
-      // }, 2000);
+      controls.start({
+        width: '100%',
+        transition: {
+          duration: duration,
+        },
+      })
+      setTimeout(() => {
+        controls.start({
+          width: '0%',
+          transition: { duration: 0.3 },
+        })
+      }, 2000)
       setTimeout(() => {
         controls.set({
           width: '0%',
@@ -158,8 +163,11 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       }, 2000)
     }
   }, [status, controls, statusInternal, delay, duration])
+  console.log('current userid', currentUserId)
+  console.log('user', currentRowUser)
+  console.log('isEqual', currentRowUser == currentUserId)
   const showUserAddress = statusInternal === 'REJECTED' || statusInternal === 'COMPLETED'
-  const isMyTxn = account === user && status !== 'REJECTED'
+  const isMyTxn = currentUserId === currentRowUser
   const isCellRevivedTxn = type === 'cell_revived'
 
   return (
@@ -177,6 +185,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       exit={{
         opacity: 0,
       }}
+      layout
     >
       {statusInternal !== 'COMPLETED' ? (
         <Progress
@@ -217,8 +226,14 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
               {getShortChecksumAddress(user)} {isMyTxn && <span>(you)</span>}
             </UserContainer>
           )}
-
-          {statusInternal === 'COMPLETED' ? '' : label}
+          {statusInternal === 'COMPLETED' ? (
+            ''
+          ) : (
+            <>
+              {label} {isMyTxn && <span>(you) </span>}
+            </>
+          )}
+          {}
         </StatusContainer>
         {statusInternal !== 'COMPLETED' ? (
           <ButtonContainer status={status}>

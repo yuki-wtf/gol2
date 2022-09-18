@@ -18,7 +18,7 @@ export const IHeader = ({ gameId }) => {
   const { contract } = useGameContract()
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
-  const balance = user?.balance ?? 0
+  // const balance = user?.balance ?? 0
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
