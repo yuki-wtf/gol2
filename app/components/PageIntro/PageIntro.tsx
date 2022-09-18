@@ -1,7 +1,7 @@
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import Typography from '../Typography/Typography'
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 24px;
@@ -53,6 +53,9 @@ const Text = ({ children }) => {
       <StyledText>{children}</StyledText>
     </TextWrapper>
   )
+}
+const Container = ({ children, style }) => {
+  return <StyledContainer style={{ ...style }}>{children}</StyledContainer>
 }
 
 const PageIntro = {
