@@ -60,7 +60,14 @@ const ConnectWallet = () => {
           title="Connect wallet"
           desc="Start playing Game of Life!"
         >
-          <Button primary label="Connect" onClick={() => setOpen(true)} />
+          <Button
+            primary
+            label="Connect"
+            onClick={() => {
+              setHelpMessage(null)
+              setOpen(true)
+            }}
+          />
         </Highlight>
       )}
 
