@@ -22,13 +22,19 @@ export default function GameContainer({ currentFrame, maxFrame, gameId }: Props)
     maxFrame,
     currentFrame,
     fetchFrames,
-    lastFrameRefreshInterval: 5000
+    lastFrameRefreshInterval: 5000,
   })
 
   return (
     <StyledGridContainer>
       <CHeader gameId={gameId} />
-      <GridWrapper gameState={state.frames[state.currentFrame]?.state ?? null} />
+      <GridWrapper
+        gameState={state.frames[state.currentFrame]?.state ?? null}
+        isGameOver={
+          state.frames[state.currentFrame]?.state != null &&
+          BigInt(state.frames[state.currentFrame]?.state) === BigInt(0)
+        }
+      />
       <CFooter actions={actions} state={state} />
     </StyledGridContainer>
   )
