@@ -20,9 +20,13 @@ export default function GridWrapper({ gameState, isGameOver }: Props) {
   return (
     <Body>
       {isGameOver && (
-        <div style={{ position: 'absolute', left: -14, right: -14, top: -16, bottom: -16, zIndex: 4 }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 1.3 } }}
+          style={{ position: 'absolute', left: -14, right: -14, top: -16, bottom: -16, zIndex: 4 }}
+        >
           <img style={{ width: '100%', height: '100%' }} src="/assets/grid/gameover.png" alt="game over" />
-        </div>
+        </motion.div>
       )}
       {gameState != null ? (
         <Grid data={gameStateToGrid(gameState)} />
