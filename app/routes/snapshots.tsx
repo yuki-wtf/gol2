@@ -164,7 +164,7 @@ export default function Snapshots() {
                       open(
                         twitter(
                           `I own generation ${snapshot.gameGeneration} in @GoL2io 💪  #GoL2 #Starknet`,
-                          `${VoyagerUrl}/${snapshot.gameGeneration}`
+                          `${VoyagerUrl}/infinite/${snapshot.gameGeneration}`
                         )
                       )
                     }}
