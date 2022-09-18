@@ -3,9 +3,16 @@ import Cell from '../GolGrid/Cell/Cell'
 
 interface Props {
   readonly data: number[][]
+  readonly isGameOver: boolean
 }
 
-export default function CSnapshotGrid({ data }: Props) {
+export default function CSnapshotGrid({ data, isGameOver }: Props) {
+  if (isGameOver)
+    return (
+      <div style={{ position: 'absolute', top: 4, left: 13, zIndex: 4 }}>
+        <img style={{ width: 204, height: 204 }} src="/assets/grid/gameoversmall.png" alt="game over" />
+      </div>
+    )
   return (
     <GameGrid isWithoutMotion>
       {data.map((row, j) =>
