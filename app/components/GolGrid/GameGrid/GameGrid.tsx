@@ -10,7 +10,9 @@ const StyledGridWithoutMotion = styled.div`
   gap: 0;
   border: 0;
   height: 100%;
-  width: 100%;
+  height: ${(p) => (p.size ? `${p.size}px` : '100%')};
+  /* width: 100%; */
+  width: ${(p) => (p.size ? `${p.size}px` : '100%')};
   position: relative;
 `
 
@@ -18,15 +20,22 @@ const StyledGrid = StyledGridWithoutMotion.withComponent(motion.div)
 
 type Props = PropsWithChildren<{
   readonly isWithoutMotion?: boolean
+  readonly size: number
 }>
 
-export default function GameGrid({ children, isWithoutMotion }: Props) {
+export default function GameGrid({ children, isWithoutMotion, size }: Props) {
   if (isWithoutMotion) {
-    return <StyledGridWithoutMotion>{children}</StyledGridWithoutMotion>
+    return (
+      <StyledGridWithoutMotion width={size} height={size}>
+        {children}
+      </StyledGridWithoutMotion>
+    )
   }
 
   return (
     <StyledGrid
+      width={size}
+      height={size}
       initial={{
         opacity: 0,
       }}
