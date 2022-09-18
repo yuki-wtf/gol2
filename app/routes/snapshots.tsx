@@ -26,7 +26,7 @@ const FlexContainer = styled.div`
   }
 `
 
-function twitter(url: string, text: string): string {
+function twitter(text: string, url: string): string {
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
 }
 
