@@ -7,6 +7,7 @@ import { getShortChecksumAddress } from '~/helpers/starknet'
 import { useUser } from '~/hooks/useUser'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { VoyagerUrl } from '~/hooks/useGameContract'
+import usePrevious from '~/hooks/usePrevious'
 
 const Container = styled(motion.div)`
   height: 48px;
@@ -89,9 +90,12 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
   const currentUserFormatted = currentUser && hexToDecimalString(currentUser.userId)
   const currentUserId = currentUserFormatted ?? null
   const currentRowUser = user && hexToDecimalString(user)
+  const prevStatus = usePrevious(status)
+  console.log('previous state ======', prevStatus)
 
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
+      console.log('transaction status', status)
       controls.start({
         width: '100%',
         transition: {
@@ -99,6 +103,20 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
           duration: duration,
         },
       })
+    } else if (
+      prevStatus === 'PENDING' ||
+      prevStatus === 'ACCEPTED_ON_L2' ||
+      prevStatus === 'ACCEPTED_ON_L1' ||
+      prevStatus === undefined
+    ) {
+      setTimeout(() => {
+        console.log('transaction status 2')
+        controls.set({
+          width: '0%',
+        })
+        setStatusInternal('COMPLETED')
+      }, 0)
+      return
     } else if (status === 'PENDING' || status === 'ACCEPTED_ON_L2' || status === 'ACCEPTED_ON_L1') {
       controls.set({
         width: '0%',
@@ -107,20 +125,23 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         width: '100%',
         transition: {
           duration: duration,
+          delay: 0,
         },
       })
       setTimeout(() => {
+        console.log('transaction status 1')
         controls.start({
           width: '0%',
           transition: { duration: 0.3 },
         })
       }, 2000)
       setTimeout(() => {
+        console.log('transaction status 2')
         controls.set({
           width: '0%',
         })
         setStatusInternal('COMPLETED')
-      }, 0)
+      }, 2000)
     } else if (status === 'REJECTED') {
       //   controls.set({ width: "0%" });
       controls.start({
