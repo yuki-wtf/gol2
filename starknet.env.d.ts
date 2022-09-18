@@ -145,5 +145,6 @@ type StarknetWindowObject =
 declare global {
   interface Window {
     starknet?: StarknetWindowObject
+    starknet_braavos?: StarknetWindowObject
   }
 }
