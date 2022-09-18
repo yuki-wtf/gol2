@@ -13,11 +13,17 @@ const StyledLoaderContainer = styled(motion.div)`
 
 interface Props {
   readonly gameState: string | null
+  readonly isGameOver: boolean
 }
 
-export default function GridWrapper({ gameState }: Props) {
+export default function GridWrapper({ gameState, isGameOver }: Props) {
   return (
     <Body>
+      {isGameOver && (
+        <div style={{ position: 'absolute', left: -14, right: -14, top: -16, bottom: -16, zIndex: 4 }}>
+          <img style={{ width: '100%', height: '100%' }} src="/assets/grid/gameover.png" alt="game over" />
+        </div>
+      )}
       {gameState != null ? (
         <Grid data={gameStateToGrid(gameState)} />
       ) : (

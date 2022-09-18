@@ -20,7 +20,7 @@ const StyledGrid = StyledGridWithoutMotion.withComponent(motion.div)
 
 type Props = PropsWithChildren<{
   readonly isWithoutMotion?: boolean
-  readonly size: number
+  readonly size?: number
 }>
 
 export default function GameGrid({ children, isWithoutMotion, size }: Props) {

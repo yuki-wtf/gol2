@@ -111,7 +111,7 @@ const SnapshotCreator = ({ to, generationNumber, address, id, gameState }) => {
   return (
     <StyledCard to={to}>
       <StyledGridContainer>
-        <CSnapshotGrid data={gameStateToGrid(gameState)} />
+        <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />
       </StyledGridContainer>
 
       <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
