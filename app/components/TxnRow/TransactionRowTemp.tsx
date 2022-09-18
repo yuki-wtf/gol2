@@ -153,9 +153,9 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       }, 2000)
     }
   }, [status, controls, statusInternal, delay, duration])
-  console.log('current userid', currentUserId)
-  console.log('user', currentRowUser)
-  console.log('isEqual', currentRowUser == currentUserId)
+  // console.log('current userid', currentUserId)
+  // console.log('user', currentRowUser)
+  // console.log('isEqual', currentRowUser == currentUserId)
   const showUserAddress = statusInternal === 'REJECTED' || statusInternal === 'COMPLETED'
   const isMyTxn = currentUserId === currentRowUser
   const isCellRevivedTxn = type === 'cell_revived'

@@ -271,7 +271,7 @@ const Highlight = ({
   style,
   sideOffset = 15,
 }: Props) => {
-  console.log(highlightRadius)
+  // console.log(highlightRadius)
   return (
     <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
       <Popover defaultOpen={true} open={active}>
