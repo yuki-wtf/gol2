@@ -15,14 +15,15 @@ const StyledLoaderContainer = styled(motion.div)`
 
 interface Props {
   readonly gameState: string | null
+  readonly isPlaying: boolean
   readonly receivedCells: SerializeFrom<readonly ReceivedCell[]>
 }
 
-export default function GridWrapper({ gameState, receivedCells }: Props) {
+export default function GridWrapper({ gameState, receivedCells, isPlaying }: Props) {
   return (
     <Body>
       {gameState != null ? (
-        <Grid receivedCells={receivedCells} data={gameStateToGrid(gameState)} />
+        <Grid isPlaying={isPlaying} receivedCells={receivedCells} data={gameStateToGrid(gameState)} />
       ) : (
         <StyledLoaderContainer
           initial={{
