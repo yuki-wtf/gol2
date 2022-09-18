@@ -15,7 +15,7 @@ import { useLoaderData } from '@remix-run/react'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useUser } from '~/hooks/useUser'
 import type { TypedResponse } from '@remix-run/react/dist/components'
-
+import { VoyagerUrl } from '~/hooks/useGameContract'
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -164,7 +164,7 @@ export default function Snapshots() {
                       open(
                         twitter(
                           `I own generation ${snapshot.gameGeneration} in @GoL2io 💪  #GoL2 #Starknet`,
-                          `https://goerli.gol2.io/infinite/${snapshot.gameGeneration}`
+                          `${VoyagerUrl}/${snapshot.gameGeneration}`
                         )
                       )
                     }}
