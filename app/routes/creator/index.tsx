@@ -146,6 +146,10 @@ export default function CreatorPage() {
             marginTop: 24,
           }}
         >
+          {/* TODO: STATE to show game being created
+           <SnapshotCreator gameState={userCreatedGameState} isCreating={'RECEIVED'} />
+          */}
+
           {user == null && (
             <SnapshotEmpty
               style={{ height: 196, marginBottom: 32 }}
