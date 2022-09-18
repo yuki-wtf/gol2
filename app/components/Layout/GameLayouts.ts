@@ -10,7 +10,7 @@ export const GameWrapper = styled.div`
 `
 export const GameGridWrapper = styled.div`
   width: 544px;
-  overflow: hidden;
+  /* overflow: hidden; */
 `
 export const SideBarWrapper = styled.div`
   display: flex;
