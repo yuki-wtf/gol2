@@ -63,7 +63,7 @@ const StyledContainer = styled.span`
   display: inline-flex;
   padding: 2px;
   position: relative;
-  pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
+  pointer-events: ${(p) => (p.active ? 'auto' : 'auto')};
   z-index: 5;
   transition: all 0.5s ease;
 
