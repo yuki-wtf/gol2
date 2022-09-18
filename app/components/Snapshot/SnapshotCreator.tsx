@@ -107,18 +107,26 @@ const StyledUserAddress = styled.div`
   margin-top: 4px;
 `
 
-const SnapshotCreator = ({ to, generationNumber, address, id, gameState }) => {
+const SnapshotCreator = ({ to, generationNumber, address, id, gameState, isCreating }) => {
   return (
-    <StyledCard to={to}>
+    <StyledCard to={!isCreating && to}>
       <StyledGridContainer>
         <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />
       </StyledGridContainer>
-
-      <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
-      <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
-      <StyledUserAddress>
-        <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
-      </StyledUserAddress>
+      {isCreating === 'RECEIVED' ? (
+        <>
+          <StyledGenNumber> Creating Game </StyledGenNumber>
+          <StyledGenLabel> Pending... </StyledGenLabel>
+        </>
+      ) : (
+        <>
+          <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
+          <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>{' '}
+          <StyledUserAddress>
+            <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
+          </StyledUserAddress>
+        </>
+      )}
     </StyledCard>
   )
 }
