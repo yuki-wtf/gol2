@@ -34,6 +34,7 @@ export default function GameContainer({ currentFrame, maxFrame, receivedCells }:
       <IHeader />
       <DialogGiveLife />
       <GridWrapper
+        isPlaying={state.currentFrame !== state.maxFrame}
         receivedCells={state.currentFrame === state.maxFrame ? receivedCells : []}
         gameState={state.frames[state.currentFrame]?.state ?? null}
       />

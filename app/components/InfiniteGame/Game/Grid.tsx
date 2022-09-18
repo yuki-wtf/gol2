@@ -8,10 +8,11 @@ import { useHelpMessage } from '~/hooks/HelpMessage'
 
 interface Props {
   readonly data: number[][]
+  readonly isPlaying: boolean
   readonly receivedCells: SerializeFrom<readonly ReceivedCell[]>
 }
 
-export default function Grid({ data, receivedCells }: Props) {
+export default function Grid({ data, receivedCells, isPlaying }: Props) {
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const [selectedCell, setSelectedCell] = useSelectedCell()
   const user = useUser()
@@ -29,6 +30,7 @@ export default function Grid({ data, receivedCells }: Props) {
           }
 
           if (cell === 0) {
+            if (isPlaying) return <Cell state="disabled" key={key} />
             return (
               <Cell
                 state={

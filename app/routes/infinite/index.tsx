@@ -108,7 +108,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 export default function InfinitePage() {
   useAutoRefresh()
   const data = useLoaderData<typeof loader>()
-  console.log(data)
+  // console.log(data)
   return (
     <ContainerInner>
       <GameWrapper>

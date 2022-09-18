@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
 interface Props {
-  readonly state?: 'pending' | 'alive' | 'selected' | 'createSelected' | 'dead'
+  readonly state?: 'pending' | 'alive' | 'selected' | 'createSelected' | 'disabled' | 'dead'
   readonly hasHoverState?: boolean
   readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
@@ -32,6 +32,15 @@ const defaultCell = (p: any) => css`
   background-color: ${p.theme.colors.cell.cellDefaultBackground};
   border: 0.5px solid #2d3038;
 `
+const disabledCell = (p: any) => css`
+  pointer-events: none;
+  background-color: ${p.theme.colors.cell.cellDefaultBackground};
+
+  border: 0.5px solid #2d3038;
+  > &:hover {
+    background-color: ${p.theme.colors.cell.cellDefaultBackground};
+  }
+`
 
 const StyledCell = styled.div<Props>`
   ${(p) => {
@@ -50,6 +59,9 @@ const StyledCell = styled.div<Props>`
 
       case 'dead':
         return defaultCell(p)
+
+      case 'disabled':
+        return disabledCell(p)
 
       default:
         return defaultCell(p)

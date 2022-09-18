@@ -26,7 +26,7 @@ export function UserProvider({ children }: Props) {
 
   const { account } = starknet
   // const { account, connectors } = starknet
-  console.log('account UserIdProvider', account)
+  // console.log('account UserIdProvider', account)
 
   const user: User =
     data.userId != null
@@ -78,7 +78,7 @@ export function UserProvider({ children }: Props) {
   // }, [accountObj])
 
   useLayoutEffectX(() => {
-    console.log([userId, account])
+    // console.log([userId, account])
     if (userId == account) return
 
     setUserId(account)
