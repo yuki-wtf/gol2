@@ -32,10 +32,10 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
     loadFont('Mulish/Mulish-ExtraBold.ttf')
     loadFont('Mulish/Mulish-Bold.ttf')
 
-    const canvas = createCanvas(514 * 4, 293 * 4)
+    const canvas = createCanvas(504 * 4, 264 * 4)
     const ctx = canvas.getContext('2d')
 
-    const image = await getImage('infiniteGame_4x.png')
+    const image = await getImage('infiniteGame_4x_1.png')
 
     ctx.drawImage(image, 0, 0)
 
@@ -63,9 +63,9 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
 
     const grid = gameStateToGrid(gameState)
 
-    let x = 18 * 4
-    let y = 18 * 4
-    let s = ((8 * 32) / 15) * 4
+    let x = 27 * 4
+    let y = 27 * 4
+    let s = ((8 * 26.3) / 15) * 4
 
     ctx.fillStyle = '#1d222c'
     ctx.fillRect(x, y, s * 15, s * 15)
@@ -73,9 +73,11 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
     for (const row of grid) {
       for (const cell of row) {
         if (cell) {
-          ctx.lineWidth = 0
+          ctx.lineWidth = 0.5 * 4
+          ctx.strokeStyle = '#dbf267'
           ctx.fillStyle = '#dbf267'
           ctx.fillRect(x, y, s, s)
+          ctx.strokeRect(x, y, s, s)
         } else {
           ctx.lineWidth = 0.5 * 4
           ctx.strokeStyle = '#2b2e36'
@@ -93,12 +95,12 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
     ctx.font = `${34 * 4}px Mulish-ExtraBold`
     ctx.textBaseline = 'middle'
     ctx.fillStyle = '#FCFAF8'
-    ctx.fillText(gameGeneration.toString(), 292 * 4, (173 + 26 / 2) * 4)
+    ctx.fillText(gameGeneration.toString(), 271 * 4, (160 + 26 / 2) * 4)
 
     ctx.font = `${14 * 4}px Mulish-Bold`
     ctx.textBaseline = 'middle'
     ctx.fillStyle = '#FCFAF8'
-    ctx.fillText(accountTruncated, 310 * 4, (234 + 14 / 2) * 4)
+    ctx.fillText(accountTruncated, 289 * 4, (218 + 14 / 2) * 4)
 
     const png = await canvas.encode('png')
 
