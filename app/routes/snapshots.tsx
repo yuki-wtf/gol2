@@ -15,7 +15,7 @@ import { useLoaderData } from '@remix-run/react'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useUser } from '~/hooks/useUser'
 import type { TypedResponse } from '@remix-run/react/dist/components'
-import { VoyagerUrl } from '~/hooks/useGameContract'
+import { CurrentNetwork } from '~/hooks/useGameContract'
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -163,8 +163,10 @@ export default function Snapshots() {
                     onClickTwitter={() => {
                       open(
                         twitter(
-                          `I own generation ${snapshot.gameGeneration} in @GoL2io 💪  #GoL2 #Starknet`,
-                          `${VoyagerUrl}/infinite/${snapshot.gameGeneration}`
+                          `I own generation ${snapshot.gameGeneration} in @GoL2io 💪 #GoL2 #Starknet`,
+                          `https://${CurrentNetwork == 'mainnet' ? 'gol2.io' : 'goerli.gol2.io'}/infinite/${
+                            snapshot.gameGeneration
+                          }`
                         )
                       )
                     }}
