@@ -95,8 +95,12 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         END "type",
         "functionCaller" "owner",
         "createdAt"
-      FROM transaction
-      WHERE status = 'RECEIVED'
+      FROM transaction t
+      WHERE CASE "status"
+          WHEN 'RECEIVED' THEN TRUE
+          WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
+          else FALSE
+        END
         AND CASE "functionName"
           WHEN 'create' THEN "functionInputGameState" = ${params.gameId}
           WHEN 'evolve' THEN "functionInputGameId" = ${params.gameId}

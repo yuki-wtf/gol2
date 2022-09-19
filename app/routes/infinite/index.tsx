@@ -55,8 +55,12 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       "functionCaller" "owner",
       "functionInputCellIndex" "cellIndex",
       "createdAt"
-    FROM transaction
-    WHERE status = 'RECEIVED'
+    FROM transaction t
+    WHERE CASE "status"
+        WHEN 'RECEIVED' THEN TRUE
+        WHEN 'PENDING' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+        else FALSE
+      END
       AND "functionName" = 'give_life_to_cell'
     ORDER BY "createdAt" DESC
   `
@@ -73,8 +77,12 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         END "type",
         "functionCaller" "owner",
         "createdAt"
-      FROM transaction
-      WHERE status = 'RECEIVED'
+      FROM transaction t
+      WHERE CASE "status"
+          WHEN 'RECEIVED' THEN TRUE
+          WHEN 'PENDING' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+          else FALSE
+        END
         AND CASE "functionName"
           WHEN 'create' THEN "functionInputGameState" = ${INFINITE_GAME_GENESIS}
           WHEN 'evolve' THEN "functionInputGameId" = ${INFINITE_GAME_GENESIS}
