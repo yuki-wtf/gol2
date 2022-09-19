@@ -8,9 +8,11 @@ import DialogWallet from '~/components/DialogWallet/DialogWallet'
 import Highlight from '~/components/Highlight/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { clearTimeout } from 'timers'
+import DialogSwitchWallet from '~/components/DialogSwitchWallet/DialogSwitchWallet'
 
 const ConnectWallet = () => {
   const [open, setOpen] = useState(false)
+  const [wrongNetworkDialogOpen, setWrongNetworkDialogOpen] = useState(false)
   const { account, error, connectors, connect, disconnect } = useStarknet()
   const [helpMessage, setHelpMessage] = useHelpMessage()
 
@@ -70,7 +72,6 @@ const ConnectWallet = () => {
           />
         </Highlight>
       )}
-
       <DialogWallet open={open} onClose={() => setOpen(false)}>
         {!account &&
           !error &&
@@ -91,11 +92,19 @@ const ConnectWallet = () => {
               ) : null
             )}
       </DialogWallet>
-
       <DialogDownloadWallet
         open={open && !connectors.length}
         onClose={() => {
           setOpen(false)
+        }}
+      />
+      {/* TODO - wrong network modal to be shown */}
+      <DialogSwitchWallet
+        currentNetwork={'Testnet'}
+        wrongNetwork={'Mainnet'}
+        open={wrongNetworkDialogOpen}
+        onClose={() => {
+          setWrongNetworkDialogOpen(false)
         }}
       />
     </div>

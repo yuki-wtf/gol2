@@ -29,7 +29,7 @@ export const IHeader = ({ gameId }) => {
     if (hasClickedEvolveCreator) return
     setTimeout(() => {
       setHelpMessage('evolveCreator')
-    }, 1500)
+    }, 1000)
   }, [])
 
   useEffect(() => {
