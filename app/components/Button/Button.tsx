@@ -232,6 +232,15 @@ const Button = ({
 }: Props) => {
   const Component = to != null ? StyledLink : StyledButton
 
+  // if(isloading && icon)  render spinner
+  // if (isloading and no icon ) render spinner
+  const renderIconSpinner = () => {
+    if (isLoading && icon != null) {
+      return <Spinner />
+    } else if (!isLoading && icon) {
+      return icon
+    }
+  }
   return (
     <Component
       full={full}
@@ -245,8 +254,8 @@ const Button = ({
       onClick={onClick}
       tertiaryColor={tertiaryColor}
     >
-      {icon && !isLoading && icon}
-      {isLoading ? <Spinner /> : <T.Button>{label}</T.Button>}
+      {renderIconSpinner()}
+      <T.Button>{label}</T.Button>
     </Component>
   )
 }
