@@ -69,11 +69,12 @@ const StyledSkeletonGridContainer = styled.div`
 const StyledActions = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
 
   width: 100%;
-  margin-top: 12px;
+  margin-top: 0px;
   padding-left: ${(props) => (props.large ? '40px' : '0')};
   padding-top: ${(props) => (props.large ? '30px' : '0')};
 `
@@ -282,9 +283,13 @@ const Snapshot = ({
       {large && (
         <StyledActions large={large}>
           <Button secondary label="share to twitter" onClick={onClickTwitter} />
+          <div style={{ fontSize: 10, paddingTop: 12, color: '#57637b' }}>
+            (If the image doesn’t appear in your tweet draft, close it and click share to twitter again!)
+          </div>
         </StyledActions>
       )}
     </StyledCard>
+    // color: #2d3038;
   )
 }
 
