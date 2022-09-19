@@ -28,11 +28,18 @@ export const IHeader = ({ gameId }) => {
   })
 
   useEffect(() => {
+    console.log('game over', GameOverMessage)
+
     if (hasClickedEvolveCreator) return
+
     setTimeout(() => {
+      if (GameOverMessage === null || GameOverMessage === true) {
+        setHelpMessage(null)
+        return
+      }
       setHelpMessage('evolveCreator')
     }, 1000)
-  }, [])
+  }, [setHelpMessage, hasClickedEvolveCreator, GameOverMessage])
 
   useEffect(() => {
     let timer

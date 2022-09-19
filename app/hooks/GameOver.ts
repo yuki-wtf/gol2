@@ -1,5 +1,5 @@
 import { createStateContext } from 'react-use'
 
-type GameOverMessage = boolean | null
+type GameOverMessage = boolean
 
-export const [useGameOver, GameOverProvider, GameOverContext] = createStateContext<GameOverMessage>(null)
+export const [useGameOver, GameOverProvider, GameOverContext] = createStateContext<GameOverMessage>(false)
