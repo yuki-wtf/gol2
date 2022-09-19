@@ -22,6 +22,7 @@ import { SelectedCellProvider } from './hooks/SelectedCell'
 import { CreatorGridProvider } from './hooks/CreatorGrid'
 import { HelpMessageProvider } from './hooks/HelpMessage'
 import MobileMessage from './components/MobileMessage/MobileMessage'
+import { GameOverProvider } from './hooks/GameOver'
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
@@ -31,7 +32,7 @@ export async function loader({ request }: LoaderArgs) {
   let hasOutgoingTransfer: boolean = false
 
   if (userId != null) {
-    const res = await sql<{ balance: number, hasIncomingTransfer: boolean, hasOutgoingTransfer: boolean }>`
+    const res = await sql<{ balance: number; hasIncomingTransfer: boolean; hasOutgoingTransfer: boolean }>`
       SELECT
         (
           select "balance"
@@ -66,7 +67,7 @@ export async function loader({ request }: LoaderArgs) {
     userId: await getUserId(request),
     balance,
     hasIncomingTransfer,
-    hasOutgoingTransfer
+    hasOutgoingTransfer,
   })
 }
 
@@ -178,14 +179,16 @@ function AppLayout({ children }) {
   return (
     <Document>
       <ThemeProvider theme={infinite}>
-        <HelpMessageProvider>
-          <SelectedCellProvider>
-            <CreatorGridProvider>
-              <GlobalStyle />
-              <Layout>{children}</Layout>
-            </CreatorGridProvider>
-          </SelectedCellProvider>
-        </HelpMessageProvider>
+        <GameOverProvider>
+          <HelpMessageProvider>
+            <SelectedCellProvider>
+              <CreatorGridProvider>
+                <GlobalStyle />
+                <Layout>{children}</Layout>
+              </CreatorGridProvider>
+            </SelectedCellProvider>
+          </HelpMessageProvider>
+        </GameOverProvider>
       </ThemeProvider>
     </Document>
   )
