@@ -9,16 +9,17 @@ import {
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
-import { ContractAddress } from '~/hooks/useGameContract'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useStarknet } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { getChecksumAddress } from 'starknet4'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const UserDropdownMenu = ({ account, disconnect }) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
   const { connectors } = useStarknet()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()
+  const { env } = useRootLoaderData()
 
   useEffect(() => {
     ;(async () => {
@@ -54,41 +55,30 @@ const UserDropdownMenu = ({ account, disconnect }) => {
         {/* // TODO show this only if a user has not added gol token to wallet */}
         <DropdownMenu.Item
           onClick={() => {
+            const data = {
+              type: 'wallet_watchAsset',
+              params: {
+                type: 'ERC20',
+                options: {
+                  address: env.CONTRACT_ADDRESS,
+                  name: 'Game of Life Token',
+                  symbol: 'GOL',
+                  decimals: '0',
+                  network: env.USE_MAINNET ? 'mainnet-alpha' : 'goerli-alpha',
+                  image: golTokenIcon,
+                },
+              },
+            }
+
             if (wallet?.id === 'argentX') {
               if (window.starknet != null) {
-                window.starknet.request({
-                  type: 'wallet_watchAsset',
-                  params: {
-                    type: 'ERC20',
-                    options: {
-                      address: ContractAddress,
-                      name: 'Game of Life Token',
-                      symbol: 'GOL',
-                      decimals: '0',
-                      network: 'goerli-alpha',
-                      image: golTokenIcon,
-                    },
-                  },
-                })
+                window.starknet.request(data)
               }
             }
 
             if (wallet?.id === 'braavos') {
               if (window.starknet_braavos != null) {
-                window.starknet_braavos.request({
-                  type: 'wallet_watchAsset',
-                  params: {
-                    type: 'ERC20',
-                    options: {
-                      address: ContractAddress,
-                      name: 'Game of Life Token',
-                      symbol: 'GOL',
-                      decimals: '0',
-                      network: 'goerli-alpha',
-                      image: golTokenIcon,
-                    },
-                  },
-                })
+                window.starknet_braavos.request(data)
               }
             }
           }}

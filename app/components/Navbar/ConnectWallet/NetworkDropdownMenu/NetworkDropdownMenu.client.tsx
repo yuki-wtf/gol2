@@ -1,35 +1,25 @@
 import DropdownMenu from '../../../DropDownMenu/DropDownMenu'
 import { HiChevronDown, HiOutlineGlobeAlt } from 'react-icons/hi'
 import { FaEthereum } from 'react-icons/fa'
-import { CurrentNetwork } from '~/hooks/useGameContract'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const NetworkDropdownMenu = () => {
-  const renderNetworkIcon = () => {
-    switch (CurrentNetwork) {
-      case 'goerli':
-        return <HiOutlineGlobeAlt size={15} />
-
-      case 'mainnet':
-        return <FaEthereum size={15} />
-
-      default:
-        return <HiOutlineGlobeAlt size={15} />
-    }
-  }
+  const { env } = useRootLoaderData()
+  const currentNetwork = env.USE_MAINNET ? 'mainnet' : 'goerli'
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        {renderNetworkIcon()}
-        {CurrentNetwork}
+        {env.USE_MAINNET ? <FaEthereum size={15} /> : <HiOutlineGlobeAlt size={15} />}
+        {currentNetwork}
         <HiChevronDown size={24} />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>Select a network</DropdownMenu.Label>
         <DropdownMenu.RadioGroup
-          value={CurrentNetwork}
+          value={currentNetwork}
           onValueChange={(value) => {
-            if (CurrentNetwork !== value) {
+            if (currentNetwork !== value) {
               if (value === 'goerli') {
                 location.href = 'https://goerli.gol2.io/'
               } else if (value === 'mainnet') {

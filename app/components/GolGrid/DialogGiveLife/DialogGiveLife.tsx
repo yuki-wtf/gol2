@@ -1,4 +1,4 @@
-import { useStarknetInvoke } from '@starknet-react/core'
+import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Button from '../../Button/Button'
@@ -8,6 +8,9 @@ import Typography from '../../Typography/Typography'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useUser } from '~/hooks/useUser'
+import { useDialog } from '~/hooks/Dialog'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { StarknetChainId } from 'starknet4/dist/constants'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -53,6 +56,10 @@ const DialogGiveLife = () => {
   const [payload, setPayload] = useState<number>()
   const user = useUser()
   const { contract } = useGameContract()
+  const { library } = useStarknet()
+  const [dialog, setDialog] = useDialog()
+  const { env } = useRootLoaderData()
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract: contract,
@@ -121,6 +128,11 @@ const DialogGiveLife = () => {
             <Button
               secondary
               onClick={() => {
+                if (library.chainId != currentStarknetChainId) {
+                  setDialog('WrongNetworkDialog')
+                  return
+                }
+
                 if (user != null && user.balance > 0) {
                   const payload = selectedCell.row * 15 + selectedCell.col
 

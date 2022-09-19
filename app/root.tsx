@@ -23,6 +23,9 @@ import { CreatorGridProvider } from './hooks/CreatorGrid'
 import { HelpMessageProvider } from './hooks/HelpMessage'
 import MobileMessage from './components/MobileMessage/MobileMessage'
 import { GameOverProvider } from './hooks/GameOver'
+import { DialogProvider } from './hooks/Dialog'
+import Dialogs from './components/Dialogs'
+import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
@@ -62,7 +65,9 @@ export async function loader({ request }: LoaderArgs) {
 
   return json({
     env: {
-      BASE_URL: process.env.URL,
+      BASE_URL: process.env.BASE_URL,
+      USE_MAINNET: process.env.USE_MAINNET === 'true',
+      CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS,
     },
     userId: await getUserId(request),
     balance,
@@ -77,9 +82,6 @@ export async function action({ request, params }: ActionArgs) {
 
   return json(
     {
-      env: {
-        BASE_URL: process.env.URL,
-      },
       userId,
     },
     {
@@ -179,16 +181,21 @@ function AppLayout({ children }) {
   return (
     <Document>
       <ThemeProvider theme={infinite}>
-        <GameOverProvider>
-          <HelpMessageProvider>
-            <SelectedCellProvider>
-              <CreatorGridProvider>
-                <GlobalStyle />
-                <Layout>{children}</Layout>
-              </CreatorGridProvider>
-            </SelectedCellProvider>
-          </HelpMessageProvider>
-        </GameOverProvider>
+        <RootLoaderDataProvider>
+          <GameOverProvider>
+            <HelpMessageProvider>
+              <DialogProvider>
+                <SelectedCellProvider>
+                  <CreatorGridProvider>
+                    <GlobalStyle />
+                    <Layout>{children}</Layout>
+                    <Dialogs />
+                  </CreatorGridProvider>
+                </SelectedCellProvider>
+              </DialogProvider>
+            </HelpMessageProvider>
+          </GameOverProvider>
+        </RootLoaderDataProvider>
       </ThemeProvider>
     </Document>
   )

@@ -6,7 +6,7 @@ import SnapshotEmpty from '../components/SnapshotEmpty/SnapshotEmpty'
 import styled from '@emotion/styled'
 import { AnimatePresence } from 'framer-motion'
 import * as SnapshotDialog from '../components/Snapshot/SnapshotDialog'
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
@@ -14,8 +14,8 @@ import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useUser } from '~/hooks/useUser'
-import type { TypedResponse } from '@remix-run/react/dist/components'
-import { CurrentNetwork } from '~/hooks/useGameContract'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -54,6 +54,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 export default function Snapshots() {
   const user = useUser()
   const data = useLoaderData<typeof loader>()
+  const { env } = useRootLoaderData()
 
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
@@ -177,9 +178,7 @@ export default function Snapshots() {
                       open(
                         twitter(
                           `I own generation ${snapshot.gameGeneration} in @GoL2io 💪 #GoL2 #Starknet`,
-                          `https://${CurrentNetwork == 'mainnet' ? 'gol2.io' : 'goerli.gol2.io'}/infinite/${
-                            snapshot.gameGeneration
-                          }`
+                          `${env.BASE_URL}/infinite/${snapshot.gameGeneration}`
                         )
                       )
                     }}

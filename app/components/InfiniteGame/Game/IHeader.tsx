@@ -1,12 +1,15 @@
-import { useStarknetInvoke } from '@starknet-react/core'
+import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
+import { StarknetChainId } from 'starknet4/dist/constants'
 import Highlight from '~/components/Highlight/Highlight'
 import { INFINITE_GAME_GENESIS } from '~/env'
+import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useGameContract } from '~/hooks/useGameContract'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Button from '../../Button/Button'
 import DialogTxnError from '../../DialogTxnError/DialogTxnError'
@@ -24,6 +27,10 @@ export const IHeader = () => {
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const balance = user?.balance ?? 0
+  const { library } = useStarknet()
+  const [dialog, setDialog] = useDialog()
+  const { env } = useRootLoaderData()
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
@@ -108,6 +115,12 @@ export const IHeader = () => {
           <Button
             onClick={() => {
               setHasClickedEvolveInfinite(true)
+
+              if (library.chainId != currentStarknetChainId) {
+                setDialog('WrongNetworkDialog')
+                return
+              }
+
               if (user != null) {
                 invoke({
                   args: [INFINITE_GAME_GENESIS],

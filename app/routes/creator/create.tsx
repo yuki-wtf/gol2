@@ -7,13 +7,16 @@ import Button from '../../components/Button/Button'
 import { useCreatorGrid } from '~/hooks/CreatorGrid'
 import { useUser } from '~/hooks/useUser'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useStarknetInvoke } from '@starknet-react/core'
+import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { useNavigate } from '@remix-run/react'
 import { gridToGameState } from '~/helpers/gridToGameState'
 import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
 import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+import { useDialog } from '~/hooks/Dialog'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { StarknetChainId } from 'starknet4/dist/constants'
 
 const gameExamples = [
   {
@@ -111,6 +114,11 @@ const Create = () => {
     contract,
     method: 'create',
   })
+
+  const { library } = useStarknet()
+  const [dialog, setDialog] = useDialog()
+  const { env } = useRootLoaderData()
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
@@ -217,6 +225,11 @@ const Create = () => {
                   label="Create Game"
                   isLoading={loading}
                   onClick={() => {
+                    if (library.chainId != currentStarknetChainId) {
+                      setDialog('WrongNetworkDialog')
+                      return
+                    }
+
                     if (user != null) {
                       const gameState = gridToGameState(grid)
                       console.log(gameState)

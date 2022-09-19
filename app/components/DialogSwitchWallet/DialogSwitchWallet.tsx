@@ -1,7 +1,6 @@
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineX } from 'react-icons/hi'
 import Button from '../Button/Button'
-import { Link } from '@remix-run/react'
 
 const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => {
   return (

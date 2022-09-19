@@ -6,8 +6,8 @@ import { TxnRowStatus } from './TxnRow'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { useUser } from '~/hooks/useUser'
 import { hexToDecimalString } from 'starknet/utils/number'
-import { VoyagerUrl } from '~/hooks/useGameContract'
 import usePrevious from '~/hooks/usePrevious'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const Container = styled(motion.div)`
   height: 48px;
@@ -92,6 +92,9 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
   const currentRowUser = user && hexToDecimalString(user)
   const prevStatus = usePrevious(status)
   // console.log('previous state ======', prevStatus)
+
+  const { env } = useRootLoaderData()
+  const voyagerUrl = env.USE_MAINNET ? 'https://voyager.online' : 'https://goerli.voyager.online'
 
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
@@ -248,13 +251,13 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         </StatusContainer>
         {statusInternal !== 'COMPLETED' ? (
           <ButtonContainer status={status}>
-            <a rel="noreferrer" target="_blank" href={`${VoyagerUrl}/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`${voyagerUrl}/tx/${url}`}>
               view
             </a>
           </ButtonContainer>
         ) : (
           <ButtonContainerCompleted status={status}>
-            <a rel="noreferrer" target="_blank" href={`${VoyagerUrl}/tx/${url}`}>
+            <a rel="noreferrer" target="_blank" href={`${voyagerUrl}/tx/${url}`}>
               view
             </a>
           </ButtonContainerCompleted>

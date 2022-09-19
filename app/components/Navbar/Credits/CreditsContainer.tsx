@@ -10,9 +10,11 @@ import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import DialogAddGolTokenToWallet from '~/components/DialogAddGolTokenToWallet/DialogAddGolTokenToWallet'
-import { ContractAddress } from '~/hooks/useGameContract'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useLocalStorage } from 'react-use'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { useStarknet } from '@starknet-react/core'
+import { getChecksumAddress } from 'starknet4'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -91,6 +93,7 @@ export default function CreditsContainer() {
     'has-dismissed-first-token-earned-message',
     false
   )
+  const {env} = useRootLoaderData()
 
   useEffect(() => {
     if (hasIncomingTransfer && !hasOutgoingTransfer && !hasDismissedFirstTokenEarnedMessage) {
@@ -114,6 +117,28 @@ export default function CreditsContainer() {
     }
   }, [helpMessage, setHasDismissedFirstTokenEarnedMessage, setHelpMessage])
 
+  const { connectors } = useStarknet()
+  const [wallet, setWallet] = useState<{ id: string; name: string }>()
+  const {account} = useStarknet()
+
+  useEffect(() => {
+    ;(async () => {
+      for (const connector of connectors) {
+        const accountObj = await connector.account()
+        if (accountObj != null) {
+          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
+            setWallet({
+              id: connector.id(),
+              name: connector.name(),
+            })
+          }
+        }
+      }
+    })()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account])
+
   function getMessageData() {
     if (helpMessage == 'balanceMessage') {
       return {
@@ -134,22 +159,33 @@ export default function CreditsContainer() {
     <StyledContainer>
       <DialogAddGolTokenToWallet
         onClick={() => {
-          if (window.starknet != null) {
-            window.starknet.request({
-              type: 'wallet_watchAsset',
-              params: {
-                type: 'ERC20',
-                options: {
-                  address: ContractAddress,
-                  name: 'Game of Life Token',
-                  symbol: 'GOL',
-                  decimals: '0',
-                  network: 'goerli-alpha',
-                  image: golTokenIcon,
-                },
+          const data = {
+            type: 'wallet_watchAsset',
+            params: {
+              type: 'ERC20',
+              options: {
+                address: env.CONTRACT_ADDRESS,
+                name: 'Game of Life Token',
+                symbol: 'GOL',
+                decimals: '0',
+                network: env.USE_MAINNET ? 'mainnet-alpha' : 'goerli-alpha',
+                image: golTokenIcon,
               },
-            })
+            },
           }
+
+          if (wallet?.id === 'argentX') {
+            if (window.starknet != null) {
+              window.starknet.request(data)
+            }
+          }
+
+          if (wallet?.id === 'braavos') {
+            if (window.starknet_braavos != null) {
+              window.starknet_braavos.request(data)
+            }
+          }
+
           setAddTokenDialogVisible(false)
         }}
         open={addTokenDialogVisible}
