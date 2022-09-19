@@ -66,10 +66,6 @@ export default function Snapshots() {
           <Twitterlink href="https://twitter.com/GoL2io" title="Twitter">
             Twitter
           </Twitterlink>{' '}
-          or{' '}
-          <Twitterlink href="https://discord.gg/XNFJ6HCt" title="Discord">
-            Discord
-          </Twitterlink>{' '}
         </PageIntro.Text>
       </PageIntro.Container>
       <FlexContainer>
