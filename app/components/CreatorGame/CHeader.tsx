@@ -2,6 +2,7 @@ import { useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
+import { useGameOver } from '~/hooks/GameOver'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useUser } from '~/hooks/useUser'
@@ -18,6 +19,7 @@ export const IHeader = ({ gameId }) => {
   const { contract } = useGameContract()
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+  const [GameOverMessage, setGameOverMessage] = useGameOver()
   // const balance = user?.balance ?? 0
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
@@ -113,6 +115,7 @@ export const IHeader = ({ gameId }) => {
             isLoading={loading}
             label="Evolve"
             icon={<HiOutlineLightningBolt size={24} />}
+            disabled={GameOverMessage}
           />
         </Highlight>
       </Header>
