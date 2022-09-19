@@ -6,8 +6,8 @@ const DialogWallet = ({ children, open, onClose }) => {
     <Dialog.Root open={open}>
       <Dialog.Overlay>
         <Dialog.Content>
-          <Dialog.Title>Connect a wallet provider to play</Dialog.Title>
-          <Dialog.Description>More options coming soon!</Dialog.Description>
+          <Dialog.Title>Connect a wallet to play</Dialog.Title>
+
           <Dialog.ActionContainer>{children}</Dialog.ActionContainer>
           <Dialog.SmallCopy>
             <p
