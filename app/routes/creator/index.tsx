@@ -56,7 +56,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
         "createdAt"
       from creator c1
       where "transactionType" = 'game_created'
-      order by "createdAt"
+      order by "createdAt" desc
     `
 
     return json<LoaderData>({
@@ -108,7 +108,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
       from creator c1
       where "transactionType" = 'game_created'
         and "transactionOwner" = ${hexToDecimalString(userId)}
-      order by "createdAt"
+      order by "createdAt" desc
     )
   `
   const communityGames = await sql<CreatorGame>`
@@ -133,7 +133,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     from creator c1
     where "transactionType" = 'game_created'
       and "transactionOwner" != ${hexToDecimalString(userId)}
-    order by "createdAt"
+    order by "createdAt" desc
   `
 
   return json<LoaderData>({
