@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import styled from '@emotion/styled'
 
 const StyledContainer = styled(motion.div)`
-  height: 260px;
+  height: 266px;
   overflow-y: auto;
 `
 const TxnList = ({ children }) => {
