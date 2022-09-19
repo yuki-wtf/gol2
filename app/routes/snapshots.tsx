@@ -64,7 +64,11 @@ export default function Snapshots() {
           you evolve the infinite game. <br /> <br /> Think snapshots should be mintable as NFTs? Let us know on{' '}
           <Twitterlink href="https://twitter.com/GoL2io" title="Twitter">
             Twitter
-          </Twitterlink>
+          </Twitterlink>{' '}
+          or{' '}
+          <Twitterlink href="https://discord.gg/XNFJ6HCt" title="Discord">
+            Discord
+          </Twitterlink>{' '}
         </PageIntro.Text>
       </PageIntro.Container>
       <FlexContainer>
