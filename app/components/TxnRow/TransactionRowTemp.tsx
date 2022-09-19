@@ -91,11 +91,11 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
   const currentUserId = currentUserFormatted ?? null
   const currentRowUser = user && hexToDecimalString(user)
   const prevStatus = usePrevious(status)
-  console.log('previous state ======', prevStatus)
+  // console.log('previous state ======', prevStatus)
 
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
-      console.log('transaction status', status)
+      // console.log('transaction status', status)
       controls.start({
         width: '100%',
         transition: {
@@ -110,7 +110,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
       prevStatus === undefined
     ) {
       setTimeout(() => {
-        console.log('transaction status 2')
+        // console.log('transaction status 2')
         controls.set({
           width: '0%',
         })
@@ -129,14 +129,14 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         },
       })
       setTimeout(() => {
-        console.log('transaction status 1')
+        // console.log('transaction status 1')
         controls.start({
           width: '0%',
           transition: { duration: 0.3 },
         })
       }, 2000)
       setTimeout(() => {
-        console.log('transaction status 2')
+        // console.log('transaction status 2')
         controls.set({
           width: '0%',
         })
@@ -173,7 +173,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
         })
       }, 2000)
     }
-  }, [status, controls, statusInternal, delay, duration])
+  }, [status, controls, statusInternal, delay, duration, prevStatus])
   // console.log('current userid', currentUserId)
   // console.log('user', currentRowUser)
   // console.log('isEqual', currentRowUser == currentUserId)
