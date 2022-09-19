@@ -99,9 +99,15 @@ export function useGamePlayback({
   const goToNextFrame = useCallback(() => {
     goToFrame(state.currentFrame + 1)
   }, [goToFrame, state.currentFrame])
+
+  const maxFrameLoaded = state.frames[state.maxFrame]?.state != null
+
   const goToLastFrame = useCallback(() => {
-    goToFrame(state.maxFrame)
-  }, [goToFrame, state.maxFrame])
+    if (maxFrameLoaded) {
+      goToFrame(state.maxFrame)
+    }
+  }, [maxFrameLoaded, goToFrame, state.maxFrame])
+
   const goToFirstFrame = useCallback(() => {
     goToFrame(1)
   }, [goToFrame])
