@@ -16,11 +16,14 @@ interface LoaderData {
   readonly extinctions: number
   readonly longestStablePeriod: number
 
+  readonly currentFrame: number
+  readonly maxFrame: number
+
   readonly onChainPlay: OnChainPlay[]
   readonly receivedCells: ReceivedCell[]
 }
 
-export async function loader({ request }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
+export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
   const statistics = await sql<{ label: string; value: string }>`
     (
       select 'Generations' "label",
@@ -95,27 +98,33 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     )
   `
 
-  return json<LoaderData>({
+  const stats = {
     generations: parseInt(statistics.rows.find((r) => r.label === 'Generations').value),
     livesGiven: parseInt(statistics.rows.find((r) => r.label === 'Lives given').value),
     extinctions: parseInt(statistics.rows.find((r) => r.label === 'Extinctions').value),
     longestStablePeriod: 0,
+  }
+
+  return json<LoaderData>({
+    ...stats,
     onChainPlay: onChainPlay.rows,
     receivedCells: receivedCells.rows,
+    currentFrame: params.gameGeneration != null ? parseInt(params.gameGeneration) : stats.generations,
+    maxFrame: stats.generations,
   })
 }
 
 export default function InfinitePage() {
   useAutoRefresh()
   const data = useLoaderData<typeof loader>()
-  // console.log(data)
+
   return (
     <ContainerInner>
       <GameWrapper>
         <GameGridWrapper>
           <GameContainer
-            currentFrame={data.generations}
-            maxFrame={data.generations}
+            currentFrame={data.currentFrame}
+            maxFrame={data.maxFrame}
             receivedCells={data.receivedCells}
           />
         </GameGridWrapper>
