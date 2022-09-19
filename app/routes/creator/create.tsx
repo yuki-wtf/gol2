@@ -135,22 +135,24 @@ const Create = () => {
   useEffect(() => {
     if (data == null) return undefined
 
-    const gameState = gridToGameState(grid)
+    ;(async () => {
+      const gameState = gridToGameState(grid)
 
-    const formData = new FormData()
+      const formData = new FormData()
 
-    formData.append('hash', data)
-    formData.append('status', 'RECEIVED')
-    formData.append('functionName', 'create')
-    formData.append('functionCaller', user.userId)
-    formData.append('functionInputGameState', gameState)
+      formData.append('hash', data)
+      formData.append('status', 'RECEIVED')
+      formData.append('functionName', 'create')
+      formData.append('functionCaller', user.userId)
+      formData.append('functionInputGameState', gameState)
 
-    fetch('/api/transaction', {
-      body: formData,
-      method: 'post',
-    })
+      await fetch('/api/transaction', {
+        body: formData,
+        method: 'post',
+      })
 
-    navigate('/creator')
+      navigate('/creator')
+    })()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, navigate])

@@ -66,28 +66,50 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   }
 
   const yourGames = await sql<CreatorGame>`
-    select
-      "transactionOwner" "gameOwner",
-      "gameId",
-      (
-        select c2."gameState"
-        from creator c2
-        where c1."gameId" = c2."gameId"
-        order by COALESCE(c2."gameGeneration", 1) desc
-        limit 1
-      ) as "gameState",
-      (
-        select COALESCE(c2."gameGeneration", 1)
-        from creator c2
-        where c1."gameId" = c2."gameId"
-        order by COALESCE(c2."gameGeneration", 1) desc
-        limit 1
-      ) as "gameGeneration",
-      "createdAt"
-    from creator c1
-    where "transactionType" = 'game_created'
-      and "transactionOwner" = ${hexToDecimalString(userId)}
-    order by "createdAt"
+    (
+      select
+        "functionCaller" "gameOwner",
+        "functionInputGameState" "gameId",
+        "functionInputGameState" "gameState",
+        0 "gameGeneration",
+        "createdAt"
+      from "transaction" t
+      where "functionName" = 'create'
+        and "functionCaller" = ${hexToDecimalString(userId)}
+        and CASE "status"
+          WHEN 'RECEIVED' THEN TRUE
+          WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
+          else FALSE
+        END
+      order by "createdAt" desc
+    )
+
+    UNION ALL
+
+    (
+      select
+        "transactionOwner" "gameOwner",
+        "gameId",
+        (
+          select c2."gameState"
+          from creator c2
+          where c1."gameId" = c2."gameId"
+          order by COALESCE(c2."gameGeneration", 1) desc
+          limit 1
+        ) as "gameState",
+        (
+          select COALESCE(c2."gameGeneration", 1)
+          from creator c2
+          where c1."gameId" = c2."gameId"
+          order by COALESCE(c2."gameGeneration", 1) desc
+          limit 1
+        ) as "gameGeneration",
+        "createdAt"
+      from creator c1
+      where "transactionType" = 'game_created'
+        and "transactionOwner" = ${hexToDecimalString(userId)}
+      order by "createdAt"
+    )
   `
   const communityGames = await sql<CreatorGame>`
     select
@@ -146,10 +168,6 @@ export default function CreatorPage() {
             marginTop: 24,
           }}
         >
-          {/* TODO: STATE to show game being created
-           <SnapshotCreator gameState={userCreatedGameState} isCreating={'RECEIVED'} />
-          */}
-
           {user == null && (
             <SnapshotEmpty
               style={{ height: 196, marginBottom: 32 }}
@@ -165,8 +183,10 @@ export default function CreatorPage() {
             />
           )}
           {user != null &&
-            yourGames.map((game) => {
-              return (
+            yourGames.map((game) =>
+              game.gameGeneration == '0' ? (
+                <SnapshotCreator gameState={game.gameState} isCreating={'RECEIVED'} />
+              ) : (
                 <SnapshotCreator
                   to={`/creator/game/${game.gameId}`}
                   key={game.gameId}
@@ -176,7 +196,7 @@ export default function CreatorPage() {
                   gameState={game.gameState}
                 />
               )
-            })}
+            )}
         </div>
         <Typography.H2>Community Games</Typography.H2>
 
