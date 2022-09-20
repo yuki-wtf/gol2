@@ -105,7 +105,10 @@ export const IHeader = ({ gameId }) => {
       <Header>
         <Highlight
           collisonPadding={{ left: 24 }}
-          onClose={() => setHelpMessage(null)}
+          onClose={() => {
+            setHelpMessage(null)
+            setHasClickedEvolveCreator(true)
+          }}
           active={helpMessage === 'evolveCreator' && !GameOverMessage}
           title="Evolve game & earn tokens"
           desc="10 GOL tokens = 1 new game"
