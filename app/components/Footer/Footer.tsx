@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { BsMegaphoneFill } from 'react-icons/bs'
 import Typography from '../Typography/Typography'
 import StarknetLogoLink from './Links/StarknetLogo'
 import YukiLogoLink from './Links/YukiLogo'
@@ -76,6 +77,14 @@ const Footer = () => {
                 fill="#57637B"
               />
             </svg>
+          </Link>
+          <Link
+            rel="noreferrer"
+            href="https://github.com/yuki-wtf/GoL2-Feedback/discussions"
+            title="Go to GOL2 Feedback"
+            target="_blank"
+          >
+            <BsMegaphoneFill size={24} color="#57637B" />
           </Link>
         </StyledLinks>
         <StyledCredits>
