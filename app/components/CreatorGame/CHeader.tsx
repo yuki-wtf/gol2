@@ -36,15 +36,9 @@ export const IHeader = ({ gameId }) => {
   })
 
   useEffect(() => {
-    console.log('game over', GameOverMessage)
-
     if (hasClickedEvolveCreator) return
 
     setTimeout(() => {
-      if (GameOverMessage === null || GameOverMessage === true) {
-        setHelpMessage(null)
-        return
-      }
       setHelpMessage('evolveCreator')
     }, 1000)
   }, [setHelpMessage, hasClickedEvolveCreator, GameOverMessage])
@@ -111,7 +105,7 @@ export const IHeader = ({ gameId }) => {
         <Highlight
           collisonPadding={{ left: 24 }}
           onClose={() => setHelpMessage(null)}
-          active={helpMessage === 'evolveCreator'}
+          active={helpMessage === 'evolveCreator' && !GameOverMessage}
           title="Evolve game & earn tokens"
           desc="10 GOL tokens = 1 new game"
         >
