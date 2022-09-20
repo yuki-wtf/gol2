@@ -4,7 +4,7 @@ import Button from '../Button/Button'
 
 const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => {
   return (
-    <Dialog.Root open={true}>
+    <Dialog.Root open={open}>
       <Dialog.Overlay>
         <Dialog.Content>
           <Dialog.IconWrapper>
