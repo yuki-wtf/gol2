@@ -31,6 +31,7 @@ const StyledStarkware = styled.div`
   display: flex;
   flex: 1;
   margin-left: auto;
+  align-items: center;
   color: ${(props) => props.theme.colors.text200};
 `
 const StyledYuki = styled.div`
@@ -97,7 +98,7 @@ const Footer = () => {
             </Typography.XL1Semibold>
           </StyledYuki>
           <StyledStarkware>
-            Powered by <StarknetLogoLink />
+            <Typography.XL1Semibold>Powered by</Typography.XL1Semibold> <StarknetLogoLink />
           </StyledStarkware>
         </StyledCredits>
       </StyledFooterInner>
