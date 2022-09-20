@@ -151,6 +151,8 @@ const Create = () => {
         method: 'post',
       })
 
+      setGrid(gameStateToGrid('0'))
+
       navigate('/creator')
     })()
 
