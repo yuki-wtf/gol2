@@ -50,12 +50,13 @@ export const IHeader = () => {
     if (helpMessage === 'evolveInfinite') {
       timer = setTimeout(() => {
         setHelpMessage(null)
+        setHasClickedEvolveInfinite(true)
       }, 3000)
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [helpMessage, setHelpMessage])
+  }, [helpMessage, setHelpMessage, setHasClickedEvolveInfinite])
 
   useEffect(() => {
     if (loading) {

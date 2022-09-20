@@ -48,12 +48,13 @@ export const IHeader = ({ gameId }) => {
     if (helpMessage === 'evolveCreator') {
       timer = setTimeout(() => {
         setHelpMessage(null)
+        setHasClickedEvolveCreator(true)
       }, 3000)
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [helpMessage, setHelpMessage])
+  }, [helpMessage, setHelpMessage, setHasClickedEvolveCreator])
 
   useEffect(() => {
     if (loading) {
