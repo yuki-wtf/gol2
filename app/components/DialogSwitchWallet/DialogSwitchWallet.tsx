@@ -16,7 +16,7 @@ const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => 
           <Dialog.Description>
             You are using GoL2 on {currentNetwork}. Please switch your <br />
             wallet network from {wrongNetwork} to {currentNetwork}.<br /> <br /> Try refreshing the app if network used{' '}
-            <br /> is not correctly detected by Gol2
+            <br /> is not correctly detected by Gol2.
           </Dialog.Description>
           <Dialog.ActionContainer>
             <Button onClick={onClose} full label="ok" secondary />
