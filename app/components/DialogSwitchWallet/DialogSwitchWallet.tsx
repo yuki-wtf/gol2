@@ -4,7 +4,7 @@ import Button from '../Button/Button'
 
 const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => {
   return (
-    <Dialog.Root open={open}>
+    <Dialog.Root open={true}>
       <Dialog.Overlay>
         <Dialog.Content>
           <Dialog.IconWrapper>
@@ -14,8 +14,9 @@ const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => 
           </Dialog.IconWrapper>
           <Dialog.Title>Wrong Network selected</Dialog.Title>
           <Dialog.Description>
-            You are using GoL2 on {currentNetwork}. Please switch your wallet <br /> network from {wrongNetwork} to{' '}
-            {currentNetwork}.
+            You are using GoL2 on {currentNetwork}. Please switch your <br />
+            wallet network from {wrongNetwork} to {currentNetwork}.<br /> <br /> Try refreshing the app if network used{' '}
+            <br /> is not correctly detected by Gol2
           </Dialog.Description>
           <Dialog.ActionContainer>
             <Button onClick={onClose} full label="ok" secondary />

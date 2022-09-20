@@ -108,7 +108,10 @@ export const IHeader = () => {
         {selectedCell != null && <TempOverlay />}
         <Highlight
           collisonPadding={{ left: 24 }}
-          onClose={() => setHelpMessage(null)}
+          onClose={() => {
+            setHelpMessage(null)
+            setHasClickedEvolveInfinite(true)
+          }}
           active={helpMessage === 'evolveInfinite'}
           title="Evolve game & earn tokens"
           desc="1 GOL token = 1 Give Life to a cell "
