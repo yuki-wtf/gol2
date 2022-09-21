@@ -56,6 +56,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
         "createdAt"
       from creator c1
       where "transactionType" = 'game_created'
+        and "gameId" != 0
       order by "createdAt" desc
     `
 
@@ -81,6 +82,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
           WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
           else FALSE
         END
+        and "functionInputGameState" != 0
       order by "createdAt" desc
     )
 
@@ -108,6 +110,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
       from creator c1
       where "transactionType" = 'game_created'
         and "transactionOwner" = ${hexToDecimalString(userId)}
+        and "gameId" != 0
       order by "createdAt" desc
     )
   `
@@ -133,6 +136,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     from creator c1
     where "transactionType" = 'game_created'
       and "transactionOwner" != ${hexToDecimalString(userId)}
+      and "gameId" != 0
     order by "createdAt" desc
   `
 
