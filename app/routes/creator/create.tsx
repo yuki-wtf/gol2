@@ -8,7 +8,7 @@ import { useCreatorGrid } from '~/hooks/CreatorGrid'
 import { useUser } from '~/hooks/useUser'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@remix-run/react'
 import { gridToGameState } from '~/helpers/gridToGameState'
 import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
@@ -159,6 +159,8 @@ const Create = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, navigate])
 
+  const gameState = useMemo(() => gridToGameState(grid), [grid])
+
   return (
     <ContainerInner>
       <div
@@ -228,6 +230,7 @@ const Create = () => {
                 <Button
                   label="Create Game"
                   isLoading={loading}
+                  disabled={gameState === '0'}
                   onClick={() => {
                     if (library.chainId != currentStarknetChainId) {
                       setDialog('WrongNetworkDialog')
@@ -235,8 +238,9 @@ const Create = () => {
                     }
 
                     if (user != null) {
-                      const gameState = gridToGameState(grid)
                       console.log(gameState)
+
+                      if (gameState === '0') return
 
                       // TODO test this
                       invoke({
