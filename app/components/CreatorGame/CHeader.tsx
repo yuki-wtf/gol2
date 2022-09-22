@@ -2,7 +2,6 @@ import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { useGameOver } from '~/hooks/GameOver'
 import { StarknetChainId } from 'starknet4/dist/constants'
 import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
@@ -15,7 +14,13 @@ import DialogWaiting from '../DialogWaiting/DialogWaiting'
 import Header from '../GolGrid/Header/Header'
 import Highlight from '../Highlight/Highlight'
 
-export const IHeader = ({ gameId }) => {
+
+interface Props {
+  readonly isGameOver: boolean
+  readonly gameId: string
+}
+
+export const IHeader = ({ gameId, isGameOver }: Props) => {
   const [hasClickedEvolveCreator, setHasClickedEvolveCreator] = useLocalStorage('has-clicked-evolve-creator', false)
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
@@ -24,7 +29,6 @@ export const IHeader = ({ gameId }) => {
   const { library } = useStarknet()
   const [dialog, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
-  const [GameOverMessage, setGameOverMessage] = useGameOver()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
@@ -41,11 +45,12 @@ export const IHeader = ({ gameId }) => {
     setTimeout(() => {
       setHelpMessage('evolveCreator')
     }, 1000)
-  }, [setHelpMessage, hasClickedEvolveCreator, GameOverMessage])
+  }, [setHelpMessage, hasClickedEvolveCreator])
 
   useEffect(() => {
     let timer
-    if (helpMessage === 'evolveCreator') {
+
+    if (helpMessage === 'evolveCreator' && !isGameOver) {
       timer = setTimeout(() => {
         setHelpMessage(null)
         setHasClickedEvolveCreator(true)
@@ -54,7 +59,7 @@ export const IHeader = ({ gameId }) => {
         clearTimeout(timer)
       }
     }
-  }, [helpMessage, setHelpMessage, setHasClickedEvolveCreator])
+  }, [helpMessage, setHelpMessage, setHasClickedEvolveCreator, isGameOver])
 
   useEffect(() => {
     if (loading) {
@@ -109,7 +114,7 @@ export const IHeader = ({ gameId }) => {
             setHelpMessage(null)
             setHasClickedEvolveCreator(true)
           }}
-          active={helpMessage === 'evolveCreator' && !GameOverMessage}
+          active={helpMessage === 'evolveCreator' && !isGameOver}
           title="Evolve game & earn tokens"
           desc="10 GOL tokens = 1 new game"
         >
@@ -134,7 +139,7 @@ export const IHeader = ({ gameId }) => {
             isLoading={loading}
             label="Evolve"
             icon={<HiOutlineLightningBolt size={24} />}
-            disabled={GameOverMessage}
+            disabled={isGameOver}
           />
         </Highlight>
       </Header>

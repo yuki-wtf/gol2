@@ -4,8 +4,6 @@ import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import Body from '../GolGrid/Body/Body'
 import Loader from '../Loader/Loader'
 import Grid from './Grid'
-import { useGameOver } from '~/hooks/GameOver'
-import { useEffect } from 'react'
 
 const StyledLoaderContainer = styled(motion.div)`
   width: 512px;
@@ -19,16 +17,6 @@ interface Props {
 }
 
 export default function GridWrapper({ gameState, isGameOver }: Props) {
-  const [GameOverMessage, setGameOverMessage] = useGameOver()
-
-  useEffect(() => {
-    if (isGameOver) {
-      setGameOverMessage(true)
-      return
-    }
-    setGameOverMessage(false)
-  }, [isGameOver, setGameOverMessage])
-
   return (
     <Body>
       {isGameOver && (

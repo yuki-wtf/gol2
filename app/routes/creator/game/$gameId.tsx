@@ -158,7 +158,7 @@ export default function CreatorGamePage() {
           <div style={{ width: 544, minWidth: 544 }}>
             <CreatorGameHeader gameId={game.gameId} gameOwner={game.gameOwner} />
             <GameContainer
-              gameId={game.gameId}
+              game={game}
               currentFrame={parseInt(game.gameGeneration)}
               maxFrame={parseInt(game.gameGeneration)}
             />

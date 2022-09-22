@@ -22,7 +22,6 @@ import { SelectedCellProvider } from './hooks/SelectedCell'
 import { CreatorGridProvider } from './hooks/CreatorGrid'
 import { HelpMessageProvider } from './hooks/HelpMessage'
 import MobileMessage from './components/MobileMessage/MobileMessage'
-import { GameOverProvider } from './hooks/GameOver'
 import { DialogProvider } from './hooks/Dialog'
 import Dialogs from './components/Dialogs'
 import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
@@ -182,19 +181,17 @@ function AppLayout({ children }) {
     <Document>
       <ThemeProvider theme={infinite}>
         <RootLoaderDataProvider>
-          <GameOverProvider>
-            <HelpMessageProvider>
-              <DialogProvider>
-                <SelectedCellProvider>
-                  <CreatorGridProvider>
-                    <GlobalStyle />
-                    <Layout>{children}</Layout>
-                    <Dialogs />
-                  </CreatorGridProvider>
-                </SelectedCellProvider>
-              </DialogProvider>
-            </HelpMessageProvider>
-          </GameOverProvider>
+          <HelpMessageProvider>
+            <DialogProvider>
+              <SelectedCellProvider>
+                <CreatorGridProvider>
+                  <GlobalStyle />
+                  <Layout>{children}</Layout>
+                  <Dialogs />
+                </CreatorGridProvider>
+              </SelectedCellProvider>
+            </DialogProvider>
+          </HelpMessageProvider>
         </RootLoaderDataProvider>
       </ThemeProvider>
     </Document>
