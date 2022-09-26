@@ -48,12 +48,21 @@ export function useGamePlayback({
   })
 
   useEffect(() => {
-    setState((state) => ({
-      ...state,
-      maxFrame,
-      currentFrame,
-    }))
-  }, [maxFrame, currentFrame])
+    setState((state) => {
+      if (state.currentFrame === state.maxFrame) {
+        return {
+          ...state,
+          maxFrame,
+          isPlaying: true,
+        }
+      } else {
+        return {
+          ...state,
+          maxFrame,
+        }
+      }
+    })
+  }, [maxFrame])
 
   // methods
   const goToFrame = useCallback((frame: number) => {
@@ -100,13 +109,9 @@ export function useGamePlayback({
     goToFrame(state.currentFrame + 1)
   }, [goToFrame, state.currentFrame])
 
-  const maxFrameLoaded = state.frames[state.maxFrame]?.state != null
-
   const goToLastFrame = useCallback(() => {
-    if (maxFrameLoaded) {
-      goToFrame(state.maxFrame)
-    }
-  }, [maxFrameLoaded, goToFrame, state.maxFrame])
+    goToFrame(state.maxFrame)
+  }, [goToFrame, state.maxFrame])
 
   const goToFirstFrame = useCallback(() => {
     goToFrame(1)
