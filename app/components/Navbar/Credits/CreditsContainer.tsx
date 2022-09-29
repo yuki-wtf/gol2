@@ -3,7 +3,6 @@ import T from '../../Typography/Typography'
 import GolToken from '~/components/Logos/Token/GolToken'
 import { useUser } from '~/hooks/useUser'
 import Button from '~/components/Button/Button'
-import { useLocation } from 'react-router-dom'
 import { HiPlus } from 'react-icons/hi'
 import Highlight from '~/components/Highlight/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
@@ -15,6 +14,7 @@ import { useLocalStorage } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useStarknet } from '@starknet-react/core'
 import { getChecksumAddress } from 'starknet4'
+import { useLocation } from '@remix-run/react'
 
 const StyledContainer = styled.div`
   display: flex;

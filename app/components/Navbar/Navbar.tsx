@@ -5,8 +5,7 @@ import MenuButton from './MenuButton/MenuButton'
 import TempOverlay from '../TempOverlay/TempOverlay'
 import CreditsContainer from './Credits/CreditsContainer'
 import { useSelectedCell } from '~/hooks/SelectedCell'
-import { useLocation } from 'react-router-dom'
-import { Link } from '@remix-run/react'
+import { Link, useLocation } from '@remix-run/react'
 import ClientOnly from '../ClientOnly'
 
 const StyledNavbar = styled.header`
