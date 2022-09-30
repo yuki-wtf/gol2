@@ -4,7 +4,7 @@
   "scripts": {
     "build": "yarn remix:build",
     "dev": "cross-env NODE_ENV=development yarn remix:dev",
-    "start": "remix-serve build",
+    "start": "yarn node --require newrelic ./node_modules/.bin/remix-serve build",
     "fmt": "yarn commands:prettier --write",
     "lint": "yarn commands:eslint",
     "commands:prettier": "prettier **/*.{js,ts,tsx,json,md}",
