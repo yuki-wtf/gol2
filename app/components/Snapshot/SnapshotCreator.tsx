@@ -4,6 +4,7 @@ import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { Link } from '@remix-run/react'
+import ClientOnly from '../ClientOnly'
 
 const StyledGridContainer = styled.div`
   width: 212px;
@@ -111,7 +112,7 @@ const SnapshotCreator = ({ to, generationNumber, address, id, gameState, isCreat
   return (
     <StyledCard to={!isCreating && to}>
       <StyledGridContainer>
-        <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />
+        <ClientOnly>{() => <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />}</ClientOnly>
       </StyledGridContainer>
       {isCreating === 'RECEIVED' ? (
         <>

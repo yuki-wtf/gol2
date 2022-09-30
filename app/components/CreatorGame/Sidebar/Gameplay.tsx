@@ -1,7 +1,7 @@
 import SidebarSection from '../../SidebarSection/SidebarSection'
 import { TxnRowStatus } from '../../TxnRow/TxnRow'
 import type { OnChainPlay } from '~/db.server'
-import { getChecksumAddress } from 'starknet'
+import { getChecksumAddress } from 'starknet4'
 import type { SerializeFrom } from '@remix-run/node'
 import TransactionRowTemp from '~/components/TxnRow/TransactionRowTemp'
 import TxnList from '~/components/TxnRowNew/TxnList'
