@@ -99,6 +99,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       WHERE CASE "status"
           WHEN 'RECEIVED' THEN TRUE
           WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
+          WHEN 'REJECTED' THEN "createdAt" > (now() - interval '15 minutes')
           else FALSE
         END
         AND CASE "functionName"
