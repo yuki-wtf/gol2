@@ -108,9 +108,9 @@ const StyledUserAddress = styled.div`
   margin-top: 4px;
 `
 
-const SnapshotCreator = ({ to, generationNumber, address, id, gameState, isCreating }) => {
+const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, isCreating }) => {
   return (
-    <StyledCard to={!isCreating && to}>
+    <StyledCard to={!isCreating && to} style={style}>
       <StyledGridContainer>
         <ClientOnly>{() => <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />}</ClientOnly>
       </StyledGridContainer>

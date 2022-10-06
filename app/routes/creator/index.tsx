@@ -14,7 +14,8 @@ import { getUserId } from '~/session.server'
 import { hexToDecimalString } from 'starknet/utils/number'
 import { useAutoRefresh } from '~/hooks/useAutoRefresh'
 import SnapshotEmpty from '~/components/SnapshotEmpty/SnapshotEmpty'
-import { HiOutlineCube, HiOutlineLightningBolt } from 'react-icons/hi'
+import { HiOutlineCube } from 'react-icons/hi'
+import { AutoSizer, Grid, WindowScroller } from 'react-virtualized'
 
 // const Loading = styled.div`
 //   width: 210px;
@@ -206,24 +207,47 @@ export default function CreatorPage() {
 
         <div
           style={{
-            display: 'flex',
-            gap: 0,
-            flexWrap: 'wrap',
             marginTop: 24,
           }}
         >
-          {communityGames.map((game) => {
-            return (
-              <SnapshotCreator
-                to={`/creator/game/${game.gameId}`}
-                key={game.gameId}
-                id={game.gameId}
-                generationNumber={game.gameGeneration}
-                address={game.gameOwner}
-                gameState={game.gameState}
-              />
-            )
-          })}
+          <WindowScroller>
+            {({ height, isScrolling, onChildScroll, scrollTop }) => {
+              console.log(scrollTop)
+              return (
+                <AutoSizer disableHeight>
+                  {({ width }) => (
+                    <Grid
+                      cellRenderer={({ columnIndex, rowIndex, style, key }) => {
+                        const game = communityGames[rowIndex * 4 + columnIndex]
+                        if (game == null) return null
+                        return (
+                          <SnapshotCreator
+                            style={style}
+                            to={`/creator/game/${game.gameId}`}
+                            key={key}
+                            id={game.gameId}
+                            generationNumber={game.gameGeneration}
+                            address={game.gameOwner}
+                            gameState={game.gameState}
+                          />
+                        )
+                      }}
+                      columnCount={4}
+                      columnWidth={230}
+                      rowCount={Math.ceil(communityGames.length / 4)}
+                      rowHeight={335}
+                      autoHeight
+                      width={width}
+                      height={height}
+                      isScrolling={isScrolling}
+                      onScroll={onChildScroll}
+                      scrollTop={scrollTop}
+                    />
+                  )}
+                </AutoSizer>
+              )
+            }}
+          </WindowScroller>
         </div>
       </ContainerInner>
     </ThemeProvider>
