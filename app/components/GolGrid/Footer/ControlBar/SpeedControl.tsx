@@ -1,6 +1,6 @@
 import { HiCheck, HiChevronRight } from 'react-icons/hi'
 import DropUpMenu from '../../../DropUpMenu/DropUpMenu'
-import type { Actions, State } from '~/hooks/useInfiniteGamePlayback'
+import type { Actions, State } from '~/hooks/useGamePlayback'
 
 interface Props {
   readonly state: State

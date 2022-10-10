@@ -1,11 +1,6 @@
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
-// const sizes = {
-//   sm: 16,
-//   md: 19,
-//   lg: 36,
-// } as const
 const animate = keyframes`
   from {
     transform: translateX(-100%);
@@ -14,10 +9,8 @@ const animate = keyframes`
     transform: translateX(100%);
   }
 `
-// type Props = {
-//   size?: keyof typeof sizes
-// }
-const Skeleton = styled.div`
+
+const Skeleton = styled.div<{ size?: number }>`
   display: inline-flex;
   width: 100%;
   position: relative;

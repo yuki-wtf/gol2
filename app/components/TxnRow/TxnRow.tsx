@@ -64,7 +64,9 @@ export const TxnRowStatus = {
     buttonColor: '#FCFAF8',
     userColor: '#F3E9E1',
   },
-}
+} as const
+
+export type TxnStatus = keyof typeof TxnRowStatus
 
 const TxnRow = ({ data }) => {
   return (

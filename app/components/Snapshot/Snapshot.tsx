@@ -1,4 +1,4 @@
-import { HiOutlinePhotograph, HiOutlineUser, HiOutlineX } from 'react-icons/hi'
+import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
@@ -55,7 +55,7 @@ const StyledSkeletonCard = styled(motion.li)`
     animation-iteration-count: infinite;
   }
 `
-const StyledSkeletonGridContainer = styled.div`
+const StyledSkeletonGridContainer = styled.div<{ large?: boolean }>`
   width: 244px;
   height: 244px;
   border: 1px solid #000000;
@@ -66,7 +66,7 @@ const StyledSkeletonGridContainer = styled.div`
   align-items: center;
   justify-content: center;
 `
-const StyledActions = styled.div`
+const StyledActions = styled.div<{ large?: boolean }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -78,7 +78,7 @@ const StyledActions = styled.div`
   padding-left: ${(props) => (props.large ? '40px' : '0')};
   padding-top: ${(props) => (props.large ? '30px' : '0')};
 `
-const StyledCard = styled(motion.li)`
+const StyledCard = styled(motion.li)<{ large?: boolean }>`
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -123,7 +123,7 @@ const StyledDivider = styled.div`
   margin-top: 12px;
   margin-bottom: 5px;
 `
-const StyledGridContainer = styled.div`
+const StyledGridContainer = styled.div<{ large?: boolean }>`
   width: ${(props) => (props.large ? '458px' : '244px')};
   height: ${(props) => (props.large ? '520px' : '244px')};
 
@@ -138,7 +138,7 @@ const StyledGridContainer = styled.div`
   padding-right: ${(props) => (props.large ? '24px' : '0')};
   padding-bottom: ${(props) => (props.large ? '85px' : '0')};
 `
-const StyledGenLabel = styled.div`
+const StyledGenLabel = styled.div<{ large?: boolean }>`
   text-align: left;
   width: 100%;
   font-family: 'Mulish';
@@ -165,7 +165,7 @@ const StyledGenLabelLarge = styled.div`
   padding-top: 37px;
   padding-left: 40px;
 `
-const StyledGenNumber = styled.div`
+const StyledGenNumber = styled.div<{ large?: boolean }>`
   text-align: left;
   width: 100%;
   font-family: 'Mulish';
@@ -178,22 +178,8 @@ const StyledGenNumber = styled.div`
   letter-spacing: 0.05em;
   padding-left: ${(props) => (props.large ? '40px' : '0')};
 `
-// const StyledGenId = styled.div`
-//   font-family: 'Mulish';
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 13px;
-//   line-height: 26px;
-//   text-align: left;
-//   width: 100%;
-//   color: #2d3038;
-//   margin-top: 4px;
-//   & span {
-//     color: #57637b;
-//     font-weight: 600;
-//   }
-// `
-const StyledUserAddress = styled.div`
+
+const StyledUserAddress = styled.div<{ large?: boolean }>`
   font-family: 'Mulish';
   font-style: normal;
   font-weight: 700;
@@ -206,14 +192,6 @@ const StyledUserAddress = styled.div`
   gap: 4px;
   margin-top: 8px;
   padding-left: ${(props) => (props.large ? '40px' : '0')};
-`
-const StyledCloseBtn = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  background: none;
-  outline: none;
-  border: 0;
 `
 
 const SkeletonImagePreview = () => {
@@ -237,7 +215,7 @@ const Snapshot = ({
   ...rest
 }) => {
   let formattedUser
-  // console.log(user)
+
   if (user) {
     formattedUser = getShortChecksumAddress(user)
   }
@@ -259,7 +237,7 @@ const Snapshot = ({
             border: large ? '2px solid #000000 ' : '0px',
           }}
         >
-          <ISnapshotGrid large={large} isSnapshot data={gameStateToGrid(gameState)} />
+          <ISnapshotGrid data={gameStateToGrid(gameState)} />
         </div>
         {large && <SnapshotLogo />}
       </StyledGridContainer>
@@ -274,9 +252,6 @@ const Snapshot = ({
 
       {!large && <StyledDivider />}
 
-      {/* <StyledGenId>
-       <span>ID:</span> 32232323232323
-      </StyledGenId> */}
       <StyledUserAddress large={large}>
         <HiOutlineUser color="#57637b" size={16} /> {formattedUser}
       </StyledUserAddress>

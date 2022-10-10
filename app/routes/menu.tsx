@@ -52,9 +52,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 }
 
 const Menu = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedHover, setselectedHover] = useState(null)
-  const [currentNav, setCurrentNav] = useState(null)
+  const [currentNav, setCurrentNav] = useState<number>(null)
 
   const data = useLoaderData<typeof loader>()
 
@@ -106,6 +104,7 @@ const Menu = () => {
       badge: 0,
       heading: 'How does GoL2 work?',
       desc: 'New to Conways game of life? We’ve got you covered inside.',
+      desc2: null,
       image_url: '/assets/menu/howitworks.png',
       width: 353,
       height: 353,
@@ -118,11 +117,13 @@ const Menu = () => {
       badge: 0,
       heading: 'How does StarkNet work?',
       desc: 'StarkNet is a Layer 2 ZK-Rollup that is bringing massive scalability to Ethereum while preserving L1 security, permissionless interactions, and decentralization.',
+      desc2: null,
       image_url: '/assets/menu/how.png',
       width: 363,
       height: 426,
     },
-  ]
+  ] as const
+
   return (
     <NavContainer>
       <div
@@ -162,9 +163,8 @@ const Menu = () => {
                   }}
                 >
                   <NavItem
-                    selectedHover={selectedHover}
                     to={item.to}
-                    exClassName={item.className}
+                    className={item.className}
                     color={item.color}
                     title={item.title}
                     isActive={i + 1 === currentNav}
@@ -191,7 +191,6 @@ const Menu = () => {
             menuItems.map((item, i) => {
               return (
                 <MenuDescription
-                  index={i + 1}
                   title={item.heading}
                   color={item.color}
                   isActive={i + 1 === currentNav}

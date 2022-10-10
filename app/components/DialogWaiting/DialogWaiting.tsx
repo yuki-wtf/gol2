@@ -8,7 +8,7 @@ const DialogWaiting = ({ open, onClose }) => {
       <Dialog.Overlay>
         <Dialog.Content>
           <Dialog.IconWrapper>
-            <Loader theme="light" />
+            <Loader variant="light" />
           </Dialog.IconWrapper>
           <Dialog.Title centered>Waiting for confirmation</Dialog.Title>
           <Dialog.Description centered>Confirm this transaction in your wallet</Dialog.Description>

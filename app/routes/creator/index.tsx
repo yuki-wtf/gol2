@@ -17,16 +17,6 @@ import SnapshotEmpty from '~/components/SnapshotEmpty/SnapshotEmpty'
 import { HiOutlineCube } from 'react-icons/hi'
 import { AutoSizer, Grid, WindowScroller } from 'react-virtualized'
 
-// const Loading = styled.div`
-//   width: 210px;
-//   height: 211px;
-//   display: flex;
-//   background: #1b202b;
-//   border: 1px solid #000000;
-//   margin-right: 3px;
-//   margin-left: 14px;
-//   margin-bottom: 16px;
-// `
 interface LoaderData {
   readonly yourGames: CreatorGame[]
   readonly communityGames: CreatorGame[]
@@ -190,7 +180,7 @@ export default function CreatorPage() {
           {user != null &&
             yourGames.map((game) =>
               game.gameGeneration == '0' ? (
-                <SnapshotCreator gameState={game.gameState} isCreating={'RECEIVED'} />
+                <SnapshotCreator gameState={game.gameState} isCreating />
               ) : (
                 <SnapshotCreator
                   to={`/creator/game/${game.gameId}`}
@@ -212,7 +202,6 @@ export default function CreatorPage() {
         >
           <WindowScroller>
             {({ height, isScrolling, onChildScroll, scrollTop }) => {
-              console.log(scrollTop)
               return (
                 <AutoSizer disableHeight>
                   {({ width }) => (

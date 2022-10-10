@@ -1,63 +1,63 @@
+import type { Interpolation } from '@emotion/styled'
 import styled from '@emotion/styled'
 
 interface Props {
-  readonly state?: 'pending' | 'alive' | 'selected' | 'createSelected' | 'disabled' | 'dead'
+  readonly state?: 'pending' | 'alive' | 'selected' | 'createSelected' | 'disabled' | 'dead' | 'default'
   readonly hasHoverState?: boolean
   readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const cellStyles = (p) => {
-  switch (p.state) {
-    case 'pending':
-      return {
-        backgroundColor: p.theme.colors.cell.cellPendingBackground,
-        pointerEvents: 'none',
-        boxShadow: `inset 0 0 0 1px ${p.theme.colors.cell.cellLiveBackground}`,
-      }
+const StyledCell = styled.div<Props>((p): Interpolation<Props> => {
+  const style = ((): Interpolation<Props> => {
+    switch (p.state) {
+      case 'pending':
+        return {
+          backgroundColor: p.theme.colors.cell.cellPendingBackground,
+          pointerEvents: 'none',
+          boxShadow: `inset 0 0 0 1px ${p.theme.colors.cell.cellLiveBackground}`,
+        }
 
-    case 'alive':
-      return {
-        backgroundColor: p.theme.colors.cell.cellLiveBackground,
-        pointerEvents: 'none',
-      }
+      case 'alive':
+        return {
+          backgroundColor: p.theme.colors.cell.cellLiveBackground,
+          pointerEvents: 'none',
+        }
 
-    case 'selected':
-      return {
-        backgroundColor: p.theme.colors.cell.cellPreLiveBackground,
-        pointerEvents: 'none',
-      }
-
-    case 'createSelected':
-      return {
-        backgroundColor: p.theme.colors.cell.cellPreLiveBackground,
-        cursor: 'pointer',
-        '> &:hover': {
+      case 'selected':
+        return {
           backgroundColor: p.theme.colors.cell.cellPreLiveBackground,
-        },
-      }
+          pointerEvents: 'none',
+        }
 
-    case 'disabled':
-      return {
-        pointerEvents: 'none',
-        backgroundColor: p.theme.colors.cell.cellDefaultBackground,
+      case 'createSelected':
+        return {
+          backgroundColor: p.theme.colors.cell.cellPreLiveBackground,
+          cursor: 'pointer',
+          '> &:hover': {
+            backgroundColor: p.theme.colors.cell.cellPreLiveBackground,
+          },
+        }
 
-        border: '0.5px solid #2d3038',
-        '> &:hover': {
+      case 'disabled':
+        return {
+          pointerEvents: 'none',
           backgroundColor: p.theme.colors.cell.cellDefaultBackground,
-        },
-      }
 
-    case 'dead':
-    default:
-      return {
-        backgroundColor: p.theme.colors.cell.cellDefaultBackground,
-        border: '0.5px solid #2d3038',
-      }
-  }
-}
+          border: '0.5px solid #2d3038',
+          '> &:hover': {
+            backgroundColor: p.theme.colors.cell.cellDefaultBackground,
+          },
+        }
 
-const StyledCell = styled.div((p) => {
-  const style = cellStyles(p)
+      case 'dead':
+      case 'default':
+      default:
+        return {
+          backgroundColor: p.theme.colors.cell.cellDefaultBackground,
+          border: '0.5px solid #2d3038',
+        }
+    }
+  })()
 
   style['&:hover'] = {
     backgroundColor: p.hasHoverState && p.theme.colors.cell.cellDefaultHover,

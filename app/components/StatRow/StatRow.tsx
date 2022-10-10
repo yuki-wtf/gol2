@@ -3,12 +3,6 @@ import { motion } from 'framer-motion'
 import Skeleton from '../Skeleton/Skeleton'
 import T from '../Typography/Typography'
 
-// const Container = styled(motion.div)`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   height: 48px;
-// `
 const StyledStat = styled(motion.div)`
   display: flex;
   flex-direction: row;
@@ -47,7 +41,15 @@ const fadeInAnimation = {
   },
 }
 
-const StatRow = ({ icon, loading, error, title = 'title', value }) => {
+interface Props {
+  readonly icon: React.ReactNode
+  readonly loading?: boolean
+  readonly error?: React.ReactNode
+  readonly title: React.ReactNode
+  readonly value: React.ReactNode
+}
+
+const StatRow = ({ icon, loading, error, title, value }: Props) => {
   return (
     <StyledStat {...fadeInAnimation}>
       <StyledIcon>{icon}</StyledIcon>

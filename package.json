@@ -45,6 +45,7 @@
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.4",
+    "@types/bn.js": "^5.1.1",
     "@types/node": "^18.8.3",
     "@types/pg": "^8.6.5",
     "@types/react": "^18.0.21",

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 const Root = styled(DropdownMenuPrimitive.Root)``
 const Trigger = styled(DropdownMenuPrimitive.Trigger)`
   border-radius: 4px;
-  border: 2px solid ${(props) => props.theme.colors.buttonPrimary.triggerBorder};
+  border: 2px solid ${(props) => props.theme.colors.dropdownMenu.triggerBorder};
   background-color: ${(props) => props.theme.colors.buttonPrimary.defaultBackground};
   color: #0a0c10;
   height: 20px;

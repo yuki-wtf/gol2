@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useAnimation, motion } from 'framer-motion'
 import { HiOutlineHeart, HiOutlineLightningBolt } from 'react-icons/hi'
+import type { TxnStatus } from './TxnRow'
 import { TxnRowStatus } from './TxnRow'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { useUser } from '~/hooks/useUser'
@@ -19,7 +20,7 @@ const Container = styled(motion.div)`
 
   /* opacity: 0; */
 `
-const Progress = styled(motion.div)`
+const Progress = styled(motion.div)<{ status: TxnStatus }>`
   border: 1px solid #1d222c;
   background-color: ${(p) => TxnRowStatus[p.status].color};
 
@@ -44,7 +45,7 @@ const InnerContainer = styled(motion.div)`
   height: 48px;
   z-index: 2;
 `
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.div<{ status: TxnStatus }>`
   margin-left: auto;
   a {
     color: ${(p) => TxnRowStatus[p.status].buttonColor};
@@ -62,7 +63,7 @@ const ButtonContainerCompleted = styled.div`
     }
   }
 `
-const IconContainer = styled.div`
+const IconContainer = styled.div<{ status: TxnStatus }>`
   height: 100%;
   justify-content: center;
   display: flex;
@@ -79,7 +80,7 @@ const IconContainerComplete = styled.div`
 const UserContainer = styled(motion.span)`
   color: #f3e9e1;
 `
-const StatusContainer = styled.div`
+const StatusContainer = styled.div<{ status: TxnStatus }>`
   color: ${(p) => TxnRowStatus[p.status].textColor};
 `
 
@@ -186,7 +187,6 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
 
   return (
     <Container
-      status={status}
       initial={{
         opacity: 0,
       }}
@@ -235,7 +235,6 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
               animate={{
                 opacity: 1,
               }}
-              status={status}
             >
               {getShortChecksumAddress(user)} {isMyTxn && <span>(you)</span>}
             </UserContainer>
@@ -256,7 +255,7 @@ const TransactionRowTemp = ({ url = '/', type = 'game_evolved', status, delay = 
             </a>
           </ButtonContainer>
         ) : (
-          <ButtonContainerCompleted status={status}>
+          <ButtonContainerCompleted>
             <a rel="noreferrer" target="_blank" href={`${voyagerUrl}/tx/${url}`}>
               view
             </a>

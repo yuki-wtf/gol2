@@ -42,7 +42,7 @@ export default function GridWrapper({ gameState, isGameOver }: Props) {
             },
           }}
         >
-          <Loader theme="dark" centered />
+          <Loader variant="dark" centered />
         </StyledLoaderContainer>
       )}
     </Body>

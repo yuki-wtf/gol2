@@ -60,7 +60,7 @@ const Content = styled(DialogPrimitve.Content)`
   flex-direction: column;
   z-index: 100000;
 `
-const Title = styled(DialogPrimitve.Title)`
+const Title = styled(DialogPrimitve.Title)<{ centered?: boolean }>`
   font-family: 'Mulish';
   font-style: normal;
   font-weight: 800;
@@ -71,7 +71,7 @@ const Title = styled(DialogPrimitve.Title)`
   margin: 0;
   text-align: ${(p) => (p.centered ? 'center' : 'left')};
 `
-const Description = styled(DialogPrimitve.Description)`
+const Description = styled(DialogPrimitve.Description)<{ centered?: boolean }>`
   font-family: 'Mulish';
   font-style: normal;
   font-weight: 400;

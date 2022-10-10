@@ -36,7 +36,7 @@ export default function GridWrapper({ gameState, receivedCells, isPlaying }: Pro
             },
           }}
         >
-          <Loader theme="dark" centered />
+          <Loader variant="dark" centered />
         </StyledLoaderContainer>
       )}
     </Body>

@@ -1,4 +1,3 @@
-//Todo: Move to styled components
 import { motion } from 'framer-motion'
 
 const MenuDescriptionVariant = {
@@ -67,19 +66,27 @@ const imgVariant = {
   },
 }
 
+interface Props {
+  readonly isActive: boolean
+  readonly color: string
+  readonly title: string
+  readonly desc: string
+  readonly desc2: string
+  readonly img: string
+  readonly width: number
+  readonly height: number
+}
+
 const MenuDescription = ({
-  data,
   isActive,
   color,
   title,
   desc,
   desc2 = null,
   img,
-  alt,
   width = 375,
   height,
-  index,
-}) => {
+}:Props) => {
   return (
     <motion.div
       style={{
@@ -121,7 +128,7 @@ const MenuDescription = ({
           </motion.div>
         ) : null}
         <motion.div variants={imgVariant}>
-          <img className="descImg" src={img} alt={alt} width={width} height={height} />
+          <img className="descImg" src={img} alt='' width={width} height={height} />
         </motion.div>
       </div>
     </motion.div>

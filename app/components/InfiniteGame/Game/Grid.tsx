@@ -19,7 +19,7 @@ export default function Grid({ data, receivedCells, isPlaying }: Props) {
   const balance = user?.balance ?? 0
 
   return (
-    <GameGrid size={512}>
+    <GameGrid>
       {data.map((row, rowIndex) => {
         return row.map((cell, colIndex) => {
           const key = `${rowIndex}${colIndex}`

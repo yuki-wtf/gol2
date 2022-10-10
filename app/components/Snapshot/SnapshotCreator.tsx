@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
+import type { LinkProps } from '@remix-run/react'
 import { Link } from '@remix-run/react'
 import ClientOnly from '../ClientOnly'
 
@@ -21,8 +22,6 @@ const StyledCard = styled(Link)`
   padding: 0;
   width: 230px;
   height: 335px;
-  /* background: #fefcfa; */
-  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); */
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -38,17 +37,6 @@ const StyledCard = styled(Link)`
     box-shadow: 0px 6px 10px #000000;
     border-color: white;
   }
-
-  /* &:before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 129px;
-    left: 0px;
-    bottom: -2px;
-    background: #dbf267;
-    border-radius: 0px 0px 0px 10px;
-  } */
 `
 const StyledGenLabel = styled.div`
   text-align: left;
@@ -77,21 +65,6 @@ const StyledGenNumber = styled.div`
   text-transform: uppercase;
   letter-spacing: 0.15em;
 `
-// const StyledGenId = styled.div`
-//   font-family: 'Mulish';
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 13px;
-//   line-height: 26px;
-//   text-align: left;
-//   width: 100%;
-//   color: #2d3038;
-//   margin-top: 4px;
-//   & span {
-//     color: #57637b;
-//     font-weight: 600;
-//   }
-// `
 const StyledUserAddress = styled.div`
   font-family: 'Mulish';
   font-style: normal;
@@ -108,13 +81,25 @@ const StyledUserAddress = styled.div`
   margin-top: 4px;
 `
 
-const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, isCreating }) => {
+interface Props {
+  readonly style?: React.CSSProperties
+  readonly to?: LinkProps['to']
+  readonly generationNumber?: string
+  readonly address?: string
+  readonly id?: string
+  readonly gameState: string
+  readonly isCreating?: boolean
+}
+
+const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, isCreating }: Props) => {
   return (
-    <StyledCard to={!isCreating && to} style={style}>
+    <StyledCard to={to} style={style}>
       <StyledGridContainer>
-        <ClientOnly>{() => <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == 0} />}</ClientOnly>
+        <ClientOnly>
+          {() => <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == '0'} />}
+        </ClientOnly>
       </StyledGridContainer>
-      {isCreating === 'RECEIVED' ? (
+      {isCreating ? (
         <>
           <StyledGenNumber> Creating Game </StyledGenNumber>
           <StyledGenLabel> Pending... </StyledGenLabel>

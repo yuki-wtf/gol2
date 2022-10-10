@@ -17,27 +17,35 @@ const StyledCenteredContainer = styled.div`
   align-items: center;
   justify-content: center;
 `
-const StyledLoaderContainer = styled.div`
+const StyledLoaderContainer = styled.div<Props>`
   height: 120px;
   width: 120px;
   z-index: 0 !important;
   & svg > g > g:first-of-type path {
-    stroke: ${(p) => (p.theme === 'light' ? '#2d3038' : '#1D222C')};
+    stroke: ${(p) => (p.variant === 'light' ? '#2d3038' : '#1D222C')};
   }
   & svg > g > g path {
-    stroke: ${(p) => (p.theme === 'light' ? '#f06b97' : '#F3E9E1')};
+    stroke: ${(p) => (p.variant === 'light' ? '#f06b97' : '#F3E9E1')};
   }
 `
 
-const Loader = ({ centered, theme = 'light' }) => {
+interface Props {
+  readonly centered?: boolean
+  readonly variant?: 'light' | 'dark'
+}
+
+const Loader = ({ centered, variant = 'light' }: Props) => {
   const { View } = useLottie(options)
-  if (centered)
+
+  if (centered) {
     return (
       <StyledCenteredContainer>
-        <StyledLoaderContainer theme={theme}>{View}</StyledLoaderContainer>
+        <StyledLoaderContainer variant={variant}>{View}</StyledLoaderContainer>
       </StyledCenteredContainer>
     )
-  return <StyledLoaderContainer theme={theme}>{View}</StyledLoaderContainer>
+  }
+
+  return <StyledLoaderContainer variant={variant}>{View}</StyledLoaderContainer>
 }
 
 export default Loader

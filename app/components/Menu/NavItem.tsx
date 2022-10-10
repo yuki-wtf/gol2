@@ -1,7 +1,8 @@
-//Todo: Move to styled components
 import { BsArrowRight } from 'react-icons/bs'
 import { motion } from 'framer-motion'
+import type { LinkProps } from '@remix-run/react'
 import { Link } from '@remix-run/react'
+
 const linkVariant = {
   hidden: {
     width: 0,
@@ -15,30 +16,26 @@ const linkVariant = {
   },
 }
 
-const NavItem = ({
-  title,
-  onMouseEnter,
-  OnMouseLeave,
-  to,
-  styles,
-  color,
-  exClassName,
-  selectedHover,
-  isActive,
-  badge,
-}) => {
+interface Props {
+  readonly title: React.ReactNode
+  readonly to: LinkProps['to']
+  readonly color: React.CSSProperties['color']
+  readonly className: string
+  readonly isActive: boolean
+  readonly badge: number
+}
+
+const NavItem = ({ title, to, color, className, isActive, badge }: Props) => {
   return (
     <div
       className="alink"
-      key={to}
       style={{
-        postion: 'relative',
-        ...styles,
+        position: 'relative',
       }}
     >
       <Link
         to={to}
-        className={`link ${exClassName}`}
+        className={`link ${className}`}
         style={{
           color: color,
           position: 'relative',
@@ -56,7 +53,6 @@ const NavItem = ({
             bottom: 0,
             height: '100%',
             backgroundColor: color,
-            // width: isActive ? "100%" : 0,
             zIndex: 0,
           }}
         />

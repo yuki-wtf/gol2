@@ -1,7 +1,9 @@
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import Typography from '../Typography/Typography'
-const StyledContainer = styled.div`
+import type { ReactNode } from 'react'
+
+const Container = styled.div`
   display: flex;
   flex-direction: row;
   gap: 24px;
@@ -39,7 +41,7 @@ const StyledText = styled(Typography.BaseRegular)`
   margin: 0;
 `
 
-const Icon = ({ color }) => {
+const Icon = ({ color }: { color: string }) => {
   return (
     <IconWrapper>
       <HiOutlineLightBulb size={48} color={color} />
@@ -47,15 +49,12 @@ const Icon = ({ color }) => {
   )
 }
 
-const Text = ({ children }) => {
+const Text = ({ children }: { children: ReactNode }) => {
   return (
     <TextWrapper>
       <StyledText>{children}</StyledText>
     </TextWrapper>
   )
-}
-const Container = ({ children, style }) => {
-  return <StyledContainer style={{ ...style }}>{children}</StyledContainer>
 }
 
 const PageIntro = {

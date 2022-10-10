@@ -86,7 +86,6 @@ const StatusContainer = styled.div`
 const TransactionRowLoading = ({ status = 'COMPLETED', delay = 1 }) => {
   return (
     <Container
-      status={status}
       initial={{
         opacity: 0,
       }}
@@ -105,7 +104,7 @@ const TransactionRowLoading = ({ status = 'COMPLETED', delay = 1 }) => {
           <HiOutlineHeart size={18} color="#57637B" />
         </IconContainerComplete>
 
-        <StatusContainer status={status}>
+        <StatusContainer>
           <UserContainer
             initial={{
               opacity: 0,
@@ -113,7 +112,6 @@ const TransactionRowLoading = ({ status = 'COMPLETED', delay = 1 }) => {
             animate={{
               opacity: 1,
             }}
-            status={status}
           >
             <Skeleton size={6} />
           </UserContainer>

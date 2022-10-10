@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header<{ empty?: boolean }>`
   background-color: ${(props) => (props.empty ? '#1D222D' : props.theme.colors.neutral100)};
   border: 1px solid ${(props) => props.theme.colors.neutral400};
   height: 68px;
@@ -14,8 +14,4 @@ const StyledHeader = styled.header`
   border-top-right-radius: 10px;
 `
 
-const Header = ({ children, empty }) => {
-  return <StyledHeader empty={empty}>{children}</StyledHeader>
-}
-
-export default Header
+export default StyledHeader

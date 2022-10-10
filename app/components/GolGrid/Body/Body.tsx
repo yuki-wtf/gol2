@@ -31,7 +31,7 @@ const Body = ({ children }) => {
          animate={{ opacity: 1 }}
          style={{ width: 512, height: 512, backgroundColor: "black" }}
        >
-         <Loader theme="dark" centered />
+         <Loader variant="dark" centered />
        </div>
       )} */}
     </StyledContainer>

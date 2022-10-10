@@ -37,7 +37,7 @@ const StyledTextWrapper = styled.div`
     }
   }
 `
-const StyledTokenIconWrapper = styled(motion.div)`
+const StyledTokenIconWrapper = styled(motion.div)<{ active?: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -93,7 +93,7 @@ export default function CreditsContainer() {
     'has-dismissed-first-token-earned-message',
     false
   )
-  const {env} = useRootLoaderData()
+  const { env } = useRootLoaderData()
 
   useEffect(() => {
     if (hasIncomingTransfer && !hasOutgoingTransfer && !hasDismissedFirstTokenEarnedMessage) {
@@ -119,7 +119,7 @@ export default function CreditsContainer() {
 
   const { connectors } = useStarknet()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()
-  const {account} = useStarknet()
+  const { account } = useStarknet()
 
   useEffect(() => {
     ;(async () => {
