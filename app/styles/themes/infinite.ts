@@ -1,4 +1,6 @@
-export const infinite = {
+import type { Theme } from '@emotion/react'
+
+export const infinite: Theme = {
   name: 'infinite',
   colors: {
     cell: {

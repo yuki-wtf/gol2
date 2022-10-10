@@ -1,4 +1,6 @@
-export const creator = {
+import type { Theme } from '@emotion/react'
+
+export const creator: Theme = {
   name: 'creator',
   colors: {
     cell: {
