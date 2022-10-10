@@ -134,11 +134,7 @@ export default function InfinitePage() {
     <ContainerInner>
       <GameWrapper>
         <GameGridWrapper>
-          <GameContainer
-            currentFrame={data.currentFrame}
-            maxFrame={data.maxFrame}
-            receivedCells={data.receivedCells}
-          />
+          <GameContainer currentFrame={data.currentFrame} maxFrame={data.maxFrame} receivedCells={data.receivedCells} />
         </GameGridWrapper>
         <SideBarWrapper>
           <Sidebar

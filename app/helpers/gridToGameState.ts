@@ -1,6 +1,6 @@
 const GRID_SIZE = 15
 
-export function gridToGameState(grid: number[][]): string  {
+export function gridToGameState(grid: number[][]): string {
   let gameState = BigInt(0)
 
   for (let row = 0; row < GRID_SIZE; row++) {

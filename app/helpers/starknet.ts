@@ -4,11 +4,7 @@ import type { BigNumberish } from 'starknet4/dist/utils/number'
 export function getShortChecksumAddress(address: BigNumberish | string): string {
   const checksumAddress = getChecksumAddress(address).toLowerCase()
 
-  return (
-    checksumAddress.slice(0, 6) +
-    '...' +
-    checksumAddress.slice(checksumAddress.length - 4)
-  )
+  return checksumAddress.slice(0, 6) + '...' + checksumAddress.slice(checksumAddress.length - 4)
 }
 
 if (import.meta.vitest) {

@@ -24,10 +24,7 @@ const build = (options) => {
               plugins: [['@babel/plugin-syntax-typescript', { isTSX: true, disallowAmbiguousJSXLike: false }]],
             },
           ],
-          plugins: [
-            '@babel/plugin-syntax-jsx',
-            '@emotion/babel-plugin'
-          ],
+          plugins: ['@babel/plugin-syntax-jsx', '@emotion/babel-plugin'],
         },
       }),
     ],

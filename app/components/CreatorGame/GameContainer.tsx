@@ -29,13 +29,7 @@ export default function GameContainer({ currentFrame, maxFrame, game }: Props) {
 
   return (
     <StyledGridContainer>
-      <CHeader
-        gameId={game.gameId}
-        isGameOver={
-          game.gameState != null &&
-          BigInt(game.gameState) === BigInt(0)
-        }
-      />
+      <CHeader gameId={game.gameId} isGameOver={game.gameState != null && BigInt(game.gameState) === BigInt(0)} />
       <GridWrapper
         gameState={state.frames[state.currentFrame]?.state ?? null}
         isGameOver={

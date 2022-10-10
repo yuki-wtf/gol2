@@ -57,13 +57,7 @@ export default function CreatorGameHeader({ gameOwner, gameId, title }: Props) {
     <StyledCreatorHeader>
       <StyledButtonIdWrapper>
         <StyledButtonWrapper>
-          <Button
-            to='/creator'
-            tertiaryColor="#C2B9B2"
-            icon={<HiOutlineArrowLeft />}
-            label="All games"
-            tertiary
-          />
+          <Button to="/creator" tertiaryColor="#C2B9B2" icon={<HiOutlineArrowLeft />} label="All games" tertiary />
         </StyledButtonWrapper>
         {gameId && <StyledId>Game #{gameId.slice(0, 3)}</StyledId>}
         {title && <StyledId>{title}</StyledId>}

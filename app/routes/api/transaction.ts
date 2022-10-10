@@ -1,9 +1,9 @@
-import type { ActionArgs } from "@remix-run/node";
-import { hexToDecimalString } from "starknet/utils/number";
-import { sql } from "~/db.server";
+import type { ActionArgs } from '@remix-run/node'
+import { hexToDecimalString } from 'starknet/utils/number'
+import { sql } from '~/db.server'
 
 export async function action({ request }: ActionArgs) {
-  const body = await request.formData();
+  const body = await request.formData()
 
   const tx = await sql`
     INSERT INTO transaction (

@@ -14,7 +14,6 @@ import DialogWaiting from '../DialogWaiting/DialogWaiting'
 import Header from '../GolGrid/Header/Header'
 import Highlight from '../Highlight/Highlight'
 
-
 interface Props {
   readonly isGameOver: boolean
   readonly gameId: string

@@ -134,7 +134,6 @@ const Create = () => {
 
   useEffect(() => {
     if (data == null) return undefined
-
     ;(async () => {
       const gameState = gridToGameState(grid)
 

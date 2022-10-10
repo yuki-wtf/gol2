@@ -77,16 +77,7 @@ interface Props {
   readonly height: number
 }
 
-const MenuDescription = ({
-  isActive,
-  color,
-  title,
-  desc,
-  desc2 = null,
-  img,
-  width = 375,
-  height,
-}:Props) => {
+const MenuDescription = ({ isActive, color, title, desc, desc2 = null, img, width = 375, height }: Props) => {
   return (
     <motion.div
       style={{
@@ -128,7 +119,7 @@ const MenuDescription = ({
           </motion.div>
         ) : null}
         <motion.div variants={imgVariant}>
-          <img className="descImg" src={img} alt='' width={width} height={height} />
+          <img className="descImg" src={img} alt="" width={width} height={height} />
         </motion.div>
       </div>
     </motion.div>

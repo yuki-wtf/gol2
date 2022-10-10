@@ -76,7 +76,7 @@ const CreatorCredits = ({ loading, tokenCount, error }) => {
       </StyledTextWrapper>
       <StyledButtonWrapper>
         <Button
-          to='/creator/create'
+          to="/creator/create"
           icon={<HiPlus size={24} />}
           label="new game"
           secondary

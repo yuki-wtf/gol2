@@ -38,7 +38,7 @@ const pluginBabel = (options = {}) => ({
 
       return {
         ...(await transformContents({ args, contents })),
-        loader: args.path.endsWith('tsx') ? 'tsx' : 'ts'
+        loader: args.path.endsWith('tsx') ? 'tsx' : 'ts',
       }
     })
   },

@@ -4,7 +4,7 @@ import NavItem from '../components/Menu/NavItem'
 import MenuDescription from '../components/Menu/MenuDescription'
 import NavContainer from '../components/Layout/NavContainer'
 import { getUserId } from '~/session.server'
-import type { LoaderArgs, TypedResponse } from '@remix-run/node';
+import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { sql } from '~/db.server'
 import { hexToDecimalString } from 'starknet/utils/number'
@@ -47,7 +47,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   `
 
   return json({
-    snapshots: result.rows[0].snapshots
+    snapshots: result.rows[0].snapshots,
   })
 }
 
