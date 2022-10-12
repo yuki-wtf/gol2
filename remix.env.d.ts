@@ -125,6 +125,80 @@ declare module '@emotion/react' {
       highLight: string
       lightGrey: string
       heart: string
+      logoVariants: {
+        default: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+        infinite: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+        creator: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+        howitworks: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+        about: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+        snapshots: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+        }
+      }
     }
     flexboxgrid: {
       gridSize: number
