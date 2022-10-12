@@ -1,11 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import styled from '@emotion/styled'
-import AboutLogo from '../../Logos/Header/AboutLogo'
-import CreatorLogo from '../../Logos/Header/CreatorLogo'
-import DefaultLogo from '../../Logos/Header/DefaultLogo'
-import HowitworksLogo from '../../Logos/Header/HowitworksLogo'
-import InfiniteLogo from '../../Logos/Header/InfiniteLogo'
-import SnapshotsLogo from '../../Logos/Header/SnapshotsLogo'
+import PageLogoTitle from '~/components/Logos/Header/PageLogoTitle'
 
 const LogoWrapper = styled.div`
   position: relative;
@@ -16,12 +11,12 @@ export default function HeaderLogo() {
   return (
     <LogoWrapper>
       <Routes>
-        <Route path="/infinite/*" element={<InfiniteLogo />}></Route>
-        <Route path="/creator/*" element={<CreatorLogo />}></Route>
-        <Route path="/snapshots/*" element={<SnapshotsLogo />}></Route>
-        <Route path="/howitworks/*" element={<HowitworksLogo />}></Route>
-        <Route path="/about/*" element={<AboutLogo />}></Route>
-        <Route path="/*" element={<DefaultLogo />}></Route>
+        <Route path="/infinite/*" element={<PageLogoTitle variant="infinite" text="Infinite" />}></Route>
+        <Route path="/creator/*" element={<PageLogoTitle variant="creator" text="Creator" />}></Route>
+        <Route path="/snapshots/*" element={<PageLogoTitle variant="snapshots" text="Snapshots" />}></Route>
+        <Route path="/howitworks/*" element={<PageLogoTitle variant="howitworks" text="How it works" />}></Route>
+        <Route path="/about/*" element={<PageLogoTitle variant="about" text="About" />}></Route>
+        <Route path="/*" element={<PageLogoTitle variant="default" />}></Route>
       </Routes>
     </LogoWrapper>
   )

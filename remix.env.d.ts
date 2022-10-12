@@ -125,6 +125,86 @@ declare module '@emotion/react' {
       highLight: string
       lightGrey: string
       heart: string
+      logoVariants: {
+        default: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+        infinite: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+        creator: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+        howitworks: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+        about: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+        snapshots: {
+          path1: string
+          path2: string
+          path3: string
+          path4: string
+          path5: string
+          path6: string
+          path7: string
+          path8: string
+          path9: string
+          path10: string
+          text: string
+        }
+      }
     }
     flexboxgrid: {
       gridSize: number
