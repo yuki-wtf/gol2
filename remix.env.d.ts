@@ -138,7 +138,6 @@ declare module '@emotion/react' {
           path9: string
           path10: string
           text: string
-          text: string
         }
         infinite: {
           path1: string
