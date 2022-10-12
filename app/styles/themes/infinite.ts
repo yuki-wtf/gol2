@@ -133,6 +133,7 @@ export const infinite: Theme = {
         path8: '#FFADAD',
         path9: '#fff',
         path10: '#FF7979',
+        text: '#FF7979',
       },
       infinite: {
         path1: '#DBF267',
@@ -145,6 +146,7 @@ export const infinite: Theme = {
         path8: '#F5F8E7',
         path9: '#fff',
         path10: '#DBF267',
+        text: '#DBF267',
       },
       creator: {
         path1: '#8AED9B',
@@ -157,6 +159,7 @@ export const infinite: Theme = {
         path8: '#E3FCE7',
         path9: '#fff',
         path10: '#8AED9B',
+        text: '#8AED9B',
       },
       howitworks: {
         path1: '#83E8FE',
@@ -169,6 +172,7 @@ export const infinite: Theme = {
         path8: '#C3F3FE',
         path9: '#fff',
         path10: '#83E8FE',
+        text: '#83E8FE',
       },
       about: {
         path1: '#ffceaa',
@@ -181,6 +185,7 @@ export const infinite: Theme = {
         path8: '#f5f8e7',
         path9: '#fff',
         path10: '#ffceaa',
+        text: '#ffceaa',
       },
       snapshots: {
         path1: '#F06B97',
@@ -193,6 +198,7 @@ export const infinite: Theme = {
         path8: '#F89FBC',
         path9: '#fff',
         path10: '#F06B97',
+        text: '#F06B97',
       },
     },
   },

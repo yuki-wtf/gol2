@@ -137,6 +137,8 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
+          text: string
         }
         infinite: {
           path1: string
@@ -149,6 +151,7 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
         }
         creator: {
           path1: string
@@ -161,6 +164,7 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
         }
         howitworks: {
           path1: string
@@ -173,6 +177,7 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
         }
         about: {
           path1: string
@@ -185,6 +190,7 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
         }
         snapshots: {
           path1: string
@@ -197,6 +203,7 @@ declare module '@emotion/react' {
           path8: string
           path9: string
           path10: string
+          text: string
         }
       }
     }
