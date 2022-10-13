@@ -1,43 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import * as LandingScreen from '../components/LandingScreen'
-import { motion } from 'framer-motion'
-import NavContainer from '../components/Layout/NavContainer'
+import NavContainer from '../components/NavContainer'
 import { useNavigate } from '@remix-run/react'
-import { COLUMNS } from '../utils/constants'
-import useGame from '../hooks/useGame'
-import LandingAnimation from '~/components/LandingAnimation/LandingAnimation'
-
-const active = {
-  hidden: {
-    opacity: 0,
-    transition: {
-      ease: 'easeInOut',
-    },
-  },
-  visible: {
-    opacity: 0.4,
-    transition: {
-      ease: 'easeInOut',
-    },
-  },
-}
-const visible = {
-  hide: {
-    opacity: 0,
-    transition: {
-      ease: 'easeInOut',
-    },
-  },
-  show: {
-    opacity: 1,
-    transition: {
-      ease: 'easeInOut',
-      duration: 6,
-      delay: 0,
-    },
-  },
-}
+import LandingAnimation from '~/components/LandingAnimation'
 
 export default function Index() {
   const logoRef = useRef(null)

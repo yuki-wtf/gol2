@@ -1,5 +1,5 @@
 import Dialog from '../Dialog/Dialog'
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 import { HiOutlineX } from 'react-icons/hi'
 
 const DialogWaiting = ({ open, onClose }) => {

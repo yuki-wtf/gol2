@@ -1,6 +1,6 @@
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineX } from 'react-icons/hi'
-import Button from '../Button/Button'
+import Button from '../Button'
 
 const GolTokenIcon = () => {
   return (

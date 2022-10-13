@@ -1,12 +1,12 @@
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import ISnapshotGrid from '../InfiniteGame/SnapshotGrid/ISnapShotGrid'
-import Button from '../Button/Button'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { keyframes } from '@emotion/react'
 import SnapshotLogo from './SnapshotLogo'
+import SnapshotGrid from '../GameMode/Shared/SnapshotGrid'
+import Button from '../Button'
 
 const animate = keyframes`
   from {
@@ -237,7 +237,7 @@ const Snapshot = ({
             border: large ? '2px solid #000000 ' : '0px',
           }}
         >
-          <ISnapshotGrid data={gameStateToGrid(gameState)} />
+          <SnapshotGrid data={gameStateToGrid(gameState)} />
         </div>
         {large && <SnapshotLogo />}
       </StyledGridContainer>
@@ -264,7 +264,6 @@ const Snapshot = ({
         </StyledActions>
       )}
     </StyledCard>
-    // color: #2d3038;
   )
 }
 

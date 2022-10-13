@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import { BsMegaphoneFill } from 'react-icons/bs'
-import Typography from '../Typography/Typography'
-import StarknetLogoLink from './Links/StarknetLogo'
-import YukiLogoLink from './Links/YukiLogo'
+import Typography from '../Typography'
+import StarknetLogoLink from './StarknetLogo'
+import YukiLogoLink from './YukiLogo'
 
 const StyledFooter = styled.footer`
   height: 72px;

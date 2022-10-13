@@ -1,6 +1,6 @@
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineX } from 'react-icons/hi'
-import Button from '../Button/Button'
+import Button from '../Button'
 
 const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => {
   return (
@@ -15,7 +15,7 @@ const DialogSwitchWallet = ({ open, onClose, currentNetwork, wrongNetwork }) => 
           <Dialog.Title>Wrong Network selected</Dialog.Title>
           <Dialog.Description>
             You are using GoL2 on {currentNetwork}. Please switch your <br />
-            wallet network from {wrongNetwork} to {currentNetwork}.<br /> <br /> Try refreshing the app if network used{' '}
+            wallet network from {wrongNetwork} to {currentNetwork}.<br /> <br /> Try refreshing the app if network used
             <br /> is not correctly detected by Gol2.
           </Dialog.Description>
           <Dialog.ActionContainer>
