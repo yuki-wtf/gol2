@@ -17,7 +17,7 @@ export default function Index() {
     window.onkeypress = function (e) {
       navigate('/menu')
     }
-  }, [])
+  }, [navigate])
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -82,7 +82,6 @@ export default function Index() {
   return (
     <NavContainer>
       <LandingAnimation />
-
       <LandingScreen.LandingContainer
         style={{
           position: 'relative',

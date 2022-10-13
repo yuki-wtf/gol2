@@ -1,8 +1,4 @@
-import Dialog from '../Dialog/Dialog'
-import { HiOutlineX } from 'react-icons/hi'
-import Button from '../Button'
-
-const GolTokenIcon = () => {
+const GolToken = () => {
   return (
     <svg
       style={{ marginRight: 8 }}
@@ -65,37 +61,4 @@ const GolTokenIcon = () => {
     </svg>
   )
 }
-
-const DialogAddGolTokenToWallet = ({ open, onClose, onClick }) => {
-  return (
-    <Dialog.Root open={open}>
-      <Dialog.Overlay>
-        <Dialog.Content>
-          <Dialog.Title>Add GOL tokens to your wallet</Dialog.Title>
-
-          <Dialog.SmallCopy>
-            <p
-              style={{
-                maxWidth: 322,
-                marginTop: -10,
-              }}
-            >
-              In order to view GOL tokens in your wallet you need to add the GOL token to the list of tokens in your
-              wallet. It’s easy, just click the button and follow your wallets instructions.
-            </p>
-          </Dialog.SmallCopy>
-          <Dialog.ActionContainer>
-            <Button onClick={onClick} icon={<GolTokenIcon />} full label="add gol token to wallet" secondary />
-          </Dialog.ActionContainer>
-          <Dialog.Close asChild>
-            <button onClick={onClose}>
-              <HiOutlineX size={24} />
-            </button>
-          </Dialog.Close>
-        </Dialog.Content>
-      </Dialog.Overlay>
-    </Dialog.Root>
-  )
-}
-
-export default DialogAddGolTokenToWallet
+export default GolToken

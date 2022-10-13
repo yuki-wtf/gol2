@@ -7,10 +7,11 @@ import { useUser } from '~/hooks/useUser'
 import { useDialog } from '~/hooks/Dialog'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { StarknetChainId } from 'starknet4/dist/constants'
-import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
-import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
 import Button from '~/components/Button'
 import Typography from '~/components/Typography'
+import Loader from '~/components/Loader'
+import { HiOutlineX } from 'react-icons/hi'
+import Dialog from '~/components/Dialog/Dialog'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -93,8 +94,12 @@ const DialogGiveLife = () => {
       }}
     >
       {loading && (
-        <DialogWaiting
+        <Dialog
+          textCentered
+          description="Confirm this transaction in your wallet"
+          title="Waiting for confirmation"
           open={approvalDialogOpen}
+          animation={<Loader variant="light" />}
           onClose={() => {
             setApprovalDialogOpen(false)
             reset()
@@ -103,12 +108,16 @@ const DialogGiveLife = () => {
       )}
 
       {error && (
-        <DialogTxnError
+        <Dialog
+          hasConfirmButton
+          textCentered
+          title="Transaction rejected"
           open={userCancelledDialogOpen}
           onClose={() => {
             setUserCancelledDialogOpen(false)
             reset()
           }}
+          icon={<HiOutlineX size={40} />}
         />
       )}
       {selectedCell != null && (

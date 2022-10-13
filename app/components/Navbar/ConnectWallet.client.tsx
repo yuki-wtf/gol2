@@ -3,11 +3,10 @@ import { useStarknet } from '@starknet-react/core'
 import Button from '../Button'
 import UserDropdownMenu from './UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu.client'
-import DialogDownloadWallet from '../DialogDownloadWallet/DialogDownloadWallet'
-import DialogWallet from '~/components/DialogWallet/DialogWallet'
 import Highlight from '~/components/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { clearTimeout } from 'timers'
+import Dialog from '../Dialog/Dialog'
 
 const ConnectWallet = () => {
   const [open, setOpen] = useState(false)
@@ -70,8 +69,9 @@ const ConnectWallet = () => {
           />
         </Highlight>
       )}
-      <DialogWallet open={open} onClose={() => setOpen(false)}>
-        {!account &&
+      <Dialog
+        contentActions={
+          !account &&
           !error &&
           connectors
             .sort((a, b) => a.id().localeCompare(b.id()))
@@ -88,13 +88,47 @@ const ConnectWallet = () => {
                   key={connector.id()}
                 />
               ) : null
-            )}
-      </DialogWallet>
-      <DialogDownloadWallet
+            )
+        }
+        title="Connect a wallet to play"
+        smallDescription={
+          <p>
+            By connecting a wallets, you agree to Starknet’s Terms of Service and acknowledge that you have read and
+            understand the Starknet Protocol Disclaimer.
+          </p>
+        }
+        open={open}
+        onClose={() => setOpen(false)}
+      />
+
+      <Dialog
+        contentActions={
+          <>
+            <a
+              href="https://chrome.google.com/webstore/detail/argent-x/dlcobpjiigpikoobohmabehhmhfoodbb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button full label="Install Argent X" secondary />
+            </a>
+            <a
+              href="https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button full label="Install Braavos" secondary />
+            </a>
+          </>
+        }
+        title="Install a wallet"
+        smallDescription={
+          <p>
+            By connecting a wallets, you agree to Starknet’s Terms of Service and acknowledge that you have read and
+            understand the Starknet Protocol Disclaimer.
+          </p>
+        }
         open={open && !connectors.length}
-        onClose={() => {
-          setOpen(false)
-        }}
+        onClose={() => setOpen(false)}
       />
     </div>
   )
