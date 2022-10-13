@@ -11,12 +11,13 @@ import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@remix-run/react'
 import { gridToGameState } from '~/helpers/gridToGameState'
-import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
-import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { useDialog } from '~/hooks/Dialog'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { StarknetChainId } from 'starknet4/dist/constants'
+import Dialog from '~/components/Dialog/Dialog'
+import Loader from '~/components/Loader'
+import { HiOutlineX } from 'react-icons/hi'
 
 const gameExamples = [
   {
@@ -209,8 +210,12 @@ const Create = () => {
               </Styledlist>
               <div>
                 {loading && (
-                  <DialogWaiting
+                  <Dialog
+                    textCentered
+                    description="Confirm this transaction in your wallet"
+                    title="Waiting for confirmation"
                     open={approvalDialogOpen}
+                    animation={<Loader variant="light" />}
                     onClose={() => {
                       setApprovalDialogOpen(false)
                       reset()
@@ -218,12 +223,16 @@ const Create = () => {
                   />
                 )}
                 {error && (
-                  <DialogTxnError
+                  <Dialog
+                    hasConfirmButton
+                    textCentered
+                    title="Transaction rejected"
                     open={userCancelledDialogOpen}
                     onClose={() => {
                       setUserCancelledDialogOpen(false)
                       reset()
                     }}
+                    icon={<HiOutlineX size={40} />}
                   />
                 )}
                 <Button

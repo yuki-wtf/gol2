@@ -8,13 +8,13 @@ import Highlight from '~/components/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import DialogAddGolTokenToWallet from '~/components/DialogAddGolTokenToWallet/DialogAddGolTokenToWallet'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useLocalStorage } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useStarknet } from '@starknet-react/core'
 import { getChecksumAddress } from 'starknet4'
 import { useLocation } from '@remix-run/react'
+import Dialog from '../Dialog/Dialog'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -157,40 +157,50 @@ export default function CreditsContainer() {
 
   return (
     <StyledContainer>
-      <DialogAddGolTokenToWallet
-        onClick={() => {
-          const data = {
-            type: 'wallet_watchAsset',
-            params: {
-              type: 'ERC20',
-              options: {
-                address: env.CONTRACT_ADDRESS,
-                name: 'Game of Life Token',
-                symbol: 'GOL',
-                decimals: '0',
-                network: env.USE_MAINNET ? 'mainnet-alpha' : 'goerli-alpha',
-                image: golTokenIcon,
-              },
-            },
-          }
-
-          if (wallet?.id === 'argentX') {
-            if (window.starknet != null) {
-              window.starknet.request(data)
-            }
-          }
-
-          if (wallet?.id === 'braavos') {
-            if (window.starknet_braavos != null) {
-              window.starknet_braavos.request(data)
-            }
-          }
-
-          setAddTokenDialogVisible(false)
-        }}
+      <Dialog
+        title="Add GOL tokens to your wallet"
         open={addTokenDialogVisible}
         onClose={() => setAddTokenDialogVisible(false)}
+        footerActions={
+          <Button
+            onClick={() => {
+              const data = {
+                type: 'wallet_watchAsset',
+                params: {
+                  type: 'ERC20',
+                  options: {
+                    address: env.CONTRACT_ADDRESS,
+                    name: 'Game of Life Token',
+                    symbol: 'GOL',
+                    decimals: '0',
+                    network: env.USE_MAINNET ? 'mainnet-alpha' : 'goerli-alpha',
+                    image: golTokenIcon,
+                  },
+                },
+              }
+
+              if (wallet?.id === 'argentX') {
+                if (window.starknet != null) {
+                  window.starknet.request(data)
+                }
+              }
+
+              if (wallet?.id === 'braavos') {
+                if (window.starknet_braavos != null) {
+                  window.starknet_braavos.request(data)
+                }
+              }
+
+              setAddTokenDialogVisible(false)
+            }}
+            icon={<GolToken />}
+            full
+            label="Add gol token to wallet"
+            secondary
+          />
+        }
       />
+
       <Highlight
         style={{ height: 38, lineHeight: 38, alignItems: 'center', paddingLeft: 24, paddingRight: 24 }}
         highlightRadius={100}

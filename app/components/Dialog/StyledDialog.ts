@@ -39,6 +39,7 @@ const SmallCopy = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
+  max-width: 330px;
   /* or 18px */
 
   color: #94887f;
@@ -82,6 +83,7 @@ const Description = styled(DialogPrimitve.Description)<{ centered?: boolean }>`
   margin: 0;
   margin-top: -24px;
   text-align: ${(p) => (p.centered ? 'center' : 'left')};
+  max-width: 320px;
 `
 const Close = styled(DialogPrimitve.Close)`
   position: absolute;
@@ -94,7 +96,7 @@ const Close = styled(DialogPrimitve.Close)`
     opacity: 0.5;
   }
 `
-const Dialog = {
+const StyledDialog = {
   Root,
   Portal,
   Overlay,
@@ -107,4 +109,4 @@ const Dialog = {
   ActionContainer,
   SmallCopy,
 }
-export default Dialog
+export default StyledDialog

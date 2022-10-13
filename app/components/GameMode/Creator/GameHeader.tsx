@@ -1,12 +1,12 @@
 import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
-import { HiOutlineLightningBolt } from 'react-icons/hi'
+import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
 import { StarknetChainId } from 'starknet4/dist/constants'
 import Button from '~/components/Button'
-import DialogTxnError from '~/components/DialogTxnError/DialogTxnError'
-import DialogWaiting from '~/components/DialogWaiting/DialogWaiting'
+import Dialog from '~/components/Dialog/Dialog'
 import Highlight from '~/components/Highlight'
+import Loader from '~/components/Loader'
 import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
@@ -87,8 +87,12 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   return (
     <>
       {loading && (
-        <DialogWaiting
+        <Dialog
+          textCentered
+          description="Confirm this transaction in your wallet"
+          title="Waiting for confirmation"
           open={approvalDialogOpen}
+          animation={<Loader variant="light" />}
           onClose={() => {
             setApprovalDialogOpen(false)
             reset()
@@ -96,12 +100,16 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
         />
       )}
       {error && (
-        <DialogTxnError
+        <Dialog
+          hasConfirmButton
+          textCentered
+          title="Transaction rejected"
           open={userCancelledDialogOpen}
           onClose={() => {
             setUserCancelledDialogOpen(false)
             reset()
           }}
+          icon={<HiOutlineX size={40} />}
         />
       )}
       <Header>
