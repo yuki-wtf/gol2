@@ -1,5 +1,5 @@
-import { InfoGrid, InfoHeading, InfoParagraph, InfoSection } from '~/components/info'
-import Spacer from '../components/Spacer/Spacer'
+import { InfoGrid, InfoHeading, InfoParagraph, InfoSection } from '~/components/Info'
+import Spacer from '../components/Spacer'
 
 export default function About() {
   return (
@@ -77,7 +77,7 @@ export default function About() {
         <InfoSection>
           <InfoParagraph>
             StarkNet is a scaling solution for Ethereum that makes reduces transactions costs without compromising on
-            security.{' '}
+            security.
           </InfoParagraph>
           <Spacer size={32} />
           <InfoParagraph>
@@ -89,7 +89,7 @@ export default function About() {
             Proofs are traditionally extremely complex and nuanced things to build. The real breakthrough that StarkNet
             brings to the world is **Cairo**, the language which builds these proofs for you. Writing a program in Cairo
             is extremely accessible and learnable due to it’s similarity with Python. it’s also worth noting that the
-            structure of the contracts are similar to that of Solidity contracts.{' '}
+            structure of the contracts are similar to that of Solidity contracts.
           </InfoParagraph>
           <Spacer size={32} />
           <InfoParagraph>

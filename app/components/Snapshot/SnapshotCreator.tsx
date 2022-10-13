@@ -1,11 +1,11 @@
 import { HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
-import CSnapshotGrid from '../CreatorGame/CSnapshotGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import type { LinkProps } from '@remix-run/react'
 import { Link } from '@remix-run/react'
 import ClientOnly from '../ClientOnly'
+import SnapshotGrid from '../GameMode/Shared/SnapshotGrid'
 
 const StyledGridContainer = styled.div`
   width: 212px;
@@ -96,7 +96,7 @@ const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, 
     <StyledCard to={to} style={style}>
       <StyledGridContainer>
         <ClientOnly>
-          {() => <CSnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == '0'} />}
+          {() => <SnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == '0'} />}
         </ClientOnly>
       </StyledGridContainer>
       {isCreating ? (
@@ -107,7 +107,7 @@ const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, 
       ) : (
         <>
           <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
-          <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>{' '}
+          <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
           <StyledUserAddress>
             <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
           </StyledUserAddress>

@@ -1,6 +1,6 @@
 import Dialog from '../Dialog/Dialog'
 import { HiOutlineFire, HiOutlineX } from 'react-icons/hi'
-import Button from '../Button/Button'
+import Button from '../Button'
 
 interface Props {
   readonly open?: boolean

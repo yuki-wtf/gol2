@@ -40,9 +40,6 @@ const StyledContent = styled(DialogPrimitive.Content)`
   left: 50%;
   z-index: 10;
   transform: translate(-50%, -50%);
-  /* width: 90vw;
-  max-width: 450px;
-  max-height: 85vh; */
   padding: 25;
   @media (prefers-reduced-motion: no-preference) {
     animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;

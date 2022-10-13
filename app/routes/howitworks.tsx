@@ -1,5 +1,5 @@
-import { InfoGrid, InfoHeading, InfoImage, InfoList, InfoListItem, InfoParagraph, InfoSection } from '~/components/info'
-import Spacer from '../components/Spacer/Spacer'
+import { InfoGrid, InfoHeading, InfoImage, InfoList, InfoListItem, InfoParagraph, InfoSection } from '~/components/Info'
+import Spacer from '../components/Spacer'
 
 export default function Howitworks() {
   return (
@@ -58,7 +58,7 @@ export default function Howitworks() {
           <InfoImage url="/assets/howitworks/Generationsx3.png" width={216} height={216} />
           <InfoParagraph>
             A useful way to think about this is that at any point in time each cell contains either a unit of energy
-            (alive) or no energy (dead).{' '}
+            (alive) or no energy (dead).
           </InfoParagraph>
           <Spacer />
           <InfoParagraph>
@@ -151,7 +151,7 @@ export default function Howitworks() {
           <InfoParagraph>
             Creator mode contains multiple games created by the community. You can observe these games or evolve them to
             earn GOL tokens. 10 GOL tokens gives you the ability to create (or spawn) your own game and share it with
-            everybody.{' '}
+            everybody.
           </InfoParagraph>
           <Spacer size={32} />
           <InfoParagraph weight={700}>Gameplay:</InfoParagraph>

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SnapshotLogo = () => {
   return (
     <div style={{ marginTop: 23 }}>
