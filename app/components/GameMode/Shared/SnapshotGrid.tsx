@@ -1,5 +1,5 @@
-import Cell from "./Game/Cell"
-import GameGrid from "./Game/Grid"
+import Cell from './Game/Cell'
+import GameGrid from './Game/Grid'
 
 interface Props {
   readonly data: number[][]
