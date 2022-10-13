@@ -19,7 +19,7 @@ interface Props {
   readonly gameId: string
 }
 
-export const GameHeader = ({ gameId, isGameOver }: Props) => {
+export default function GameHeader ({ gameId, isGameOver }: Props) {
   const [hasClickedEvolveCreator, setHasClickedEvolveCreator] = useLocalStorage('has-clicked-evolve-creator', false)
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
@@ -143,4 +143,3 @@ export const GameHeader = ({ gameId, isGameOver }: Props) => {
     </>
   )
 }
-export default GameHeader

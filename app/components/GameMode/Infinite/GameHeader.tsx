@@ -17,7 +17,7 @@ import DialogWaiting from '../../DialogWaiting/DialogWaiting'
 import TempOverlay from '../../TempOverlay'
 import Header from '../Shared/Game/Header'
 
-export const GameHeader = () => {
+export default function GameHeader () {
   const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
   const [selectedCell] = useSelectedCell()
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
@@ -141,4 +141,3 @@ export const GameHeader = () => {
     </>
   )
 }
-export default GameHeader
