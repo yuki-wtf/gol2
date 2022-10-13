@@ -232,8 +232,6 @@ const Button = ({
 }: Props) => {
   const Component = to != null ? StyledLink : StyledButton
 
-  // if(isloading && icon)  render spinner
-  // if (isloading and no icon ) render spinner
   const renderIconSpinner = () => {
     if (isLoading && icon != null) {
       return <Spinner />
