@@ -13,6 +13,8 @@
     "module": "ESNext",
     "strict": true,
     "allowJs": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {

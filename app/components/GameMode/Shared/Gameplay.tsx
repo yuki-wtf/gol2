@@ -19,8 +19,8 @@ export default function Gameplay({ title, type, onChainPlay }: Props) {
         {onChainPlay.map((data) => (
           <TxnRow
             key={data.hash}
-            label={TxnRowStatus[data.status ?? 'ACCEPTED_ON_L1'].statusText}
-            status={data.status ?? 'ACCEPTED_ON_L1'}
+            label={TxnRowStatus[data.status].statusText}
+            status={data.status}
             user={getChecksumAddress(data.owner)}
             url={data.hash}
             type={data.type}

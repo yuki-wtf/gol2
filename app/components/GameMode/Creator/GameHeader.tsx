@@ -76,7 +76,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
     formData.append('functionCaller', user!.userId)
     formData.append('functionInputGameId', gameId)
 
-    fetch('/api/transaction', {
+    void fetch('/api/transaction', {
       body: formData,
       method: 'post',
     })
@@ -134,7 +134,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
 
               if (user != null) {
                 // TODO test this
-                invoke({
+                void invoke({
                   args: [gameId],
                 })
                 return

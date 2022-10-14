@@ -79,7 +79,7 @@ const DialogGiveLife = () => {
     formData.append('functionCaller', user!.userId)
     formData.append('functionInputCellIndex', payload!.toString())
 
-    fetch('/api/transaction', {
+    void fetch('/api/transaction', {
       body: formData,
       method: 'post',
     })
@@ -135,13 +135,13 @@ const DialogGiveLife = () => {
                   return
                 }
 
-                if (user != null && user!.balance && user!.balance > 0) {
+                if (user?.balance && user.balance > 0) {
                   const payload = selectedCell.row * 15 + selectedCell.col
 
                   setPayload(payload)
 
                   // TODO test this
-                  invoke({
+                  void invoke({
                     args: [payload],
                   })
 

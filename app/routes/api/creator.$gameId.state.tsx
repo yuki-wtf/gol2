@@ -19,5 +19,6 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       ) as ids
   `
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return json(result.rows.map((r) => r.gameState))
 }

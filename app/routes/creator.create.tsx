@@ -135,7 +135,8 @@ const Create = () => {
 
   useEffect(() => {
     if (data == null) return undefined
-    ;(async () => {
+
+    void (async () => {
       const gameState = gridToGameState(grid)
 
       const formData = new FormData()
@@ -251,7 +252,7 @@ const Create = () => {
                       if (gameState === '0') return
 
                       // TODO test this
-                      invoke({
+                      void invoke({
                         args: [gameState],
                       })
                     }

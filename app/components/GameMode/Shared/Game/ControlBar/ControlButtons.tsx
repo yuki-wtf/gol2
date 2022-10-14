@@ -126,7 +126,7 @@ const StyledButtonContainer = styled.button`
 export const ToStartBtn = (
   props: JSX.IntrinsicAttributes & {
     theme?: Theme | undefined
-    as?: ElementType<any> | undefined
+    as?: ElementType | undefined
   } & ClassAttributes<HTMLButtonElement> &
     ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
@@ -150,7 +150,7 @@ export const ToStartBtn = (
 export const StepForwardBtn = (
   props: JSX.IntrinsicAttributes & {
     theme?: Theme | undefined
-    as?: ElementType<any> | undefined
+    as?: ElementType | undefined
   } & ClassAttributes<HTMLButtonElement> &
     ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
@@ -180,7 +180,7 @@ export const StepForwardBtn = (
 export const ToEndBtn = (
   props: JSX.IntrinsicAttributes & {
     theme?: Theme | undefined
-    as?: ElementType<any> | undefined
+    as?: ElementType | undefined
   } & ClassAttributes<HTMLButtonElement> &
     ButtonHTMLAttributes<HTMLButtonElement>
 ) => {

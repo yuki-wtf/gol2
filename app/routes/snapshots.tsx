@@ -36,7 +36,7 @@ function twitter(text: string, url: string): string {
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
 }
 
-export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[]>> {
+export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[] | null>> {
   const userId = await getUserId(request)
 
   if (userId == null) return json(null)
@@ -119,7 +119,7 @@ export default function Snapshots() {
                   <Snapshot
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    user={user?.userId}
+                    user={user.userId}
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -143,7 +143,7 @@ export default function Snapshots() {
                     large
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    user={user?.userId}
+                    user={user.userId}
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -159,7 +159,7 @@ export default function Snapshots() {
                       open(
                         twitter(
                           `I own generation ${snapshot.gameGeneration} in @GoL2io 💪 #GoL2 #Starknet`,
-                          `${env.BASE_URL}/infinite/${snapshot.gameGeneration}`
+                          `${env.BASE_URL!}/infinite/${snapshot.gameGeneration}`
                         )
                       )
                     }}

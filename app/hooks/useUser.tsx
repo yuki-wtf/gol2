@@ -85,7 +85,7 @@ export function UserProvider({ children }: Props) {
 
     fetcher.submit(
       {
-        userId: account || '',
+        userId: account ?? '',
       },
       {
         method: 'post',

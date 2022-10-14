@@ -6,10 +6,11 @@ import type { TxnStatus } from './components/TxnRow'
 invariant(process.env.DATABASE_URL, 'DATABASE_URL must be set')
 
 declare global {
+  // eslint-disable-next-line no-var
   var __DB_POOL__: Pool | null | undefined
 }
 
-export async function getPool() {
+export function getPool(): Pool {
   global.__DB_POOL__ ??= new Pool({
     connectionString: process.env.DATABASE_URL,
   })
@@ -17,8 +18,8 @@ export async function getPool() {
   return global.__DB_POOL__
 }
 
-export async function sql<T extends QueryResultRow = any>(strings: TemplateStringsArray, ...values: any[]) {
-  const db = await getPool()
+export async function sql<T extends QueryResultRow>(strings: TemplateStringsArray, ...values: unknown[]) {
+  const db = getPool()
 
   return db.query<T>({
     text: String.raw(strings, ...values.map((_, i) => `$${i + 1}`)),

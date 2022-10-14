@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { COLUMNS, ROWS } from './constants'
 
-export interface Grid {
-  [key: string]: boolean[]
-}
+export type Grid = Record<string, boolean[]>
 
 export const getCells = (num: number): Grid => {
   const arr = new Array(num).fill(false)
-  let ob: any = { ...arr }
+  const ob: any = { ...arr }
   Object.keys(ob).forEach((item) => {
     ob[item] = [...arr]
   })
@@ -22,7 +25,7 @@ export const removeCellByPosition = (grid: Grid, columns: number, rows: number, 
   const c = (position - 1) % columns
   const r = Math.ceil(position / columns)
 
-  grid[c][r - 1] = false
+  grid[c]![r - 1] = false
 
   return grid
 }
@@ -30,7 +33,7 @@ export const removeCellByPosition = (grid: Grid, columns: number, rows: number, 
 export const addCellByPosition = (grid: Grid, columns: number, rows: number, position: number): Grid => {
   const c = (position - 1) % columns
   const r = Math.ceil(position / columns)
-  grid[c][r - 1] = true
+  grid[c]![r - 1] = true
 
   return grid
 }
@@ -38,29 +41,29 @@ export const addCellByPosition = (grid: Grid, columns: number, rows: number, pos
 export const getLiveNeighbours = (grid: Grid, column: number, row: number): number => {
   let liveCellNeighbours = 0
 
-  if (grid?.[column]?.[row - 1]) {
+  if (grid[column]![row - 1]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[column]?.[row + 1]) {
+  if (grid[column]![row + 1]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[+column + 1]?.[row]) {
+  if (grid[+column + 1]![row]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[+column + 1]?.[row - 1]) {
+  if (grid[+column + 1]![row - 1]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[+column + 1]?.[row + 1]) {
+  if (grid[+column + 1]![row + 1]) {
     liveCellNeighbours += 1
   }
 
-  if (grid?.[+column - 1]?.[row]) {
+  if (grid[+column - 1]![row]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[+column - 1]?.[row - 1]) {
+  if (grid[+column - 1]![row - 1]) {
     liveCellNeighbours += 1
   }
-  if (grid?.[+column - 1]?.[row + 1]) {
+  if (grid[+column - 1]![row + 1]) {
     liveCellNeighbours += 1
   }
 
@@ -73,23 +76,23 @@ export const transformGrid = (grid: Grid): Grid => {
   let newGrid: Grid = Object.assign({}, grid)
 
   Object.keys(newGrid).forEach((column) => {
-    newGrid[column].forEach((cell: any, rowIndex: any) => {
+    newGrid[column]!.forEach((cell: any, rowIndex: any) => {
       if (cell) {
-        let liveNeighbours = getLiveNeighbours(newGrid, column as any, rowIndex)
+        const liveNeighbours = getLiveNeighbours(newGrid, column as any, rowIndex)
         if (liveNeighbours < 2) {
-          let cellPos = getCellPosition(newGrid, column as any, rowIndex)
+          const cellPos = getCellPosition(newGrid, column as any, rowIndex)
           itemsToDie = [...itemsToDie, cellPos]
         } else if (liveNeighbours === 2 || liveNeighbours === 3) {
-          let cellPos = getCellPosition(newGrid, column as any, rowIndex)
+          const cellPos = getCellPosition(newGrid, column as any, rowIndex)
           itemsToLive = [...itemsToLive, cellPos]
         } else if (liveNeighbours > 3) {
-          let cellPos = getCellPosition(newGrid, column as any, rowIndex)
+          const cellPos = getCellPosition(newGrid, column as any, rowIndex)
           itemsToDie = [...itemsToDie, cellPos]
         }
       } else {
-        let liveNeighbours = getLiveNeighbours(newGrid, column as any, rowIndex)
+        const liveNeighbours = getLiveNeighbours(newGrid, column as any, rowIndex)
         if (liveNeighbours === 3) {
-          let cellPos = getCellPosition(newGrid, column as any, rowIndex)
+          const cellPos = getCellPosition(newGrid, column as any, rowIndex)
           itemsToLive = [...itemsToLive, cellPos]
         }
       }
@@ -110,10 +113,10 @@ export const transformGrid = (grid: Grid): Grid => {
 }
 
 export const randomizeGrid = (grid: Grid): Grid => {
-  let randomGrid: Grid = {}
+  const randomGrid: Grid = {}
 
   Object.keys(grid).forEach((item) => {
-    randomGrid[item] = grid[item].map(() => Math.random() >= 0.8)
+    randomGrid[item] = grid[item]!.map(() => Math.random() >= 0.8)
   })
   return randomGrid
 }

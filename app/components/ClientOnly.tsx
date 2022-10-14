@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function ClientOnly({ children, fallback }: Props) {
-  let [hydrated, setHydrated] = useState(() => !hydrating)
+  const [hydrated, setHydrated] = useState(() => !hydrating)
 
   useEffect(() => {
     hydrating = false

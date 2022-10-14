@@ -173,7 +173,7 @@ const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duratio
 
   useEffect(() => {
     if (status === 'TRANSACTION_RECEIVED' || status === 'RECEIVED' || status === 'NOT_RECEIVED') {
-      controls.start({
+      void controls.start({
         width: '100%',
         transition: {
           delay: delay,
@@ -197,7 +197,7 @@ const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duratio
       controls.set({
         width: '0%',
       })
-      controls.start({
+      void controls.start({
         width: '100%',
         transition: {
           duration: duration,
@@ -205,7 +205,7 @@ const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duratio
         },
       })
       setTimeout(() => {
-        controls.start({
+        void controls.start({
           width: '0%',
           transition: { duration: 0.3 },
         })
@@ -217,7 +217,7 @@ const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duratio
         setStatusInternal('COMPLETED')
       }, 2000)
     } else if (status === 'REJECTED') {
-      controls.start({
+      void controls.start({
         width: '0%',
         transition: {
           duration: duration,
@@ -231,7 +231,7 @@ const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duratio
         width: '0%',
       })
       setTimeout(() => {
-        controls.start({
+        void controls.start({
           width: '0%',
           transition: {
             duration: 0.3,

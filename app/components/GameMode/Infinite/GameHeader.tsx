@@ -74,7 +74,7 @@ export default function GameHeader() {
     formData.append('functionCaller', user!.userId)
     formData.append('functionInputGameId', INFINITE_GAME_GENESIS)
 
-    fetch('/api/transaction', {
+    void fetch('/api/transaction', {
       body: formData,
       method: 'post',
     })
@@ -132,7 +132,7 @@ export default function GameHeader() {
               }
 
               if (user != null) {
-                invoke({
+                void invoke({
                   args: [INFINITE_GAME_GENESIS],
                 })
                 return

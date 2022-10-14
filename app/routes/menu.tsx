@@ -145,34 +145,33 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          {menuItems &&
-            menuItems.map((item, i) => {
-              return (
-                <motion.div
-                  onMouseEnter={() => setCurrentNav(i + 1)}
-                  onMouseLeave={() => setCurrentNav(null)}
-                  key={item.to}
-                  variants={listItem}
-                  initial={{
-                    opacity: 0,
-                    y: -30,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                >
-                  <NavItem
-                    to={item.to}
-                    className={item.className}
-                    color={item.color}
-                    title={item.title}
-                    isActive={i + 1 === currentNav}
-                    badge={item.badge}
-                  />
-                </motion.div>
-              )
-            })}
+          {menuItems.map((item, i) => {
+            return (
+              <motion.div
+                onMouseEnter={() => setCurrentNav(i + 1)}
+                onMouseLeave={() => setCurrentNav(null)}
+                key={item.to}
+                variants={listItem}
+                initial={{
+                  opacity: 0,
+                  y: -30,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+              >
+                <NavItem
+                  to={item.to}
+                  className={item.className}
+                  color={item.color}
+                  title={item.title}
+                  isActive={i + 1 === currentNav}
+                  badge={item.badge}
+                />
+              </motion.div>
+            )
+          })}
         </motion.div>
         <div
           style={{
@@ -187,22 +186,21 @@ const Menu = () => {
           }}
           className="menuCont"
         >
-          {menuItems &&
-            menuItems.map((item, i) => {
-              return (
-                <MenuDescription
-                  title={item.heading}
-                  color={item.color}
-                  isActive={i + 1 === currentNav}
-                  desc={item.desc}
-                  desc2={item.desc2}
-                  img={item.image_url}
-                  width={item.width}
-                  height={item.height}
-                  key={item.to}
-                />
-              )
-            })}
+          {menuItems.map((item, i) => {
+            return (
+              <MenuDescription
+                title={item.heading}
+                color={item.color}
+                isActive={i + 1 === currentNav}
+                desc={item.desc}
+                desc2={item.desc2}
+                img={item.image_url}
+                width={item.width}
+                height={item.height}
+                key={item.to}
+              />
+            )
+          })}
         </div>
       </div>
     </NavContainer>

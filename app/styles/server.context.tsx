@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 export interface ServerStyleContextData {
   key: string
-  ids: Array<string>
+  ids: string[]
   css: string
 }
 

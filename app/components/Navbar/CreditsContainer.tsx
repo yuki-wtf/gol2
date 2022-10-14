@@ -122,7 +122,7 @@ export default function CreditsContainer() {
   const { account } = useStarknet()
 
   useEffect(() => {
-    ;(async () => {
+    void (async () => {
       for (const connector of connectors) {
         const accountObj = await connector.account()
         if (accountObj != null) {
@@ -181,13 +181,13 @@ export default function CreditsContainer() {
 
               if (wallet?.id === 'argentX') {
                 if (window.starknet != null) {
-                  window.starknet.request(data)
+                  void window.starknet.request(data)
                 }
               }
 
               if (wallet?.id === 'braavos') {
                 if (window.starknet_braavos != null) {
-                  window.starknet_braavos.request(data)
+                  void window.starknet_braavos.request(data)
                 }
               }
 

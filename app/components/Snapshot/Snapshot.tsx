@@ -228,7 +228,7 @@ const Snapshot = ({
   animate,
   exit,
 }: Props) => {
-  let formattedUser = user ? getShortChecksumAddress(user) : null
+  const formattedUser = user ? getShortChecksumAddress(user) : null
 
   if (isLoading) {
     return (
