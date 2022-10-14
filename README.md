@@ -20,7 +20,7 @@ https://github.com/yuki-wtf/GoL2-Contract
 ### Deployed contracts
 
 Goerli - [0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093](https://goerli.voyager.online/contract/0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093) <br>
-Mainnet - [0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093](https://goerli.voyager.online/contract/0x06dc4bd1212e67fd05b456a34b24a060c45aad08ab95843c42af31f86c7bd093) <br>
+Mainnet - [0x06a05844a03bb9e744479e3298f54705a35966ab04140d3d8dd797c1f6dc49d0](https://goerli.voyager.online/contract/0x06a05844a03bb9e744479e3298f54705a35966ab04140d3d8dd797c1f6dc49d0) <br>
 
 
 
