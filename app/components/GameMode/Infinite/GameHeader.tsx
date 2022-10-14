@@ -26,11 +26,10 @@ export default function GameHeader() {
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
     method: 'evolve',

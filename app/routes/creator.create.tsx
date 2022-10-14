@@ -117,7 +117,7 @@ const Create = () => {
   })
 
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 

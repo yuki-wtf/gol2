@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function GameGrid({ data, receivedCells, isPlaying }: Props) {
-  const [helpMessage, setHelpMessage] = useHelpMessage()
+  const [, setHelpMessage] = useHelpMessage()
   const [selectedCell, setSelectedCell] = useSelectedCell()
   const user = useUser()
   const balance = user?.balance ?? 0

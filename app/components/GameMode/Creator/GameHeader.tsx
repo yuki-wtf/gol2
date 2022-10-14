@@ -26,7 +26,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   const { contract } = useGameContract()
   const user = useUser()
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET

@@ -149,12 +149,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         <Meta />
         <Links />
         {serverStyleData?.map(({ key, ids, css }) => (
-          <style
-            key={key}
-            data-emotion={`${key} ${ids.join(' ')}`}
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: css }}
-          />
+          <style key={key} data-emotion={`${key} ${ids.join(' ')}`} dangerouslySetInnerHTML={{ __html: css }} />
         ))}
       </head>
       <body>

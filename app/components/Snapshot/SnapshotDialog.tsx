@@ -1,7 +1,8 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import styled from '@emotion/styled'
-import { keyframes, Theme } from '@emotion/react'
-import { RefAttributes } from 'react'
+import type { Theme } from '@emotion/react'
+import { keyframes } from '@emotion/react'
+import type { RefAttributes } from 'react'
 
 const overlayShow = keyframes`
   from {
