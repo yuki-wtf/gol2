@@ -103,6 +103,17 @@ const ItemIndicator = styled(DropdownMenuPrimitive.ItemIndicator)`
   align-items: center;
   justify-content: center;
 `
+const LinkItemIndicator = styled.div`
+  position: absolute;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #8aed9b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`
 const exportedObject = {
   Root,
   Trigger,
@@ -112,5 +123,6 @@ const exportedObject = {
   RadioGroup,
   RadioItem,
   ItemIndicator,
+  LinkItemIndicator,
 }
 export default exportedObject
