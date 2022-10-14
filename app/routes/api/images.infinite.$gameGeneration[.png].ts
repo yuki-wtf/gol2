@@ -8,7 +8,7 @@ import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 
 function asset(src: string): string {
-  return path.join(process.env.PWD, 'app/assets', src)
+  return path.join(process.env.PWD!, 'app/assets', src)
 }
 
 function loadFont(src: string): void {
@@ -19,7 +19,7 @@ function loadFont(src: string): void {
   }
 }
 
-async function getImage(src): Promise<Image> {
+async function getImage(src: string): Promise<Image> {
   const file = await fs.readFile(asset(path.join('images', src)))
   const image = new Image()
   image.src = file
@@ -65,7 +65,7 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
 
     let x = 27 * 4
     let y = 27 * 4
-    let s = ((8 * 26.3) / 15) * 4
+    const s = ((8 * 26.3) / 15) * 4
 
     ctx.fillStyle = '#1d222c'
     ctx.fillRect(x, y, s * 15, s * 15)
@@ -111,7 +111,9 @@ export async function loader({ params }: DataFunctionArgs): Promise<Response> {
         'Content-Length': png.byteLength.toString(),
       },
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
     return json({ err: err.message }, { status: 500 })
   }
 }

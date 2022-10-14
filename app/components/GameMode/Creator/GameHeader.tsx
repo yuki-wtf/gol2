@@ -26,7 +26,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   const { contract } = useGameContract()
   const user = useUser()
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
@@ -45,7 +45,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   }, [setHelpMessage, hasClickedEvolveCreator])
 
   useEffect(() => {
-    let timer
+    let timer: string | number | NodeJS.Timeout | undefined
 
     if (helpMessage === 'evolveCreator' && !isGameOver) {
       timer = setTimeout(() => {
@@ -73,10 +73,10 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'evolve')
-    formData.append('functionCaller', user.userId)
+    formData.append('functionCaller', user!.userId)
     formData.append('functionInputGameId', gameId)
 
-    fetch('/api/transaction', {
+    void fetch('/api/transaction', {
       body: formData,
       method: 'post',
     })
@@ -134,7 +134,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
 
               if (user != null) {
                 // TODO test this
-                invoke({
+                void invoke({
                   args: [gameId],
                 })
                 return

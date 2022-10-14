@@ -13,7 +13,7 @@ export default function handleRequest(
   remixContext: EntryContext
 ) {
   const cache = createEmotionCache()
-  const { extractCriticalToChunks } = createEmotionServer(cache)
+  const emotionServer = createEmotionServer(cache)
 
   const html = renderToString(
     <ServerStyleContext.Provider value={null}>
@@ -23,7 +23,7 @@ export default function handleRequest(
     </ServerStyleContext.Provider>
   )
 
-  const chunks = extractCriticalToChunks(html)
+  const chunks = emotionServer.extractCriticalToChunks(html)
 
   const markup = renderToString(
     <ServerStyleContext.Provider value={chunks.styles}>

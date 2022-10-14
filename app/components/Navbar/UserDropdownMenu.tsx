@@ -15,14 +15,19 @@ import { useEffect, useState } from 'react'
 import { getChecksumAddress } from 'starknet4'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
-const UserDropdownMenu = ({ account, disconnect }) => {
+interface Props {
+  readonly account: string
+  readonly disconnect: () => void
+}
+
+const UserDropdownMenu = ({ account, disconnect }: Props) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
   const { connectors } = useStarknet()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()
   const { env } = useRootLoaderData()
 
   useEffect(() => {
-    ;(async () => {
+    void (async () => {
       for (const connector of connectors) {
         const accountObj = await connector.account()
         if (accountObj != null) {
@@ -72,13 +77,13 @@ const UserDropdownMenu = ({ account, disconnect }) => {
 
             if (wallet?.id === 'argentX') {
               if (window.starknet != null) {
-                window.starknet.request(data)
+                void window.starknet.request(data)
               }
             }
 
             if (wallet?.id === 'braavos') {
               if (window.starknet_braavos != null) {
-                window.starknet_braavos.request(data)
+                void window.starknet_braavos.request(data)
               }
             }
           }}

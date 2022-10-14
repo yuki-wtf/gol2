@@ -27,5 +27,6 @@ export async function action({ request }: ActionArgs) {
     RETURNING *;
   `
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return tx.rows[0]
 }

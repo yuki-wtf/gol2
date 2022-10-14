@@ -5,12 +5,14 @@ import { useEffect } from 'react'
 
 export default function LandingAnimation() {
   const { grid, initialize, setIsRunning } = useGame()
+
   useEffect(() => {
     initialize()
 
     setTimeout(() => {
       setIsRunning(true)
     }, 1000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -27,22 +29,21 @@ export default function LandingAnimation() {
           }}
           data-testid="grid-wrapper"
         >
-          {grid &&
-            Object.keys(grid).map((column, index) => (
-              <div key={index} className="column" data-testid="column" style={{ gap: 0, height: '100vh' }}>
-                {grid[column].map((cell: boolean, rowIndex: number) => (
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      backgroundColor: cell ? 'rgba(255,255,255,0.05)' : 'transparent',
-                    }}
-                    key={rowIndex}
-                    data-testid="cell"
-                  />
-                ))}
-              </div>
-            ))}
+          {Object.keys(grid).map((column, index) => (
+            <div key={index} className="column" data-testid="column" style={{ gap: 0, height: '100vh' }}>
+              {grid[column]!.map((cell: boolean, rowIndex: number) => (
+                <div
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    backgroundColor: cell ? 'rgba(255,255,255,0.05)' : 'transparent',
+                  }}
+                  key={rowIndex}
+                  data-testid="cell"
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </motion.div>

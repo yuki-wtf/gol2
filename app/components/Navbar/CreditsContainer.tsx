@@ -102,7 +102,7 @@ export default function CreditsContainer() {
   }, [hasDismissedFirstTokenEarnedMessage, hasIncomingTransfer, hasOutgoingTransfer, setHelpMessage])
 
   useEffect(() => {
-    let timer
+    let timer: string | number | NodeJS.Timeout | undefined
     if (helpMessage === 'balanceMessage' || helpMessage === 'firstTokenEarnedMessage') {
       timer = setTimeout(() => {
         if (helpMessage === 'firstTokenEarnedMessage') {
@@ -122,11 +122,11 @@ export default function CreditsContainer() {
   const { account } = useStarknet()
 
   useEffect(() => {
-    ;(async () => {
+    void (async () => {
       for (const connector of connectors) {
         const accountObj = await connector.account()
         if (accountObj != null) {
-          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
+          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account!)) {
             setWallet({
               id: connector.id(),
               name: connector.name(),
@@ -181,13 +181,13 @@ export default function CreditsContainer() {
 
               if (wallet?.id === 'argentX') {
                 if (window.starknet != null) {
-                  window.starknet.request(data)
+                  void window.starknet.request(data)
                 }
               }
 
               if (wallet?.id === 'braavos') {
                 if (window.starknet_braavos != null) {
-                  window.starknet_braavos.request(data)
+                  void window.starknet_braavos.request(data)
                 }
               }
 

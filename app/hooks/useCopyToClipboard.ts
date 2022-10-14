@@ -10,7 +10,7 @@ type Return = [
 ]
 
 export default function useCopyToClipboard(): Return {
-  const [value, setValue] = useState<string>(null)
+  const [value, setValue] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
   const copyToClipboard: typeof copy = (text, options) => {

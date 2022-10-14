@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 
 export const InfoList = styled.ul`
   margin-top: 32px;
-  /* padding: 0; */
   padding-left: 16px;
   list-style-type: disc;
   display: flex;
@@ -63,13 +62,7 @@ export interface InfoImageProps {
   readonly backgroundColor?: string
 }
 
-export function InfoImage({
-  url,
-  alt = null,
-  width,
-  height,
-  backgroundColor = ' var(--howitworks-primary)',
-}: InfoImageProps) {
+export function InfoImage({ url, alt, width, height, backgroundColor = ' var(--howitworks-primary)' }: InfoImageProps) {
   return (
     <InfoImageContainer
       style={{

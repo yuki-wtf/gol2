@@ -4,7 +4,7 @@ import { sql } from '~/db.server'
 
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<string[]>> {
   const url = new URL(request.url)
-  const frames = url.searchParams.get('frames').split(',')
+  const frames = url.searchParams.get('frames')!.split(',')
 
   const result = await sql`
     select (
@@ -19,5 +19,6 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       ) as ids
   `
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return json(result.rows.map((r) => r.gameState))
 }

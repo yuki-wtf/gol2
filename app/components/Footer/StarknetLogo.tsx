@@ -8,7 +8,6 @@ const StyledContainer = styled.div`
   gap: 16px;
 `
 const StyledLogo = styled.a`
-  /* max-width: 78px; */
   svg {
     filter: grayscale(1);
   }
@@ -24,11 +23,11 @@ const StyledLogo = styled.a`
   }
 `
 
-const StarknetLogoLink = (props) => {
+const StarknetLogoLink = () => {
   return (
     <StyledContainer>
       <StyledLogo href="https://starkware.co/">
-        <svg width={126.48} height={25} viewBox="0 0 490 106" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <svg width={126.48} height={25} viewBox="0 0 490 106" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M100.096 53c0 26.51-21.511 48-48.048 48C25.513 101 4 79.51 4 53S25.513 5 52.048 5c26.537 0 48.048 21.49 48.048 48z"
             fill="#29296E"

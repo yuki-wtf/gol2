@@ -4,7 +4,7 @@ import { getCellPosition, getCells, randomizeGrid, transformGrid } from '../util
 import { COLUMNS, INTERVAL } from '../utils/constants'
 import { useInterval } from 'react-use'
 
-const useGame = () => {
+export default function useGame() {
   const [isRunning, setIsRunning] = useState<boolean>(false)
   const [steps, setSteps] = useState<number>(0)
   const [grid, setGrid] = useState<Grid>({})
@@ -12,6 +12,7 @@ const useGame = () => {
 
   useEffect(() => {
     initialize()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useInterval(
@@ -24,23 +25,23 @@ const useGame = () => {
   const initialize = useCallback(() => {
     setSteps(0)
     const cells = getCells(COLUMNS)
-    cells[1][4] = true
-    cells[2][5] = true
-    cells[3][3] = true
-    cells[3][4] = true
-    cells[3][5] = true
+    cells[1]![4] = true
+    cells[2]![5] = true
+    cells[3]![3] = true
+    cells[3]![4] = true
+    cells[3]![5] = true
 
-    cells[30][4] = true
-    cells[31][3] = true
-    cells[31][4] = true
-    cells[31][5] = true
-    cells[32][4] = true
+    cells[30]![4] = true
+    cells[31]![3] = true
+    cells[31]![4] = true
+    cells[31]![5] = true
+    cells[32]![4] = true
 
-    cells[22][16] = true
-    cells[23][16] = true
-    cells[21][17] = true
-    cells[22][17] = true
-    cells[22][18] = true
+    cells[22]![16] = true
+    cells[23]![16] = true
+    cells[21]![17] = true
+    cells[22]![17] = true
+    cells[22]![18] = true
 
     setGrid(cells)
   }, [])
@@ -55,15 +56,15 @@ const useGame = () => {
     (column: number, rowIndex: number, cell: boolean) => {
       const currentCell = !cell
 
-      let newOb: any = { ...grid }
-      newOb[column][rowIndex] = currentCell
+      const newOb = { ...grid }
+      newOb[column]![rowIndex] = currentCell
 
-      let cellPos = getCellPosition(grid, column, rowIndex)
+      const cellPos = getCellPosition(grid, column, rowIndex)
 
       if (currentCell) {
         setLiveCellsPos([...liveCellsPos, cellPos])
       } else {
-        let liveCellsToUpdate = [...liveCellsPos]
+        const liveCellsToUpdate = [...liveCellsPos]
         const cellIndex = liveCellsToUpdate.indexOf(cellPos)
         if (cellIndex > -1) {
           liveCellsToUpdate.splice(cellIndex, 1)
@@ -91,5 +92,3 @@ const useGame = () => {
     handleNext,
   }
 }
-
-export default useGame

@@ -5,7 +5,9 @@ export function useGameContract() {
   const data = useRootLoaderData()
 
   return useContract({
-    abi: ContractAbi as any,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    abi: ContractAbi,
     address: data.env.CONTRACT_ADDRESS,
   })
 }

@@ -29,9 +29,9 @@ import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
 
-  let balance: number = null
-  let hasIncomingTransfer: boolean = false
-  let hasOutgoingTransfer: boolean = false
+  let balance: number | null = null
+  let hasIncomingTransfer = false
+  let hasOutgoingTransfer = false
 
   if (userId != null) {
     const res = await sql<{ balance: number; hasIncomingTransfer: boolean; hasOutgoingTransfer: boolean }>`
@@ -131,11 +131,13 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
     const tags = emotionCache.sheet.tags
     emotionCache.sheet.flush()
     tags.forEach((tag) => {
-      ;(emotionCache.sheet as any)._insertTag(tag)
+      // @ts-expect-error _insertTag is not in types
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      emotionCache.sheet._insertTag(tag)
     })
 
     // reset cache to re-apply global styles
-    clientStyleData.reset()
+    clientStyleData.reset?.()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -149,12 +151,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         <Meta />
         <Links />
         {serverStyleData?.map(({ key, ids, css }) => (
-          <style
-            key={key}
-            data-emotion={`${key} ${ids.join(' ')}`}
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: css }}
-          />
+          <style key={key} data-emotion={`${key} ${ids.join(' ')}`} dangerouslySetInnerHTML={{ __html: css }} />
         ))}
       </head>
       <body>
@@ -163,11 +160,9 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         </div>
         <div className="appContainer">{children}</div>
 
-        {!(
-          location.state &&
-          typeof location.state === 'object' &&
-          (location.state as { scroll: boolean }).scroll === false
-        ) && <ScrollRestoration />}
+        {!(location.state && typeof location.state === 'object' && !(location.state as { scroll: boolean }).scroll) && (
+          <ScrollRestoration />
+        )}
 
         <Scripts />
         <LiveReload />
@@ -176,7 +171,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
   )
 })
 
-function AppLayout({ children }) {
+function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Document>
       <ThemeProvider theme={infinite}>

@@ -1,11 +1,9 @@
 import { createContext } from 'react'
 
 export interface ClientStyleContextData {
-  reset: () => void
+  reset?: () => void
 }
 
-const ClientStyleContext = createContext<ClientStyleContextData>({
-  reset: () => {},
-})
+const ClientStyleContext = createContext<ClientStyleContextData>({})
 
 export default ClientStyleContext

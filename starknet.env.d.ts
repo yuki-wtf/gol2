@@ -74,7 +74,7 @@ type RpcMessage =
     }
   | {
       type: string
-      params: any
+      params: unknown
       result: never
     }
 

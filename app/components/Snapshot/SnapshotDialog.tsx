@@ -1,6 +1,8 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import styled from '@emotion/styled'
+import type { Theme } from '@emotion/react'
 import { keyframes } from '@emotion/react'
+import type { RefAttributes } from 'react'
 
 const overlayShow = keyframes`
   from {
@@ -59,11 +61,15 @@ const StyledClose = styled(DialogPrimitive.Close)`
   }
 `
 
-function Content({ children, ...props }) {
+function Content(
+  props: JSX.IntrinsicAttributes &
+    DialogPrimitive.DialogContentProps &
+    RefAttributes<HTMLDivElement> & { theme?: Theme | undefined }
+) {
   return (
     <DialogPrimitive.Portal>
       <StyledOverlay />
-      <StyledContent {...props}>{children}</StyledContent>
+      <StyledContent {...props}></StyledContent>
     </DialogPrimitive.Portal>
   )
 }

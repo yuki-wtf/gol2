@@ -10,16 +10,19 @@ interface Params {
 }
 
 export interface State {
-  readonly maxFrame: null | number
-  readonly currentFrame: null | number
+  readonly maxFrame: number
+  readonly currentFrame: number
   readonly playbackSpeed: number
   readonly isPlaying: boolean
-  readonly frames: {
-    readonly [frame: number]: {
-      readonly shouldRefresh?: boolean
-      readonly state?: string
-    }
-  }
+  readonly frames: Readonly<
+    Record<
+      number,
+      {
+        readonly shouldRefresh?: boolean
+        readonly state?: string
+      }
+    >
+  >
 }
 
 export interface Actions {
@@ -79,8 +82,6 @@ export function useGamePlayback({
 
   const play = useCallback(() => {
     setState((state) => {
-      if (state.maxFrame == null) return state
-      if (state.currentFrame == null) return state
       if (state.currentFrame === state.maxFrame) return state
 
       return {
@@ -129,15 +130,12 @@ export function useGamePlayback({
   useInterval(() => {
     setState(
       produce((draft) => {
-        draft.frames[maxFrame].shouldRefresh = true
+        draft.frames[maxFrame]!.shouldRefresh = true
       })
     )
   }, lastFrameRefreshInterval ?? null)
 
   useEffect(() => {
-    if (state.maxFrame == null) return
-    if (state.currentFrame == null) return
-
     const chunkSize = 20
     const currentChunkStart = Math.floor((state.currentFrame - 1) / chunkSize) * chunkSize + 1
     const currentChunkEnd = currentChunkStart + chunkSize
@@ -153,7 +151,7 @@ export function useGamePlayback({
             ? Array.from({ length: chunkSize }, (v, k) => k + currentChunkEnd)
             : []),
         ].filter((frame) => {
-          return frame <= state.maxFrame && (state.frames[frame] == null || state.frames[frame].shouldRefresh === true)
+          return frame <= state.maxFrame && (state.frames[frame] == null || state.frames[frame]!.shouldRefresh === true)
         })
       ).values()
     )
@@ -164,10 +162,10 @@ export function useGamePlayback({
       produce((draft) => {
         framesToLoad.forEach((frame) => {
           if (draft.frames[frame]?.state != null) {
-            draft.frames[frame].shouldRefresh = false
+            draft.frames[frame]!.shouldRefresh = false
           } else {
             draft.frames[frame] = {
-              state: null,
+              state: undefined,
             }
           }
         })
@@ -180,26 +178,27 @@ export function useGamePlayback({
       .then((data: string[]) => {
         setState(
           produce((draft) => {
-            for (let i = 0; i < framesToLoad.length; i++) {
-              if (data[i] != null) {
-                draft.frames[framesToLoad[i]] = {
-                  state: data[i],
+            framesToLoad.forEach((frame, index) => {
+              if (data[index] != null) {
+                draft.frames[frame] = {
+                  state: data[index],
                 }
               } else {
-                draft.frames[framesToLoad[i]] = null
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete draft.frames[frame]
               }
-            }
+            })
           })
         )
       })
       .catch(() => {
         setState(
           produce((draft) => {
-            for (let i = 0; i < framesToLoad.length; i++) {
-              if (draft.frames[framesToLoad[i]] != null) {
-                draft.frames[framesToLoad[i]].shouldRefresh = true
+            framesToLoad.forEach((frame) => {
+              if (draft.frames[frame] != null) {
+                draft.frames[frame]!.shouldRefresh = true
               }
-            }
+            })
           })
         )
       })

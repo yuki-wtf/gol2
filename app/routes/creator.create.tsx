@@ -117,7 +117,7 @@ const Create = () => {
   })
 
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
@@ -135,7 +135,8 @@ const Create = () => {
 
   useEffect(() => {
     if (data == null) return undefined
-    ;(async () => {
+
+    void (async () => {
       const gameState = gridToGameState(grid)
 
       const formData = new FormData()
@@ -143,7 +144,7 @@ const Create = () => {
       formData.append('hash', data)
       formData.append('status', 'RECEIVED')
       formData.append('functionName', 'create')
-      formData.append('functionCaller', user.userId)
+      formData.append('functionCaller', user!.userId)
       formData.append('functionInputGameState', gameState)
 
       await fetch('/api/transaction', {
@@ -251,7 +252,7 @@ const Create = () => {
                       if (gameState === '0') return
 
                       // TODO test this
-                      invoke({
+                      void invoke({
                         args: [gameState],
                       })
                     }

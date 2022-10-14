@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
+import type { ElementType, ClassAttributes, ButtonHTMLAttributes } from 'react'
 
-export const StyledPlayPause = styled.button`
+const StyledPlayPause = styled.button`
   position: relative;
   height: 48px;
   width: 48px;
@@ -62,16 +64,22 @@ export const StyledPlayPause = styled.button`
   }
 `
 
-const PlayPauseBtn = ({ onClick, disabled, isPlaying, ...rest }) => {
+interface Props {
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>
+  readonly disabled?: boolean
+  readonly isPlaying?: boolean
+}
+
+export const PlayPauseBtn = ({ onClick, disabled, isPlaying }: Props) => {
   return (
-    <StyledPlayPause onClick={onClick} disabled={disabled} {...rest}>
+    <StyledPlayPause onClick={onClick} disabled={disabled}>
       {isPlaying ? (
-        <svg width={14} height={20} viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+        <svg width={14} height={20} viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width={4} height={20} rx={2} fill="#0A0C10" />
           <rect x={10} width={4} height={20} rx={2} fill="#0A0C10" />
         </svg>
       ) : (
-        <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+        <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -115,11 +123,17 @@ const StyledButtonContainer = styled.button`
   }
 `
 
-const ToStartBtn = (props) => {
+export const ToStartBtn = (
+  props: JSX.IntrinsicAttributes & {
+    theme?: Theme | undefined
+    as?: ElementType | undefined
+  } & ClassAttributes<HTMLButtonElement> &
+    ButtonHTMLAttributes<HTMLButtonElement>
+) => {
   return (
     <StyledButtonContainer {...props}>
       <div>
-        <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 1a1 1 0 012 0v18a1 1 0 11-2 0V1z" fill="#F3E9E1" />
           <path
             fillRule="evenodd"
@@ -133,11 +147,17 @@ const ToStartBtn = (props) => {
   )
 }
 
-const StepForwardBtn = (props) => {
+export const StepForwardBtn = (
+  props: JSX.IntrinsicAttributes & {
+    theme?: Theme | undefined
+    as?: ElementType | undefined
+  } & ClassAttributes<HTMLButtonElement> &
+    ButtonHTMLAttributes<HTMLButtonElement>
+) => {
   return (
     <StyledButtonContainer {...props}>
       <div>
-        <svg width={20} height={24} viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <svg width={20} height={24} viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12.51 16.95V18H8.12v-1.05h1.56v-4.59l-1.45.87v-1.15l1.98-1.2h.75v6.07h1.55z" fill="#F3E9E1" />
           <path
             fillRule="evenodd"
@@ -157,11 +177,17 @@ const StepForwardBtn = (props) => {
   )
 }
 
-const ToEndBtn = (props) => {
+export const ToEndBtn = (
+  props: JSX.IntrinsicAttributes & {
+    theme?: Theme | undefined
+    as?: ElementType | undefined
+  } & ClassAttributes<HTMLButtonElement> &
+    ButtonHTMLAttributes<HTMLButtonElement>
+) => {
   return (
     <StyledButtonContainer {...props}>
       <div>
-        <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19 1a1 1 0 112 0v18a1 1 0 11-2 0V1z" fill="#F3E9E1" />
           <path
             fillRule="evenodd"
@@ -174,11 +200,3 @@ const ToEndBtn = (props) => {
     </StyledButtonContainer>
   )
 }
-
-const exportedObject = {
-  ToStartBtn,
-  StepForwardBtn,
-  ToEndBtn,
-  PlayPauseBtn,
-}
-export default exportedObject

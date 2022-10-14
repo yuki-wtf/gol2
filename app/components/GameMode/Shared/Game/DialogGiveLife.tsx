@@ -52,7 +52,7 @@ const DialogGiveLife = () => {
   const user = useUser()
   const { contract } = useGameContract()
   const { library } = useStarknet()
-  const [dialog, setDialog] = useDialog()
+  const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
   const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
 
@@ -76,10 +76,10 @@ const DialogGiveLife = () => {
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'give_life_to_cell')
-    formData.append('functionCaller', user.userId)
-    formData.append('functionInputCellIndex', payload.toString())
+    formData.append('functionCaller', user!.userId)
+    formData.append('functionInputCellIndex', payload!.toString())
 
-    fetch('/api/transaction', {
+    void fetch('/api/transaction', {
       body: formData,
       method: 'post',
     })
@@ -135,13 +135,13 @@ const DialogGiveLife = () => {
                   return
                 }
 
-                if (user != null && user.balance > 0) {
+                if (user?.balance && user.balance > 0) {
                   const payload = selectedCell.row * 15 + selectedCell.col
 
                   setPayload(payload)
 
                   // TODO test this
-                  invoke({
+                  void invoke({
                     args: [payload],
                   })
 

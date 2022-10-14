@@ -11,12 +11,18 @@
     "resolveJsonModule": true,
     "target": "ES2019",
     "module": "ESNext",
-    "strict": false,
+    "strict": true,
     "allowJs": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "react": ["./node_modules/@types/react"],
+      "react/*": ["./node_modules/@types/react/*"],
+      "react-dom": ["./node_modules/@types/react-dom"],
+      "react-dom/*": ["./node_modules/@types/react-dom/*"]
     },
 
     // Remix takes care of building everything in `remix build`.
