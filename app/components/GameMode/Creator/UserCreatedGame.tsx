@@ -29,7 +29,7 @@ const UserCreatedGame = () => {
               <Cell
                 onClick={() => {
                   const newCells = produce(grid, (draft) => {
-                    draft[rowIndex][colIndex] = draft[rowIndex][colIndex] ? 0 : 1
+                    draft[rowIndex]![colIndex] = draft[rowIndex]![colIndex] ? 0 : 1
                   })
 
                   setGrid(newCells)

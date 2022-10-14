@@ -17,10 +17,12 @@ export interface State {
   readonly frames: Readonly<
     Record<
       number,
-      {
-        readonly shouldRefresh?: boolean
-        readonly state?: string
-      }
+      | undefined
+      | null
+      | {
+          readonly shouldRefresh?: boolean
+          readonly state?: string
+        }
     >
   >
 }

@@ -47,7 +47,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   `
 
   return json({
-    snapshots: result.rows[0].snapshots,
+    snapshots: result.rows[0]!.snapshots,
   })
 }
 

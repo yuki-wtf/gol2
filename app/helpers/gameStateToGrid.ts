@@ -8,7 +8,7 @@ export function gameStateToGrid(data: string): number[][] {
     gameState[row] = []
 
     for (let col = 0; col < GRID_SIZE; col++) {
-      gameState[row][col] = (intGameState & (BigInt(1) << BigInt(row * GRID_SIZE + col))) == BigInt(0) ? 0 : 1
+      gameState[row]![col] = (intGameState & (BigInt(1) << BigInt(row * GRID_SIZE + col))) == BigInt(0) ? 0 : 1
     }
   }
 

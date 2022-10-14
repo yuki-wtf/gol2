@@ -47,7 +47,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     limit 1
   `
 
-  const game = games.rows[0]
+  const game = games.rows[0]!
 
   const statistics = await sql<{ label: string; value: string }>`
     (
@@ -134,7 +134,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     uniquePlayers: parseInt(statistics.rows.find((r) => r.label === 'Unique Players')!.value),
     cellsToStart: bitCount(statistics.rows.find((r) => r.label === 'Cells To Start')!.value),
     gamesByUser: parseInt(statistics.rows.find((r) => r.label === 'Games By User')!.value),
-    game: games.rows[0],
+    game: games.rows[0]!,
     onChainPlay: onChainPlay.rows,
   })
 }

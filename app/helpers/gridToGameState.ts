@@ -5,7 +5,7 @@ export function gridToGameState(grid: number[][]): string {
 
   for (let row = 0; row < GRID_SIZE; row++) {
     for (let col = 0; col < GRID_SIZE; col++) {
-      gameState += BigInt(grid[row][col]) << BigInt(row * GRID_SIZE + col)
+      gameState += BigInt(grid[row]![col]!) << BigInt(row * GRID_SIZE + col)
     }
   }
 
