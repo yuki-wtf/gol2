@@ -16,7 +16,7 @@ const StyledGridContainer = styled.div`
   background-color: #1d222c;
   pointer-events: none;
 `
-const StyledCard = styled(Link)`
+const StyledCard = styled.div`
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -38,6 +38,8 @@ const StyledCard = styled(Link)`
     border-color: white;
   }
 `
+const StyledCardLink = StyledCard.withComponent(Link)
+
 const StyledGenLabel = styled.div`
   text-align: left;
   width: 100%;
@@ -92,8 +94,10 @@ interface Props {
 }
 
 const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, isCreating }: Props) => {
+  const StyledCardComponent = to == null ? StyledCard : StyledCardLink
+
   return (
-    <StyledCard to={to} style={style}>
+    <StyledCardComponent to={to!} style={style}>
       <StyledGridContainer>
         <ClientOnly>
           {() => <SnapshotGrid data={gameStateToGrid(gameState)} isGameOver={gameState == '0'} />}
@@ -106,14 +110,14 @@ const SnapshotCreator = ({ style, to, generationNumber, address, id, gameState, 
         </>
       ) : (
         <>
-          <StyledGenNumber> Game #{id.slice(0, 3)} </StyledGenNumber>
+          <StyledGenNumber> Game #{id?.slice(0, 3)} </StyledGenNumber>
           <StyledGenLabel> Generation: {generationNumber} </StyledGenLabel>
           <StyledUserAddress>
-            <HiOutlineUser color="#c2b9b2" size={16} /> {getShortChecksumAddress(address)}
+            <HiOutlineUser color="#c2b9b2" size={16} /> {address && getShortChecksumAddress(address)}
           </StyledUserAddress>
         </>
       )}
-    </StyledCard>
+    </StyledCardComponent>
   )
 }
 

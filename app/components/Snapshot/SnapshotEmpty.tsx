@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Typography from '../Typography'
-import type { MotionProps } from 'framer-motion';
+import type { MotionProps } from 'framer-motion'
 import { motion } from 'framer-motion'
 
 const Container = styled(motion.div)`

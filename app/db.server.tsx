@@ -1,5 +1,7 @@
+import type { QueryResultRow } from 'pg'
 import { Pool } from 'pg'
 import invariant from 'tiny-invariant'
+import type { TxnStatus } from './components/TxnRow'
 
 invariant(process.env.DATABASE_URL, 'DATABASE_URL must be set')
 
@@ -15,7 +17,7 @@ export async function getPool() {
   return global.__DB_POOL__
 }
 
-export async function sql<T = any>(strings: TemplateStringsArray, ...values: any[]) {
+export async function sql<T extends QueryResultRow = any>(strings: TemplateStringsArray, ...values: any[]) {
   const db = await getPool()
 
   return db.query<T>({
@@ -58,7 +60,7 @@ export interface CreatorGame {
 
 export interface OnChainPlay {
   readonly hash: string
-  readonly status: string
+  readonly status: TxnStatus
   readonly type: 'game_created' | 'game_evolved' | 'cell_revived'
   readonly owner: string
   readonly createdAt: Date

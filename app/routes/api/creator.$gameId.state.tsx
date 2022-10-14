@@ -4,7 +4,7 @@ import { sql } from '~/db.server'
 
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<string[]>> {
   const url = new URL(request.url)
-  const frames = url.searchParams.get('frames').split(',')
+  const frames = url.searchParams.get('frames')!.split(',')
 
   const result = await sql`
     select (

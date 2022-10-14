@@ -5,7 +5,7 @@ import type { loader } from '~/root'
 
 type RootLoaderData = SerializeFrom<typeof loader>
 
-const RootLoaderDataContext = createContext<RootLoaderData>(null)
+const RootLoaderDataContext = createContext<RootLoaderData>(null!)
 
 interface Props {
   readonly children: React.ReactNode

@@ -1,6 +1,8 @@
+import type { Theme } from '@emotion/react'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
+import type { RefAttributes } from 'react'
 import { HiOutlineHeart, HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import Typography from './Typography'
 
@@ -129,11 +131,15 @@ const StyledArrow = styled(PopoverPrimitive.Arrow)`
   fill: #f3e9e1;
 `
 
-function Content({ children, ...props }) {
+function Content(
+  props: JSX.IntrinsicAttributes &
+    PopoverPrimitive.PopoverContentProps &
+    RefAttributes<HTMLDivElement> & { theme?: Theme | undefined }
+) {
   return (
     <PopoverPrimitive.Portal>
       <StyledContent {...props}>
-        {children}
+        {props.children}
         <StyledArrow width={27} height={10} />
       </StyledContent>
     </PopoverPrimitive.Portal>

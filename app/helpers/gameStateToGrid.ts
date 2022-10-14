@@ -2,7 +2,7 @@ const GRID_SIZE = 15
 
 export function gameStateToGrid(data: string): number[][] {
   const intGameState = BigInt(data)
-  const gameState = []
+  const gameState: number[][] = []
 
   for (let row = 0; row < GRID_SIZE; row++) {
     gameState[row] = []

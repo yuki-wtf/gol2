@@ -111,9 +111,9 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
   `
 
   const stats = {
-    generations: parseInt(statistics.rows.find((r) => r.label === 'Generations').value),
-    livesGiven: parseInt(statistics.rows.find((r) => r.label === 'Lives given').value),
-    extinctions: parseInt(statistics.rows.find((r) => r.label === 'Extinctions').value),
+    generations: parseInt(statistics.rows.find((r) => r.label === 'Generations')!.value),
+    livesGiven: parseInt(statistics.rows.find((r) => r.label === 'Lives given')!.value),
+    extinctions: parseInt(statistics.rows.find((r) => r.label === 'Extinctions')!.value),
     longestStablePeriod: 0,
   }
 

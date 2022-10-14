@@ -29,7 +29,7 @@ import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
 
-  let balance: number = null
+  let balance: number | null = null
   let hasIncomingTransfer: boolean = false
   let hasOutgoingTransfer: boolean = false
 
@@ -176,7 +176,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
   )
 })
 
-function AppLayout({ children }) {
+function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Document>
       <ThemeProvider theme={infinite}>

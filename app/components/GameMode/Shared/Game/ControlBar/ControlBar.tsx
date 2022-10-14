@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import type { Actions, State } from '~/hooks/useGamePlayback'
-import ControlButtons from './ControlButtons'
+import * as ControlButtons from './ControlButtons'
 import SpeedDropdownMenu from './SpeedControl'
 
 const StyledControlbar = styled.div`

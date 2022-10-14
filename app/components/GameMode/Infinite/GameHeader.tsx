@@ -44,7 +44,8 @@ export default function GameHeader() {
   }, [hasClickedEvolveInfinite, setHelpMessage])
 
   useEffect(() => {
-    let timer
+    let timer: string | number | NodeJS.Timeout | undefined
+
     if (helpMessage === 'evolveInfinite') {
       timer = setTimeout(() => {
         setHelpMessage(null)
@@ -71,7 +72,7 @@ export default function GameHeader() {
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'evolve')
-    formData.append('functionCaller', user.userId)
+    formData.append('functionCaller', user!.userId)
     formData.append('functionInputGameId', INFINITE_GAME_GENESIS)
 
     fetch('/api/transaction', {

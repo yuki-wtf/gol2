@@ -14,7 +14,7 @@ const ConnectWallet = () => {
   const [helpMessage, setHelpMessage] = useHelpMessage()
 
   useEffect(() => {
-    let timer
+    let timer: string | number | NodeJS.Timeout | undefined
     if (helpMessage === 'connectWalletMessage') {
       timer = setTimeout(() => {
         setHelpMessage(null)

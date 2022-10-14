@@ -76,8 +76,8 @@ const DialogGiveLife = () => {
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'give_life_to_cell')
-    formData.append('functionCaller', user.userId)
-    formData.append('functionInputCellIndex', payload.toString())
+    formData.append('functionCaller', user!.userId)
+    formData.append('functionInputCellIndex', payload!.toString())
 
     fetch('/api/transaction', {
       body: formData,
@@ -135,7 +135,7 @@ const DialogGiveLife = () => {
                   return
                 }
 
-                if (user != null && user.balance > 0) {
+                if (user != null && user!.balance && user!.balance > 0) {
                   const payload = selectedCell.row * 15 + selectedCell.col
 
                   setPayload(payload)

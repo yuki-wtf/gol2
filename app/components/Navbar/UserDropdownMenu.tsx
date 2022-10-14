@@ -15,7 +15,12 @@ import { useEffect, useState } from 'react'
 import { getChecksumAddress } from 'starknet4'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
-const UserDropdownMenu = ({ account, disconnect }) => {
+interface Props {
+  readonly account: string
+  readonly disconnect: () => void
+}
+
+const UserDropdownMenu = ({ account, disconnect }: Props) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
   const { connectors } = useStarknet()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()

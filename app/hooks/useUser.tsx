@@ -9,12 +9,12 @@ import { useLayoutEffectX } from './useLayoutEffectX'
 
 interface User {
   readonly userId: string
-  readonly balance: number
+  readonly balance: number | null
   readonly hasIncomingTransfer: boolean
   readonly hasOutgoingTransfer: boolean
 }
 
-const UserContext = createContext<User>(null)
+const UserContext = createContext<User | null>(null)
 
 interface Props {
   readonly children: React.ReactNode
@@ -28,7 +28,7 @@ export function UserProvider({ children }: Props) {
   // const { account, connectors } = starknet
   // console.log('account UserIdProvider', account)
 
-  const user: User =
+  const user: User | null =
     data.userId != null
       ? {
           userId: data.userId,
@@ -81,7 +81,7 @@ export function UserProvider({ children }: Props) {
     // console.log([userId, account])
     if (userId == account) return
 
-    setUserId(account)
+    setUserId(account ?? null)
 
     fetcher.submit(
       {

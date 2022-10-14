@@ -149,8 +149,18 @@ const StatusContainer = styled.div<{ status: TxnStatus }>`
   color: ${(p) => TxnRowStatus[p.status].textColor};
 `
 
-const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duration = 0.3, label, user }) => {
-  const [statusInternal, setStatusInternal] = useState(null)
+interface Props {
+  readonly url: string
+  readonly type: 'game_evolved' | 'cell_revived' | 'game_created'
+  readonly status: TxnStatus
+  readonly delay?: number
+  readonly duration?: number
+  readonly label: string
+  readonly user: string
+}
+
+const TxnRow = ({ url = '/', type = 'game_evolved', status, delay = 0.5, duration = 0.3, label, user }: Props) => {
+  const [statusInternal, setStatusInternal] = useState<TxnStatus | null>(null)
   const controls = useAnimation()
   const currentUser = useUser()
   const currentUserFormatted = currentUser && hexToDecimalString(currentUser.userId)

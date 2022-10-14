@@ -45,7 +45,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   }, [setHelpMessage, hasClickedEvolveCreator])
 
   useEffect(() => {
-    let timer
+    let timer: string | number | NodeJS.Timeout | undefined
 
     if (helpMessage === 'evolveCreator' && !isGameOver) {
       timer = setTimeout(() => {
@@ -73,7 +73,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
     formData.append('hash', data)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'evolve')
-    formData.append('functionCaller', user.userId)
+    formData.append('functionCaller', user!.userId)
     formData.append('functionInputGameId', gameId)
 
     fetch('/api/transaction', {

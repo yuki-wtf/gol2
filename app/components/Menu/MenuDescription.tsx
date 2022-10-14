@@ -71,13 +71,13 @@ interface Props {
   readonly color: string
   readonly title: string
   readonly desc: string
-  readonly desc2: string
+  readonly desc2?: string | null
   readonly img: string
   readonly width: number
   readonly height: number
 }
 
-const MenuDescription = ({ isActive, color, title, desc, desc2 = null, img, width = 375, height }: Props) => {
+const MenuDescription = ({ isActive, color, title, desc, desc2, img, width = 375, height }: Props) => {
   return (
     <motion.div
       style={{

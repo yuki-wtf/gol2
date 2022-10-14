@@ -248,7 +248,7 @@ const Button = ({
       isLoading={isLoading}
       icon={icon}
       disabled={disabled}
-      to={to}
+      to={to!}
       onClick={onClick}
       tertiaryColor={tertiaryColor}
     >

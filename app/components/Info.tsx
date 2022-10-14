@@ -63,13 +63,7 @@ export interface InfoImageProps {
   readonly backgroundColor?: string
 }
 
-export function InfoImage({
-  url,
-  alt = null,
-  width,
-  height,
-  backgroundColor = ' var(--howitworks-primary)',
-}: InfoImageProps) {
+export function InfoImage({ url, alt, width, height, backgroundColor = ' var(--howitworks-primary)' }: InfoImageProps) {
   return (
     <InfoImageContainer
       style={{

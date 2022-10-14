@@ -52,7 +52,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
 }
 
 const Menu = () => {
-  const [currentNav, setCurrentNav] = useState<number>(null)
+  const [currentNav, setCurrentNav] = useState<number | null>(null)
 
   const data = useLoaderData<typeof loader>()
 

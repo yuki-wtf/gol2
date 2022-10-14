@@ -143,7 +143,7 @@ const Create = () => {
       formData.append('hash', data)
       formData.append('status', 'RECEIVED')
       formData.append('functionName', 'create')
-      formData.append('functionCaller', user.userId)
+      formData.append('functionCaller', user!.userId)
       formData.append('functionInputGameState', gameState)
 
       await fetch('/api/transaction', {

@@ -5,4 +5,6 @@ export interface SelectedCell {
   readonly col: number
 }
 
-export const [useSelectedCell, SelectedCellProvider, SelectedCellContext] = createStateContext<SelectedCell>(null)
+export const [useSelectedCell, SelectedCellProvider, SelectedCellContext] = createStateContext<SelectedCell | null>(
+  null
+)

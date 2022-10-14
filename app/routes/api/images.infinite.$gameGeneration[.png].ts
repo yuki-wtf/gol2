@@ -8,7 +8,7 @@ import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 
 function asset(src: string): string {
-  return path.join(process.env.PWD, 'app/assets', src)
+  return path.join(process.env.PWD!, 'app/assets', src)
 }
 
 function loadFont(src: string): void {
@@ -19,7 +19,7 @@ function loadFont(src: string): void {
   }
 }
 
-async function getImage(src): Promise<Image> {
+async function getImage(src: string): Promise<Image> {
   const file = await fs.readFile(asset(path.join('images', src)))
   const image = new Image()
   image.src = file

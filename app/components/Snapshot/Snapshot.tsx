@@ -1,6 +1,6 @@
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
-import type { AnimationProps} from 'framer-motion';
+import type { AnimationProps } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
@@ -226,20 +226,18 @@ const Snapshot = ({
   isLoading,
   initial,
   animate,
-  exit
+  exit,
 }: Props) => {
-  let formattedUser: string
+  let formattedUser = user ? getShortChecksumAddress(user) : null
 
-  if (user) {
-    formattedUser = getShortChecksumAddress(user)
-  }
-
-  if (isLoading)
+  if (isLoading) {
     return (
       <StyledSkeletonCard initial={initial} animate={animate} exit={exit}>
         <SkeletonImagePreview />
       </StyledSkeletonCard>
     )
+  }
+
   return (
     <StyledCard large={large} onClick={onClick} initial={initial} animate={animate} exit={exit}>
       <StyledGridContainer large={large}>
@@ -251,7 +249,7 @@ const Snapshot = ({
             border: large ? '2px solid #000000 ' : '0px',
           }}
         >
-          <SnapshotGrid data={gameStateToGrid(gameState)} />
+          <SnapshotGrid data={gameStateToGrid(gameState ?? '0')} />
         </div>
         {large && <SnapshotLogo />}
       </StyledGridContainer>

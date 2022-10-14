@@ -29,15 +29,15 @@ export default function GameContainer({ currentFrame, maxFrame, game }: Props) {
     fetchFrames,
     lastFrameRefreshInterval: 5000,
   })
-  const gameState = state.frames[state.currentFrame]?.state ?? null
+  const gameState = state.frames[state.currentFrame!]?.state ?? null
   return (
     <StyledGridContainer>
       <GameHeader gameId={game.gameId} isGameOver={game.gameState != null && BigInt(game.gameState) === BigInt(0)} />
 
       <GridWrapper
         isGameOver={
-          state.frames[state.currentFrame]?.state != null &&
-          BigInt(state.frames[state.currentFrame]?.state) === BigInt(0)
+          state.frames[state.currentFrame!]?.state != null &&
+          BigInt(state.frames[state.currentFrame!]?.state!) === BigInt(0)
         }
       >
         {gameState != null ? <GameGrid data={gameStateToGrid(gameState)} /> : null}

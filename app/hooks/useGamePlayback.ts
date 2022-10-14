@@ -10,8 +10,8 @@ interface Params {
 }
 
 export interface State {
-  readonly maxFrame: null | number
-  readonly currentFrame: null | number
+  readonly maxFrame: number
+  readonly currentFrame: number
   readonly playbackSpeed: number
   readonly isPlaying: boolean
   readonly frames: {
@@ -167,7 +167,7 @@ export function useGamePlayback({
             draft.frames[frame].shouldRefresh = false
           } else {
             draft.frames[frame] = {
-              state: null,
+              state: undefined,
             }
           }
         })
@@ -186,7 +186,7 @@ export function useGamePlayback({
                   state: data[i],
                 }
               } else {
-                draft.frames[framesToLoad[i]] = null
+                delete draft.frames[framesToLoad[i]]
               }
             }
           })

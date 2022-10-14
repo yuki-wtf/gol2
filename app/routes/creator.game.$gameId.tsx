@@ -131,10 +131,10 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
   `
 
   return json<LoaderData>({
-    generations: parseInt(statistics.rows.find((r) => r.label === 'Generations').value),
-    uniquePlayers: parseInt(statistics.rows.find((r) => r.label === 'Unique Players').value),
-    cellsToStart: bitCount(statistics.rows.find((r) => r.label === 'Cells To Start').value),
-    gamesByUser: parseInt(statistics.rows.find((r) => r.label === 'Games By User').value),
+    generations: parseInt(statistics.rows.find((r) => r.label === 'Generations')!.value),
+    uniquePlayers: parseInt(statistics.rows.find((r) => r.label === 'Unique Players')!.value),
+    cellsToStart: bitCount(statistics.rows.find((r) => r.label === 'Cells To Start')!.value),
+    gamesByUser: parseInt(statistics.rows.find((r) => r.label === 'Games By User')!.value),
     game: games.rows[0],
     onChainPlay: onChainPlay.rows,
   })

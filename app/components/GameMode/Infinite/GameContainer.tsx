@@ -34,7 +34,7 @@ export default function GameContainer({ currentFrame, maxFrame, receivedCells }:
     lastFrameRefreshInterval: 5000,
   })
   const [selectedCell] = useSelectedCell()
-  const gameState = state.frames[state.currentFrame]?.state ?? null
+  const gameState = state.frames[state.currentFrame!]?.state ?? null
 
   return (
     <StyledGridContainer>

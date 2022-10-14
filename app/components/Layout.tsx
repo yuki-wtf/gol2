@@ -17,7 +17,11 @@ const Container = styled.div`
   flex: 1;
 `
 
-export default function Layout({ children }) {
+interface Props {
+  children: React.ReactNode
+}
+
+export default function Layout({ children }: Props) {
   const router = useLocation()
 
   return (
