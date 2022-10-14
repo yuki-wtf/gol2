@@ -9,7 +9,6 @@ module.exports = {
     '@remix-run/eslint-config/node',
     '@remix-run/eslint-config/jest-testing-library',
     'eslint-config-prettier',
-    'plugin:storybook/recommended',
     'prettier',
   ],
   // We're using vitest which has a very similar API to jest
