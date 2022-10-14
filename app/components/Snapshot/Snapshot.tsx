@@ -1,5 +1,6 @@
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
 import styled from '@emotion/styled'
+import type { AnimationProps} from 'framer-motion';
 import { motion } from 'framer-motion'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
@@ -202,6 +203,19 @@ const SkeletonImagePreview = () => {
   )
 }
 
+interface Props {
+  readonly onClick?: React.MouseEventHandler<HTMLLIElement>
+  readonly onClickTwitter?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
+  readonly large?: boolean
+  readonly gameGeneration?: React.ReactNode
+  readonly gameState?: string
+  readonly user?: string
+  readonly isLoading?: boolean
+  readonly initial?: AnimationProps['initial']
+  readonly animate?: AnimationProps['animate']
+  readonly exit?: AnimationProps['exit']
+}
+
 const Snapshot = ({
   onClick,
   onClickTwitter,
@@ -209,12 +223,12 @@ const Snapshot = ({
   gameGeneration,
   gameState,
   user,
-  id,
   isLoading,
-  onClose,
-  ...rest
-}) => {
-  let formattedUser
+  initial,
+  animate,
+  exit
+}: Props) => {
+  let formattedUser: string
 
   if (user) {
     formattedUser = getShortChecksumAddress(user)
@@ -222,12 +236,12 @@ const Snapshot = ({
 
   if (isLoading)
     return (
-      <StyledSkeletonCard {...rest}>
+      <StyledSkeletonCard initial={initial} animate={animate} exit={exit}>
         <SkeletonImagePreview />
       </StyledSkeletonCard>
     )
   return (
-    <StyledCard large={large} {...rest} onClick={onClick}>
+    <StyledCard large={large} onClick={onClick} initial={initial} animate={animate} exit={exit}>
       <StyledGridContainer large={large}>
         <div
           style={{

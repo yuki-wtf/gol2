@@ -95,14 +95,6 @@ export default function Snapshots() {
         <AnimatePresence>
           {user != null && data && data.length === 0 && (
             <SnapshotEmpty
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{
-                opacity: 0,
-                transition: {
-                  delay: 0,
-                },
-              }}
               icon={<HiOutlineLightningBolt size={40} />}
               label="You don’t have any snapshots! Evolve the Infinite game to earn your first snapshot."
             />
@@ -125,7 +117,6 @@ export default function Snapshots() {
               <SnapshotDialog.Dialog key={snapshot.gameGeneration}>
                 <SnapshotDialog.DialogTrigger asChild>
                   <Snapshot
-                    isSnapshot
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user?.userId}
@@ -140,10 +131,6 @@ export default function Snapshots() {
                         delay: 0,
                       },
                     }}
-                    onClick={undefined}
-                    onClickTwitter={undefined}
-                    id={undefined}
-                    isLoading={undefined}
                   />
                 </SnapshotDialog.DialogTrigger>
                 <SnapshotDialog.DialogContent>
@@ -153,8 +140,6 @@ export default function Snapshots() {
                     </SnapshotDialog.DialogClose>
                   </div>
                   <Snapshot
-                    onClose={undefined}
-                    isSnapshot
                     large
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
@@ -178,9 +163,6 @@ export default function Snapshots() {
                         )
                       )
                     }}
-                    onClick={undefined}
-                    id={undefined}
-                    isLoading={undefined}
                   />
                 </SnapshotDialog.DialogContent>
               </SnapshotDialog.Dialog>

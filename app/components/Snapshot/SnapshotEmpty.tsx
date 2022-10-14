@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Typography from '../Typography'
+import type { MotionProps } from 'framer-motion';
 import { motion } from 'framer-motion'
 
 const Container = styled(motion.div)`
@@ -23,7 +24,17 @@ const TextWrapper = styled.div`
   text-align: center;
 `
 
-const SnapshotEmpty = ({ label = 'Connect your wallet to view snapshots from your previous plays', icon, style }) => {
+interface Props {
+  readonly icon?: React.ReactNode
+  readonly label?: React.ReactNode
+  readonly style?: MotionProps['style']
+}
+
+const SnapshotEmpty = ({
+  label = 'Connect your wallet to view snapshots from your previous plays',
+  icon,
+  style,
+}: Props) => {
   return (
     <Container style={{ ...style }}>
       <IconWrapper>{icon}</IconWrapper>
