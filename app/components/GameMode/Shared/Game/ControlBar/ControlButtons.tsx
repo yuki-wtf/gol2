@@ -3,7 +3,7 @@ import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import type { ElementType, ClassAttributes, ButtonHTMLAttributes } from 'react'
 
-export const StyledPlayPause = styled.button`
+const StyledPlayPause = styled.button`
   position: relative;
   height: 48px;
   width: 48px;

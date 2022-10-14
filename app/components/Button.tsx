@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import T from './Typography'
 import Spinner from './Spinner'
 import { css } from '@emotion/react'
+import type { LinkProps } from '@remix-run/react'
 import { Link } from '@remix-run/react'
-import type { To } from 'react-router-dom'
 
 interface Props {
   readonly primary?: boolean
@@ -14,7 +14,7 @@ interface Props {
   readonly label?: React.ReactNode
   readonly disabled?: boolean
   readonly onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>
-  readonly to?: To
+  readonly to?: LinkProps['to']
   readonly full?: boolean
   readonly tertiaryColor?: string
 }
@@ -195,7 +195,7 @@ const tertiaryButton = (p: any) => css`
     ${activeButtonTertiary(p)}
   }
 `
-export const StyledButton = styled.button<Props>`
+const StyledButton = styled.button<Props>`
   ${(p) => defaultButton(p)};
 
   ${(p) => {
@@ -217,7 +217,7 @@ export const StyledButton = styled.button<Props>`
 
 const StyledLink = StyledButton.withComponent(Link)
 
-const Button = ({
+export default function Button({
   primary,
   secondary,
   tertiary,
@@ -229,7 +229,7 @@ const Button = ({
   to,
   full,
   tertiaryColor,
-}: Props) => {
+}: Props) {
   const Component = to != null ? StyledLink : StyledButton
 
   const renderIconSpinner = () => {
@@ -257,5 +257,3 @@ const Button = ({
     </Component>
   )
 }
-
-export default Button

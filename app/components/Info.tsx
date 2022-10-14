@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 
 export const InfoList = styled.ul`
   margin-top: 32px;
-  /* padding: 0; */
   padding-left: 16px;
   list-style-type: disc;
   display: flex;

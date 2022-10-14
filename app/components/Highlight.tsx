@@ -89,18 +89,6 @@ const StyledContainer = styled.span<{ active?: boolean; highlightRadius?: number
   }
 `
 
-// const StyledBackdrop = styled.div`
-//   opacity: ${(p) => (p.active ? '0.4' : '0')};
-//   /* Section/Snapshots-200 */
-//   position: fixed;
-//   inset: 0;
-//   z-index: 0;
-//   background-color: #1d222c;
-//   visibility: ${(p) => (p.active ? 'visible' : 'hidden')};
-//   pointer-events: ${(p) => (p.active ? 'none' : 'auto')};
-//   transition: all 0.5s ease;
-// `
-
 const StyledContent = styled(PopoverPrimitive.Content)`
   border-radius: 8px;
   padding: 20px;
@@ -190,13 +178,7 @@ const StyledIcon = styled.div`
   color: white;
 `
 
-// Exports
-export const Popover = PopoverPrimitive.Root
-export const PopoverTrigger = PopoverPrimitive.Trigger
-export const PopoverContent = Content
-export const PopoverClose = StyledClose
-
-const Highlight = ({
+export default function Highlight({
   highlightRadius = 8,
   collisonPadding,
   title,
@@ -207,15 +189,15 @@ const Highlight = ({
   type = 'evolve',
   style,
   sideOffset = 15,
-}: Props) => {
+}: Props) {
   return (
     <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
-      <Popover defaultOpen={true} open={active}>
+      <PopoverPrimitive.Root defaultOpen={true} open={active}>
         <StyledTrigger>
           <>{children} </>
         </StyledTrigger>
 
-        <PopoverContent
+        <Content
           collisionPadding={collisonPadding}
           sideOffset={sideOffset}
           onPointerDownOutside={(event) => event.preventDefault()}
@@ -230,13 +212,11 @@ const Highlight = ({
             </div>
           </StyledContentInner>
 
-          <PopoverClose onClick={onClose} aria-label="Close">
+          <StyledClose onClick={onClose} aria-label="Close">
             <HiOutlineX />
-          </PopoverClose>
-        </PopoverContent>
-      </Popover>
+          </StyledClose>
+        </Content>
+      </PopoverPrimitive.Root>
     </StyledContainer>
   )
 }
-
-export default Highlight
