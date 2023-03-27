@@ -1,10 +1,8 @@
-import { useSearchParams } from '@remix-run/react'
+import { useRevalidator } from '@remix-run/react'
 import { useInterval } from 'react-use'
 
 export function useAutoRefresh() {
-  const [, setSearchParams] = useSearchParams()
+  const { revalidate, state } = useRevalidator()
 
-  useInterval(() => {
-    setSearchParams({}, { replace: true, state: { scroll: false } })
-  }, 5000)
+  useInterval(revalidate, state === 'idle' ? 5000 : null)
 }
