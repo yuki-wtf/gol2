@@ -1,0 +1,30 @@
+{
+  "name": "Ubuntu 22.04 (Jammy Jellyfish)",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "lts"
+    }
+  },
+
+  "postCreateCommand": "bash -c '[ -f \"${localWorkspaceFolder}/.devcontainer/post-create.sh\" ] && bash -i \"${localWorkspaceFolder}/.devcontainer/post-create.sh\" || true'",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "arcanis.vscode-zipfs",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "mikestead.dotenv",
+        "hahnlee.yarn2-dependency-explorer",
+        "editorconfig.editorconfig",
+        "sleistner.vscode-fileutils",
+        "eamodio.gitlens"
+      ]
+    }
+  }
+}
