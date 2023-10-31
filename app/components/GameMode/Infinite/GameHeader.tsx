@@ -16,6 +16,7 @@ import { useUser } from '~/hooks/useUser'
 import Button from '../../Button'
 import TempOverlay from '../../TempOverlay'
 import Header from '../Shared/Game/Header'
+import { getLibraryChainId } from '~/helpers/getLibraryChainId'
 
 export default function GameHeader() {
   const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
@@ -126,7 +127,7 @@ export default function GameHeader() {
             onClick={() => {
               setHasClickedEvolveInfinite(true)
 
-              if (library.chainId != currentStarknetChainId) {
+              if (getLibraryChainId(library) != currentStarknetChainId) {
                 setDialog('WrongNetworkDialog')
                 return
               }

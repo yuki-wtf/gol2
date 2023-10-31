@@ -12,6 +12,7 @@ import Typography from '~/components/Typography'
 import Loader from '~/components/Loader'
 import { HiOutlineX } from 'react-icons/hi'
 import Dialog from '~/components/Dialog/Dialog'
+import { getLibraryChainId } from '~/helpers/getLibraryChainId'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -130,7 +131,7 @@ const DialogGiveLife = () => {
             <Button
               secondary
               onClick={() => {
-                if (library.chainId != currentStarknetChainId) {
+                if (getLibraryChainId(library) != currentStarknetChainId) {
                   setDialog('WrongNetworkDialog')
                   return
                 }

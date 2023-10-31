@@ -18,6 +18,7 @@ import { StarknetChainId } from 'starknet4/dist/constants'
 import Dialog from '~/components/Dialog/Dialog'
 import Loader from '~/components/Loader'
 import { HiOutlineX } from 'react-icons/hi'
+import { getLibraryChainId } from '~/helpers/getLibraryChainId'
 
 const gameExamples = [
   {
@@ -241,7 +242,7 @@ const Create = () => {
                   isLoading={loading}
                   disabled={gameState === '0'}
                   onClick={() => {
-                    if (library.chainId != currentStarknetChainId) {
+                    if (getLibraryChainId(library) != currentStarknetChainId) {
                       setDialog('WrongNetworkDialog')
                       return
                     }

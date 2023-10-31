@@ -13,6 +13,7 @@ import { useGameContract } from '~/hooks/useGameContract'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Header from '../Shared/Game/Header'
+import { getLibraryChainId } from '~/helpers/getLibraryChainId'
 
 interface Props {
   readonly isGameOver: boolean
@@ -127,7 +128,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
             onClick={() => {
               setHasClickedEvolveCreator(true)
 
-              if (library.chainId != currentStarknetChainId) {
+              if (getLibraryChainId(library) != currentStarknetChainId) {
                 setDialog('WrongNetworkDialog')
                 return
               }
