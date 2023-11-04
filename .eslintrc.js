@@ -20,7 +20,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-non-null-assertion': ['off'],
     '@typescript-eslint/no-invalid-void-type': ['off'],
-    "@typescript-eslint/no-unsafe-member-access": ["off"],
+    '@typescript-eslint/no-unsafe-member-access': ['off'],
   },
   // We're using vitest which has a very similar API to jest
   // (so the linting plugins work nicely), but we have to
