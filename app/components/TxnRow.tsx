@@ -4,9 +4,10 @@ import { useAnimation, motion } from 'framer-motion'
 import { HiOutlineHeart, HiOutlineLightningBolt } from 'react-icons/hi'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import { useUser } from '~/hooks/useUser'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { usePreviousDistinct } from 'react-use'
+const hexToDecimalString = num.hexToDecimalString
 
 export const TxnRowStatus = {
   TRANSACTION_RECEIVED: {

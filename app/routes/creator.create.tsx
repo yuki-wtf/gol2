@@ -14,11 +14,12 @@ import { gridToGameState } from '~/helpers/gridToGameState'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { useDialog } from '~/hooks/Dialog'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { StarknetChainId } from 'starknet4/dist/constants'
+import { constants } from 'starknet'
 import Dialog from '~/components/Dialog/Dialog'
 import Loader from '~/components/Loader'
 import { HiOutlineX } from 'react-icons/hi'
 import { getLibraryChainId } from '~/helpers/getLibraryChainId'
+const StarknetChainId = constants.StarknetChainId;
 
 const gameExamples = [
   {
@@ -120,7 +121,7 @@ const Create = () => {
   const { library } = useStarknet()
   const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.SN_MAIN : StarknetChainId.SN_GOERLI
 
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)

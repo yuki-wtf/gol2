@@ -2,7 +2,7 @@ import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { StarknetChainId } from 'starknet4/dist/constants'
+import { constants } from 'starknet'
 import Dialog from '~/components/Dialog/Dialog'
 import Highlight from '~/components/Highlight'
 import Loader from '~/components/Loader'
@@ -17,6 +17,7 @@ import Button from '../../Button'
 import TempOverlay from '../../TempOverlay'
 import Header from '../Shared/Game/Header'
 import { getLibraryChainId } from '~/helpers/getLibraryChainId'
+const StarknetChainId = constants.StarknetChainId;
 
 export default function GameHeader() {
   const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
@@ -29,7 +30,7 @@ export default function GameHeader() {
   const { library } = useStarknet()
   const [, setDialog] = useDialog()
   const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.SN_MAIN : StarknetChainId.SN_GOERLI
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,

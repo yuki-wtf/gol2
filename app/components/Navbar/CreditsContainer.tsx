@@ -12,7 +12,7 @@ import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useLocalStorage } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useStarknet } from '@starknet-react/core'
-import { getChecksumAddress } from 'starknet4'
+import { getChecksumAddress } from 'starknet'
 import { useLocation } from '@remix-run/react'
 import Dialog from '../Dialog/Dialog'
 
