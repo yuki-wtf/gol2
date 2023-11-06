@@ -1,9 +1,6 @@
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import { useStarknet } from '@starknet-react/core'
 import { createContext, useContext, useState } from 'react'
-// import type { AccountInterface } from 'starknet3'
-// import { getChecksumAddress } from 'starknet3'
-// import { StarknetChainId } from 'starknet3/dist/constants'
 import type { loader } from '~/root'
 import { useLayoutEffectX } from './useLayoutEffectX'
 

@@ -7,8 +7,9 @@ import { getUserId } from '~/session.server'
 import type { LoaderArgs, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { sql } from '~/db.server'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { useLoaderData } from '@remix-run/react'
+const hexToDecimalString = num.hexToDecimalString
 
 const container = {
   hidden: {

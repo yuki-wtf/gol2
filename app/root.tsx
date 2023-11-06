@@ -17,7 +17,7 @@ import ServerStyleContext from './styles/server.context'
 import ClientStyleContext from './styles/client.context'
 import { useContext, useEffect } from 'react'
 import { sql } from './db.server'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { SelectedCellProvider } from './hooks/SelectedCell'
 import { CreatorGridProvider } from './hooks/CreatorGrid'
 import { HelpMessageProvider } from './hooks/HelpMessage'
@@ -25,6 +25,7 @@ import MobileMessage from './components/MobileMessage'
 import { DialogProvider } from './hooks/Dialog'
 import Dialogs from './components/Dialogs'
 import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
+const hexToDecimalString  = num.hexToDecimalString
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)

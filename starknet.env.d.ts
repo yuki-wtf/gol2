@@ -1,7 +1,6 @@
 // https://github.com/argentlabs/argent-x/blob/e57225f5841f47782e444ae7c75b28cb8840c23b/packages/extension/src/inpage/inpage.model.ts
 
-import type { AccountInterface, ProviderInterface } from 'starknet4'
-import type { AccountInterface as AccountInterface3, ProviderInterface as ProviderInterface3 } from 'starknet3'
+import type { AccountInterface, ProviderInterface } from 'starknet'
 
 type AccountChangeEventHandler = (accounts: string[]) => void
 
@@ -78,7 +77,6 @@ type RpcMessage =
       result: never
     }
 
-type StarknetJsVersion = 'v3' | 'v4'
 
 interface IStarketWindowObject {
   id: string
@@ -86,36 +84,23 @@ interface IStarketWindowObject {
   version: string
   icon: string
   request: <T extends RpcMessage>(call: Omit<T, 'result'>) => Promise<T['result']>
-  enable: (options?: { starknetVersion?: StarknetJsVersion }) => Promise<string[]>
+  enable: () => Promise<string[]>
   isPreauthorized: () => Promise<boolean>
   on: (event: WalletEvents['type'], handleEvent: WalletEvents['handler']) => void
   off: (event: WalletEvents['type'], handleEvent: WalletEvents['handler']) => void
-  starknetJsVersion?: StarknetJsVersion
-  account?: AccountInterface | AccountInterface3
-  provider?: ProviderInterface | ProviderInterface3
+  account?: AccountInterface
+  provider?: ProviderInterface
   selectedAddress?: string
   chainId?: string
 }
 
-interface ConnectedStarketWindowObjectV3 extends IStarketWindowObject {
+interface ConnectedStarketWindowObject extends IStarketWindowObject {
   isConnected: true
-  starknetJsVersion: 'v3'
-  account: AccountInterface3
-  provider: ProviderInterface3
-  selectedAddress: string
-  chainId: string
-}
-
-interface ConnectedStarketWindowObjectV4 extends IStarketWindowObject {
-  isConnected: true
-  starknetJsVersion: 'v4'
   account: AccountInterface
   provider: ProviderInterface
   selectedAddress: string
   chainId: string
 }
-
-type ConnectedStarketWindowObject = ConnectedStarketWindowObjectV3 | ConnectedStarketWindowObjectV4
 
 interface DisconnectedStarketWindowObject extends IStarketWindowObject {
   isConnected: false

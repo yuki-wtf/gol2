@@ -12,7 +12,7 @@ import { getShortChecksumAddress } from '~/helpers/starknet'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useStarknet } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
-import { getChecksumAddress } from 'starknet4'
+import { getChecksumAddress } from 'starknet'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 interface Props {

@@ -1,5 +1,5 @@
-import { getChecksumAddress } from 'starknet4'
-import type { BigNumberish } from 'starknet4/dist/utils/number'
+import { getChecksumAddress } from 'starknet'
+import type { BigNumberish } from 'starknet'
 
 export function getShortChecksumAddress(address: BigNumberish | string): string {
   const checksumAddress = getChecksumAddress(address).toLowerCase()
