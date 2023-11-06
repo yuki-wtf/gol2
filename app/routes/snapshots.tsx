@@ -12,9 +12,10 @@ import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+const hexToDecimalString = num.hexToDecimalString
 
 const FlexContainer = styled.div`
   display: flex;

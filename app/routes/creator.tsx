@@ -11,11 +11,12 @@ import type { CreatorGame } from '~/db.server'
 import { sql } from '~/db.server'
 import { useUser } from '~/hooks/useUser'
 import { getUserId } from '~/session.server'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { useAutoRefresh } from '~/hooks/useAutoRefresh'
 import { HiOutlineCube } from 'react-icons/hi'
 import { AutoSizer, Grid, WindowScroller } from 'react-virtualized'
 import SnapshotEmpty from '~/components/Snapshot/SnapshotEmpty'
+const hexToDecimalString  = num.hexToDecimalString
 
 interface LoaderData {
   readonly yourGames: CreatorGame[]

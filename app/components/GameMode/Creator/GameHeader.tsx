@@ -2,7 +2,8 @@ import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { StarknetChainId } from 'starknet4/dist/constants'
+import { constants } from 'starknet';
+
 import Button from '~/components/Button'
 import Dialog from '~/components/Dialog/Dialog'
 import Highlight from '~/components/Highlight'
@@ -14,7 +15,7 @@ import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Header from '../Shared/Game/Header'
 import { getLibraryChainId } from '~/helpers/getLibraryChainId'
-
+const StarknetChainId = constants.StarknetChainId;
 interface Props {
   readonly isGameOver: boolean
   readonly gameId: string
@@ -30,7 +31,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   const [, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.SN_MAIN : StarknetChainId.SN_GOERLI
 
   const { data, loading, error, reset, invoke } = useStarknetInvoke({
     contract,
