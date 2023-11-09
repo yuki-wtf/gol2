@@ -10,10 +10,10 @@ import useCopyToClipboard from '../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
-import { useStarknet } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { getChecksumAddress } from 'starknet'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { useConnect } from '@starknet-react/core'
 
 interface Props {
   readonly account: string
@@ -22,7 +22,7 @@ interface Props {
 
 const UserDropdownMenu = ({ account, disconnect }: Props) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
-  const { connectors } = useStarknet()
+  const { connectors } = useConnect()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()
   const { env } = useRootLoaderData()
 

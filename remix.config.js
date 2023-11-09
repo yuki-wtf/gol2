@@ -2,4 +2,7 @@
 module.exports = {
   cacheDirectory: './node_modules/.cache/remix',
   ignoredRouteFiles: ['**/.*', '**/*.css', '**/*.test.{js,jsx,ts,tsx}'],
+  serverDependenciesToBundle: ["@starknet-react/core", "@starknet-react/chains"],
+  // serverModuleFormat: 'esm', // or 'esm' both worked
+
 }
