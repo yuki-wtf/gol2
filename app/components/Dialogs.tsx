@@ -1,18 +1,15 @@
 import { useDialog } from '~/hooks/Dialog'
 
-import { useStarknet } from '@starknet-react/core'
-import { constants } from 'starknet'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 import { HiOutlineX } from 'react-icons/hi'
 import Dialog from './Dialog/Dialog'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
-const StarknetChainId = constants.StarknetChainId;
+import { useNetwork } from '@starknet-react/core'
 
 export default function Dialogs() {
   const [dialog, setDialog] = useDialog()
-  const { library } = useStarknet()
   const { env } = useRootLoaderData()
+  const { chain } = useNetwork()
 
   return (
     <>
@@ -22,8 +19,7 @@ export default function Dialogs() {
         description={
           <span>
             You are using GoL2 on {env.USE_MAINNET ? 'Mainnet' : 'Testnet'}. Please switch your wallet network from{' '}
-            {getLibraryChainId(library) === StarknetChainId.SN_MAIN ? 'Mainnet' : 'Testnet'} to{' '}
-            {env.USE_MAINNET ? 'Mainnet' : 'Testnet'}
+            {!chain.testnet ? 'Mainnet' : 'Testnet'} to {env.USE_MAINNET ? 'Mainnet' : 'Testnet'}
             <br /> <br /> Try refreshing the app if network used is not correctly detected by Gol2.
           </span>
         }

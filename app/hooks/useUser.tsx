@@ -1,8 +1,8 @@
 import { useFetcher, useLoaderData } from '@remix-run/react'
-import { useStarknet } from '@starknet-react/core'
 import { createContext, useContext, useState } from 'react'
 import type { loader } from '~/root'
 import { useLayoutEffectX } from './useLayoutEffectX'
+import { useAccount } from '@starknet-react/core'
 
 interface User {
   readonly userId: string
@@ -18,12 +18,10 @@ interface Props {
 }
 
 export function UserProvider({ children }: Props) {
-  const starknet = useStarknet()
   const data = useLoaderData<typeof loader>()
 
-  const { account } = starknet
-  // const { account, connectors } = starknet
-  // console.log('account UserIdProvider', account)
+  const { account: _account } = useAccount()
+  const account = _account?.address
 
   const user: User | null =
     data.userId != null

@@ -1,8 +1,7 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
+import { useContractWrite } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { constants } from 'starknet';
 
 import Button from '~/components/Button'
 import Dialog from '~/components/Dialog/Dialog'
@@ -11,11 +10,9 @@ import Loader from '~/components/Loader'
 import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Header from '../Shared/Game/Header'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
-const StarknetChainId = constants.StarknetChainId;
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 interface Props {
   readonly isGameOver: boolean
   readonly gameId: string
@@ -27,15 +24,18 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
   const user = useUser()
-  const { library } = useStarknet()
   const [, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
-  const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.SN_MAIN : StarknetChainId.SN_GOERLI
+  const { isCorrectNetwork } = useCheckNetwork()
 
-  const { data, loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'evolve',
+  const {
+    write,
+    data,
+    isLoading: loading,
+    isError: error,
+    reset,
+  } = useContractWrite({
+    calls: contract ? [contract.populateTransaction.evolve!(gameId)] : [],
   })
 
   useEffect(() => {
@@ -129,16 +129,14 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
             onClick={() => {
               setHasClickedEvolveCreator(true)
 
-              if (getLibraryChainId(library) != currentStarknetChainId) {
+              if (!isCorrectNetwork) {
                 setDialog('WrongNetworkDialog')
                 return
               }
 
               if (user != null) {
                 // TODO test this
-                void invoke({
-                  args: [gameId],
-                })
+                write()
                 return
               }
               setHelpMessage('connectWalletMessage')

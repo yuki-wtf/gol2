@@ -2351,12 +2351,21 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@starknet-react/core@^0.13.2":
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.13.4.tgz#feff59363caa9be97602fd7723774bb802d56b45"
-  integrity sha512-aACYPHGVNtPNEFFPxIMvmld23VSeWqJpBJ1reapnndAXlDO9SQSy9vc6jLtCic3WWkAnc4jFlRpXCnBzWFxKtA==
+"@starknet-react/chains@^0.1.0-next.1":
+  version "0.1.0-next.1"
+  resolved "https://registry.yarnpkg.com/@starknet-react/chains/-/chains-0.1.0-next.1.tgz#bb10bf1b5b2cf2b4376a3cec5e39bbf186cdac88"
+  integrity sha512-4/aYmckYXSbmkLJvc5NsM3WBDCH/0zrUGmF0dJMeET+rQv1YfxRY2IMV3u6ulha+19MELsuO0FmYaAWI1L5k2A==
+
+"@starknet-react/core@^2.0.0-next.6":
+  version "2.0.0-next.6"
+  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-2.0.0-next.6.tgz#32e35f29078acea9d95fa86407907e5d86d05656"
+  integrity sha512-yleXhaklEbcaFsOEEuA97IO+/JlsTLbQ4/G8yx2j2nvOiK8/dHWcJSxUF2T3pZKsZVTai/XqgXSDa+qhaZDISg==
   dependencies:
-    immutable "^4.0.0"
+    "@starknet-react/chains" "^0.1.0-next.1"
+    "@tanstack/react-query" "^4.35.3"
+    eventemitter3 "^5.0.1"
+    immutable "^4.3.4"
+    zod "^3.22.2"
 
 "@szmarczak/http-timer@^4.0.5":
   version "4.0.6"
@@ -2364,6 +2373,19 @@
   integrity sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==
   dependencies:
     defer-to-connect "^2.0.0"
+
+"@tanstack/query-core@4.36.1":
+  version "4.36.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.36.1.tgz#79f8c1a539d47c83104210be2388813a7af2e524"
+  integrity sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==
+
+"@tanstack/react-query@^4.35.3":
+  version "4.36.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.36.1.tgz#acb589fab4085060e2e78013164868c9c785e5d2"
+  integrity sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==
+  dependencies:
+    "@tanstack/query-core" "4.36.1"
+    use-sync-external-store "^1.2.0"
 
 "@testing-library/dom@^8.11.1":
   version "8.19.0"
@@ -4729,6 +4751,11 @@ event-target-shim@^5.0.0:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
+eventemitter3@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
+  integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
+
 exit-hook@2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-2.2.1.tgz#007b2d92c6428eda2b76e7016a34351586934593"
@@ -5187,12 +5214,18 @@ get-port@^5.1.1:
   resolved "https://registry.yarnpkg.com/get-port/-/get-port-5.1.1.tgz#0469ed07563479de6efb986baf053dcd7d4e3193"
   integrity sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==
 
-get-starknet@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/get-starknet/-/get-starknet-1.5.0.tgz#b6df1b18cd8cb33c9277b75c32aa71c412c79ed0"
-  integrity sha512-6A14mdPoMwO4orETjG5D+wwaZOzuAyNp/5+ZlDJnU+UU7QRGMYILUo8WjgqeVTg0mcN0BZoUE0C/Qhgd7dBvVQ==
+get-starknet-core@^3.0.1, get-starknet-core@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/get-starknet-core/-/get-starknet-core-3.2.0.tgz#44cabcbd573262340d575cb6b9a38e469a8029ed"
+  integrity sha512-SZhxtLlKoPKLZ2H3l9WIU7CiNmkL3qLWGksALmvZdAXa/9PykYfLtvIB5B8A2UZMpf2ojTZlWLfuo1KhgmVobA==
+
+get-starknet@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/get-starknet/-/get-starknet-3.0.1.tgz#46a4ece33defcedf83d8e006e1222bb868132116"
+  integrity sha512-EyUl+DVQH5PXW2OUdY06/yaqlMizzLKRLzp3S+VhYz+l6wGvW5pmhTXHLaYI4hWfebIDfFkFvAPxVPv/TkWLyA==
   dependencies:
     bowser "^2.11.0"
+    get-starknet-core "^3.0.1"
 
 get-stream@^5.1.0:
   version "5.2.0"
@@ -5594,10 +5627,10 @@ immer@^9.0.15:
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.15.tgz#0b9169e5b1d22137aba7d43f8a81a495dd1b62dc"
   integrity sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==
 
-immutable@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.1.0.tgz#f795787f0db780183307b9eb2091fcac1f6fafef"
-  integrity sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==
+immutable@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.4.tgz#2e07b33837b4bb7662f288c244d1ced1ef65a78f"
+  integrity sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==
 
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -9407,6 +9440,11 @@ use-sidecar@^1.1.2:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
 
+use-sync-external-store@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
@@ -9745,6 +9783,11 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.22.2:
+  version "3.22.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
+  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
 
 zwitch@^2.0.0:
   version "2.0.2"

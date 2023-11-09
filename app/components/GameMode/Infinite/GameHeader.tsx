@@ -1,8 +1,7 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
+import { useContractWrite } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { constants } from 'starknet'
 import Dialog from '~/components/Dialog/Dialog'
 import Highlight from '~/components/Highlight'
 import Loader from '~/components/Loader'
@@ -11,13 +10,11 @@ import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Button from '../../Button'
 import TempOverlay from '../../TempOverlay'
 import Header from '../Shared/Game/Header'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
-const StarknetChainId = constants.StarknetChainId;
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 
 export default function GameHeader() {
   const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
@@ -27,15 +24,19 @@ export default function GameHeader() {
   const { contract } = useGameContract()
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
-  const { library } = useStarknet()
   const [, setDialog] = useDialog()
-  const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.SN_MAIN : StarknetChainId.SN_GOERLI
 
-  const { data, loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'evolve',
+  const {
+    write,
+    data,
+    isLoading: loading,
+    error,
+    reset,
+  } = useContractWrite({
+    calls: contract ? [contract.populateTransaction.evolve!(INFINITE_GAME_GENESIS)] : [],
   })
+
+  const { isCorrectNetwork } = useCheckNetwork()
 
   useEffect(() => {
     if (hasClickedEvolveInfinite) return
@@ -128,15 +129,13 @@ export default function GameHeader() {
             onClick={() => {
               setHasClickedEvolveInfinite(true)
 
-              if (getLibraryChainId(library) != currentStarknetChainId) {
+              if (!isCorrectNetwork) {
                 setDialog('WrongNetworkDialog')
                 return
               }
 
               if (user != null) {
-                void invoke({
-                  args: [INFINITE_GAME_GENESIS],
-                })
+                write()
                 return
               }
 
