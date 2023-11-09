@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useStarknet } from '@starknet-react/core'
 import Button from '../Button'
 import UserDropdownMenu from './UserDropdownMenu'
 import NetworkDropdownMenu from './NetworkDropdownMenu.client'
@@ -7,10 +6,16 @@ import Highlight from '~/components/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { clearTimeout } from 'timers'
 import Dialog from '../Dialog/Dialog'
+import { useAccount, useConnect, useDisconnect} from '@starknet-react/core'
 
 const ConnectWallet = () => {
   const [open, setOpen] = useState(false)
-  const { account, error, connectors, connect, disconnect } = useStarknet()
+  const {connectors, connect, isError} = useConnect()
+  const { disconnect } = useDisconnect()
+  const {account } = useAccount()
+  const accountAddress = account?.address || ''
+
+
   const [helpMessage, setHelpMessage] = useHelpMessage()
 
   useEffect(() => {
@@ -25,7 +30,7 @@ const ConnectWallet = () => {
     }
   }, [helpMessage, setHelpMessage])
 
-  if (account) {
+  if (accountAddress) {
     return (
       <div
         style={{
@@ -37,7 +42,7 @@ const ConnectWallet = () => {
         }}
       >
         <NetworkDropdownMenu />
-        <UserDropdownMenu account={account} disconnect={disconnect} />
+        <UserDropdownMenu account={accountAddress} disconnect={disconnect} />
       </div>
     )
   }
@@ -71,23 +76,22 @@ const ConnectWallet = () => {
       )}
       <Dialog
         contentActions={
-          !account &&
-          !error &&
+          !accountAddress &&
+          !isError && 
           connectors
-            .sort((a, b) => a.id().localeCompare(b.id()))
+            .sort((a, b) => a.id.localeCompare(b.id))
             .map((connector, i) =>
-              connector.available() ? (
                 <Button
+                  disabled={!connector.available}
                   onClick={() => {
                     setOpen(false)
-                    connect(connector)
+                    connect({connector})
                   }}
                   full
-                  label={connector.name()}
+                  label={connector.name}
                   secondary
-                  key={connector.id()}
+                  key={connector.id}
                 />
-              ) : null
             )
         }
         title="Connect a wallet to play"

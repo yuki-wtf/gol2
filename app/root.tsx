@@ -1,5 +1,4 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from '@remix-run/react'
-import { getInstalledInjectedConnectors, StarknetProvider } from '@starknet-react/core'
 import { ThemeProvider } from '@emotion/react'
 import Layout from './components/Layout'
 import { GlobalStyle } from './styles/globalStyle'
@@ -25,7 +24,8 @@ import MobileMessage from './components/MobileMessage'
 import { DialogProvider } from './hooks/Dialog'
 import Dialogs from './components/Dialogs'
 import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
-const hexToDecimalString  = num.hexToDecimalString
+import { StarknetProvider } from './components/Navbar/StarknetProvider'
+const hexToDecimalString = num.hexToDecimalString
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
@@ -68,6 +68,7 @@ export async function loader({ request }: LoaderArgs) {
       BASE_URL: process.env.BASE_URL,
       USE_MAINNET: process.env.USE_MAINNET === 'true',
       CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS,
+      INFURA_API_KEY: process.env.INFURA_API_KEY,
     },
     userId: await getUserId(request),
     balance,
@@ -195,10 +196,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const connectors = getInstalledInjectedConnectors()
-
   return (
-    <StarknetProvider autoConnect connectors={connectors}>
+    <StarknetProvider>
       <UserProvider>
         <AppLayout>
           <Outlet />
