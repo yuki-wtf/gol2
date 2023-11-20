@@ -2,6 +2,7 @@ import type { QueryResultRow } from 'pg'
 import { Pool } from 'pg'
 import invariant from 'tiny-invariant'
 import type { TxnStatus } from './components/TxnRow'
+import * as fs from 'fs';
 
 invariant(process.env.DATABASE_URL, 'DATABASE_URL must be set')
 
@@ -13,6 +14,9 @@ declare global {
 export function getPool(): Pool {
   global.__DB_POOL__ ??= new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      ca: fs.readFileSync("ca-certificate.crt").toString(),
+    },
   })
 
   return global.__DB_POOL__
