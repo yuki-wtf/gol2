@@ -59,7 +59,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           images: '[{"name": "gol2","image":{"registry_type": "DOCR","repository": "gol2","tag": "${{ env.tag }}"}}]'
 
-  Deploy-dev:
+  Deploy-production:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/dev'
     needs: Build
     runs-on: ubuntu-latest
