@@ -71,7 +71,7 @@ export default function GameHeader() {
 
     const formData = new FormData()
 
-    formData.append('hash', data)
+    formData.append('hash', data.transaction_hash)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'evolve')
     formData.append('functionCaller', user!.userId)

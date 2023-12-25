@@ -222,14 +222,16 @@ export function useGamePlayback({
 
 export function useFetchInfiniteFrames(): (frames: number[]) => Promise<string[]> {
   return useCallback((frames: number[]) => {
-    return fetch(`/api/infinite/state?frames=${frames.join(',')}`).then((response) => response.json())
+    const framesQuery = frames.filter((f) => f !== null).join(',')
+    return fetch(`/api/infinite/state?frames=${framesQuery}`).then((response) => response.json())
   }, [])
 }
 
 export function useFetchCreatorFrames(gameId: string): (frames: number[]) => Promise<string[]> {
   return useCallback(
     (frames: number[]) => {
-      return fetch(`/api/creator/${gameId}/state?frames=${frames.join(',')}`).then((response) => response.json())
+      const framesQuery = frames.join(',')
+      return fetch(`/api/creator/${gameId}/state?frames=${framesQuery}`).then((response) => response.json())
     },
     [gameId]
   )

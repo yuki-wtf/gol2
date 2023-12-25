@@ -67,7 +67,7 @@ const DialogGiveLife = () => {
 
     const formData = new FormData()
 
-    formData.append('hash', data)
+    formData.append('hash', data.transaction_hash)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'give_life_to_cell')
     formData.append('functionCaller', user!.userId)
