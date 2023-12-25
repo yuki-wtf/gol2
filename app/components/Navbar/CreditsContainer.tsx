@@ -129,8 +129,8 @@ export default function CreditsContainer() {
         if (accountObj != null) {
           if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
             setWallet({
-              id: connector.id(),
-              name: connector.name(),
+              id: connector.id,
+              name: connector.name,
             })
           }
         }
