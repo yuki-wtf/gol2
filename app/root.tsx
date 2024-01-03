@@ -27,6 +27,12 @@ import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
 import { StarknetProvider } from './components/Navbar/StarknetProvider'
 const hexToDecimalString = num.hexToDecimalString
 
+interface UserInfo {
+  balance: number
+  hasIncomingTransfer: boolean
+  hasOutgoingTransfer: boolean
+}
+
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
 
@@ -35,7 +41,7 @@ export async function loader({ request }: LoaderArgs) {
   let hasOutgoingTransfer = false
 
   if (userId != null) {
-    const res = await sql<{ balance: number; hasIncomingTransfer: boolean; hasOutgoingTransfer: boolean }>`
+    const res = await sql<UserInfo>`
       SELECT
         (
           select "balance"
