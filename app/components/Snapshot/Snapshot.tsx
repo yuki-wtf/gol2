@@ -1,4 +1,5 @@
 import { HiOutlinePhotograph, HiOutlineUser } from 'react-icons/hi'
+import { FaXTwitter } from 'react-icons/fa6'
 import styled from '@emotion/styled'
 import type { AnimationProps } from 'framer-motion'
 import { motion } from 'framer-motion'
@@ -8,6 +9,7 @@ import { keyframes } from '@emotion/react'
 import SnapshotLogo from './SnapshotLogo'
 import SnapshotGrid from '../GameMode/Shared/SnapshotGrid'
 import Button from '../Button'
+import { SnapshotMint } from './SnapshotMint'
 
 const animate = keyframes`
   from {
@@ -22,7 +24,7 @@ const StyledSkeletonCard = styled(motion.li)`
   margin: 0;
   padding: 0;
   width: 290px;
-  height: 394px;
+  height: 400px;
   background: #1b202b;
   border: 1px solid #0a0c10;
   padding-top: 24px;
@@ -84,7 +86,7 @@ const StyledCard = styled(motion.li)<{ large?: boolean }>`
   margin: 0;
   padding: 0;
   width: ${(props) => (props.large ? '525px' : '290px')};
-  height: ${(props) => (props.large ? '763px' : '394px')};
+  height: ${(props) => (props.large ? '733px' : '400px')};
   background: #fefcfa;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -122,7 +124,7 @@ const StyledDivider = styled.div`
   background: #dbf267;
   border-radius: 1px;
   margin-top: 12px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 `
 const StyledGridContainer = styled.div<{ large?: boolean }>`
   width: ${(props) => (props.large ? '458px' : '244px')};
@@ -194,6 +196,18 @@ const StyledUserAddress = styled.div<{ large?: boolean }>`
   margin-top: 8px;
   padding-left: ${(props) => (props.large ? '40px' : '0')};
 `
+const StyledShareText = styled.div`
+  font-family: 'Mulish';
+  color: #0a0c10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 800;
+`
 
 const SkeletonImagePreview = () => {
   return (
@@ -264,17 +278,38 @@ const Snapshot = ({
 
       {!large && <StyledDivider />}
 
-      <StyledUserAddress large={large}>
-        <HiOutlineUser color="#57637b" size={16} /> {formattedUser}
-      </StyledUserAddress>
       {large && (
-        <StyledActions large={large}>
-          <Button secondary label="share to twitter" onClick={onClickTwitter} />
-          <div style={{ fontSize: 10, paddingTop: 12, color: '#57637b' }}>
-            (If the image doesn’t appear in your tweet draft, close it and click share to twitter again!)
-          </div>
-        </StyledActions>
+        <StyledUserAddress large={large}>
+          <HiOutlineUser color="#57637b" size={16} /> {formattedUser}
+        </StyledUserAddress>
       )}
+      <StyledActions large={large}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <SnapshotMint />
+          {large && (
+            <Button
+              tertiary
+              tertiaryColor="#0A0C10"
+              label={
+                <StyledShareText>
+                  <span>SHARE ON</span>
+                  <FaXTwitter />
+                </StyledShareText>
+              }
+              onClick={onClickTwitter}
+            />
+          )}
+        </div>
+        {/* <div style={{ fontSize: 10, paddingTop: 12, color: '#57637b' }}>
+            (If the image doesn’t appear in your tweet draft, close it and click share to twitter again!)
+          </div> */}
+      </StyledActions>
     </StyledCard>
   )
 }

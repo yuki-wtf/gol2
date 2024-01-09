@@ -17,6 +17,7 @@ interface Props {
   readonly to?: LinkProps['to']
   readonly full?: boolean
   readonly tertiaryColor?: string
+  readonly color?: string
 }
 
 const StyledButton = styled.button<Props>`
@@ -213,6 +214,7 @@ export default function Button({
   to,
   full,
   tertiaryColor,
+  color,
 }: Props) {
   const Component = to != null ? StyledLink : StyledButton
 
@@ -237,7 +239,7 @@ export default function Button({
       tertiaryColor={tertiaryColor}
     >
       {renderIconSpinner()}
-      <T.Button>{label}</T.Button>
+      <T.Button color={color}>{label}</T.Button>
     </Component>
   )
 }

@@ -1,10 +1,10 @@
 import { getChecksumAddress } from 'starknet'
 import type { BigNumberish } from 'starknet'
 
-export function getShortChecksumAddress(address: BigNumberish | string): string {
+export function getShortChecksumAddress(address: BigNumberish | string, sliceStart = 6, sliceEnd = 4): string {
   const checksumAddress = getChecksumAddress(address).toLowerCase()
 
-  return checksumAddress.slice(0, 6) + '...' + checksumAddress.slice(checksumAddress.length - 4)
+  return checksumAddress.slice(0, sliceStart) + '...' + checksumAddress.slice(checksumAddress.length - sliceEnd)
 }
 
 if (import.meta.vitest) {
@@ -25,4 +25,8 @@ if (import.meta.vitest) {
     const short = '0x020f...dfcb'
     expect(getShortChecksumAddress(long)).toBe(short)
   })
+}
+
+export function getShortMintAddress(address: string, sliceStart = 6, sliceEnd = 4): string {
+  return address.slice(0, sliceStart) + '...' + address.slice(address.length - sliceEnd)
 }
