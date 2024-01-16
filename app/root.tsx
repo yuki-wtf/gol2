@@ -25,6 +25,7 @@ import { DialogProvider } from './hooks/Dialog'
 import Dialogs from './components/Dialogs'
 import { RootLoaderDataProvider } from './hooks/useRootLoaderData'
 import { StarknetProvider } from './components/Navbar/StarknetProvider'
+import { CreatedSnapshotProvider } from './hooks/CreatedSnapshot'
 const hexToDecimalString = num.hexToDecimalString
 
 interface UserInfo {
@@ -187,11 +188,13 @@ function AppLayout({ children }: { children: React.ReactNode }) {
           <HelpMessageProvider>
             <DialogProvider>
               <SelectedCellProvider>
-                <CreatorGridProvider>
-                  <GlobalStyle />
-                  <Layout>{children}</Layout>
-                  <Dialogs />
-                </CreatorGridProvider>
+                <CreatedSnapshotProvider>
+                  <CreatorGridProvider>
+                    <GlobalStyle />
+                    <Layout>{children}</Layout>
+                    <Dialogs />
+                  </CreatorGridProvider>
+                </CreatedSnapshotProvider>
               </SelectedCellProvider>
             </DialogProvider>
           </HelpMessageProvider>
