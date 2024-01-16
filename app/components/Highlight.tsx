@@ -1,14 +1,26 @@
 import type { Theme } from '@emotion/react'
 import { keyframes } from '@emotion/react'
+import type { StyledComponent } from '@emotion/styled'
 import styled from '@emotion/styled'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import type { RefAttributes } from 'react'
 import { HiOutlineHeart, HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import Typography from './Typography'
+import { Link } from '@remix-run/react'
 
+type DescNode = StyledComponent<
+  {
+    theme?: Theme | undefined
+    as?: React.ElementType | undefined
+  } & React.ClassAttributes<HTMLParagraphElement> &
+    React.HTMLAttributes<HTMLParagraphElement> & {
+      to?: string | undefined
+    }
+>
 interface Props {
   readonly title?: React.ReactNode
   readonly desc?: React.ReactNode
+  readonly descLink?: string
   readonly children?: React.ReactNode
   readonly active?: boolean
   readonly type?: 'evolve' | 'give_life'
@@ -156,10 +168,12 @@ const StyledTitle = styled(Typography.XL1Extrabold)`
   padding: 0;
   margin: 0;
 `
-const StyledDesc = styled(Typography.BaseRegular)`
+
+const StyledDesc = styled<DescNode>(Typography.BaseRegular)`
   color: #2d3038;
   padding: 0;
   margin: 0;
+  text-decoration: ${(p) => (p.to ? 'underline' : 'none')};
 `
 const StyledContentInner = styled.div`
   display: flex;
@@ -183,6 +197,7 @@ export default function Highlight({
   collisonPadding,
   title,
   desc,
+  descLink,
   children,
   active = true,
   onClose,
@@ -208,7 +223,9 @@ export default function Highlight({
             </StyledIcon>
             <div>
               <StyledTitle>{title}</StyledTitle>
-              <StyledDesc>{desc}</StyledDesc>
+              <StyledDesc as={descLink ? Link : undefined} to={descLink}>
+                {desc}
+              </StyledDesc>
             </div>
           </StyledContentInner>
 

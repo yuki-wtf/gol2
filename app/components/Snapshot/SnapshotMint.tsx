@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { Link } from '@remix-run/react'
 import { FaCircleCheck } from 'react-icons/fa6'
 import { HiOutlineExternalLink } from 'react-icons/hi'
 import { getShortMintAddress } from '~/helpers/starknet'
@@ -32,7 +31,7 @@ const MintedAddressContainer = styled.div`
 `
 
 export const SnapshotMint = () => {
-  const address = '0x1234567890123456789012345678901234567890'
+  const address = '0x04f556396283bb4702d8434542f31e76b8ed9a2ccdcf9af77efa629c72ed4218'
   const isLoading = false
   if (!address) {
     return (
@@ -52,17 +51,20 @@ export const SnapshotMint = () => {
         <FaCircleCheck color="#27CE60" />
         <div className="address">
           MINTED ON CHAIN:
-          <Link
-            to={`https://rinkeby.etherscan.io/address/${address}`}
+          <a
+            href={`https://starkscan.co/block/${address}`}
+            target="_blank"
+            rel="noreferrer"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '2px',
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             {getShortMintAddress(address, 5, 3)}
             <HiOutlineExternalLink />
-          </Link>
+          </a>
         </div>
       </MintedAddressContainer>
     )
