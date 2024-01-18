@@ -60,7 +60,7 @@ jobs:
           images: '[{"name": "gol-2","image":{"registry_type": "DOCR","repository": "gol2","tag": "${{ env.tag }}"}}]'
 
   Deploy-production:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/dev'
+    if: github.event_name != 'workflow_dispatch' && github.ref == 'refs/heads/dev'
     needs: Build
     runs-on: ubuntu-latest
     env:
