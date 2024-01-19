@@ -132,7 +132,9 @@ export function useGamePlayback({
   useInterval(() => {
     setState(
       produce((draft) => {
-        draft.frames[maxFrame]!.shouldRefresh = true
+        if (draft.frames[maxFrame]) {
+          draft.frames[maxFrame]!.shouldRefresh = true
+        }
       })
     )
   }, lastFrameRefreshInterval ?? null)
@@ -153,7 +155,8 @@ export function useGamePlayback({
             ? Array.from({ length: chunkSize }, (v, k) => k + currentChunkEnd)
             : []),
         ].filter((frame) => {
-          return frame <= state.maxFrame && (state.frames[frame] == null || state.frames[frame]!.shouldRefresh === true)
+          const isValidFrame = frame >= 1 && frame <= state.maxFrame && frame !== null
+          return isValidFrame && (state.frames[frame] == null || state.frames[frame]!.shouldRefresh === true)
         })
       ).values()
     )
@@ -204,7 +207,8 @@ export function useGamePlayback({
           })
         )
       })
-  }, [fetchFrames, state.currentFrame, state.frames, state.maxFrame])
+  }, [fetchFrames, state.currentFrame, state.maxFrame])
+  // }, [fetchFrames, state.currentFrame, state.frames, state.maxFrame])
 
   return [
     state,
@@ -222,14 +226,16 @@ export function useGamePlayback({
 
 export function useFetchInfiniteFrames(): (frames: number[]) => Promise<string[]> {
   return useCallback((frames: number[]) => {
-    return fetch(`/api/infinite/state?frames=${frames.join(',')}`).then((response) => response.json())
+    const framesQuery = frames.filter((f) => f !== null).join(',')
+    return fetch(`/api/infinite/state?frames=${framesQuery}`).then((response) => response.json())
   }, [])
 }
 
 export function useFetchCreatorFrames(gameId: string): (frames: number[]) => Promise<string[]> {
   return useCallback(
     (frames: number[]) => {
-      return fetch(`/api/creator/${gameId}/state?frames=${frames.join(',')}`).then((response) => response.json())
+      const framesQuery = frames.join(',')
+      return fetch(`/api/creator/${gameId}/state?frames=${framesQuery}`).then((response) => response.json())
     },
     [gameId]
   )

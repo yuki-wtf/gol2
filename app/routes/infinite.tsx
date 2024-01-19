@@ -23,8 +23,13 @@ interface LoaderData {
   readonly receivedCells: ReceivedCell[]
 }
 
+interface Statistics {
+  label: string
+  value: string
+}
+
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
-  const statistics = await sql<{ label: string; value: string }>`
+  const statistics = await sql<Statistics>`
     (
       select 'Generations' "label",
         max(COALESCE("gameGeneration", 1)) "value"
