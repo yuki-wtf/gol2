@@ -223,7 +223,7 @@ export default function Highlight({
             </StyledIcon>
             <div>
               <StyledTitle>{title}</StyledTitle>
-              <StyledDesc as={descLink ? Link : undefined} to={descLink}>
+              <StyledDesc as={descLink ? Link : undefined} to={descLink} onClick={(e) => onClose?.(e as any)}>
                 {desc}
               </StyledDesc>
             </div>

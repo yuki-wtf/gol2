@@ -2,7 +2,10 @@ import styled from '@emotion/styled'
 import { FaCircleCheck } from 'react-icons/fa6'
 import { HiOutlineExternalLink } from 'react-icons/hi'
 import { getShortMintAddress } from '~/helpers/starknet'
+import { useAccount, useProvider } from '@starknet-react/core'
+import { CallData, cairo } from 'starknet'
 import Button from '../Button'
+import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 
 const MintedAddressContainer = styled.div`
   display: flex;
@@ -30,10 +33,36 @@ const MintedAddressContainer = styled.div`
   }
 `
 
-export const SnapshotMint = () => {
-  const address = '0x04f556396283bb4702d8434542f31e76b8ed9a2ccdcf9af77efa629c72ed4218'
+export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
+  const { account } = useAccount()
+  const { provider } = useProvider()
+  const { env } = useRootLoaderData()
+  const voyagerUrl = env.USE_MAINNET ? 'https://voyager.online' : 'https://goerli.voyager.online'
+
+  const mintGame = async (generation: string) => {
+    if (!account) {
+      return
+    }
+
+    const multiCall = await account.execute([
+      {
+        contractAddress: env.CONTRACT_ADDRESS!,
+        entrypoint: 'increase_allowance',
+        calldata: CallData.compile([env.NFT_CONTRACT_ADDRESS!, cairo.uint256(1)]),
+      },
+      // Calling the second contract
+      {
+        contractAddress: env.NFT_CONTRACT_ADDRESS!,
+        entrypoint: 'mint',
+        calldata: CallData.compile([generation]),
+      },
+    ])
+    const res = await provider.waitForTransaction(multiCall.transaction_hash)
+    console.log('res', res)
+  }
+
   const isLoading = false
-  if (!address) {
+  if (!nft) {
     return (
       <Button
         secondary
@@ -41,18 +70,24 @@ export const SnapshotMint = () => {
         isLoading={isLoading}
         icon={isLoading}
         color="#F3E9E1"
+        onClick={(e) => {
+          mintGame(generation).then((minted) => {
+            console.log('minted', minted)
+          })
+          e.stopPropagation()
+        }}
       />
     )
   }
 
-  if (address) {
+  if (nft) {
     return (
       <MintedAddressContainer>
         <FaCircleCheck color="#27CE60" />
         <div className="address">
           MINTED ON CHAIN:
           <a
-            href={`https://starkscan.co/block/${address}`}
+            href={`${voyagerUrl}/tx/${nft.transactionHash}`}
             target="_blank"
             rel="noreferrer"
             style={{
@@ -62,7 +97,7 @@ export const SnapshotMint = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            {getShortMintAddress(address, 5, 3)}
+            {getShortMintAddress(nft.transactionHash, 5, 3)}
             <HiOutlineExternalLink />
           </a>
         </div>

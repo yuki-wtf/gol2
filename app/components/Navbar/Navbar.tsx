@@ -36,18 +36,18 @@ const StyledNavbarInner = styled.header`
 `
 
 const MenuButtonWithHighlight = () => {
-  const [snapshot, setSnapshot] = useCreatedSnapshot()
+  const [snapshotCreated, setSnapshotCreated] = useCreatedSnapshot()
   const { pathname } = useLocation()
   useEffect(() => {
-    setSnapshot(null)
-  }, [pathname, setSnapshot])
+    setSnapshotCreated(false)
+  }, [pathname, setSnapshotCreated])
   return (
     <Highlight
       collisonPadding={{ left: 24 }}
       onClose={() => {
-        setSnapshot(null)
+        setSnapshotCreated(false)
       }}
-      active={!!snapshot?.snapshotId}
+      active={snapshotCreated}
       title="Snapshot created"
       desc="Mint as an NFT"
       descLink="/snapshots"

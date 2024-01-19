@@ -221,7 +221,7 @@ interface Props {
   readonly onClick?: React.MouseEventHandler<HTMLLIElement>
   readonly onClickTwitter?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
   readonly large?: boolean
-  readonly gameGeneration?: React.ReactNode
+  readonly gameGeneration?: string
   readonly gameState?: string
   readonly user?: string
   readonly isLoading?: boolean
@@ -241,6 +241,7 @@ const Snapshot = ({
   initial,
   animate,
   exit,
+  nft,
 }: Props) => {
   const formattedUser = user ? getShortChecksumAddress(user) : null
 
@@ -291,7 +292,7 @@ const Snapshot = ({
             width: '100%',
           }}
         >
-          <SnapshotMint />
+          {gameGeneration && <SnapshotMint generation={gameGeneration} nft={nft} />}
           {large && (
             <Button
               tertiary
