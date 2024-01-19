@@ -36,13 +36,12 @@ interface UserInfo {
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
-
   let balance: number | null = null
   let hasIncomingTransfer = false
   let hasOutgoingTransfer = false
-
   if (userId != null) {
-    const res = await sql<UserInfo>`
+    try {
+      const res = await sql<UserInfo>`
       SELECT
         (
           select "balance"
@@ -64,12 +63,13 @@ export async function loader({ request }: LoaderArgs) {
           limit 1
         ) is not null as "hasOutgoingTransfer"
     `
-
-    balance = res.rows[0]?.balance ?? 0
-    hasIncomingTransfer = res.rows[0]?.hasIncomingTransfer ?? false
-    hasOutgoingTransfer = res.rows[0]?.hasOutgoingTransfer ?? false
+      balance = res.rows[0]?.balance ?? 0
+      hasIncomingTransfer = res.rows[0]?.hasIncomingTransfer ?? false
+      hasOutgoingTransfer = res.rows[0]?.hasOutgoingTransfer ?? false
+    } catch (e) {
+      console.error('root loader error', e)
+    }
   }
-
   return json({
     env: {
       BASE_URL: process.env.BASE_URL,

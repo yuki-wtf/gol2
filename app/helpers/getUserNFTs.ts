@@ -1,4 +1,3 @@
-import axios from 'axios'
 import dummyNFTs from './dummyNFTs.json'
 
 export async function getUserNFTs(owner: string) {
@@ -12,10 +11,5 @@ export async function getUserNFTs(owner: string) {
   // Alchemy URL
   const url = `${baseURL}/getNFTsForOwner/?owner=${owner}`
 
-  const config = {
-    method: 'get',
-    url: url,
-  }
-
-  return axios(config)
+  return fetch(url)
 }
