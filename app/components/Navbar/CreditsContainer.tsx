@@ -9,12 +9,13 @@ import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
-import { useLocalStorage } from 'react-use'
+import { useLocalStorage, usePrevious, useUpdateEffect } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { getChecksumAddress } from 'starknet'
 import { useLocation } from '@remix-run/react'
 import Dialog from '../Dialog/Dialog'
 import { useAccount, useConnect } from '@starknet-react/core'
+import { useCreatedSnapshot } from '~/hooks/CreatedSnapshot'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -85,10 +86,19 @@ export default function CreditsContainer() {
   const [addTokenDialogVisible, setAddTokenDialogVisible] = useState(false)
   const user = useUser()
   const balance = user?.balance ?? 0
+  const prevBalance = usePrevious(balance)
   const hasIncomingTransfer = user?.hasIncomingTransfer ?? false
   const hasOutgoingTransfer = user?.hasOutgoingTransfer ?? false
   const location = useLocation()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+  const [_, setSnapshotCreated] = useCreatedSnapshot()
+
+  useUpdateEffect(() => {
+    if (user?.balance && user.balance > (prevBalance || 0)) {
+      setSnapshotCreated(true)
+    }
+  }, [user?.balance, prevBalance])
+
   const [hasDismissedFirstTokenEarnedMessage, setHasDismissedFirstTokenEarnedMessage] = useLocalStorage(
     'has-dismissed-first-token-earned-message',
     false

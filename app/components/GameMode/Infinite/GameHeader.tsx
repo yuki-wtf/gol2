@@ -15,7 +15,6 @@ import Button from '../../Button'
 import TempOverlay from '../../TempOverlay'
 import Header from '../Shared/Game/Header'
 import { useCheckNetwork } from '~/helpers/useCheckNetwork'
-import { useCreatedSnapshot } from '~/hooks/CreatedSnapshot'
 
 export default function GameHeader() {
   const [hasClickedEvolveInfinite, setHasClickedEvolveInfinite] = useLocalStorage('has-clicked-evolve-infinite', false)
@@ -26,7 +25,6 @@ export default function GameHeader() {
   const user = useUser()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const [, setDialog] = useDialog()
-  const [_, setSnapshot] = useCreatedSnapshot()
 
   const {
     write,
@@ -81,8 +79,6 @@ export default function GameHeader() {
     void fetch('/api/transaction', {
       body: formData,
       method: 'post',
-    }).then(() => {
-      setSnapshot({ snapshotId: 'evolve' })
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
