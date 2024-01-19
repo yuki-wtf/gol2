@@ -15,6 +15,9 @@ import { useLoaderData } from '@remix-run/react'
 import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithNFTs'
+import { getUserNFTs } from '~/helpers/getUserNFTs'
+
 const hexToDecimalString = num.hexToDecimalString
 
 const FlexContainer = styled.div`
@@ -42,6 +45,8 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 
   if (userId == null) return json(null)
 
+  const { data } = await getUserNFTs(userId)
+
   const result = await sql<Infinite>`
     select *
     from "infinite"
@@ -49,7 +54,8 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  return json(result.rows)
+  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, data.ownedNfts)
+  return json(snapshotsWithNfts)
 }
 
 export default function Snapshots() {
@@ -118,6 +124,7 @@ export default function Snapshots() {
               <SnapshotDialog.Dialog key={snapshot.gameGeneration}>
                 <SnapshotDialog.DialogTrigger asChild>
                   <Snapshot
+                    nft={snapshot.nft}
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user.userId}
@@ -145,6 +152,7 @@ export default function Snapshots() {
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user.userId}
+                    nft={snapshot.nft}
                     initial={{
                       opacity: 0,
                       y: 10,
