@@ -6,10 +6,10 @@ import Button from '~/components/Button'
 import { HiPlus } from 'react-icons/hi'
 import Highlight from '~/components/Highlight'
 import { useHelpMessage } from '~/hooks/HelpMessage'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
-import { useLocalStorage, usePrevious, useUpdateEffect } from 'react-use'
+import { useLocalStorage } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { getChecksumAddress } from 'starknet'
 import { useLocation } from '@remix-run/react'
@@ -86,18 +86,20 @@ export default function CreditsContainer() {
   const [addTokenDialogVisible, setAddTokenDialogVisible] = useState(false)
   const user = useUser()
   const balance = user?.balance ?? 0
-  const prevBalance = usePrevious(balance)
+  const prevBalance = useRef<undefined | number>()
   const hasIncomingTransfer = user?.hasIncomingTransfer ?? false
   const hasOutgoingTransfer = user?.hasOutgoingTransfer ?? false
   const location = useLocation()
   const [helpMessage, setHelpMessage] = useHelpMessage()
   const [_, setSnapshotCreated] = useCreatedSnapshot()
 
-  useUpdateEffect(() => {
-    if (user?.balance && user.balance > (prevBalance || 0)) {
+  useEffect(() => {
+    const validPrev = prevBalance.current !== undefined
+    if (validPrev && user?.balance && user.balance > prevBalance.current!) {
       setSnapshotCreated(true)
     }
-  }, [user?.balance, prevBalance])
+    prevBalance.current = user?.balance ?? undefined
+  }, [user?.balance, prevBalance, setSnapshotCreated])
 
   const [hasDismissedFirstTokenEarnedMessage, setHasDismissedFirstTokenEarnedMessage] = useLocalStorage(
     'has-dismissed-first-token-earned-message',
