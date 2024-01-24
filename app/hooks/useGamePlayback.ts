@@ -207,8 +207,8 @@ export function useGamePlayback({
           })
         )
       })
-  }, [fetchFrames, state.currentFrame, state.maxFrame])
-  // }, [fetchFrames, state.currentFrame, state.frames, state.maxFrame])
+    // }, [fetchFrames, state.currentFrame, state.maxFrame])
+  }, [fetchFrames, state.currentFrame, state.frames, state.maxFrame])
 
   return [
     state,
