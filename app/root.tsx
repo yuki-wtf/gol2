@@ -120,7 +120,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,800:1,800&display=swap',
+    href: 'https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap',
   },
 ]
 
@@ -257,5 +257,6 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  return <AppLayout>{error.message}</AppLayout>
+  console.error(error)
+  return <>{error.message}</>
 }
