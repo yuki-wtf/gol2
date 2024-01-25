@@ -11,12 +11,15 @@ import { json } from '@remix-run/node'
 import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import { getUserId } from '~/session.server'
-import { useLoaderData } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithNFTs'
-import { getUserNFTs } from '~/helpers/getUserNFTs'
+// import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithNFTs'
+import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithStarkscanNFTs'
+import { getUserNFTs } from '~/helpers/getUserNFTsStarkscan'
+import { useEffect, useState } from 'react'
+import { useUpdateEffect } from 'react-use'
 
 const hexToDecimalString = num.hexToDecimalString
 
@@ -45,7 +48,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 
   if (userId == null) return json(null)
 
-  const { data } = await getUserNFTs(userId)
+  const userNfts = await getUserNFTs(userId)
 
   const result = await sql<Infinite>`
     select *
@@ -54,14 +57,27 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, data.ownedNfts)
+  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, userNfts)
   return json(snapshotsWithNfts)
 }
 
 export default function Snapshots() {
   const user = useUser()
-  const data = useLoaderData<typeof loader>()
+  const { load, data: fetcherData } = useFetcher()
   const { env } = useRootLoaderData()
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    load('/snapshots')
+  }, [load])
+
+  useUpdateEffect(() => {
+    console.log('fetcherData', fetcherData)
+    if (fetcherData) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      setData(fetcherData)
+    }
+  }, [fetcherData])
 
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>

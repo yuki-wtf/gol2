@@ -6,6 +6,7 @@ import { useAccount, useProvider } from '@starknet-react/core'
 import { CallData, cairo } from 'starknet'
 import Button from '../Button'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { useFetcher } from '@remix-run/react'
 
 const MintedAddressContainer = styled.div`
   display: flex;
@@ -37,7 +38,8 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
   const { account } = useAccount()
   const { provider } = useProvider()
   const { env } = useRootLoaderData()
-  const voyagerUrl = env.USE_MAINNET ? 'https://voyager.online' : 'https://goerli.voyager.online'
+  const starkscan = env.USE_MAINNET ? 'https://starkscan.co' : 'https://testnet.starkscan.co'
+  const fetcher = useFetcher()
 
   const mintGame = async (generation: string) => {
     if (!account) {
@@ -57,8 +59,7 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
         calldata: CallData.compile([generation]),
       },
     ])
-    const res = await provider.waitForTransaction(multiCall.transaction_hash)
-    console.log('res', res)
+    return provider.waitForTransaction(multiCall.transaction_hash)
   }
 
   const isLoading = false
@@ -73,6 +74,7 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
         onClick={(e) => {
           mintGame(generation).then((minted) => {
             console.log('minted', minted)
+            fetcher.load('/snapshots')
           })
           e.stopPropagation()
         }}
@@ -87,7 +89,7 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
         <div className="address">
           MINTED ON CHAIN:
           <a
-            href={`${voyagerUrl}/tx/${nft.transactionHash}`}
+            href={`${starkscan}/nft/${nft.contractAddress}/${nft.gameGeneration}`}
             target="_blank"
             rel="noreferrer"
             style={{
