@@ -57,7 +57,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, userNfts)
+  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, userNfts || [])
   return json(snapshotsWithNfts)
 }
 

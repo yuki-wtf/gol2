@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+
+import { getChecksumAddress } from 'starknet'
 const targetContractAddress = process.env.NFT_CONTRACT_ADDRESS
 
 function transformNfts(nfts) {
@@ -19,7 +21,7 @@ export function mergeSnapshotsWithNFTs(snapshots, nfts) {
     const snapshotWithNft = { ...snapshot }
     const nft = nftsByGeneration[snapshot.gameGeneration]
 
-    if (nft && nft.contract_address.toLowerCase() === targetContractAddress.toLowerCase()) {
+    if (nft && getChecksumAddress(nft.contract_address) === getChecksumAddress(targetContractAddress)) {
       const gameModeAttribute = nft.attributes.find((attr) => attr.trait_type === 'Game Mode')
 
       const nftData = {
