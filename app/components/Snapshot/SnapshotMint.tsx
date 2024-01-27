@@ -7,6 +7,9 @@ import { CallData, cairo } from 'starknet'
 import Button from '../Button'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useFetcher } from '@remix-run/react'
+import { useNftContract } from '~/hooks/useNftContract'
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
+import { useDialog } from '~/hooks/Dialog'
 
 const MintedAddressContainer = styled.div`
   display: flex;
@@ -40,17 +43,24 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
   const { env } = useRootLoaderData()
   const starkscan = env.USE_MAINNET ? 'https://starkscan.co' : 'https://testnet.starkscan.co'
   const fetcher = useFetcher()
+  const { isCorrectNetwork } = useCheckNetwork()
+  const [_, setDialog] = useDialog()
+  const { contract: nftContract } = useNftContract()
 
   const mintGame = async (generation: string) => {
-    if (!account) {
+    if (!account || !nftContract) {
       return
     }
 
+    const { mint_token_address, mint_price } = nftContract
+    const price = await mint_price()
+    const tokenAddress = await mint_token_address()
+
     const multiCall = await account.execute([
       {
-        contractAddress: env.CONTRACT_ADDRESS!,
-        entrypoint: 'increase_allowance',
-        calldata: CallData.compile([env.NFT_CONTRACT_ADDRESS!, cairo.uint256(1)]),
+        contractAddress: tokenAddress.toString(),
+        entrypoint: 'increaseAllowance',
+        calldata: CallData.compile([env.NFT_CONTRACT_ADDRESS!, cairo.uint256(price)]),
       },
       // Calling the second contract
       {
@@ -72,11 +82,15 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
         icon={isLoading}
         color="#F3E9E1"
         onClick={(e) => {
+          e.stopPropagation()
+          if (!isCorrectNetwork) {
+            setDialog('WrongNetworkDialog')
+            return
+          }
           mintGame(generation).then((minted) => {
             console.log('minted', minted)
             fetcher.load('/snapshots')
           })
-          e.stopPropagation()
         }}
       />
     )

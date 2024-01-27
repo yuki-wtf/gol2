@@ -10,8 +10,6 @@ import useCopyToClipboard from '../../hooks/useCopyToClipboard'
 import { CgProfile } from 'react-icons/cg'
 import { getShortChecksumAddress } from '~/helpers/starknet'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
-import { useEffect, useState } from 'react'
-import { getChecksumAddress } from 'starknet'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useConnect } from '@starknet-react/core'
 
@@ -22,27 +20,8 @@ interface Props {
 
 const UserDropdownMenu = ({ account, disconnect }: Props) => {
   const [copyToClipboard, { success }] = useCopyToClipboard()
-  const { connectors } = useConnect()
-  const [wallet, setWallet] = useState<{ id: string; name: string }>()
+  const { connector: wallet } = useConnect()
   const { env } = useRootLoaderData()
-
-  useEffect(() => {
-    void (async () => {
-      for (const connector of connectors) {
-        const accountObj = await connector.account()
-        if (accountObj != null) {
-          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
-            setWallet({
-              id: connector.id,
-              name: connector.name,
-            })
-          }
-        }
-      }
-    })()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account])
 
   return (
     <DropdownMenu.Root>
@@ -53,7 +32,7 @@ const UserDropdownMenu = ({ account, disconnect }: Props) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" sideOffset={5}>
         <DropdownMenu.Label>
-          Connected to <strong>{wallet?.name ?? 'Argent X'}</strong>
+          Connected to <strong>{wallet?.name ?? 'Unkown'}</strong>
           {' via '} <strong>Starknet</strong>
         </DropdownMenu.Label>
 
