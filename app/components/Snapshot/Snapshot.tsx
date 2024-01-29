@@ -216,7 +216,24 @@ const SkeletonImagePreview = () => {
     </StyledSkeletonGridContainer>
   )
 }
+export interface MintedNFT {
+  type: 'minted'
+  tokenId: string
+  userAddress: string
+  gameGeneration: string
+  transactionHash: string
+  contractAddress: string
+}
 
+export interface PendingNFT {
+  type: 'pending'
+  generation: string
+  status: string
+  txHash: string
+  userId: string
+}
+
+export type NFT = MintedNFT | PendingNFT
 interface Props {
   readonly onClick?: React.MouseEventHandler<HTMLLIElement>
   readonly onClickTwitter?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
@@ -228,6 +245,8 @@ interface Props {
   readonly initial?: AnimationProps['initial']
   readonly animate?: AnimationProps['animate']
   readonly exit?: AnimationProps['exit']
+  readonly refreshPage?: () => void
+  readonly nft?: NFT
 }
 
 const Snapshot = ({
@@ -242,6 +261,7 @@ const Snapshot = ({
   animate,
   exit,
   nft,
+  refreshPage,
 }: Props) => {
   const formattedUser = user ? getShortChecksumAddress(user) : null
 
@@ -292,7 +312,7 @@ const Snapshot = ({
             width: '100%',
           }}
         >
-          {gameGeneration && <SnapshotMint generation={gameGeneration} nft={nft} />}
+          {gameGeneration && <SnapshotMint generation={gameGeneration} nft={nft} refreshPage={refreshPage} />}
           {large && (
             <Button
               tertiary
