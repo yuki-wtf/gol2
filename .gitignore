@@ -20,3 +20,6 @@
 *.pem
 .DS_Store
 .idea
+
+# certificate files
+*.crt
