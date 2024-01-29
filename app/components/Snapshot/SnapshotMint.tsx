@@ -6,10 +6,11 @@ import { useAccount, useProvider } from '@starknet-react/core'
 import { CallData, cairo } from 'starknet'
 import Button from '../Button'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { useFetcher } from '@remix-run/react'
 import { useNftContract } from '~/hooks/useNftContract'
 import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 import { useDialog } from '~/hooks/Dialog'
+import { useUser } from '~/hooks/useUser'
+import type { NFT } from './Snapshot'
 
 const MintedAddressContainer = styled.div`
   display: flex;
@@ -37,15 +38,55 @@ const MintedAddressContainer = styled.div`
   }
 `
 
-export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
+interface Props {
+  generation: string
+  nft?: NFT
+  refreshPage?: () => void
+}
+export const SnapshotMint = ({ generation, nft, refreshPage }: Props) => {
+  const user = useUser()
   const { account } = useAccount()
   const { provider } = useProvider()
   const { env } = useRootLoaderData()
   const starkscan = env.USE_MAINNET ? 'https://starkscan.co' : 'https://testnet.starkscan.co'
-  const fetcher = useFetcher()
   const { isCorrectNetwork } = useCheckNetwork()
   const [_, setDialog] = useDialog()
   const { contract: nftContract } = useNftContract()
+
+  const addMintToPending = async (generationNumber: number, txHash: string) => {
+    const formData = new FormData()
+
+    formData.append('generation', String(generationNumber))
+    formData.append('txHash', txHash)
+    formData.append('userId', user?.userId || '')
+    formData.append('status', 'RECEIVED')
+
+    const res = await fetch('/api/mints', {
+      body: formData,
+      method: 'post',
+    })
+
+    const data = await res.json()
+    if (data.status === 'success') {
+      refreshPage?.()
+    }
+  }
+
+  const onMintError = async (generationNumber: string) => {
+    const formData = new FormData()
+
+    formData.append('generation', String(generationNumber))
+
+    const res = await fetch('/api/mints', {
+      body: formData,
+      method: 'delete',
+    })
+
+    const data = await res.json()
+    if (data.status === 'success') {
+      refreshPage?.()
+    }
+  }
 
   const mintGame = async (generation: string) => {
     if (!account || !nftContract) {
@@ -69,57 +110,54 @@ export const SnapshotMint = ({ generation, nft }: { generation: string }) => {
         calldata: CallData.compile([generation]),
       },
     ])
+
+    addMintToPending(generation, multiCall.transaction_hash)
+
     return provider.waitForTransaction(multiCall.transaction_hash)
   }
 
-  const isLoading = false
-  if (!nft) {
+  const isPending = nft?.type === 'pending'
+  if (!nft || isPending) {
     return (
       <Button
         secondary
-        label={isLoading ? 'Pending' : 'Mint as NFT'}
-        isLoading={isLoading}
-        icon={isLoading}
+        label={isPending ? 'Pending' : 'Mint as NFT'}
+        isLoading={isPending}
+        icon={isPending}
         color="#F3E9E1"
+        disabled={isPending}
         onClick={(e) => {
           e.stopPropagation()
           if (!isCorrectNetwork) {
             setDialog('WrongNetworkDialog')
             return
           }
-          mintGame(generation).then((minted) => {
-            console.log('minted', minted)
-            fetcher.load('/snapshots')
-          })
+          mintGame(generation).catch((err) => onMintError(generation))
         }}
       />
     )
   }
 
-  if (nft) {
-    return (
-      <MintedAddressContainer>
-        <FaCircleCheck color="#27CE60" />
-        <div className="address">
-          MINTED ON CHAIN:
-          <a
-            href={`${starkscan}/nft/${nft.contractAddress}/${nft.gameGeneration}`}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '2px',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {getShortMintAddress(nft.transactionHash, 5, 3)}
-            <HiOutlineExternalLink />
-          </a>
-        </div>
-      </MintedAddressContainer>
-    )
-  }
-
-  return null
+  return (
+    <MintedAddressContainer>
+      <FaCircleCheck color="#27CE60" />
+      <div className="address">
+        MINTED ON CHAIN:
+        <a
+          href={`${starkscan}/nft/${nft.contractAddress}/${nft.gameGeneration}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2px',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {getShortMintAddress(nft.transactionHash, 5, 3)}
+          <HiOutlineExternalLink />
+        </a>
+      </div>
+    </MintedAddressContainer>
+  )
 }

@@ -15,11 +15,11 @@ import { useFetcher } from '@remix-run/react'
 import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-// import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithNFTs'
-import { mergeSnapshotsWithNFTs } from '~/helpers/mergeSnapshotsWithStarkscanNFTs'
+import { addMintedNftDetails } from '~/helpers/addMintedNftDetails'
+import { addPendingNftDetails } from '~/helpers/addPendingNftDetails'
 import { getUserNFTs } from '~/helpers/getUserNFTsStarkscan'
-import { useEffect, useState } from 'react'
-import { useUpdateEffect } from 'react-use'
+import { useEffect, useMemo } from 'react'
+import { useInterval } from 'react-use'
 
 const hexToDecimalString = num.hexToDecimalString
 
@@ -57,27 +57,57 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  const snapshotsWithNfts = mergeSnapshotsWithNFTs(result.rows, userNfts || [])
-  return json(snapshotsWithNfts)
+  const pendingMints = await sql<any>`
+    select *
+    from "mints"
+    where "userId" = ${userId}
+    `
+
+  const snapshotsWithMintedNfts = addMintedNftDetails(result.rows, userNfts || [])
+  const { snapshotsWithPendingAndMintedNfts, idsToRemove } = addPendingNftDetails(
+    snapshotsWithMintedNfts,
+    pendingMints.rows
+  )
+
+  if (idsToRemove.length > 0) {
+    try {
+      await sql`
+        delete from "mints"
+        where "generation" = ANY(${idsToRemove})
+      `
+      console.log('deleted mints that exist in starkscan', idsToRemove)
+    } catch {
+      console.error('error deleting pending mints', idsToRemove)
+    }
+  }
+
+  return json(snapshotsWithPendingAndMintedNfts)
 }
 
 export default function Snapshots() {
   const user = useUser()
-  const { load, data: fetcherData } = useFetcher()
+  const { load, data } = useFetcher()
   const { env } = useRootLoaderData()
-  const [data, setData] = useState(null)
 
   useEffect(() => {
     load('/snapshots')
   }, [load])
 
-  useUpdateEffect(() => {
-    console.log('fetcherData', fetcherData)
-    if (fetcherData) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      setData(fetcherData)
-    }
-  }, [fetcherData])
+  const refreshPage = () => {
+    load('/snapshots')
+  }
+
+  const hasAnyPendingMints = useMemo(() => {
+    if (data == null) return false
+    return data.some((s: any) => s.nft?.type === 'pending') as boolean
+  }, [data])
+
+  useInterval(
+    () => {
+      load('/snapshots')
+    },
+    hasAnyPendingMints ? 1000 * 60 : null
+  )
 
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
@@ -144,6 +174,7 @@ export default function Snapshots() {
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user.userId}
+                    refreshPage={refreshPage}
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -169,6 +200,7 @@ export default function Snapshots() {
                     gameState={snapshot.gameState}
                     user={user.userId}
                     nft={snapshot.nft}
+                    refreshPage={refreshPage}
                     initial={{
                       opacity: 0,
                       y: 10,
