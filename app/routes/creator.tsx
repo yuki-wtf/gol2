@@ -173,7 +173,6 @@ export default function CreatorPage() {
   const onRowsRenderedRef = useRef<({ startIndex, stopIndex }: { startIndex: number; stopIndex: number }) => void>()
   const columnCount = 4
   const fetcher = useFetcher()
-  const transition = useTransition()
   const [hasEnded, setHasEnded] = useState(false)
 
   useUpdateEffect(() => {
@@ -235,10 +234,7 @@ export default function CreatorPage() {
       <Grid
         cellRenderer={({ columnIndex, rowIndex, style, key }) => {
           const game = communityGames[rowIndex * 4 + columnIndex]
-          // if (game == null) return null
-          if (!game) {
-            return transition.state === 'loading' ? 'Loading more...' : 'Nothing to see here...'
-          }
+          if (game == null) return null
           return (
             <>
               <SnapshotCreator
@@ -357,7 +353,7 @@ export default function CreatorPage() {
                             })
                           }}
                         </InfiniteLoader>
-                        {!hasEnded && (
+                        {!hasEnded && gamesCount > LIMIT && (
                           <div
                             style={{
                               display: 'flex',
