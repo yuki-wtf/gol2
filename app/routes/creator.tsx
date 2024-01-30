@@ -165,6 +165,7 @@ order by "createdAt" desc limit ${limit} offset ${offset}
 }
 
 export default function CreatorPage() {
+  console.log('rendering creator page')
   useAutoRefresh()
   const user = useUser()
 

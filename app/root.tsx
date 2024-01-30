@@ -70,6 +70,7 @@ export async function loader({ request }: LoaderArgs) {
       console.error('root loader error', e)
     }
   }
+  console.log('process.env', process.env)
   return json({
     env: {
       BASE_URL: process.env.BASE_URL,
