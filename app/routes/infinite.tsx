@@ -132,6 +132,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
 }
 
 export default function InfinitePage() {
+  console.log('rendering InfinitePage')
   useAutoRefresh()
   const data = useLoaderData<typeof loader>()
 
