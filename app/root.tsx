@@ -81,6 +81,7 @@ export async function loader({ request }: LoaderArgs) {
       NFT_CONTRACT_ADDRESS: process.env.NFT_CONTRACT_ADDRESS,
       INFURA_API_KEY: process.env.INFURA_API_KEY,
       ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
+      MIGRATION_GENERATION_MARKER: process.env.MIGRATION_GENERATION_MARKER,
     },
     userId: await getUserId(request),
     balance,
