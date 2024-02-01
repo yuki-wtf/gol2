@@ -240,6 +240,7 @@ interface Props {
   readonly large?: boolean
   readonly gameGeneration?: string
   readonly gameState?: string
+  readonly createdAt?: string
   readonly user?: string
   readonly isLoading?: boolean
   readonly initial?: AnimationProps['initial']
@@ -255,6 +256,7 @@ const Snapshot = ({
   large = false,
   gameGeneration,
   gameState,
+  createdAt,
   user,
   isLoading,
   initial,
@@ -312,7 +314,15 @@ const Snapshot = ({
             width: '100%',
           }}
         >
-          {gameGeneration && <SnapshotMint generation={gameGeneration} nft={nft} refreshPage={refreshPage} />}
+          {gameGeneration && (
+            <SnapshotMint
+              generation={gameGeneration}
+              gameState={gameState!}
+              nft={nft}
+              refreshPage={refreshPage}
+              createdAt={createdAt!}
+            />
+          )}
           {large && (
             <Button
               tertiary
