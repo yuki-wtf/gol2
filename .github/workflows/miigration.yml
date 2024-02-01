@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'update-starknet'
-      - 'update-starknet-mainnet'
   workflow_dispatch:
 
 jobs:
