@@ -63,6 +63,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     FROM transaction t
     WHERE CASE "status"
         WHEN 'RECEIVED' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+        WHEN 'ACCEPTED_ON_L2' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
         WHEN 'PENDING' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
         else FALSE
       END
@@ -134,7 +135,6 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
 }
 
 export default function InfinitePage() {
-  console.log('rendering InfinitePage')
   useAutoRefresh()
   const data = useLoaderData<typeof loader>()
 
