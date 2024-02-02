@@ -40,17 +40,17 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
   const userId = await getUserId(request)
   const { offset, limit } = getStartLimit(new URL(request.url).searchParams)
 
-  const gamesCount = await sql`
-      SELECT
-          COUNT(*)
-      FROM
-          creator c1
-      WHERE
-          "transactionType" = 'game_created'
-          AND "gameId" != 0;
-  `
-
   if (userId == null) {
+    const gamesCount = await sql`
+    SELECT
+        COUNT(*)
+    FROM
+        creator c1
+    WHERE
+        "transactionType" = 'game_created'
+        AND "gameId" != 0;
+`
+
     const communityGames = await sql<CreatorGame>`
       select
         "transactionOwner" "gameOwner",
@@ -83,6 +83,16 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
     })
   }
 
+  const gamesCount = await sql`
+    SELECT
+        COUNT(*)
+    FROM
+        creator c1
+    WHERE
+        "transactionType" = 'game_created'
+        AND "gameId" != 0
+        AND "transactionOwner" != ${hexToDecimalString(userId)};
+  `
   const yourGames = await sql<CreatorGame>`
     (
       select
@@ -96,6 +106,7 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Loa
         and "functionCaller" = ${hexToDecimalString(userId)}
         and CASE "status"
           WHEN 'RECEIVED' THEN TRUE
+          WHEN 'ACCEPTED_ON_L2' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
           WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
           else FALSE
         END
@@ -165,7 +176,6 @@ order by "createdAt" desc limit ${limit} offset ${offset}
 }
 
 export default function CreatorPage() {
-  console.log('rendering creator page')
   useAutoRefresh()
   const user = useUser()
 
