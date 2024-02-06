@@ -6,7 +6,7 @@ WORKDIR /app
 RUN chown -R node:node /app
 USER node
 COPY --chown=node:node package*.json ./
-RUN npm ci --only=production
+RUN yarn install
 COPY --chown=node:node . .
 RUN yarn build
 
