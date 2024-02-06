@@ -30,7 +30,7 @@ jobs:
         id: auth
         with:
           token_format: access_token
-          project_id: 'governance-development'
+          project_id: 'gol2-development'
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
       - name: Login to GAR
