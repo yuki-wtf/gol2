@@ -54,6 +54,7 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
   const { isCorrectNetwork } = useCheckNetwork()
   const [_, setDialog] = useDialog()
   const { contract: nftContract } = useNftContract()
+  const isPreMigrationGeneration = Number(generation) <= Number(env.MIGRATION_GENERATION_MARKER)
 
   const addMintToPending = async (generationNumber: number, txHash: string) => {
     const formData = new FormData()
@@ -106,7 +107,7 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
       },
     ]
 
-    if (Number(generation) <= Number(env.MIGRATION_GENERATION_MARKER)) {
+    if (isPreMigrationGeneration) {
       const response = await fetch(`/api/proof/${generation}`)
       const data = await response.json()
 
@@ -143,6 +144,7 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
   }
 
   const isPending = nft?.type === 'pending'
+  const isDisabled = isPending || isPreMigrationGeneration
   let mint = null
   if (!nft || isPending) {
     mint = (
@@ -152,7 +154,8 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
         isLoading={isPending}
         icon={isPending}
         color="#F3E9E1"
-        disabled={isPending}
+        disabled={isDisabled}
+        disableCursor={true}
         onClick={(e) => {
           e.stopPropagation()
           if (!isCorrectNetwork) {
