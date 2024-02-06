@@ -32,12 +32,6 @@ const FlexContainer = styled.div`
     justify-content: center;
   }
 `
-const Twitterlink = styled.a`
-  color: #f06b97;
-  &:hover {
-    opacity: 0.8;
-  }
-`
 
 function twitter(text: string, url: string): string {
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
@@ -114,11 +108,8 @@ export default function Snapshots() {
       <PageIntro.Container>
         <PageIntro.Icon color="#F06B97" />
         <PageIntro.Text>
-          Snapshots are moments in time of the Infinite game mode. Your unique snapshots are collected here every time
-          you evolve the infinite game. <br /> <br /> Think snapshots should be mintable as NFTs? Let us know on{' '}
-          <Twitterlink href="https://twitter.com/GoL2io" title="Twitter">
-            Twitter
-          </Twitterlink>
+          Snapshots are moments in time of the Infinite game mode – mintable as NFTs. Your unique snapshots are
+          collected here every time you evolve the infinite game.
         </PageIntro.Text>
       </PageIntro.Container>
       <FlexContainer>
