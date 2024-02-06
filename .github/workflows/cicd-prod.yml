@@ -2,9 +2,8 @@ name: gol2
 
 on:
   push:
-    branches:
-      - 'dev'
-      - 'snapshot'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -20,18 +19,17 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: europe-west9-docker.pkg.dev/gol2-development/gol2/dev
+          images: europe-west9-docker.pkg.dev/gol2-production/gol2/production
           flavor: latest=false
           tags: |
-            type=ref,suffix=-{{sha}},event=branch
-            type=ref,suffix=-{{sha}},event=pr
+            type=ref,event=tag
 
       - uses: 'google-github-actions/auth@v2'
         id: auth
         with:
           token_format: access_token
           project_id: 'gol2-development'
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_PROD }}'
 
       - name: Login to GAR
         uses: docker/login-action@v3
