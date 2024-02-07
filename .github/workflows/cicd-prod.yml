@@ -28,7 +28,7 @@ jobs:
         id: auth
         with:
           token_format: access_token
-          project_id: 'gol2-development'
+          project_id: 'gol2-production'
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_PROD }}'
 
       - name: Login to GAR
@@ -56,7 +56,7 @@ jobs:
         id: auth
         with:
           token_format: access_token
-          project_id: 'gol2-development'
+          project_id: 'gol2-production'
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_PROD }}'
 
       - name: Deploy to Cloud Run

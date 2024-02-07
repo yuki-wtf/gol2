@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'dev'
-      - 'snapshot'
+      - 'update-starknet'
   workflow_dispatch:
 
 jobs:
@@ -66,5 +66,25 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: gol2
+          image: ${{ env.image }}
+          region: europe-west9
+  Deploy-update:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/snapshot'
+    needs: Build
+    runs-on: ubuntu-latest
+    env:
+      image: ${{ needs.Build.outputs.image }}
+    steps:
+      - uses: 'google-github-actions/auth@v2'
+        id: auth
+        with:
+          token_format: access_token
+          project_id: 'gol2-development'
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: gol2-update
           image: ${{ env.image }}
           region: europe-west9
