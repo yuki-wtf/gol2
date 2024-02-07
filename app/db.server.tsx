@@ -14,7 +14,6 @@ declare global {
 export function getPool(): Pool {
   global.__DB_POOL__ ??= new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: fs.existsSync('ca-certificate.crt') ? { ca: fs.readFileSync('ca-certificate.crt').toString() } : undefined,
   })
 
   return global.__DB_POOL__
