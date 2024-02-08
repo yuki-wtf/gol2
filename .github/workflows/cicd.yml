@@ -38,7 +38,7 @@ jobs:
         id: auth
         with:
           token_format: access_token
-          project_id: ${{ env.Project }}
+          project_id: ${{ env.GCP_Project_ID }}
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
       - name: Login to GAR
@@ -69,7 +69,7 @@ jobs:
         id: auth
         with:
           token_format: access_token
-          project_id: ${{ env.Project }}
+          project_id: ${{ env.GCP_Project_ID }}
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
       - name: Deploy to Cloud Run
