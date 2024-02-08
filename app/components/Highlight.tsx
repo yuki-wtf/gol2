@@ -24,6 +24,8 @@ interface Props {
   readonly children?: React.ReactNode
   readonly active?: boolean
   readonly type?: 'evolve' | 'give_life'
+  readonly noOverlay?: boolean
+  readonly containerPadding?: string
   readonly highlightRadius?: number
   readonly sideOffset?: number
   readonly style?: React.CSSProperties
@@ -56,13 +58,18 @@ const StyledTrigger = styled(PopoverPrimitive.Trigger)`
   z-index: 5;
 `
 
-const StyledContainer = styled.span<{ active?: boolean; highlightRadius?: number }>`
+const StyledContainer = styled.span<{
+  active?: boolean
+  highlightRadius?: number
+  padding?: string
+  noOverlay?: boolean
+}>`
   border: 2px solid ${(p) => (p.active ? '#f06b97' : 'transparent')};
 
   border-radius: ${(p) => (p.highlightRadius ? `${p.highlightRadius}px` : '5px')};
   box-shadow: 0px 0px 25px 2px ${(p) => (p.active ? '#f06b97' : 'transparent')};
   display: inline-flex;
-  padding: 2px;
+  padding: ${(p) => (p.padding ? p.padding : '2px')};
   position: relative;
   pointer-events: ${(p) => (p.active ? 'auto' : 'auto')};
   z-index: 5;
@@ -89,7 +96,7 @@ const StyledContainer = styled.span<{ active?: boolean; highlightRadius?: number
   }
   &::after {
     content: '';
-    opacity: ${(p) => (p.active ? '0.7' : '0')};
+    opacity: ${(p) => (p.active && !p.noOverlay ? '0.7' : '0')};
 
     position: fixed;
     inset: 0;
@@ -204,9 +211,17 @@ export default function Highlight({
   type = 'evolve',
   style,
   sideOffset = 15,
+  noOverlay = false,
+  containerPadding,
 }: Props) {
   return (
-    <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
+    <StyledContainer
+      highlightRadius={highlightRadius}
+      active={active}
+      padding={containerPadding}
+      noOverlay={noOverlay}
+      style={{ ...style }}
+    >
       <PopoverPrimitive.Root defaultOpen={true} open={active}>
         <StyledTrigger>
           <>{children} </>

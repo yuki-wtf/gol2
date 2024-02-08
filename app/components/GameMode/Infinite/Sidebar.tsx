@@ -9,6 +9,9 @@ import TempOverlay from '~/components/TempOverlay'
 import SidebarSection from '~/components/SidebarSection'
 import StatRow from '~/components/StatRow'
 import Gameplay from '../Shared/Gameplay'
+import { useCreatedSnapshot } from '~/hooks/CreatedSnapshot'
+import { useDeepCompareEffect } from 'react-use'
+import { useRef } from 'react'
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -30,6 +33,25 @@ interface Props {
 
 export default function Sidebar({ extinctions, generations, livesGiven, longestStablePeriod, onChainPlay }: Props) {
   const [selectedCell] = useSelectedCell()
+  const onChainPlayPrev = useRef(onChainPlay)
+  const [_, setCreatedSnapshot] = useCreatedSnapshot()
+  useDeepCompareEffect(() => {
+    const newReceivedTxns = onChainPlayPrev.current.filter(
+      (tnx) => tnx.status === 'RECEIVED' && tnx.type === 'game_evolved'
+    )
+    const updatedTnxObject = onChainPlay.reduce<Record<string, typeof newReceivedTxns[0]>>((acc, tnx) => {
+      acc[tnx.hash] = tnx
+      return acc
+    }, {})
+
+    newReceivedTxns.forEach((tnx) => {
+      const updatedTnx = updatedTnxObject[tnx.hash]
+      if (['ACCEPTED_ON_L2', 'ACCEPTED_ON_L1', 'PENDING'].includes(updatedTnx?.status ?? '')) {
+        setCreatedSnapshot(true)
+      }
+    })
+    onChainPlayPrev.current = onChainPlay
+  }, [onChainPlay])
 
   return (
     <StyledSidebar>

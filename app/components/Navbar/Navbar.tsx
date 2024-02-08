@@ -47,10 +47,12 @@ const MenuButtonWithHighlight = () => {
       onClose={() => {
         setSnapshotCreated(false)
       }}
-      active={snapshotCreated}
+      noOverlay={true}
+      active={snapshotCreated && pathname === '/infinite'}
       title="Snapshot created"
       desc="Mint as an NFT"
       descLink="/snapshots"
+      containerPadding="5px 2px 3px 2px"
     >
       <MenuButton />
     </Highlight>
