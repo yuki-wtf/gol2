@@ -78,3 +78,26 @@ jobs:
           service: gol2
           image: ${{ env.image }}
           region: europe-west9
+  Deploy-prod:
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    needs: Build
+    runs-on: ubuntu-latest
+    env:
+      image: ${{ needs.Build.outputs.image }}
+    environment:
+      name: production
+      url: https://gol2.io
+    steps:
+      - uses: 'google-github-actions/auth@v2'
+        id: auth
+        with:
+          token_format: access_token
+          project_id: ${{ env.GCP_Project_ID }}
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: gol2
+          image: ${{ env.image }}
+          region: europe-west9
