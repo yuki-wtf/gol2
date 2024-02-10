@@ -144,7 +144,7 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
   }
 
   const isPending = nft?.type === 'pending'
-  const isDisabled = isPending || isPreMigrationGeneration
+  const isDisabled = isPending
   let mint = null
   if (!nft || isPending) {
     mint = (
