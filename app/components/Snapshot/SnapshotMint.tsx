@@ -144,13 +144,13 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
   }
 
   const isPending = nft?.type === 'pending'
-  const isDisabled = isPending
+  const isDisabled = isPending || isPreMigrationGeneration
   let mint = null
   if (!nft || isPending) {
     mint = (
       <Button
         secondary
-        label={isPending ? 'Pending' : 'Mint as NFT'}
+        label={isPending ? 'Pending' : isPreMigrationGeneration ? 'Mint soon' : 'Mint as NFT'}
         isLoading={isPending}
         icon={isPending}
         color="#F3E9E1"
