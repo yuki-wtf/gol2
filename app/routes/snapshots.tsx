@@ -100,7 +100,7 @@ export default function Snapshots() {
     () => {
       load('/snapshots')
     },
-    hasAnyPendingMints ? 1000 * 60 : null
+    hasAnyPendingMints ? 1000 * 10 : null
   )
 
   return (
@@ -164,7 +164,6 @@ export default function Snapshots() {
                     nft={snapshot.nft}
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    createdAt={snapshot.createdAt}
                     user={user.userId}
                     refreshPage={refreshPage}
                     initial={{
@@ -190,7 +189,6 @@ export default function Snapshots() {
                     large
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
-                    createdAt={snapshot.createdAt}
                     user={user.userId}
                     nft={snapshot.nft}
                     refreshPage={refreshPage}

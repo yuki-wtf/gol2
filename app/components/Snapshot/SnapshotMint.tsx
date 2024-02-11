@@ -40,12 +40,10 @@ const MintedAddressContainer = styled.div`
 
 interface Props {
   generation: string
-  gameState: string
-  createdAt: string
   nft?: NFT
   refreshPage?: () => void
 }
-export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPage }: Props) => {
+export const SnapshotMint = ({ generation, nft, refreshPage }: Props) => {
   const user = useUser()
   const { account } = useAccount()
   const { provider } = useProvider()
@@ -115,13 +113,8 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
         console.error(`No proof exists for generation ${generation}`)
       }
 
-      if (!createdAt || !gameState) {
-        console.error(`Missing createdAt or gameState for generation ${generation}`)
-      }
-
       const proofs = data.proof.split(',')
-      const timestamp = Math.floor(new Date(data[0]?.createdAt).getTime() / 1000)
-      const callData = [Number(generation), gameState, timestamp, proofs]
+      const callData = [Number(generation), data.gameState, data.timestamp, proofs]
       const whitelistMint = {
         contractAddress: env.NFT_CONTRACT_ADDRESS!,
         entrypoint: 'whitelist_mint',
@@ -144,17 +137,16 @@ export const SnapshotMint = ({ generation, gameState, createdAt, nft, refreshPag
   }
 
   const isPending = nft?.type === 'pending'
-  const isDisabled = isPending || isPreMigrationGeneration
   let mint = null
   if (!nft || isPending) {
     mint = (
       <Button
         secondary
-        label={isPending ? 'Pending' : isPreMigrationGeneration ? 'Mint soon' : 'Mint as NFT'}
+        label={isPending ? 'Pending' : 'Mint as NFT'}
         isLoading={isPending}
         icon={isPending}
         color="#F3E9E1"
-        disabled={isDisabled}
+        disabled={isPending}
         disableCursor={true}
         onClick={(e) => {
           e.stopPropagation()
