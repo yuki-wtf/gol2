@@ -12,6 +12,9 @@ import Gameplay from '../Shared/Gameplay'
 import { useCreatedSnapshot } from '~/hooks/CreatedSnapshot'
 import { useDeepCompareEffect } from 'react-use'
 import { useRef } from 'react'
+import { useUser } from '~/hooks/useUser'
+import { num } from 'starknet'
+const hexToDecimalString = num.hexToDecimalString
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -33,13 +36,20 @@ interface Props {
 
 export default function Sidebar({ extinctions, generations, livesGiven, longestStablePeriod, onChainPlay }: Props) {
   const [selectedCell] = useSelectedCell()
-  const onChainPlayPrev = useRef(onChainPlay)
+  const currentUser = useUser()
   const [_, setCreatedSnapshot] = useCreatedSnapshot()
+
+  const myOnChainPlay = onChainPlay.filter(
+    (tnx) => currentUser?.userId && tnx.owner === hexToDecimalString(currentUser.userId)
+  )
+
+  const onChainPlayPrev = useRef(myOnChainPlay)
+
   useDeepCompareEffect(() => {
     const newReceivedTxns = onChainPlayPrev.current.filter(
       (tnx) => tnx.status === 'RECEIVED' && tnx.type === 'game_evolved'
     )
-    const updatedTnxObject = onChainPlay.reduce<Record<string, typeof newReceivedTxns[0]>>((acc, tnx) => {
+    const updatedTnxObject = myOnChainPlay.reduce<Record<string, typeof newReceivedTxns[0]>>((acc, tnx) => {
       acc[tnx.hash] = tnx
       return acc
     }, {})
@@ -50,8 +60,8 @@ export default function Sidebar({ extinctions, generations, livesGiven, longestS
         setCreatedSnapshot(true)
       }
     })
-    onChainPlayPrev.current = onChainPlay
-  }, [onChainPlay])
+    onChainPlayPrev.current = myOnChainPlay
+  }, [myOnChainPlay])
 
   return (
     <StyledSidebar>
