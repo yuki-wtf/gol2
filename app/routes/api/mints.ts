@@ -25,12 +25,13 @@ export async function action({ request }: ActionArgs) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { status: 'success' }
   } else if (request.method === 'DELETE') {
-    await sql`
+    const deleted = await sql`
     DELETE FROM mints
     WHERE "generation" = ${body.get('generation')}
+    returning *
     `
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return { status: 'success' }
+    return { status: deleted.rowCount > 0 ? 'success' : 'cancelled' }
   }
 }

@@ -154,7 +154,10 @@ export const SnapshotMint = ({ generation, nft, refreshPage }: Props) => {
             setDialog('WrongNetworkDialog')
             return
           }
-          mintGame(generation).catch((err) => onMintError(generation))
+          mintGame(generation).catch((err) => {
+            console.error('Mint erorr', err)
+            onMintError(generation)
+          })
         }}
       />
     )

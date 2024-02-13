@@ -17,13 +17,24 @@ type DescNode = StyledComponent<
       to?: string | undefined
     }
 >
+
+type TitleProps = StyledComponent<
+  {
+    theme?: Theme | undefined
+    as?: React.ElementType | undefined
+  } & React.ClassAttributes<HTMLParagraphElement> &
+    React.HTMLAttributes<HTMLParagraphElement> & {
+      type?: Props['type']
+    }
+>
+
 interface Props {
   readonly title?: React.ReactNode
   readonly desc?: React.ReactNode
   readonly descLink?: string
   readonly children?: React.ReactNode
   readonly active?: boolean
-  readonly type?: 'evolve' | 'give_life'
+  readonly type?: 'evolve' | 'give_life' | 'snapshot'
   readonly noOverlay?: boolean
   readonly containerPadding?: string
   readonly highlightRadius?: number
@@ -164,11 +175,11 @@ const StyledClose = styled(PopoverPrimitive.Close)`
   font-weight: 600;
 `
 
-const StyledTitle = styled(Typography.XL1Extrabold)`
+const StyledTitle = styled<TitleProps>(Typography.XL1Extrabold)`
   font-family: 'Mulish';
   font-style: normal;
-  font-weight: 800;
-  font-size: 15px;
+  font-weight: ${(p) => (p.type === 'snapshot' ? '400' : '800')};
+  font-size: ${(p) => (p.type === 'snapshot' ? '14px' : '16px')};
   line-height: 26px;
   color: #0a0c10;
   margin-bottom: 8px;
@@ -181,6 +192,8 @@ const StyledDesc = styled<DescNode>(Typography.BaseRegular)`
   padding: 0;
   margin: 0;
   text-decoration: ${(p) => (p.to ? 'underline' : 'none')};
+  font-size: 16px;
+  font-weight: 800;
 `
 const StyledContentInner = styled.div`
   display: flex;
@@ -237,7 +250,7 @@ export default function Highlight({
               {type === 'evolve' ? <HiOutlineHeart size={20} /> : <HiOutlineLightningBolt size={20} />}
             </StyledIcon>
             <div>
-              <StyledTitle>{title}</StyledTitle>
+              <StyledTitle type={type}>{title}</StyledTitle>
               <StyledDesc as={descLink ? Link : undefined} to={descLink} onClick={(e) => onClose?.(e as any)}>
                 {desc}
               </StyledDesc>

@@ -2,8 +2,15 @@ import { HiOutlineLightBulb } from 'react-icons/hi'
 import styled from '@emotion/styled'
 import Typography from './Typography'
 import type { ReactNode } from 'react'
+import type { Theme } from '@emotion/react'
 
-const Container = styled.div`
+interface ContainerProps {
+  theme?: Theme | undefined
+  as?: React.ElementType | undefined
+  width?: string | undefined
+}
+
+const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: row;
   gap: 24px;
@@ -11,7 +18,7 @@ const Container = styled.div`
   min-height: 52px;
   margin-top: 56px;
   padding-left: 24px;
-  width: 70%;
+  width: ${(props) => props.width ?? '70%'};
   margin-bottom: 56px;
   align-items: center;
   &:before {
