@@ -79,6 +79,8 @@ export async function loader({ request }: LoaderArgs) {
       USE_MAINNET: process.env.USE_MAINNET === 'true',
       CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS,
       NFT_CONTRACT_ADDRESS: process.env.NFT_CONTRACT_ADDRESS,
+      NFT_MINT_PRICE: process.env.NFT_MINT_PRICE,
+      NFT_MINT_TOKEN_ADDRESS: process.env.NFT_MINT_TOKEN_ADDRESS,
       INFURA_API_KEY: process.env.INFURA_API_KEY,
       ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
       MIGRATION_GENERATION_MARKER: process.env.MIGRATION_GENERATION_MARKER,
