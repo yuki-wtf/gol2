@@ -8,3 +8,12 @@ export function useAutoRefresh() {
     setSearchParams({}, { replace: true, state: { scroll: false } })
   }, 5000)
 }
+
+export function useRefreshPage() {
+  const [, setSearchParams] = useSearchParams()
+  const refreshPage = () => {
+    setSearchParams({}, { replace: true, state: { scroll: false } })
+  }
+
+  return refreshPage
+}

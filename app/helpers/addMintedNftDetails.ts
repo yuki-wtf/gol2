@@ -23,7 +23,7 @@ export function addMintedNftDetails(snapshots, nfts) {
     const nft = nftsByGeneration[snapshot.gameGeneration]
 
     if (nft && getChecksumAddress(nft.contract_address) === getChecksumAddress(targetContractAddress)) {
-      const gameModeAttribute = nft.attributes.find((attr) => attr.trait_type === 'Game Mode')
+      const gameModeAttribute = nft.attributes?.find((attr) => attr.trait_type === 'Game Mode')
 
       const nftData: MintedNFT = {
         type: 'minted',

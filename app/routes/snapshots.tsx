@@ -11,16 +11,17 @@ import { json } from '@remix-run/node'
 import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import { getUserId } from '~/session.server'
-import { useFetcher } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { addMintedNftDetails } from '~/helpers/addMintedNftDetails'
 import { addPendingNftDetails } from '~/helpers/addPendingNftDetails'
 import { getUserNFTs } from '~/helpers/getUserNFTsStarkscan'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useInterval } from 'react-use'
 import { twitter } from '~/helpers/twitter'
+import { useRefreshPage } from '~/hooks/useAutoRefresh'
 
 const hexToDecimalString = num.hexToDecimalString
 
@@ -77,28 +78,16 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
 
 export default function Snapshots() {
   const user = useUser()
-  const { load, data } = useFetcher()
+  const data = useLoaderData<typeof loader>()
   const { env } = useRootLoaderData()
-
-  useEffect(() => {
-    load('/snapshots')
-  }, [load])
-
-  const refreshPage = () => {
-    load('/snapshots')
-  }
+  const refreshPage = useRefreshPage()
 
   const hasAnyPendingMints = useMemo(() => {
     if (data == null) return false
-    return data.some((s: any) => s.nft?.type === 'pending') as boolean
+    return data.some((s: any) => s.nft?.type === 'pending')
   }, [data])
 
-  useInterval(
-    () => {
-      load('/snapshots')
-    },
-    hasAnyPendingMints ? 1000 * 10 : null
-  )
+  useInterval(refreshPage, hasAnyPendingMints ? 1000 * 10 : null)
 
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
