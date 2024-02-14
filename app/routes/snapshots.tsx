@@ -20,6 +20,7 @@ import { addPendingNftDetails } from '~/helpers/addPendingNftDetails'
 import { getUserNFTs } from '~/helpers/getUserNFTsStarkscan'
 import { useEffect, useMemo } from 'react'
 import { useInterval } from 'react-use'
+import { twitter } from '~/helpers/twitter'
 
 const hexToDecimalString = num.hexToDecimalString
 
@@ -32,10 +33,6 @@ const FlexContainer = styled.div`
     justify-content: center;
   }
 `
-
-function twitter(text: string, url: string): string {
-  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-}
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[] | null>> {
   const userId = await getUserId(request)

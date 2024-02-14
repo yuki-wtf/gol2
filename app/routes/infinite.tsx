@@ -9,6 +9,7 @@ import { INFINITE_GAME_GENESIS } from '~/env'
 import GameContainer from '~/components/GameMode/Infinite/GameContainer'
 import Sidebar from '~/components/GameMode/Infinite/Sidebar'
 import styled from '@emotion/styled'
+import PageIntro from '~/components/PageIntro'
 
 interface LoaderData {
   readonly generations: number
@@ -86,7 +87,9 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
           WHEN 'give_life_to_cell' THEN 'cell_revived'
         END "type",
         "functionCaller" "owner",
-        "createdAt"
+        "createdAt",
+        -1 "gameGeneration",
+        -1 "gameState"
       FROM transaction t
       WHERE CASE "status"
           WHEN 'RECEIVED' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
@@ -111,7 +114,9 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         "txStatus" "status",
         "transactionType" "type",
         "transactionOwner" "owner",
-        "createdAt"
+        "createdAt",
+        "gameGeneration",
+        "gameState"
       FROM infinite
       ORDER BY COALESCE("gameGeneration", 1) desc, "gameState" desc
       LIMIT 5
@@ -140,6 +145,15 @@ export default function InfinitePage() {
 
   return (
     <ContainerInner>
+      <PageIntro.Container width="100%">
+        <PageIntro.Icon color="#DBF267" />
+        <PageIntro.Text>
+          <span style={{ fontWeight: 700 }}>
+            Mint NFT: <br />
+          </span>
+          Evolve the game to generate a unique Snapshot that vou can mint as an on-chain NFT!
+        </PageIntro.Text>
+      </PageIntro.Container>
       <GameWrapper>
         <GameGridWrapper>
           <GameContainer currentFrame={data.currentFrame} maxFrame={data.maxFrame} receivedCells={data.receivedCells} />

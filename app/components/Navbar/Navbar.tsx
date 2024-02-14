@@ -47,10 +47,11 @@ const MenuButtonWithHighlight = () => {
       onClose={() => {
         setSnapshotCreated(false)
       }}
+      type="snapshot"
       noOverlay={true}
       active={snapshotCreated && pathname === '/infinite'}
-      title="Snapshot created"
-      desc="Mint as an NFT"
+      title="Keep track of mint status on Snapshots page"
+      desc="View snapshots"
       descLink="/snapshots"
       containerPadding="5px 2px 3px 2px"
     >

@@ -64,6 +64,8 @@ export interface OnChainPlay {
   readonly status: TxnStatus
   readonly type: 'game_created' | 'game_evolved' | 'cell_revived'
   readonly owner: string
+  readonly gameGeneration?: string
+  readonly gameState?: string
   readonly createdAt: Date
 }
 
