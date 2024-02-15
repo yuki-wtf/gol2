@@ -1,6 +1,7 @@
 import type { ActionArgs } from '@remix-run/node'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { sql } from '~/db.server'
+const hexToDecimalString = num.hexToDecimalString
 
 export async function action({ request }: ActionArgs) {
   const body = await request.formData()

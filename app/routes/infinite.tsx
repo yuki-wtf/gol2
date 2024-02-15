@@ -9,6 +9,7 @@ import { INFINITE_GAME_GENESIS } from '~/env'
 import GameContainer from '~/components/GameMode/Infinite/GameContainer'
 import Sidebar from '~/components/GameMode/Infinite/Sidebar'
 import styled from '@emotion/styled'
+import PageIntro from '~/components/PageIntro'
 
 interface LoaderData {
   readonly generations: number
@@ -23,8 +24,13 @@ interface LoaderData {
   readonly receivedCells: ReceivedCell[]
 }
 
+interface Statistics {
+  label: string
+  value: string
+}
+
 export async function loader({ request, params }: LoaderArgs): Promise<TypedResponse<LoaderData>> {
-  const statistics = await sql<{ label: string; value: string }>`
+  const statistics = await sql<Statistics>`
     (
       select 'Generations' "label",
         max(COALESCE("gameGeneration", 1)) "value"
@@ -58,6 +64,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
     FROM transaction t
     WHERE CASE "status"
         WHEN 'RECEIVED' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+        WHEN 'ACCEPTED_ON_L2' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
         WHEN 'PENDING' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
         else FALSE
       END
@@ -71,6 +78,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         "hash",
         CASE "status"
           WHEN 'PENDING' THEN 'RECEIVED'
+          WHEN 'ACCEPTED_ON_L2' THEN 'RECEIVED'
           else "status"
         END "status",
         CASE "functionName"
@@ -79,11 +87,14 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
           WHEN 'give_life_to_cell' THEN 'cell_revived'
         END "type",
         "functionCaller" "owner",
-        "createdAt"
+        "createdAt",
+        -1 "gameGeneration",
+        -1 "gameState"
       FROM transaction t
       WHERE CASE "status"
           WHEN 'RECEIVED' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
           WHEN 'PENDING' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+          WHEN 'ACCEPTED_ON_L2' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
           WHEN 'REJECTED' THEN "createdAt" > (now() - interval '15 minutes')
           else FALSE
         END
@@ -103,7 +114,9 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         "txStatus" "status",
         "transactionType" "type",
         "transactionOwner" "owner",
-        "createdAt"
+        "createdAt",
+        "gameGeneration",
+        "gameState"
       FROM infinite
       ORDER BY COALESCE("gameGeneration", 1) desc, "gameState" desc
       LIMIT 5
@@ -132,6 +145,15 @@ export default function InfinitePage() {
 
   return (
     <ContainerInner>
+      <PageIntro.Container width="100%">
+        <PageIntro.Icon color="#DBF267" />
+        <PageIntro.Text>
+          <span style={{ fontWeight: 700 }}>
+            Mint NFT: <br />
+          </span>
+          Evolve the game to generate a unique Snapshot that vou can mint as an on-chain NFT!
+        </PageIntro.Text>
+      </PageIntro.Container>
       <GameWrapper>
         <GameGridWrapper>
           <GameContainer currentFrame={data.currentFrame} maxFrame={data.maxFrame} receivedCells={data.receivedCells} />

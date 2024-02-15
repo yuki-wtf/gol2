@@ -1,8 +1,8 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
+import { useContractWrite } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import { HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import { useLocalStorage } from 'react-use'
-import { StarknetChainId } from 'starknet4/dist/constants'
+
 import Button from '~/components/Button'
 import Dialog from '~/components/Dialog/Dialog'
 import Highlight from '~/components/Highlight'
@@ -10,11 +10,9 @@ import Loader from '~/components/Loader'
 import { useDialog } from '~/hooks/Dialog'
 import { useHelpMessage } from '~/hooks/HelpMessage'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
 import { useUser } from '~/hooks/useUser'
 import Header from '../Shared/Game/Header'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
-
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 interface Props {
   readonly isGameOver: boolean
   readonly gameId: string
@@ -26,15 +24,18 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
   const { contract } = useGameContract()
   const user = useUser()
-  const { library } = useStarknet()
   const [, setDialog] = useDialog()
   const [helpMessage, setHelpMessage] = useHelpMessage()
-  const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const { isCorrectNetwork } = useCheckNetwork()
 
-  const { data, loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'evolve',
+  const {
+    write,
+    data,
+    isLoading: loading,
+    isError: error,
+    reset,
+  } = useContractWrite({
+    calls: contract ? [contract.populateTransaction.evolve!(gameId)] : [],
   })
 
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
 
     const formData = new FormData()
 
-    formData.append('hash', data)
+    formData.append('hash', data.transaction_hash)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'evolve')
     formData.append('functionCaller', user!.userId)
@@ -128,16 +129,14 @@ export default function GameHeader({ gameId, isGameOver }: Props) {
             onClick={() => {
               setHasClickedEvolveCreator(true)
 
-              if (getLibraryChainId(library) != currentStarknetChainId) {
+              if (!isCorrectNetwork) {
                 setDialog('WrongNetworkDialog')
                 return
               }
 
               if (user != null) {
                 // TODO test this
-                void invoke({
-                  args: [gameId],
-                })
+                write()
                 return
               }
               setHelpMessage('connectWalletMessage')

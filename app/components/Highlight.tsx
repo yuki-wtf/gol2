@@ -1,17 +1,42 @@
 import type { Theme } from '@emotion/react'
 import { keyframes } from '@emotion/react'
+import type { StyledComponent } from '@emotion/styled'
 import styled from '@emotion/styled'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import type { RefAttributes } from 'react'
 import { HiOutlineHeart, HiOutlineLightningBolt, HiOutlineX } from 'react-icons/hi'
 import Typography from './Typography'
+import { Link } from '@remix-run/react'
+
+type DescNode = StyledComponent<
+  {
+    theme?: Theme | undefined
+    as?: React.ElementType | undefined
+  } & React.ClassAttributes<HTMLParagraphElement> &
+    React.HTMLAttributes<HTMLParagraphElement> & {
+      to?: string | undefined
+    }
+>
+
+type TitleProps = StyledComponent<
+  {
+    theme?: Theme | undefined
+    as?: React.ElementType | undefined
+  } & React.ClassAttributes<HTMLParagraphElement> &
+    React.HTMLAttributes<HTMLParagraphElement> & {
+      type?: Props['type']
+    }
+>
 
 interface Props {
   readonly title?: React.ReactNode
   readonly desc?: React.ReactNode
+  readonly descLink?: string
   readonly children?: React.ReactNode
   readonly active?: boolean
-  readonly type?: 'evolve' | 'give_life'
+  readonly type?: 'evolve' | 'give_life' | 'snapshot'
+  readonly noOverlay?: boolean
+  readonly containerPadding?: string
   readonly highlightRadius?: number
   readonly sideOffset?: number
   readonly style?: React.CSSProperties
@@ -44,13 +69,18 @@ const StyledTrigger = styled(PopoverPrimitive.Trigger)`
   z-index: 5;
 `
 
-const StyledContainer = styled.span<{ active?: boolean; highlightRadius?: number }>`
+const StyledContainer = styled.span<{
+  active?: boolean
+  highlightRadius?: number
+  padding?: string
+  noOverlay?: boolean
+}>`
   border: 2px solid ${(p) => (p.active ? '#f06b97' : 'transparent')};
 
   border-radius: ${(p) => (p.highlightRadius ? `${p.highlightRadius}px` : '5px')};
   box-shadow: 0px 0px 25px 2px ${(p) => (p.active ? '#f06b97' : 'transparent')};
   display: inline-flex;
-  padding: 2px;
+  padding: ${(p) => (p.padding ? p.padding : '2px')};
   position: relative;
   pointer-events: ${(p) => (p.active ? 'auto' : 'auto')};
   z-index: 5;
@@ -77,7 +107,7 @@ const StyledContainer = styled.span<{ active?: boolean; highlightRadius?: number
   }
   &::after {
     content: '';
-    opacity: ${(p) => (p.active ? '0.7' : '0')};
+    opacity: ${(p) => (p.active && !p.noOverlay ? '0.7' : '0')};
 
     position: fixed;
     inset: 0;
@@ -145,21 +175,25 @@ const StyledClose = styled(PopoverPrimitive.Close)`
   font-weight: 600;
 `
 
-const StyledTitle = styled(Typography.XL1Extrabold)`
+const StyledTitle = styled<TitleProps>(Typography.XL1Extrabold)`
   font-family: 'Mulish';
   font-style: normal;
-  font-weight: 800;
-  font-size: 15px;
+  font-weight: ${(p) => (p.type === 'snapshot' ? '400' : '800')};
+  font-size: ${(p) => (p.type === 'snapshot' ? '14px' : '16px')};
   line-height: 26px;
   color: #0a0c10;
   margin-bottom: 8px;
   padding: 0;
   margin: 0;
 `
-const StyledDesc = styled(Typography.BaseRegular)`
+
+const StyledDesc = styled<DescNode>(Typography.BaseRegular)`
   color: #2d3038;
   padding: 0;
   margin: 0;
+  text-decoration: ${(p) => (p.to ? 'underline' : 'none')};
+  font-size: 16px;
+  font-weight: 800;
 `
 const StyledContentInner = styled.div`
   display: flex;
@@ -183,15 +217,24 @@ export default function Highlight({
   collisonPadding,
   title,
   desc,
+  descLink,
   children,
   active = true,
   onClose,
   type = 'evolve',
   style,
   sideOffset = 15,
+  noOverlay = false,
+  containerPadding,
 }: Props) {
   return (
-    <StyledContainer highlightRadius={highlightRadius} active={active} style={{ ...style }}>
+    <StyledContainer
+      highlightRadius={highlightRadius}
+      active={active}
+      padding={containerPadding}
+      noOverlay={noOverlay}
+      style={{ ...style }}
+    >
       <PopoverPrimitive.Root defaultOpen={true} open={active}>
         <StyledTrigger>
           <>{children} </>
@@ -207,8 +250,10 @@ export default function Highlight({
               {type === 'evolve' ? <HiOutlineHeart size={20} /> : <HiOutlineLightningBolt size={20} />}
             </StyledIcon>
             <div>
-              <StyledTitle>{title}</StyledTitle>
-              <StyledDesc>{desc}</StyledDesc>
+              <StyledTitle type={type}>{title}</StyledTitle>
+              <StyledDesc as={descLink ? Link : undefined} to={descLink} onClick={(e) => onClose?.(e as any)}>
+                {desc}
+              </StyledDesc>
             </div>
           </StyledContentInner>
 

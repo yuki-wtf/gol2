@@ -12,9 +12,18 @@ import type { Infinite } from '~/db.server'
 import { sql } from '~/db.server'
 import { getUserId } from '~/session.server'
 import { useLoaderData } from '@remix-run/react'
-import { hexToDecimalString } from 'starknet/utils/number'
+import { num } from 'starknet'
 import { useUser } from '~/hooks/useUser'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
+import { addMintedNftDetails } from '~/helpers/addMintedNftDetails'
+import { addPendingNftDetails } from '~/helpers/addPendingNftDetails'
+import { getUserNFTs } from '~/helpers/getUserNFTsStarkscan'
+import { useMemo } from 'react'
+import { useInterval } from 'react-use'
+import { twitter } from '~/helpers/twitter'
+import { useRefreshPage } from '~/hooks/useAutoRefresh'
+
+const hexToDecimalString = num.hexToDecimalString
 
 const FlexContainer = styled.div`
   display: flex;
@@ -25,21 +34,13 @@ const FlexContainer = styled.div`
     justify-content: center;
   }
 `
-const Twitterlink = styled.a`
-  color: #f06b97;
-  &:hover {
-    opacity: 0.8;
-  }
-`
-
-function twitter(text: string, url: string): string {
-  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-}
 
 export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Infinite[] | null>> {
   const userId = await getUserId(request)
 
   if (userId == null) return json(null)
+
+  const userNfts = await getUserNFTs(userId)
 
   const result = await sql<Infinite>`
     select *
@@ -48,24 +49,53 @@ export async function loader({ request }: LoaderArgs): Promise<TypedResponse<Inf
       and "transactionOwner" = ${hexToDecimalString(userId)}
   `
 
-  return json(result.rows)
+  const pendingMints = await sql<any>`
+    select *
+    from "mints"
+    where "userId" = ${userId}
+    `
+
+  const snapshotsWithMintedNfts = addMintedNftDetails(result.rows, userNfts || [])
+  const { snapshotsWithPendingAndMintedNfts, idsToRemove } = addPendingNftDetails(
+    snapshotsWithMintedNfts,
+    pendingMints.rows
+  )
+
+  if (idsToRemove.length > 0) {
+    try {
+      await sql`
+        delete from "mints"
+        where "generation" = ANY(${idsToRemove})
+      `
+      console.log('deleted mints that exist in starkscan', idsToRemove)
+    } catch {
+      console.error('error deleting pending mints', idsToRemove)
+    }
+  }
+
+  return json(snapshotsWithPendingAndMintedNfts)
 }
 
 export default function Snapshots() {
   const user = useUser()
   const data = useLoaderData<typeof loader>()
   const { env } = useRootLoaderData()
+  const refreshPage = useRefreshPage()
+
+  const hasAnyPendingMints = useMemo(() => {
+    if (data == null) return false
+    return data.some((s: any) => s.nft?.type === 'pending')
+  }, [data])
+
+  useInterval(refreshPage, hasAnyPendingMints ? 1000 * 10 : null)
 
   return (
     <ContainerInner maxWidth={1000} paddingBottom={64}>
       <PageIntro.Container>
         <PageIntro.Icon color="#F06B97" />
         <PageIntro.Text>
-          Snapshots are moments in time of the Infinite game mode. Your unique snapshots are collected here every time
-          you evolve the infinite game. <br /> <br /> Think snapshots should be mintable as NFTs? Let us know on{' '}
-          <Twitterlink href="https://twitter.com/GoL2io" title="Twitter">
-            Twitter
-          </Twitterlink>
+          Snapshots are moments in time of the Infinite game mode – mintable as NFTs. Your unique snapshots are
+          collected here every time you evolve the infinite game.
         </PageIntro.Text>
       </PageIntro.Container>
       <FlexContainer>
@@ -117,9 +147,11 @@ export default function Snapshots() {
               <SnapshotDialog.Dialog key={snapshot.gameGeneration}>
                 <SnapshotDialog.DialogTrigger asChild>
                   <Snapshot
+                    nft={snapshot.nft}
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user.userId}
+                    refreshPage={refreshPage}
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -144,6 +176,8 @@ export default function Snapshots() {
                     gameGeneration={snapshot.gameGeneration}
                     gameState={snapshot.gameState}
                     user={user.userId}
+                    nft={snapshot.nft}
+                    refreshPage={refreshPage}
                     initial={{
                       opacity: 0,
                       y: 10,

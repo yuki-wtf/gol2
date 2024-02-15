@@ -7,18 +7,16 @@ import Button from '../components/Button'
 import { useCreatorGrid } from '~/hooks/CreatorGrid'
 import { useUser } from '~/hooks/useUser'
 import { useGameContract } from '~/hooks/useGameContract'
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@remix-run/react'
 import { gridToGameState } from '~/helpers/gridToGameState'
 import { gameStateToGrid } from '~/helpers/gameStateToGrid'
 import { useDialog } from '~/hooks/Dialog'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { StarknetChainId } from 'starknet4/dist/constants'
 import Dialog from '~/components/Dialog/Dialog'
 import Loader from '~/components/Loader'
 import { HiOutlineX } from 'react-icons/hi'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
+import { useContractWrite } from '@starknet-react/core'
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 
 const gameExamples = [
   {
@@ -112,15 +110,20 @@ const Create = () => {
   const [grid, setGrid] = useCreatorGrid()
   const user = useUser()
   const { contract } = useGameContract()
-  const { data, loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'create',
+  const gameState = useMemo(() => gridToGameState(grid), [grid])
+
+  const {
+    data,
+    isLoading: loading,
+    isError: error,
+    reset,
+    write,
+  } = useContractWrite({
+    calls: contract ? [contract.populateTransaction.create!(gameState)] : [],
   })
 
-  const { library } = useStarknet()
   const [, setDialog] = useDialog()
-  const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const { isCorrectNetwork } = useCheckNetwork()
 
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false)
   const [userCancelledDialogOpen, setUserCancelledDialogOpen] = useState(false)
@@ -142,7 +145,7 @@ const Create = () => {
 
       const formData = new FormData()
 
-      formData.append('hash', data)
+      formData.append('hash', data.transaction_hash)
       formData.append('status', 'RECEIVED')
       formData.append('functionName', 'create')
       formData.append('functionCaller', user!.userId)
@@ -160,8 +163,6 @@ const Create = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, navigate])
-
-  const gameState = useMemo(() => gridToGameState(grid), [grid])
 
   return (
     <ContainerInner>
@@ -242,7 +243,7 @@ const Create = () => {
                   isLoading={loading}
                   disabled={gameState === '0'}
                   onClick={() => {
-                    if (getLibraryChainId(library) != currentStarknetChainId) {
+                    if (!isCorrectNetwork) {
                       setDialog('WrongNetworkDialog')
                       return
                     }
@@ -253,9 +254,7 @@ const Create = () => {
                       if (gameState === '0') return
 
                       // TODO test this
-                      void invoke({
-                        args: [gameState],
-                      })
+                      write()
                     }
                   }}
                 />

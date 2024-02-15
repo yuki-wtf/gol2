@@ -11,10 +11,10 @@ import { motion } from 'framer-motion'
 import golTokenIcon from '~/assets/images/gol-token-icon.png'
 import { useLocalStorage } from 'react-use'
 import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { useStarknet } from '@starknet-react/core'
-import { getChecksumAddress } from 'starknet4'
+import { getChecksumAddress } from 'starknet'
 import { useLocation } from '@remix-run/react'
 import Dialog from '../Dialog/Dialog'
+import { useAccount, useConnect } from '@starknet-react/core'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -89,6 +89,7 @@ export default function CreditsContainer() {
   const hasOutgoingTransfer = user?.hasOutgoingTransfer ?? false
   const location = useLocation()
   const [helpMessage, setHelpMessage] = useHelpMessage()
+
   const [hasDismissedFirstTokenEarnedMessage, setHasDismissedFirstTokenEarnedMessage] = useLocalStorage(
     'has-dismissed-first-token-earned-message',
     false
@@ -117,19 +118,20 @@ export default function CreditsContainer() {
     }
   }, [helpMessage, setHasDismissedFirstTokenEarnedMessage, setHelpMessage])
 
-  const { connectors } = useStarknet()
+  const { connectors } = useConnect()
   const [wallet, setWallet] = useState<{ id: string; name: string }>()
-  const { account } = useStarknet()
+  const { account: _account } = useAccount()
+  const account = _account?.address ?? ''
 
   useEffect(() => {
     void (async () => {
       for (const connector of connectors) {
         const accountObj = await connector.account()
         if (accountObj != null) {
-          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account!)) {
+          if (getChecksumAddress(accountObj.address) === getChecksumAddress(account)) {
             setWallet({
-              id: connector.id(),
-              name: connector.name(),
+              id: connector.id,
+              name: connector.name,
             })
           }
         }

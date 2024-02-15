@@ -88,6 +88,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
         "hash",
         CASE "status"
           WHEN 'PENDING' THEN 'RECEIVED'
+          WHEN 'ACCEPTED_ON_L2' THEN 'RECEIVED'
           else "status"
         END "status",
         CASE "functionName"
@@ -100,6 +101,7 @@ export async function loader({ request, params }: LoaderArgs): Promise<TypedResp
       FROM transaction t
       WHERE CASE "status"
           WHEN 'RECEIVED' THEN (select "transactionHash" from infinite i where i."transactionHash" = t."hash") is null
+          WHEN 'ACCEPTED_ON_L2' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
           WHEN 'PENDING' THEN (select "transactionHash" from creator c where c."transactionHash" = t."hash") is null
           WHEN 'REJECTED' THEN "createdAt" > (now() - interval '15 minutes')
           else FALSE

@@ -1,0 +1,141 @@
+{
+  "ownedNfts": [
+    {
+      "contract": {
+        "address": "0x00f4aD66Ea867300f97Ec6e47C2D0AAA201367C1265a00B6B643fAb77531bb82",
+        "name": "Xplorer",
+        "symbol": "XPLORER",
+        "totalSupply": null,
+        "tokenType": "ERC721",
+        "contractDeployer": null,
+        "deployedBlockNumber": null,
+        "openSeaMetadata": {
+          "floorPrice": null,
+          "collectionName": null,
+          "collectionSlug": null,
+          "safelistRequestStatus": null,
+          "imageUrl": null,
+          "description": null,
+          "externalUrl": null,
+          "twitterUsername": null,
+          "discordUrl": null,
+          "bannerImageUrl": null,
+          "lastIngestedAt": null
+        },
+        "isSpam": null,
+        "spamClassifications": []
+      },
+      "tokenId": "474425",
+      "tokenType": "ERC721",
+      "name": "Xplorer — Argent",
+      "description": "Xplorer, your journey into Starknet has just begun, and this beautiful piece of art documents your travels so far. Take rest for now, as you have a further 7 regions ahead of you.",
+      "tokenUri": "https://cloud.argent-api.com/v1/moments/metadata/1/474425",
+      "image": {
+        "cachedUrl": "https://nft-cdn.alchemy.com/starknet-mainnet/b72e37372878af44b1df0c05954c8565",
+        "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/starknet-mainnet/b72e37372878af44b1df0c05954c8565",
+        "pngUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/starknet-mainnet/b72e37372878af44b1df0c05954c8565",
+        "contentType": "image/png",
+        "size": 503634,
+        "originalUrl": "https://static.argent.net/moments/images/ce878b86-e0e9-4dce-9f4f-87e6b6871aa1.png"
+      },
+      "raw": {
+        "tokenUri": "https://cloud.argent-api.com/v1/moments/metadata/1/474425",
+        "metadata": {
+          "name": "Xplorer — Argent",
+          "description": "Xplorer, your journey into Starknet has just begun, and this beautiful piece of art documents your travels so far. Take rest for now, as you have a further 7 regions ahead of you.",
+          "image": "https://static.argent.net/moments/images/ce878b86-e0e9-4dce-9f4f-87e6b6871aa1.png",
+          "attributes": [
+            { "value": "fefacf00-12ab-475f-852b-1c7fea184442", "trait_type": "campaign" },
+            {
+              "trait_type": "Generation",
+              "value": 6
+            },
+            {
+              "trait_type": "Game Mode",
+              "value": "Infinite"
+            }
+          ]
+        },
+        "error": null
+      },
+      "collection": null,
+      "mint": { "mintAddress": null, "blockNumber": null, "timestamp": null, "transactionHash": null },
+      "owners": null,
+      "timeLastUpdated": "2024-01-17T15:46:33.494Z",
+      "balance": "1",
+      "acquiredAt": { "blockTimestamp": null, "blockNumber": null }
+    },
+    {
+      "contract": {
+        "address": "0x00f4aD66Ea867300f97Ec6e47C2D0AAA201367C1265a00B6B643fAb77531bb82",
+        "name": "Xplorer",
+        "symbol": "XPLORER",
+        "totalSupply": null,
+        "tokenType": "ERC721",
+        "contractDeployer": null,
+        "deployedBlockNumber": null,
+        "openSeaMetadata": {
+          "floorPrice": null,
+          "collectionName": null,
+          "collectionSlug": null,
+          "safelistRequestStatus": null,
+          "imageUrl": null,
+          "description": null,
+          "externalUrl": null,
+          "twitterUsername": null,
+          "discordUrl": null,
+          "bannerImageUrl": null,
+          "lastIngestedAt": null
+        },
+        "isSpam": null,
+        "spamClassifications": []
+      },
+      "tokenId": "718990",
+      "tokenType": "ERC721",
+      "name": "Xplorer — Starkfighter",
+      "description": "Xplorer, you took control of the cockpit, blasted off, dodged a few craters and reached your second destination. While your progress so far is to be commended, 6 more challenging regions lie ahead.",
+      "tokenUri": "https://cloud.argent-api.com/v1/moments/metadata/1/718990",
+      "image": {
+        "cachedUrl": "https://nft-cdn.alchemy.com/starknet-mainnet/61f6971a52a2fe3f706e4d617d1496a8",
+        "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/starknet-mainnet/61f6971a52a2fe3f706e4d617d1496a8",
+        "pngUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/starknet-mainnet/61f6971a52a2fe3f706e4d617d1496a8",
+        "contentType": "image/png",
+        "size": 1341853,
+        "originalUrl": "https://static.argent.net/moments/images/2421ea1c-61f1-4cc5-8879-2c3750c3a91c.png"
+      },
+      "raw": {
+        "tokenUri": "https://cloud.argent-api.com/v1/moments/metadata/1/718990",
+        "metadata": {
+          "name": "Xplorer — Starkfighter",
+          "description": "Xplorer, you took control of the cockpit, blasted off, dodged a few craters and reached your second destination. While your progress so far is to be commended, 6 more challenging regions lie ahead.",
+          "image": "https://static.argent.net/moments/images/2421ea1c-61f1-4cc5-8879-2c3750c3a91c.png",
+          "attributes": [
+            { "value": "9265e0bc-ae7d-4ad2-9c51-ec93fd734bd0", "trait_type": "campaign" },
+            {
+              "trait_type": "Generation",
+              "value": 9
+            },
+            {
+              "trait_type": "Game Mode",
+              "value": "Infinite"
+            }
+          ]
+        },
+        "error": null
+      },
+      "collection": null,
+      "mint": { "mintAddress": null, "blockNumber": null, "timestamp": null, "transactionHash": null },
+      "owners": null,
+      "timeLastUpdated": "2024-01-17T15:46:33.575Z",
+      "balance": "1",
+      "acquiredAt": { "blockTimestamp": null, "blockNumber": null }
+    }
+  ],
+  "totalCount": 7,
+  "validAt": {
+    "blockNumber": null,
+    "blockHash": "0x67d1fc7a3e19e820098fedf50c056cd666df57079bc4ff52b12b92c91ee0e13",
+    "blockTimestamp": null
+  },
+  "pageKey": null
+}

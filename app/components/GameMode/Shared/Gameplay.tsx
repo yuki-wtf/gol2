@@ -1,5 +1,5 @@
 import type { OnChainPlay } from '~/db.server'
-import { getChecksumAddress } from 'starknet4'
+import { getChecksumAddress } from 'starknet'
 import type { SerializeFrom } from '@remix-run/node'
 import TxnRow, { TxnRowStatus } from '~/components/TxnRow'
 import SidebarSection from '~/components/SidebarSection'

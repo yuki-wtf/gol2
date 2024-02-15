@@ -17,6 +17,8 @@ interface Props {
   readonly to?: LinkProps['to']
   readonly full?: boolean
   readonly tertiaryColor?: string
+  readonly color?: string
+  readonly disableCursor?: boolean
 }
 
 const StyledButton = styled.button<Props>`
@@ -83,7 +85,13 @@ const StyledButton = styled.button<Props>`
 
           ${p.disabled &&
           css`
-            pointer-events: none;
+            ${p.disableCursor
+              ? css`
+                  cursor: not-allowed;
+                `
+              : css`
+                  pointer-events: none;
+                `}
             background: ${p.theme.colors.buttonSecondary.disabledBackground};
             color: ${p.theme.colors.buttonSecondary.disabledColor};
             border: 1px solid transparent;
@@ -136,7 +144,13 @@ const StyledButton = styled.button<Props>`
           }
           ${p.disabled &&
           css`
-            pointer-events: none;
+            ${p.disableCursor
+              ? css`
+                  cursor: not-allowed;
+                `
+              : css`
+                  pointer-events: none;
+                `}
             background: ${p.theme.colors.buttonTertiary.disabledBackground};
             color: ${p.theme.colors.buttonTertiary.disabledColor};
           `}
@@ -185,6 +199,13 @@ const StyledButton = styled.button<Props>`
           ${p.disabled &&
           css`
             pointer-events: none;
+            ${p.disableCursor
+              ? css`
+                  cursor: not-allowed;
+                `
+              : css`
+                  pointer-events: none;
+                `}
             background: ${p.theme.colors.buttonPrimary.disabledBackground};
             color: ${p.theme.colors.buttonPrimary.disabledColor};
           `}
@@ -213,6 +234,8 @@ export default function Button({
   to,
   full,
   tertiaryColor,
+  color,
+  disableCursor,
 }: Props) {
   const Component = to != null ? StyledLink : StyledButton
 
@@ -235,9 +258,10 @@ export default function Button({
       to={to!}
       onClick={onClick}
       tertiaryColor={tertiaryColor}
+      disableCursor={disableCursor}
     >
       {renderIconSpinner()}
-      <T.Button>{label}</T.Button>
+      <T.Button color={color}>{label}</T.Button>
     </Component>
   )
 }

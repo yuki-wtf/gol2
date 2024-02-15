@@ -7,6 +7,9 @@ import CreditsContainer from './CreditsContainer'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { Link, useLocation } from '@remix-run/react'
 import ClientOnly from '../ClientOnly'
+import Highlight from '../Highlight'
+import { useCreatedSnapshot } from '~/hooks/CreatedSnapshot'
+import { useEffect } from 'react'
 
 const StyledNavbar = styled.header`
   position: relative;
@@ -32,6 +35,30 @@ const StyledNavbarInner = styled.header`
   }
 `
 
+const MenuButtonWithHighlight = () => {
+  const [snapshotCreated, setSnapshotCreated] = useCreatedSnapshot()
+  const { pathname } = useLocation()
+  useEffect(() => {
+    setSnapshotCreated(false)
+  }, [pathname, setSnapshotCreated])
+  return (
+    <Highlight
+      collisonPadding={{ left: 24 }}
+      onClose={() => {
+        setSnapshotCreated(false)
+      }}
+      type="snapshot"
+      noOverlay={true}
+      active={snapshotCreated && pathname === '/infinite'}
+      title="Keep track of mint status on Snapshots page"
+      desc="View snapshots"
+      descLink="/snapshots"
+      containerPadding="5px 2px 3px 2px"
+    >
+      <MenuButton />
+    </Highlight>
+  )
+}
 const Navbar = () => {
   const [selectedCell] = useSelectedCell()
   const location = useLocation()
@@ -41,7 +68,7 @@ const Navbar = () => {
       {selectedCell !== null && <TempOverlay />}
 
       <StyledNavbarInner>
-        {/^\/menu(\/|$)/.test(location.pathname) ? null : <MenuButton />}
+        {/^\/menu(\/|$)/.test(location.pathname) ? null : <MenuButtonWithHighlight />}
 
         <Link to="/" title="Home">
           <HeaderLogo />

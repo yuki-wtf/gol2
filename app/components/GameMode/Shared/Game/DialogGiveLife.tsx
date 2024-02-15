@@ -1,18 +1,16 @@
-import { useStarknet, useStarknetInvoke } from '@starknet-react/core'
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useGameContract } from '~/hooks/useGameContract'
 import { useSelectedCell } from '~/hooks/SelectedCell'
 import { useUser } from '~/hooks/useUser'
 import { useDialog } from '~/hooks/Dialog'
-import { useRootLoaderData } from '~/hooks/useRootLoaderData'
-import { StarknetChainId } from 'starknet4/dist/constants'
 import Button from '~/components/Button'
 import Typography from '~/components/Typography'
 import Loader from '~/components/Loader'
 import { HiOutlineX } from 'react-icons/hi'
 import Dialog from '~/components/Dialog/Dialog'
-import { getLibraryChainId } from '~/helpers/getLibraryChainId'
+import { useContractWrite } from '@starknet-react/core'
+import { useCheckNetwork } from '~/helpers/useCheckNetwork'
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -52,29 +50,24 @@ const DialogGiveLife = () => {
   const [payload, setPayload] = useState<number>()
   const user = useUser()
   const { contract } = useGameContract()
-  const { library } = useStarknet()
   const [, setDialog] = useDialog()
-  const { env } = useRootLoaderData()
-  const currentStarknetChainId = env.USE_MAINNET ? StarknetChainId.MAINNET : StarknetChainId.TESTNET
+  const { isCorrectNetwork } = useCheckNetwork()
 
-  const { data, loading, error, reset, invoke } = useStarknetInvoke({
-    contract: contract,
-    method: 'give_life_to_cell',
-  })
+  const { data, isLoading, isError, reset, write } = useContractWrite({ calls: [] })
 
   useEffect(() => {
-    if (loading) {
+    if (isLoading) {
       setApprovalDialogOpen(true)
       setUserCancelledDialogOpen(true)
     }
-  }, [loading])
+  }, [isLoading])
 
   useEffect(() => {
     if (data == null) return undefined
 
     const formData = new FormData()
 
-    formData.append('hash', data)
+    formData.append('hash', data.transaction_hash)
     formData.append('status', 'RECEIVED')
     formData.append('functionName', 'give_life_to_cell')
     formData.append('functionCaller', user!.userId)
@@ -94,7 +87,7 @@ const DialogGiveLife = () => {
         position: 'relative',
       }}
     >
-      {loading && (
+      {isLoading && (
         <Dialog
           textCentered
           description="Confirm this transaction in your wallet"
@@ -108,7 +101,7 @@ const DialogGiveLife = () => {
         />
       )}
 
-      {error && (
+      {isError && (
         <Dialog
           hasConfirmButton
           textCentered
@@ -131,7 +124,7 @@ const DialogGiveLife = () => {
             <Button
               secondary
               onClick={() => {
-                if (getLibraryChainId(library) != currentStarknetChainId) {
+                if (!isCorrectNetwork) {
                   setDialog('WrongNetworkDialog')
                   return
                 }
@@ -142,8 +135,8 @@ const DialogGiveLife = () => {
                   setPayload(payload)
 
                   // TODO test this
-                  void invoke({
-                    args: [payload],
+                  write({
+                    calls: contract ? contract.populateTransaction.give_life_to_cell!(payload) : [],
                   })
 
                   setSelectedCell(null)
