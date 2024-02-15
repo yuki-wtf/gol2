@@ -51,7 +51,6 @@ export const SnapshotMint = ({ generation, nft, refreshPage }: Props) => {
   const starkscan = env.USE_MAINNET ? 'https://starkscan.co' : 'https://testnet.starkscan.co'
   const { isCorrectNetwork } = useCheckNetwork()
   const [_, setDialog] = useDialog()
-  const { contract: nftContract } = useNftContract()
   const isPreMigrationGeneration = Number(generation) <= Number(env.MIGRATION_GENERATION_MARKER)
 
   const addMintToPending = async (generationNumber: number, txHash: string) => {
@@ -90,18 +89,15 @@ export const SnapshotMint = ({ generation, nft, refreshPage }: Props) => {
   }
 
   const mintGame = async (generation: string) => {
-    if (!account || !nftContract) {
+    if (!account) {
       return
     }
 
-    const { mint_token_address, mint_price } = nftContract
-    const price = await mint_price()
-    const tokenAddress = await mint_token_address()
     const calls = [
       {
-        contractAddress: tokenAddress.toString(),
+        contractAddress: env.NFT_MINT_TOKEN_ADDRESS,
         entrypoint: 'increaseAllowance',
-        calldata: CallData.compile([env.NFT_CONTRACT_ADDRESS!, cairo.uint256(price)]),
+        calldata: CallData.compile([env.NFT_CONTRACT_ADDRESS!, cairo.uint256(env.NFT_MINT_PRICE!)]),
       },
     ]
 
